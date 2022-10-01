@@ -1,0 +1,15 @@
+<main>
+  <h1>Chart</h1>
+  <div id="chart">
+    <apx-chart
+      [series]="chartOptions.series!"
+      [chart]="chartOptions.chart!"
+      [xaxis]="chartOptions.xaxis!"
+      [yaxis]="chartOptions.yaxis!"
+      [title]="chartOptions.title!"
+      [autoUpdateSeries]="true"
+    ></apx-chart>
+  </div>
+  <button (click)="addNewBar()">add new bar</button>
+  <button (click)="updateSameBar()">update same bar</button>
+</main>
