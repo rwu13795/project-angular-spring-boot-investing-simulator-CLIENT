@@ -1,4 +1,22 @@
 <main>
   <div><h1>App Component</h1></div>
   <app-custom-chart></app-custom-chart>
+
+  <app-digit-slide [digit]="+digit"></app-digit-slide>
+  <div>
+    <button onclick="increase()">+</button>
+
+    <form #formRef="ngForm" (ngSubmit)="changeDigit()">
+      <input
+        type="number"
+        id="num"
+        value="0"
+        min="0"
+        max="9"
+        name="digit"
+        ngModel
+      />
+      <button type="submit">change</button>
+    </form>
+  </div>
 </main>
