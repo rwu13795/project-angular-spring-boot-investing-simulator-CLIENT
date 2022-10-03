@@ -33,18 +33,18 @@ export class DigitSlideComponent implements OnInit, OnChanges {
     }
   }
 
-  onInputChange(event: any) {
-    let input = event.target as HTMLInputElement;
+  // onInputChange(event: any) {
+  //   let input = event.target as HTMLInputElement;
 
-    if (this.inputTimer) clearTimeout(this.inputTimer);
+  //   if (this.inputTimer) clearTimeout(this.inputTimer);
 
-    // after each user input change, set a 800ms timer to wait and see if user
-    // is still entering input. If there is new input, the old timer will be
-    // cleared and new timer will be created. If there is no input change
-    // after 800ms, then trigger the callback (send http request and etc...)
-    this.inputTimer = setTimeout(() => {
-      console.log("input stop:", input.value);
-      // send http request to make the search
-    }, 800);
-  }
+  //   // after each user input change, set a 800ms timer to wait and see if user
+  //   // is still entering input. If there is new input, the old timer will be
+  //   // cleared and new timer will be created. If there is no input change
+  //   // after 800ms, then trigger the callback (send http request and etc...)
+  //   this.inputTimer = setTimeout(() => {
+  //     console.log("input stop:", input.value);
+  //     // send http request to make the search
+  //   }, 800);
+  // }
 }
