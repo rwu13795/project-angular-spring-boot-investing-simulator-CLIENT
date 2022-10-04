@@ -13,8 +13,10 @@ export interface Response_searchByName {
 
 @Injectable({ providedIn: "root" })
 export class StockService {
-  FMP_API = "https://financialmodelingprep.com/api/v3/";
-  API_KEY = "bebf0264afd8447938b0ae54509c1513";
+  // FMP_API = "https://financialmodelingprep.com/api/v3/";
+  SERVER_URL = "http://localhost:8080/api";
+
+  // API_KEY = "bebf0264afd8447938b0ae54509c1513";
 
   constructor(private http: HttpClient) {}
 
@@ -24,12 +26,14 @@ export class StockService {
         query: inputValue,
         limit: 10,
         exchange: "NASDAQ",
-        apikey: this.API_KEY,
+        // apikey: this.API_KEY,
       },
     });
 
     return this.http
-      .get<Response_searchByName[]>(`${this.FMP_API}/search`, { params })
+      .get<Response_searchByName[]>(`${this.SERVER_URL}/stock/search`, {
+        params,
+      })
       .pipe(
         map<Response_searchByName[], Response_searchByName[]>((resonseData) => {
           return resonseData.sort((a, b) => {
