@@ -1,0 +1,47 @@
+<main>
+  <div class="chart-box" *ngIf="chartCandleOptions && chartBarOptions">
+    <div
+      id="chart-candlestick"
+      *ngIf="
+        chartCandleOptions.series &&
+        chartCandleOptions.chart &&
+        chartCandleOptions.xaxis &&
+        chartCandleOptions.yaxis &&
+        chartCandleOptions.plotOptions
+      "
+    >
+      <apx-chart
+        #chartCandle
+        [series]="chartCandleOptions.series"
+        [chart]="chartCandleOptions.chart"
+        [xaxis]="chartCandleOptions.xaxis"
+        [yaxis]="chartCandleOptions.yaxis"
+        [plotOptions]="chartCandleOptions.plotOptions"
+      ></apx-chart>
+    </div>
+    <div
+      id="chart-bar"
+      *ngIf="
+        chartBarOptions.series &&
+        chartBarOptions.chart &&
+        chartBarOptions.xaxis &&
+        chartBarOptions.yaxis &&
+        chartBarOptions.dataLabels &&
+        chartBarOptions.stroke &&
+        chartBarOptions.plotOptions
+      "
+    >
+      <apx-chart
+        #chartBar
+        [series]="chartBarOptions.series"
+        [chart]="chartBarOptions.chart"
+        [xaxis]="chartBarOptions.xaxis"
+        [yaxis]="chartBarOptions.yaxis"
+        [dataLabels]="chartBarOptions.dataLabels"
+        [stroke]="chartBarOptions.stroke"
+        [plotOptions]="chartBarOptions.plotOptions"
+      ></apx-chart>
+    </div>
+  </div>
+  <button (click)="fetchHistory()">get history</button>
+</main>

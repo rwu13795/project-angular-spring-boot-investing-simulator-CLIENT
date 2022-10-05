@@ -8,7 +8,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { CustomChartComponent } from "./chart/custom-chart.component";
 import { DigitSlideComponent } from "./digit-slide/digit-slide.component";
+import { StockChartComponent } from "./stock/stock-chart/stock-chart.component";
 import { StockComponent } from "./stock/stock.component";
+import { TestChartComponent } from "./test-chart/test-chart.component";
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { StockComponent } from "./stock/stock.component";
     CustomChartComponent,
     DigitSlideComponent,
     StockComponent,
+    StockChartComponent,
+    TestChartComponent,
   ],
   imports: [
     BrowserModule,

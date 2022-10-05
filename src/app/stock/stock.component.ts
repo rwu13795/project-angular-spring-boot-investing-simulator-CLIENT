@@ -1,6 +1,29 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Subscription } from "rxjs";
-import { Response_searchByName, StockService } from "./stock.service";
+// import { ChartOptions } from "../chart/custom-chart.component";
+import {
+  CandleData,
+  Response_searchByName,
+  StockService,
+  VolumnData,
+} from "./stock.service";
+
+import {
+  ChartComponent,
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexYAxis,
+  ApexXAxis,
+  ApexTitleSubtitle,
+} from "ng-apexcharts";
+
+type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
+  title: ApexTitleSubtitle;
+};
 
 @Component({
   selector: "app-stock",
@@ -11,6 +34,9 @@ export class StockComponent implements OnInit, OnDestroy {
   inputValue: string = "";
   stockSearchResult: Response_searchByName[] = [];
   stockSearchResult$?: Subscription;
+  candelData: CandleData[] = [];
+  volumnData: VolumnData[] = [];
+  chartData$?: Subscription;
   inputTimer?: any;
 
   constructor(private stockService: StockService) {}
@@ -19,14 +45,10 @@ export class StockComponent implements OnInit, OnDestroy {
 
   onSearchStockByName() {
     this.stockSearchResult$ = this.stockService
-      .fetchPosts(this.inputValue)
+      .searchStockByName(this.inputValue)
       .subscribe((data) => {
         this.stockSearchResult = data;
       });
-  }
-
-  ngOnDestroy(): void {
-    if (this.stockSearchResult$) this.stockSearchResult$.unsubscribe();
   }
 
   onInputChange(event: KeyboardEvent) {
@@ -46,12 +68,26 @@ export class StockComponent implements OnInit, OnDestroy {
       }
 
       this.stockSearchResult$ = this.stockService
-        .fetchPosts(value)
+        .searchStockByName(value)
         .subscribe((data) => {
           this.stockSearchResult = data;
         });
 
       this.inputValue = value;
     }, 800);
+  }
+
+  fetchHistory() {
+    this.chartData$ = this.stockService
+      .fetchHistoryPrice()
+      .subscribe((data) => {
+        this.candelData = data.candles;
+        this.volumnData = data.volumns;
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.stockSearchResult$) this.stockSearchResult$.unsubscribe();
+    if (this.chartData$) this.chartData$.unsubscribe();
   }
 }

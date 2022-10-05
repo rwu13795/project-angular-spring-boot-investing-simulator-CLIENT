@@ -2,12 +2,13 @@
   <h1>Chart</h1>
   <div id="chart">
     <apx-chart
+      #chart
       [series]="chartOptions.series!"
       [chart]="chartOptions.chart!"
       [xaxis]="chartOptions.xaxis!"
       [yaxis]="chartOptions.yaxis!"
       [title]="chartOptions.title!"
-      [autoUpdateSeries]="true"
+      [tooltip]="chartOptions.tooltip!"
     ></apx-chart>
   </div>
   <button (click)="addNewBar()">add new bar</button>
