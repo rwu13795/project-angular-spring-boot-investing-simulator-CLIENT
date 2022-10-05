@@ -31,52 +31,96 @@ export type ChartOptions = {
   styleUrls: ["./test-chart.component.css"],
 })
 export class TestChartComponent implements OnInit {
-  @ViewChild("chartCandle") chartCandle?: ChartComponent;
-  @ViewChild("chartBar") chartBar?: ChartComponent;
+  @ViewChild("chartCandle") chartCandle!: ChartComponent;
+  @ViewChild("chartBar") chartBar!: ChartComponent;
   public chartCandleOptions: Partial<ChartOptions>;
   public chartBarOptions: Partial<ChartOptions>;
 
-  constructor() {
-    // const data: ChartData = { volumns: [], candles: [] };
+  public data: ChartData = { volumns: [], candles: [] };
+  public dataTimeMap: { [timestamp: number]: number } = {};
+  updateTimer?: any;
+  intialUpdate: boolean = true;
 
-    // for (let i = chartData.length - 1; i >= 0; i--) {
-    //   const { date, open, high, low, close, volume } = chartData[i];
-    //   data.candles.push({
-    //     x: new Date(date),
-    //     y: [open, high, low, close],
-    //   });
-    //   data.volumns.push({ x: new Date(date), y: volume });
-    // }
+  constructor() {
+    for (let i = chartData.length - 1; i >= 0; i--) {
+      const { date, open, high, low, close, volume } = chartData[i];
+      this.data.candles.push({
+        x: new Date(date),
+        y: [open, high, low, close],
+      });
+      this.data.volumns.push({ x: new Date(date), y: volume });
+
+      this.dataTimeMap[date] = chartData.length - 1 - i;
+    }
 
     this.chartCandleOptions = {
       series: [
         {
           name: "candle",
-          data: seriesData,
+          data: this.data.candles,
         },
       ],
       chart: {
         type: "candlestick",
-        height: 290,
+
+        height: 500,
         id: "candles",
         toolbar: {
-          autoSelected: "pan",
-          show: false,
+          show: true,
+          tools: {
+            download: false,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            reset: true,
+          },
         },
         zoom: {
-          enabled: false,
+          enabled: true,
         },
+
         events: {
           updated: (chart, option) => {
-            console.log(chart.options.yAxis);
-            chart.options.yAxis = {
-              ...chart.options.yAxis,
-              min: 143.5,
-              max: 146.5,
-              tickAmount: 10,
-              forceNiceScale: false,
-            };
-            console.log(chart.options.yAxis);
+            console.log("updated");
+
+            // After the chart is loaded, I have to select a range of initial
+            // data points in the volumnBar which will sync with the candleBar
+            // by adding the option in the "chart" option
+
+            /**selection: {
+          enabled: true,
+          xaxis: {
+            min: 1664908620000,
+            max: 1664910480000,
+          },
+        }, */
+            // But after the selection, the fuking default "forceNiceScale: false"
+            // kicks in, and I have to set the "yaxis" option again!
+            // I should set the "yaxis" option in the "selection" event, BUT
+            // this "selection" event has a fukking bug, it will break
+            // the "brushScrolled" sync!!!!
+            // At the end, I have to set the "yaxis" option inside this
+            // "updated" event !!
+
+            if (this.intialUpdate) {
+              this.chartCandle.updateOptions({
+                yaxis: {
+                  min: 144,
+                  max: 146.5,
+                  tickAmount: 10,
+                  forceNiceScale: false,
+                },
+              });
+              this.intialUpdate = false;
+            }
+          },
+          zoomed: (chart, lastZoomValues) => {
+            console.log("zoomed-------->", chart);
+          },
+          scrolled: (chart, lastZoomValues) => {
+            console.log("scrolled-------->", chart);
           },
         },
         animations: {
@@ -95,7 +139,7 @@ export class TestChartComponent implements OnInit {
         type: "datetime",
       },
       yaxis: {
-        min: 143.5,
+        min: 144,
         max: 146.5,
         tickAmount: 10,
         forceNiceScale: false,
@@ -109,11 +153,11 @@ export class TestChartComponent implements OnInit {
       series: [
         {
           name: "volume",
-          data: seriesDataLinear,
+          data: this.data.volumns,
         },
       ],
       chart: {
-        height: 160,
+        height: 200,
         type: "bar",
         brush: {
           enabled: true,
@@ -121,21 +165,66 @@ export class TestChartComponent implements OnInit {
         },
         selection: {
           enabled: true,
-          // xaxis: {
-          //   min: data.volumns[data.volumns.length - 1].x.getTime(),
-          //   max: data.volumns[0].x.getTime(),
-          // },
-          fill: {
-            color: "#ccc",
-            opacity: 0.4,
+          xaxis: {
+            min: 1664908620000,
+            max: 1664910480000,
           },
-          stroke: {
-            color: "#0D47A1",
+          // fill: {
+          //   color: "#ccc",
+          //   opacity: 0.4,
+          // },
+          // stroke: {
+          //   color: "#0D47A1",
+          // },
+        },
+        events: {
+          updated: (chart, option) => {
+            console.log();
+            // chart.options.yAxis = {
+            //   ...chart.options.yAxis,
+            //   min: 143.5,
+            //   max: 146.5,
+            //   tickAmount: 10,
+            //   forceNiceScale: false,
+            // };
+            // console.log(chart.options.yAxis);
+          },
+          zoomed: (chart, lastZoomValues) => {
+            console.log("zoomed-------->", chart);
+          },
+          scrolled: (chart, lastZoomValues) => {
+            console.log("scrolled-------->", chart);
+          },
+          // selection: (chart, { xaxis, yaxis }) => {
+          //   console.log("selection-------->");
+          //   this.chartCandle.updateOptions({
+          //     yaxis: {
+          //       min: 144,
+          //       max: 146.5,
+          //       tickAmount: 10,
+          //       forceNiceScale: false,
+          //     },
+          //   });
+          // },
+          brushScrolled: (chart, options?) => {
+            // console.log("brushScrolled-------->", chart);
+
+            // I need to set the "forceNiceScale: false" in yaxis, since
+            // the "brushScrolled" has a default "forceNiceScale: true"
+            // the "forceNiceScale" will always mess up the yasix scale !!!
+            this.chartCandle.updateOptions({
+              yaxis: {
+                min: 144,
+                max: 146.5,
+                tickAmount: 10,
+                forceNiceScale: false,
+              },
+            });
           },
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
       },
       plotOptions: {
         bar: {

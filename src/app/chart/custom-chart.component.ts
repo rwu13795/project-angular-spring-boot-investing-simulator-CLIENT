@@ -41,7 +41,7 @@ export class CustomChartComponent {
 
     [145.12, 145.08, 145.17, 145.16],
 
-    [145.12, 145.07, 145.14, 145.12],
+    [145.12, 345.07, 45.14, 155.12],
   ];
   index = 0;
 
@@ -230,9 +230,9 @@ export class CustomChartComponent {
         tooltip: {
           enabled: true,
         },
-        // max: 6700,
-        // min: 6500,
-        forceNiceScale: true,
+        max: 147,
+        min: 143,
+        forceNiceScale: false,
         tickAmount: 10,
         axisBorder: {
           show: true,

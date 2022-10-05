@@ -222,7 +222,7 @@ export const seriesDataLinear = [
 
 export const chartData = [
   {
-    date: "2022-10-04 15:08:00",
+    date: new Date("2022-10-04 15:08:00").getTime(),
     open: 145.6,
     low: 145.51,
     high: 145.69,
@@ -230,7 +230,7 @@ export const chartData = [
     volume: 193172,
   },
   {
-    date: "2022-10-04 15:07:00",
+    date: new Date("2022-10-04 15:07:00").getTime(),
     open: 145.74,
     low: 145.5941,
     high: 145.75,
@@ -238,7 +238,7 @@ export const chartData = [
     volume: 136954,
   },
   {
-    date: "2022-10-04 15:06:00",
+    date: new Date("2022-10-04 15:06:00").getTime(),
     open: 145.7003,
     low: 145.655,
     high: 145.75,
@@ -246,7 +246,7 @@ export const chartData = [
     volume: 108041,
   },
   {
-    date: "2022-10-04 15:05:00",
+    date: new Date("2022-10-04 15:05:00").getTime(),
     open: 145.7655,
     low: 145.66,
     high: 145.775,
@@ -254,7 +254,7 @@ export const chartData = [
     volume: 112040,
   },
   {
-    date: "2022-10-04 15:04:00",
+    date: new Date("2022-10-04 15:04:00").getTime(),
     open: 145.7137,
     low: 145.675,
     high: 145.81,
@@ -262,7 +262,7 @@ export const chartData = [
     volume: 122686,
   },
   {
-    date: "2022-10-04 15:03:00",
+    date: new Date("2022-10-04 15:03:00").getTime(),
     open: 145.815,
     low: 145.66,
     high: 145.83,
@@ -270,7 +270,7 @@ export const chartData = [
     volume: 185943,
   },
   {
-    date: "2022-10-04 15:02:00",
+    date: new Date("2022-10-04 15:02:00").getTime(),
     open: 145.871,
     low: 145.79,
     high: 145.88,
@@ -278,7 +278,7 @@ export const chartData = [
     volume: 86879,
   },
   {
-    date: "2022-10-04 15:01:00",
+    date: new Date("2022-10-04 15:01:00").getTime(),
     open: 145.89,
     low: 145.805,
     high: 145.92,
@@ -286,7 +286,7 @@ export const chartData = [
     volume: 109890,
   },
   {
-    date: "2022-10-04 15:00:00",
+    date: new Date("2022-10-04 15:00:00").getTime(),
     open: 145.86,
     low: 145.79,
     high: 145.9101,
@@ -294,7 +294,7 @@ export const chartData = [
     volume: 122475,
   },
   {
-    date: "2022-10-04 14:59:00",
+    date: new Date("2022-10-04 14:59:00").getTime(),
     open: 145.92,
     low: 145.84,
     high: 145.95,
@@ -302,7 +302,7 @@ export const chartData = [
     volume: 92888,
   },
   {
-    date: "2022-10-04 14:58:00",
+    date: new Date("2022-10-04 14:58:00").getTime(),
     open: 145.965,
     low: 145.88,
     high: 146.0052,
@@ -310,7 +310,7 @@ export const chartData = [
     volume: 124438,
   },
   {
-    date: "2022-10-04 14:57:00",
+    date: new Date("2022-10-04 14:57:00").getTime(),
     open: 146.0782,
     low: 145.915,
     high: 146.09,
@@ -318,7 +318,7 @@ export const chartData = [
     volume: 168338,
   },
   {
-    date: "2022-10-04 14:56:00",
+    date: new Date("2022-10-04 14:56:00").getTime(),
     open: 145.96,
     low: 145.94,
     high: 146.08,
@@ -326,7 +326,7 @@ export const chartData = [
     volume: 187761,
   },
   {
-    date: "2022-10-04 14:55:00",
+    date: new Date("2022-10-04 14:55:00").getTime(),
     open: 145.955,
     low: 145.89,
     high: 145.98,
@@ -334,7 +334,7 @@ export const chartData = [
     volume: 100833,
   },
   {
-    date: "2022-10-04 14:54:00",
+    date: new Date("2022-10-04 14:54:00").getTime(),
     open: 145.938,
     low: 145.885,
     high: 145.96,
@@ -342,7 +342,7 @@ export const chartData = [
     volume: 104623,
   },
   {
-    date: "2022-10-04 14:53:00",
+    date: new Date("2022-10-04 14:53:00").getTime(),
     open: 145.95,
     low: 145.88,
     high: 146.0099,
@@ -350,7 +350,7 @@ export const chartData = [
     volume: 256129,
   },
   {
-    date: "2022-10-04 14:52:00",
+    date: new Date("2022-10-04 14:52:00").getTime(),
     open: 145.9599,
     low: 145.88,
     high: 145.99,
@@ -358,7 +358,7 @@ export const chartData = [
     volume: 132019,
   },
   {
-    date: "2022-10-04 14:51:00",
+    date: new Date("2022-10-04 14:51:00").getTime(),
     open: 145.925,
     low: 145.901,
     high: 146.0,
@@ -366,7 +366,7 @@ export const chartData = [
     volume: 154052,
   },
   {
-    date: "2022-10-04 14:50:00",
+    date: new Date("2022-10-04 14:50:00").getTime(),
     open: 145.855,
     low: 145.85,
     high: 145.96,
@@ -374,7 +374,7 @@ export const chartData = [
     volume: 215147,
   },
   {
-    date: "2022-10-04 14:49:00",
+    date: new Date("2022-10-04 14:49:00").getTime(),
     open: 145.9,
     low: 145.83,
     high: 145.9325,
@@ -382,7 +382,7 @@ export const chartData = [
     volume: 152375,
   },
   {
-    date: "2022-10-04 14:48:00",
+    date: new Date("2022-10-04 14:48:00").getTime(),
     open: 145.7925,
     low: 145.7801,
     high: 145.9401,
@@ -390,7 +390,7 @@ export const chartData = [
     volume: 232224,
   },
   {
-    date: "2022-10-04 14:47:00",
+    date: new Date("2022-10-04 14:47:00").getTime(),
     open: 145.67,
     low: 145.664,
     high: 145.8,
@@ -398,7 +398,7 @@ export const chartData = [
     volume: 182661,
   },
   {
-    date: "2022-10-04 14:46:00",
+    date: new Date("2022-10-04 14:46:00").getTime(),
     open: 145.56,
     low: 145.56,
     high: 145.72,
@@ -406,7 +406,7 @@ export const chartData = [
     volume: 272133,
   },
   {
-    date: "2022-10-04 14:45:00",
+    date: new Date("2022-10-04 14:45:00").getTime(),
     open: 145.555,
     low: 145.52,
     high: 145.58,
@@ -414,7 +414,7 @@ export const chartData = [
     volume: 111116,
   },
   {
-    date: "2022-10-04 14:44:00",
+    date: new Date("2022-10-04 14:44:00").getTime(),
     open: 145.485,
     low: 145.4239,
     high: 145.57,
@@ -422,7 +422,7 @@ export const chartData = [
     volume: 103916,
   },
   {
-    date: "2022-10-04 14:43:00",
+    date: new Date("2022-10-04 14:43:00").getTime(),
     open: 145.44,
     low: 145.43,
     high: 145.51,
@@ -430,7 +430,7 @@ export const chartData = [
     volume: 82035,
   },
   {
-    date: "2022-10-04 14:42:00",
+    date: new Date("2022-10-04 14:42:00").getTime(),
     open: 145.4,
     low: 145.385,
     high: 145.48,
@@ -438,7 +438,7 @@ export const chartData = [
     volume: 79578,
   },
   {
-    date: "2022-10-04 14:41:00",
+    date: new Date("2022-10-04 14:41:00").getTime(),
     open: 145.38,
     low: 145.3674,
     high: 145.435,
@@ -446,7 +446,7 @@ export const chartData = [
     volume: 52353,
   },
   {
-    date: "2022-10-04 14:40:00",
+    date: new Date("2022-10-04 14:40:00").getTime(),
     open: 145.37,
     low: 145.34,
     high: 145.42,
@@ -454,7 +454,7 @@ export const chartData = [
     volume: 88362,
   },
   {
-    date: "2022-10-04 14:39:00",
+    date: new Date("2022-10-04 14:39:00").getTime(),
     open: 145.49,
     low: 145.36,
     high: 145.49,
@@ -462,7 +462,7 @@ export const chartData = [
     volume: 101354,
   },
   {
-    date: "2022-10-04 14:38:00",
+    date: new Date("2022-10-04 14:38:00").getTime(),
     open: 145.4,
     low: 145.3999,
     high: 145.5,
@@ -470,7 +470,7 @@ export const chartData = [
     volume: 106225,
   },
   {
-    date: "2022-10-04 14:37:00",
+    date: new Date("2022-10-04 14:37:00").getTime(),
     open: 145.34,
     low: 145.3,
     high: 145.4003,
@@ -478,7 +478,7 @@ export const chartData = [
     volume: 73534,
   },
   {
-    date: "2022-10-04 14:36:00",
+    date: new Date("2022-10-04 14:36:00").getTime(),
     open: 145.305,
     low: 145.2855,
     high: 145.4,
@@ -486,7 +486,7 @@ export const chartData = [
     volume: 69722,
   },
   {
-    date: "2022-10-04 14:35:00",
+    date: new Date("2022-10-04 14:35:00").getTime(),
     open: 145.385,
     low: 145.25,
     high: 145.4,
@@ -494,7 +494,7 @@ export const chartData = [
     volume: 118049,
   },
   {
-    date: "2022-10-04 14:34:00",
+    date: new Date("2022-10-04 14:34:00").getTime(),
     open: 145.411,
     low: 145.3509,
     high: 145.44,
@@ -502,7 +502,7 @@ export const chartData = [
     volume: 106649,
   },
   {
-    date: "2022-10-04 14:33:00",
+    date: new Date("2022-10-04 14:33:00").getTime(),
     open: 145.495,
     low: 145.39,
     high: 145.5,
@@ -510,7 +510,7 @@ export const chartData = [
     volume: 125732,
   },
   {
-    date: "2022-10-04 14:32:00",
+    date: new Date("2022-10-04 14:32:00").getTime(),
     open: 145.4134,
     low: 145.4,
     high: 145.5,
@@ -518,7 +518,7 @@ export const chartData = [
     volume: 169640,
   },
   {
-    date: "2022-10-04 14:31:00",
+    date: new Date("2022-10-04 14:31:00").getTime(),
     open: 145.215,
     low: 145.215,
     high: 145.4199,
@@ -526,7 +526,7 @@ export const chartData = [
     volume: 121963,
   },
   {
-    date: "2022-10-04 14:30:00",
+    date: new Date("2022-10-04 14:30:00").getTime(),
     open: 145.1022,
     low: 145.04,
     high: 145.3,
@@ -534,7 +534,7 @@ export const chartData = [
     volume: 156796,
   },
   {
-    date: "2022-10-04 14:29:00",
+    date: new Date("2022-10-04 14:29:00").getTime(),
     open: 145.17,
     low: 145.08,
     high: 145.2511,
@@ -542,7 +542,7 @@ export const chartData = [
     volume: 125499,
   },
   {
-    date: "2022-10-04 14:28:00",
+    date: new Date("2022-10-04 14:28:00").getTime(),
     open: 145.34,
     low: 145.14,
     high: 145.43,
@@ -550,7 +550,7 @@ export const chartData = [
     volume: 170729,
   },
   {
-    date: "2022-10-04 14:27:00",
+    date: new Date("2022-10-04 14:27:00").getTime(),
     open: 145.36,
     low: 145.3,
     high: 145.37,
@@ -558,7 +558,7 @@ export const chartData = [
     volume: 66248,
   },
   {
-    date: "2022-10-04 14:26:00",
+    date: new Date("2022-10-04 14:26:00").getTime(),
     open: 145.35,
     low: 145.3,
     high: 145.3855,
@@ -566,7 +566,7 @@ export const chartData = [
     volume: 62951,
   },
   {
-    date: "2022-10-04 14:25:00",
+    date: new Date("2022-10-04 14:25:00").getTime(),
     open: 145.37,
     low: 145.31,
     high: 145.42,
@@ -574,7 +574,7 @@ export const chartData = [
     volume: 86139,
   },
   {
-    date: "2022-10-04 14:24:00",
+    date: new Date("2022-10-04 14:24:00").getTime(),
     open: 145.3501,
     low: 145.33,
     high: 145.401,
@@ -582,7 +582,7 @@ export const chartData = [
     volume: 73161,
   },
   {
-    date: "2022-10-04 14:23:00",
+    date: new Date("2022-10-04 14:23:00").getTime(),
     open: 145.29,
     low: 145.2299,
     high: 145.3893,
@@ -590,7 +590,7 @@ export const chartData = [
     volume: 108508,
   },
   {
-    date: "2022-10-04 14:22:00",
+    date: new Date("2022-10-04 14:22:00").getTime(),
     open: 145.11,
     low: 145.11,
     high: 145.3,
@@ -598,7 +598,7 @@ export const chartData = [
     volume: 94677,
   },
   {
-    date: "2022-10-04 14:21:00",
+    date: new Date("2022-10-04 14:21:00").getTime(),
     open: 145.11,
     low: 145.07,
     high: 145.1665,
@@ -606,7 +606,7 @@ export const chartData = [
     volume: 84827,
   },
   {
-    date: "2022-10-04 14:20:00",
+    date: new Date("2022-10-04 14:20:00").getTime(),
     open: 145.11,
     low: 145.07,
     high: 145.15,
@@ -614,7 +614,7 @@ export const chartData = [
     volume: 87306,
   },
   {
-    date: "2022-10-04 14:19:00",
+    date: new Date("2022-10-04 14:19:00").getTime(),
     open: 145.24,
     low: 145.08,
     high: 145.2401,
@@ -622,7 +622,7 @@ export const chartData = [
     volume: 106318,
   },
   {
-    date: "2022-10-04 14:18:00",
+    date: new Date("2022-10-04 14:18:00").getTime(),
     open: 145.235,
     low: 145.2,
     high: 145.2989,
@@ -630,7 +630,7 @@ export const chartData = [
     volume: 82540,
   },
   {
-    date: "2022-10-04 14:17:00",
+    date: new Date("2022-10-04 14:17:00").getTime(),
     open: 145.16,
     low: 145.15,
     high: 145.28,
@@ -638,7 +638,7 @@ export const chartData = [
     volume: 73637,
   },
   {
-    date: "2022-10-04 14:16:00",
+    date: new Date("2022-10-04 14:16:00").getTime(),
     open: 145.12,
     low: 145.08,
     high: 145.17,
@@ -646,7 +646,7 @@ export const chartData = [
     volume: 125209,
   },
   {
-    date: "2022-10-04 14:15:00",
+    date: new Date("2022-10-04 14:15:00").getTime(),
     open: 145.12,
     low: 145.07,
     high: 145.14,
@@ -654,7 +654,7 @@ export const chartData = [
     volume: 74956,
   },
   {
-    date: "2022-10-04 14:14:00",
+    date: new Date("2022-10-04 14:14:00").getTime(),
     open: 145.1955,
     low: 145.06,
     high: 145.24,
@@ -662,7 +662,7 @@ export const chartData = [
     volume: 103239,
   },
   {
-    date: "2022-10-04 14:13:00",
+    date: new Date("2022-10-04 14:13:00").getTime(),
     open: 145.295,
     low: 145.16,
     high: 145.2999,
@@ -670,7 +670,7 @@ export const chartData = [
     volume: 91467,
   },
   {
-    date: "2022-10-04 14:12:00",
+    date: new Date("2022-10-04 14:12:00").getTime(),
     open: 145.24,
     low: 145.2,
     high: 145.305,
@@ -678,7 +678,7 @@ export const chartData = [
     volume: 65198,
   },
   {
-    date: "2022-10-04 14:11:00",
+    date: new Date("2022-10-04 14:11:00").getTime(),
     open: 145.245,
     low: 145.2,
     high: 145.255,
@@ -686,7 +686,7 @@ export const chartData = [
     volume: 62525,
   },
   {
-    date: "2022-10-04 14:10:00",
+    date: new Date("2022-10-04 14:10:00").getTime(),
     open: 145.25,
     low: 145.215,
     high: 145.289,
@@ -694,7 +694,7 @@ export const chartData = [
     volume: 58217,
   },
   {
-    date: "2022-10-04 14:09:00",
+    date: new Date("2022-10-04 14:09:00").getTime(),
     open: 145.34,
     low: 145.23,
     high: 145.36,
@@ -702,7 +702,7 @@ export const chartData = [
     volume: 72796,
   },
   {
-    date: "2022-10-04 14:08:00",
+    date: new Date("2022-10-04 14:08:00").getTime(),
     open: 145.3097,
     low: 145.3097,
     high: 145.3705,
@@ -710,7 +710,7 @@ export const chartData = [
     volume: 79607,
   },
   {
-    date: "2022-10-04 14:07:00",
+    date: new Date("2022-10-04 14:07:00").getTime(),
     open: 145.12,
     low: 145.12,
     high: 145.3299,
@@ -718,7 +718,7 @@ export const chartData = [
     volume: 98724,
   },
   {
-    date: "2022-10-04 14:06:00",
+    date: new Date("2022-10-04 14:06:00").getTime(),
     open: 145.17,
     low: 145.12,
     high: 145.23,
@@ -726,7 +726,7 @@ export const chartData = [
     volume: 83385,
   },
   {
-    date: "2022-10-04 14:05:00",
+    date: new Date("2022-10-04 14:05:00").getTime(),
     open: 145.21,
     low: 145.165,
     high: 145.26,
@@ -734,7 +734,7 @@ export const chartData = [
     volume: 75037,
   },
   {
-    date: "2022-10-04 14:04:00",
+    date: new Date("2022-10-04 14:04:00").getTime(),
     open: 145.195,
     low: 145.18,
     high: 145.26,
@@ -742,7 +742,7 @@ export const chartData = [
     volume: 90323,
   },
   {
-    date: "2022-10-04 14:03:00",
+    date: new Date("2022-10-04 14:03:00").getTime(),
     open: 145.321,
     low: 145.18,
     high: 145.345,
@@ -750,7 +750,7 @@ export const chartData = [
     volume: 114668,
   },
   {
-    date: "2022-10-04 14:02:00",
+    date: new Date("2022-10-04 14:02:00").getTime(),
     open: 145.4155,
     low: 145.31,
     high: 145.43,
@@ -758,7 +758,7 @@ export const chartData = [
     volume: 95596,
   },
   {
-    date: "2022-10-04 14:01:00",
+    date: new Date("2022-10-04 14:01:00").getTime(),
     open: 145.33,
     low: 145.33,
     high: 145.4539,
@@ -766,7 +766,7 @@ export const chartData = [
     volume: 115839,
   },
   {
-    date: "2022-10-04 14:00:00",
+    date: new Date("2022-10-04 14:00:00").getTime(),
     open: 145.25,
     low: 145.25,
     high: 145.355,
@@ -774,7 +774,7 @@ export const chartData = [
     volume: 106270,
   },
   {
-    date: "2022-10-04 13:59:00",
+    date: new Date("2022-10-04 13:59:00").getTime(),
     open: 145.405,
     low: 145.24,
     high: 145.4182,
@@ -782,7 +782,7 @@ export const chartData = [
     volume: 132712,
   },
   {
-    date: "2022-10-04 13:58:00",
+    date: new Date("2022-10-04 13:58:00").getTime(),
     open: 145.3925,
     low: 145.36,
     high: 145.4176,
@@ -790,7 +790,7 @@ export const chartData = [
     volume: 70242,
   },
   {
-    date: "2022-10-04 13:57:00",
+    date: new Date("2022-10-04 13:57:00").getTime(),
     open: 145.49,
     low: 145.39,
     high: 145.4988,
@@ -798,7 +798,7 @@ export const chartData = [
     volume: 97399,
   },
   {
-    date: "2022-10-04 13:56:00",
+    date: new Date("2022-10-04 13:56:00").getTime(),
     open: 145.37,
     low: 145.35,
     high: 145.53,
@@ -806,7 +806,7 @@ export const chartData = [
     volume: 188469,
   },
   {
-    date: "2022-10-04 13:55:00",
+    date: new Date("2022-10-04 13:55:00").getTime(),
     open: 145.3726,
     low: 145.36,
     high: 145.485,
@@ -814,7 +814,7 @@ export const chartData = [
     volume: 101993,
   },
   {
-    date: "2022-10-04 13:54:00",
+    date: new Date("2022-10-04 13:54:00").getTime(),
     open: 145.45,
     low: 145.34,
     high: 145.49,
@@ -822,7 +822,7 @@ export const chartData = [
     volume: 123183,
   },
   {
-    date: "2022-10-04 13:53:00",
+    date: new Date("2022-10-04 13:53:00").getTime(),
     open: 145.44,
     low: 145.3544,
     high: 145.53,
@@ -830,7 +830,7 @@ export const chartData = [
     volume: 192064,
   },
   {
-    date: "2022-10-04 13:52:00",
+    date: new Date("2022-10-04 13:52:00").getTime(),
     open: 145.19,
     low: 145.18,
     high: 145.44,
@@ -838,7 +838,7 @@ export const chartData = [
     volume: 292162,
   },
   {
-    date: "2022-10-04 13:51:00",
+    date: new Date("2022-10-04 13:51:00").getTime(),
     open: 145.0994,
     low: 145.0517,
     high: 145.21,
@@ -846,7 +846,7 @@ export const chartData = [
     volume: 149616,
   },
   {
-    date: "2022-10-04 13:50:00",
+    date: new Date("2022-10-04 13:50:00").getTime(),
     open: 145.0792,
     low: 145.02,
     high: 145.095,
@@ -854,7 +854,7 @@ export const chartData = [
     volume: 60837,
   },
   {
-    date: "2022-10-04 13:49:00",
+    date: new Date("2022-10-04 13:49:00").getTime(),
     open: 145.065,
     low: 145.0,
     high: 145.11,
@@ -862,7 +862,7 @@ export const chartData = [
     volume: 117696,
   },
   {
-    date: "2022-10-04 13:48:00",
+    date: new Date("2022-10-04 13:48:00").getTime(),
     open: 144.99,
     low: 144.975,
     high: 145.13,
@@ -870,7 +870,7 @@ export const chartData = [
     volume: 258094,
   },
   {
-    date: "2022-10-04 13:47:00",
+    date: new Date("2022-10-04 13:47:00").getTime(),
     open: 144.855,
     low: 144.84,
     high: 145.0,
@@ -878,7 +878,7 @@ export const chartData = [
     volume: 89054,
   },
   {
-    date: "2022-10-04 13:46:00",
+    date: new Date("2022-10-04 13:46:00").getTime(),
     open: 144.91,
     low: 144.84,
     high: 144.915,
@@ -886,7 +886,7 @@ export const chartData = [
     volume: 75693,
   },
   {
-    date: "2022-10-04 13:45:00",
+    date: new Date("2022-10-04 13:45:00").getTime(),
     open: 144.8,
     low: 144.79,
     high: 144.9499,
@@ -894,7 +894,7 @@ export const chartData = [
     volume: 89568,
   },
   {
-    date: "2022-10-04 13:44:00",
+    date: new Date("2022-10-04 13:44:00").getTime(),
     open: 144.78,
     low: 144.77,
     high: 144.8384,
@@ -902,7 +902,7 @@ export const chartData = [
     volume: 103305,
   },
   {
-    date: "2022-10-04 13:43:00",
+    date: new Date("2022-10-04 13:43:00").getTime(),
     open: 144.775,
     low: 144.735,
     high: 144.82,
@@ -910,7 +910,7 @@ export const chartData = [
     volume: 75426,
   },
   {
-    date: "2022-10-04 13:42:00",
+    date: new Date("2022-10-04 13:42:00").getTime(),
     open: 144.88,
     low: 144.775,
     high: 144.93,
@@ -918,7 +918,7 @@ export const chartData = [
     volume: 93658,
   },
   {
-    date: "2022-10-04 13:41:00",
+    date: new Date("2022-10-04 13:41:00").getTime(),
     open: 144.81,
     low: 144.8,
     high: 144.94,
@@ -926,7 +926,7 @@ export const chartData = [
     volume: 114787,
   },
   {
-    date: "2022-10-04 13:40:00",
+    date: new Date("2022-10-04 13:40:00").getTime(),
     open: 144.7,
     low: 144.66,
     high: 144.82,
@@ -934,7 +934,7 @@ export const chartData = [
     volume: 105572,
   },
   {
-    date: "2022-10-04 13:39:00",
+    date: new Date("2022-10-04 13:39:00").getTime(),
     open: 144.68,
     low: 144.63,
     high: 144.7301,
@@ -942,7 +942,7 @@ export const chartData = [
     volume: 141541,
   },
   {
-    date: "2022-10-04 13:38:00",
+    date: new Date("2022-10-04 13:38:00").getTime(),
     open: 144.65,
     low: 144.65,
     high: 144.73,
@@ -950,7 +950,7 @@ export const chartData = [
     volume: 80958,
   },
   {
-    date: "2022-10-04 13:37:00",
+    date: new Date("2022-10-04 13:37:00").getTime(),
     open: 144.71,
     low: 144.65,
     high: 144.75,
@@ -958,7 +958,7 @@ export const chartData = [
     volume: 115806,
   },
   {
-    date: "2022-10-04 13:36:00",
+    date: new Date("2022-10-04 13:36:00").getTime(),
     open: 144.79,
     low: 144.6801,
     high: 144.83,
@@ -966,7 +966,7 @@ export const chartData = [
     volume: 133768,
   },
   {
-    date: "2022-10-04 13:35:00",
+    date: new Date("2022-10-04 13:35:00").getTime(),
     open: 144.82,
     low: 144.76,
     high: 144.83,
@@ -974,7 +974,7 @@ export const chartData = [
     volume: 157866,
   },
   {
-    date: "2022-10-04 13:34:00",
+    date: new Date("2022-10-04 13:34:00").getTime(),
     open: 144.86,
     low: 144.815,
     high: 144.885,
@@ -982,7 +982,7 @@ export const chartData = [
     volume: 84418,
   },
   {
-    date: "2022-10-04 13:33:00",
+    date: new Date("2022-10-04 13:33:00").getTime(),
     open: 144.87,
     low: 144.83,
     high: 144.91,
@@ -990,7 +990,7 @@ export const chartData = [
     volume: 96211,
   },
   {
-    date: "2022-10-04 13:32:00",
+    date: new Date("2022-10-04 13:32:00").getTime(),
     open: 144.8968,
     low: 144.83,
     high: 144.98,
@@ -998,7 +998,7 @@ export const chartData = [
     volume: 249621,
   },
   {
-    date: "2022-10-04 13:31:00",
+    date: new Date("2022-10-04 13:31:00").getTime(),
     open: 144.855,
     low: 144.855,
     high: 144.92,
@@ -1006,7 +1006,7 @@ export const chartData = [
     volume: 80871,
   },
   {
-    date: "2022-10-04 13:30:00",
+    date: new Date("2022-10-04 13:30:00").getTime(),
     open: 144.89,
     low: 144.83,
     high: 144.9,
@@ -1014,7 +1014,7 @@ export const chartData = [
     volume: 106251,
   },
   {
-    date: "2022-10-04 13:29:00",
+    date: new Date("2022-10-04 13:29:00").getTime(),
     open: 144.818,
     low: 144.78,
     high: 144.89,
@@ -1022,7 +1022,7 @@ export const chartData = [
     volume: 131626,
   },
   {
-    date: "2022-10-04 13:28:00",
+    date: new Date("2022-10-04 13:28:00").getTime(),
     open: 144.8,
     low: 144.7699,
     high: 144.8659,
@@ -1030,7 +1030,7 @@ export const chartData = [
     volume: 129879,
   },
   {
-    date: "2022-10-04 13:27:00",
+    date: new Date("2022-10-04 13:27:00").getTime(),
     open: 144.85,
     low: 144.79,
     high: 144.91,
@@ -1038,7 +1038,7 @@ export const chartData = [
     volume: 139320,
   },
   {
-    date: "2022-10-04 13:26:00",
+    date: new Date("2022-10-04 13:26:00").getTime(),
     open: 144.72,
     low: 144.71,
     high: 144.9,
@@ -1046,7 +1046,7 @@ export const chartData = [
     volume: 241696,
   },
   {
-    date: "2022-10-04 13:25:00",
+    date: new Date("2022-10-04 13:25:00").getTime(),
     open: 144.595,
     low: 144.5722,
     high: 144.72,
@@ -1054,7 +1054,7 @@ export const chartData = [
     volume: 109548,
   },
   {
-    date: "2022-10-04 13:24:00",
+    date: new Date("2022-10-04 13:24:00").getTime(),
     open: 144.48,
     low: 144.48,
     high: 144.67,
@@ -1062,7 +1062,7 @@ export const chartData = [
     volume: 182116,
   },
   {
-    date: "2022-10-04 13:23:00",
+    date: new Date("2022-10-04 13:23:00").getTime(),
     open: 144.57,
     low: 144.47,
     high: 144.61,
@@ -1070,7 +1070,7 @@ export const chartData = [
     volume: 118536,
   },
   {
-    date: "2022-10-04 13:22:00",
+    date: new Date("2022-10-04 13:22:00").getTime(),
     open: 144.535,
     low: 144.5,
     high: 144.6,
@@ -1078,7 +1078,7 @@ export const chartData = [
     volume: 104215,
   },
   {
-    date: "2022-10-04 13:21:00",
+    date: new Date("2022-10-04 13:21:00").getTime(),
     open: 144.43,
     low: 144.42,
     high: 144.56,
@@ -1086,7 +1086,7 @@ export const chartData = [
     volume: 137767,
   },
   {
-    date: "2022-10-04 13:20:00",
+    date: new Date("2022-10-04 13:20:00").getTime(),
     open: 144.33,
     low: 144.26,
     high: 144.4484,
@@ -1094,7 +1094,7 @@ export const chartData = [
     volume: 164883,
   },
   {
-    date: "2022-10-04 13:19:00",
+    date: new Date("2022-10-04 13:19:00").getTime(),
     open: 144.421,
     low: 144.31,
     high: 144.472,
@@ -1102,7 +1102,7 @@ export const chartData = [
     volume: 180088,
   },
   {
-    date: "2022-10-04 13:18:00",
+    date: new Date("2022-10-04 13:18:00").getTime(),
     open: 144.4587,
     low: 144.41,
     high: 144.54,
@@ -1110,7 +1110,7 @@ export const chartData = [
     volume: 150608,
   },
   {
-    date: "2022-10-04 13:17:00",
+    date: new Date("2022-10-04 13:17:00").getTime(),
     open: 144.475,
     low: 144.33,
     high: 144.49,
@@ -1118,7 +1118,7 @@ export const chartData = [
     volume: 232678,
   },
   {
-    date: "2022-10-04 13:16:00",
+    date: new Date("2022-10-04 13:16:00").getTime(),
     open: 144.49,
     low: 144.45,
     high: 144.59,
@@ -1126,7 +1126,7 @@ export const chartData = [
     volume: 155311,
   },
   {
-    date: "2022-10-04 13:15:00",
+    date: new Date("2022-10-04 13:15:00").getTime(),
     open: 144.6114,
     low: 144.43,
     high: 144.63,
@@ -1134,7 +1134,7 @@ export const chartData = [
     volume: 239327,
   },
   {
-    date: "2022-10-04 13:14:00",
+    date: new Date("2022-10-04 13:14:00").getTime(),
     open: 144.65,
     low: 144.6101,
     high: 144.68,
@@ -1142,7 +1142,7 @@ export const chartData = [
     volume: 93718,
   },
   {
-    date: "2022-10-04 13:13:00",
+    date: new Date("2022-10-04 13:13:00").getTime(),
     open: 144.71,
     low: 144.62,
     high: 144.72,
@@ -1150,7 +1150,7 @@ export const chartData = [
     volume: 140818,
   },
   {
-    date: "2022-10-04 13:12:00",
+    date: new Date("2022-10-04 13:12:00").getTime(),
     open: 144.861,
     low: 144.715,
     high: 144.8612,
@@ -1158,7 +1158,7 @@ export const chartData = [
     volume: 85201,
   },
   {
-    date: "2022-10-04 13:11:00",
+    date: new Date("2022-10-04 13:11:00").getTime(),
     open: 144.81,
     low: 144.805,
     high: 144.91,
@@ -1166,7 +1166,7 @@ export const chartData = [
     volume: 138239,
   },
   {
-    date: "2022-10-04 13:10:00",
+    date: new Date("2022-10-04 13:10:00").getTime(),
     open: 144.72,
     low: 144.72,
     high: 144.83,
@@ -1174,7 +1174,7 @@ export const chartData = [
     volume: 109421,
   },
   {
-    date: "2022-10-04 13:09:00",
+    date: new Date("2022-10-04 13:09:00").getTime(),
     open: 144.74,
     low: 144.68,
     high: 144.765,
@@ -1182,7 +1182,7 @@ export const chartData = [
     volume: 103802,
   },
   {
-    date: "2022-10-04 13:08:00",
+    date: new Date("2022-10-04 13:08:00").getTime(),
     open: 144.66,
     low: 144.6523,
     high: 144.77,
@@ -1190,7 +1190,7 @@ export const chartData = [
     volume: 129525,
   },
   {
-    date: "2022-10-04 13:07:00",
+    date: new Date("2022-10-04 13:07:00").getTime(),
     open: 144.7287,
     low: 144.67,
     high: 144.838,
@@ -1198,7 +1198,7 @@ export const chartData = [
     volume: 105534,
   },
   {
-    date: "2022-10-04 13:06:00",
+    date: new Date("2022-10-04 13:06:00").getTime(),
     open: 144.72,
     low: 144.695,
     high: 144.82,
@@ -1206,7 +1206,7 @@ export const chartData = [
     volume: 87934,
   },
   {
-    date: "2022-10-04 13:05:00",
+    date: new Date("2022-10-04 13:05:00").getTime(),
     open: 144.81,
     low: 144.68,
     high: 144.825,
@@ -1214,7 +1214,7 @@ export const chartData = [
     volume: 86565,
   },
   {
-    date: "2022-10-04 13:04:00",
+    date: new Date("2022-10-04 13:04:00").getTime(),
     open: 144.8,
     low: 144.795,
     high: 144.865,
@@ -1222,7 +1222,7 @@ export const chartData = [
     volume: 74751,
   },
   {
-    date: "2022-10-04 13:03:00",
+    date: new Date("2022-10-04 13:03:00").getTime(),
     open: 144.725,
     low: 144.72,
     high: 144.8757,
@@ -1230,7 +1230,7 @@ export const chartData = [
     volume: 174770,
   },
   {
-    date: "2022-10-04 13:02:00",
+    date: new Date("2022-10-04 13:02:00").getTime(),
     open: 144.755,
     low: 144.64,
     high: 144.755,
@@ -1238,7 +1238,7 @@ export const chartData = [
     volume: 190362,
   },
   {
-    date: "2022-10-04 13:01:00",
+    date: new Date("2022-10-04 13:01:00").getTime(),
     open: 144.93,
     low: 144.75,
     high: 144.93,
@@ -1246,7 +1246,7 @@ export const chartData = [
     volume: 146011,
   },
   {
-    date: "2022-10-04 13:00:00",
+    date: new Date("2022-10-04 13:00:00").getTime(),
     open: 144.86,
     low: 144.83,
     high: 144.95,
@@ -1254,7 +1254,7 @@ export const chartData = [
     volume: 100325,
   },
   {
-    date: "2022-10-04 12:59:00",
+    date: new Date("2022-10-04 12:59:00").getTime(),
     open: 144.97,
     low: 144.86,
     high: 144.97,
@@ -1262,7 +1262,7 @@ export const chartData = [
     volume: 129993,
   },
   {
-    date: "2022-10-04 12:58:00",
+    date: new Date("2022-10-04 12:58:00").getTime(),
     open: 145.06,
     low: 144.93,
     high: 145.06,
@@ -1270,7 +1270,7 @@ export const chartData = [
     volume: 112101,
   },
   {
-    date: "2022-10-04 12:57:00",
+    date: new Date("2022-10-04 12:57:00").getTime(),
     open: 144.955,
     low: 144.9538,
     high: 145.1,
@@ -1278,7 +1278,7 @@ export const chartData = [
     volume: 136215,
   },
   {
-    date: "2022-10-04 12:56:00",
+    date: new Date("2022-10-04 12:56:00").getTime(),
     open: 144.95,
     low: 144.85,
     high: 144.96,
@@ -1286,7 +1286,7 @@ export const chartData = [
     volume: 137297,
   },
   {
-    date: "2022-10-04 12:55:00",
+    date: new Date("2022-10-04 12:55:00").getTime(),
     open: 145.0,
     low: 144.94,
     high: 145.0,
@@ -1294,7 +1294,7 @@ export const chartData = [
     volume: 86890,
   },
   {
-    date: "2022-10-04 12:54:00",
+    date: new Date("2022-10-04 12:54:00").getTime(),
     open: 145.01,
     low: 144.97,
     high: 145.04,
@@ -1302,7 +1302,7 @@ export const chartData = [
     volume: 91963,
   },
   {
-    date: "2022-10-04 12:53:00",
+    date: new Date("2022-10-04 12:53:00").getTime(),
     open: 145.0513,
     low: 145.01,
     high: 145.1,
@@ -1310,7 +1310,7 @@ export const chartData = [
     volume: 71930,
   },
   {
-    date: "2022-10-04 12:52:00",
+    date: new Date("2022-10-04 12:52:00").getTime(),
     open: 145.14,
     low: 145.0,
     high: 145.15,
@@ -1318,7 +1318,7 @@ export const chartData = [
     volume: 100719,
   },
   {
-    date: "2022-10-04 12:51:00",
+    date: new Date("2022-10-04 12:51:00").getTime(),
     open: 145.04,
     low: 145.04,
     high: 145.1499,
@@ -1326,7 +1326,7 @@ export const chartData = [
     volume: 111076,
   },
   {
-    date: "2022-10-04 12:50:00",
+    date: new Date("2022-10-04 12:50:00").getTime(),
     open: 144.98,
     low: 144.97,
     high: 145.055,
@@ -1334,7 +1334,7 @@ export const chartData = [
     volume: 87248,
   },
   {
-    date: "2022-10-04 12:49:00",
+    date: new Date("2022-10-04 12:49:00").getTime(),
     open: 144.99,
     low: 144.92,
     high: 145.0422,
@@ -1342,7 +1342,7 @@ export const chartData = [
     volume: 94676,
   },
   {
-    date: "2022-10-04 12:48:00",
+    date: new Date("2022-10-04 12:48:00").getTime(),
     open: 145.06,
     low: 144.91,
     high: 145.08,
@@ -1350,7 +1350,7 @@ export const chartData = [
     volume: 173835,
   },
   {
-    date: "2022-10-04 12:47:00",
+    date: new Date("2022-10-04 12:47:00").getTime(),
     open: 145.04,
     low: 144.98,
     high: 145.08,
@@ -1358,7 +1358,7 @@ export const chartData = [
     volume: 139297,
   },
   {
-    date: "2022-10-04 12:46:00",
+    date: new Date("2022-10-04 12:46:00").getTime(),
     open: 145.12,
     low: 145.0306,
     high: 145.1271,
@@ -1366,7 +1366,7 @@ export const chartData = [
     volume: 108634,
   },
   {
-    date: "2022-10-04 12:45:00",
+    date: new Date("2022-10-04 12:45:00").getTime(),
     open: 145.23,
     low: 145.12,
     high: 145.26,
@@ -1374,7 +1374,7 @@ export const chartData = [
     volume: 108997,
   },
   {
-    date: "2022-10-04 12:44:00",
+    date: new Date("2022-10-04 12:44:00").getTime(),
     open: 145.21,
     low: 145.14,
     high: 145.24,
@@ -1382,7 +1382,7 @@ export const chartData = [
     volume: 82195,
   },
   {
-    date: "2022-10-04 12:43:00",
+    date: new Date("2022-10-04 12:43:00").getTime(),
     open: 145.165,
     low: 145.165,
     high: 145.26,
@@ -1390,7 +1390,7 @@ export const chartData = [
     volume: 81400,
   },
   {
-    date: "2022-10-04 12:42:00",
+    date: new Date("2022-10-04 12:42:00").getTime(),
     open: 145.27,
     low: 145.14,
     high: 145.27,
@@ -1398,7 +1398,7 @@ export const chartData = [
     volume: 159639,
   },
   {
-    date: "2022-10-04 12:41:00",
+    date: new Date("2022-10-04 12:41:00").getTime(),
     open: 145.2655,
     low: 145.24,
     high: 145.3,
@@ -1406,7 +1406,7 @@ export const chartData = [
     volume: 104145,
   },
   {
-    date: "2022-10-04 12:40:00",
+    date: new Date("2022-10-04 12:40:00").getTime(),
     open: 145.335,
     low: 145.27,
     high: 145.3501,
@@ -1414,7 +1414,7 @@ export const chartData = [
     volume: 105170,
   },
   {
-    date: "2022-10-04 12:39:00",
+    date: new Date("2022-10-04 12:39:00").getTime(),
     open: 145.335,
     low: 145.33,
     high: 145.4,
@@ -1422,7 +1422,7 @@ export const chartData = [
     volume: 82482,
   },
   {
-    date: "2022-10-04 12:38:00",
+    date: new Date("2022-10-04 12:38:00").getTime(),
     open: 145.3639,
     low: 145.285,
     high: 145.38,
@@ -1430,7 +1430,7 @@ export const chartData = [
     volume: 66894,
   },
   {
-    date: "2022-10-04 12:37:00",
+    date: new Date("2022-10-04 12:37:00").getTime(),
     open: 145.31,
     low: 145.3,
     high: 145.38,
@@ -1438,7 +1438,7 @@ export const chartData = [
     volume: 68516,
   },
   {
-    date: "2022-10-04 12:36:00",
+    date: new Date("2022-10-04 12:36:00").getTime(),
     open: 145.355,
     low: 145.29,
     high: 145.36,
@@ -1446,7 +1446,7 @@ export const chartData = [
     volume: 101599,
   },
   {
-    date: "2022-10-04 12:35:00",
+    date: new Date("2022-10-04 12:35:00").getTime(),
     open: 145.505,
     low: 145.35,
     high: 145.505,
@@ -1454,7 +1454,7 @@ export const chartData = [
     volume: 76786,
   },
   {
-    date: "2022-10-04 12:34:00",
+    date: new Date("2022-10-04 12:34:00").getTime(),
     open: 145.5362,
     low: 145.455,
     high: 145.55,
@@ -1462,7 +1462,7 @@ export const chartData = [
     volume: 73171,
   },
   {
-    date: "2022-10-04 12:33:00",
+    date: new Date("2022-10-04 12:33:00").getTime(),
     open: 145.555,
     low: 145.52,
     high: 145.5779,
@@ -1470,7 +1470,7 @@ export const chartData = [
     volume: 75548,
   },
   {
-    date: "2022-10-04 12:32:00",
+    date: new Date("2022-10-04 12:32:00").getTime(),
     open: 145.53,
     low: 145.4787,
     high: 145.555,
@@ -1478,7 +1478,7 @@ export const chartData = [
     volume: 67687,
   },
   {
-    date: "2022-10-04 12:31:00",
+    date: new Date("2022-10-04 12:31:00").getTime(),
     open: 145.53,
     low: 145.505,
     high: 145.6,
@@ -1486,7 +1486,7 @@ export const chartData = [
     volume: 101919,
   },
   {
-    date: "2022-10-04 12:30:00",
+    date: new Date("2022-10-04 12:30:00").getTime(),
     open: 145.4709,
     low: 145.415,
     high: 145.54,
@@ -1494,7 +1494,7 @@ export const chartData = [
     volume: 99529,
   },
   {
-    date: "2022-10-04 12:29:00",
+    date: new Date("2022-10-04 12:29:00").getTime(),
     open: 145.6563,
     low: 145.46,
     high: 145.67,
@@ -1502,7 +1502,7 @@ export const chartData = [
     volume: 163895,
   },
   {
-    date: "2022-10-04 12:28:00",
+    date: new Date("2022-10-04 12:28:00").getTime(),
     open: 145.5256,
     low: 145.5202,
     high: 145.66,
@@ -1510,7 +1510,7 @@ export const chartData = [
     volume: 192791,
   },
   {
-    date: "2022-10-04 12:27:00",
+    date: new Date("2022-10-04 12:27:00").getTime(),
     open: 145.305,
     low: 145.305,
     high: 145.54,
@@ -1518,7 +1518,7 @@ export const chartData = [
     volume: 174876,
   },
   {
-    date: "2022-10-04 12:26:00",
+    date: new Date("2022-10-04 12:26:00").getTime(),
     open: 145.4222,
     low: 145.3,
     high: 145.445,
@@ -1526,7 +1526,7 @@ export const chartData = [
     volume: 152774,
   },
   {
-    date: "2022-10-04 12:25:00",
+    date: new Date("2022-10-04 12:25:00").getTime(),
     open: 145.23,
     low: 145.21,
     high: 145.4299,
@@ -1534,7 +1534,7 @@ export const chartData = [
     volume: 134732,
   },
   {
-    date: "2022-10-04 12:24:00",
+    date: new Date("2022-10-04 12:24:00").getTime(),
     open: 145.17,
     low: 145.17,
     high: 145.26,
@@ -1542,7 +1542,7 @@ export const chartData = [
     volume: 94626,
   },
   {
-    date: "2022-10-04 12:23:00",
+    date: new Date("2022-10-04 12:23:00").getTime(),
     open: 145.235,
     low: 145.1608,
     high: 145.3,
@@ -1550,7 +1550,7 @@ export const chartData = [
     volume: 120544,
   },
   {
-    date: "2022-10-04 12:22:00",
+    date: new Date("2022-10-04 12:22:00").getTime(),
     open: 145.165,
     low: 145.15,
     high: 145.26,
@@ -1558,7 +1558,7 @@ export const chartData = [
     volume: 115077,
   },
   {
-    date: "2022-10-04 12:21:00",
+    date: new Date("2022-10-04 12:21:00").getTime(),
     open: 145.135,
     low: 145.0742,
     high: 145.17,
@@ -1566,7 +1566,7 @@ export const chartData = [
     volume: 124041,
   },
   {
-    date: "2022-10-04 12:20:00",
+    date: new Date("2022-10-04 12:20:00").getTime(),
     open: 145.19,
     low: 145.1,
     high: 145.215,
@@ -1574,7 +1574,7 @@ export const chartData = [
     volume: 106686,
   },
   {
-    date: "2022-10-04 12:19:00",
+    date: new Date("2022-10-04 12:19:00").getTime(),
     open: 145.19,
     low: 145.145,
     high: 145.22,
@@ -1582,7 +1582,7 @@ export const chartData = [
     volume: 61803,
   },
   {
-    date: "2022-10-04 12:18:00",
+    date: new Date("2022-10-04 12:18:00").getTime(),
     open: 145.2907,
     low: 145.14,
     high: 145.3074,
@@ -1590,7 +1590,7 @@ export const chartData = [
     volume: 98153,
   },
   {
-    date: "2022-10-04 12:17:00",
+    date: new Date("2022-10-04 12:17:00").getTime(),
     open: 145.24,
     low: 145.2119,
     high: 145.3,
@@ -1598,7 +1598,7 @@ export const chartData = [
     volume: 70556,
   },
   {
-    date: "2022-10-04 12:16:00",
+    date: new Date("2022-10-04 12:16:00").getTime(),
     open: 145.205,
     low: 145.19,
     high: 145.26,
@@ -1606,7 +1606,7 @@ export const chartData = [
     volume: 122059,
   },
   {
-    date: "2022-10-04 12:15:00",
+    date: new Date("2022-10-04 12:15:00").getTime(),
     open: 145.125,
     low: 145.11,
     high: 145.24,
@@ -1614,7 +1614,7 @@ export const chartData = [
     volume: 155299,
   },
   {
-    date: "2022-10-04 12:14:00",
+    date: new Date("2022-10-04 12:14:00").getTime(),
     open: 145.105,
     low: 145.07,
     high: 145.13,
@@ -1622,7 +1622,7 @@ export const chartData = [
     volume: 77060,
   },
   {
-    date: "2022-10-04 12:13:00",
+    date: new Date("2022-10-04 12:13:00").getTime(),
     open: 145.18,
     low: 145.09,
     high: 145.19,
@@ -1630,7 +1630,7 @@ export const chartData = [
     volume: 76600,
   },
   {
-    date: "2022-10-04 12:12:00",
+    date: new Date("2022-10-04 12:12:00").getTime(),
     open: 145.17,
     low: 145.12,
     high: 145.22,
@@ -1638,7 +1638,7 @@ export const chartData = [
     volume: 98950,
   },
   {
-    date: "2022-10-04 12:11:00",
+    date: new Date("2022-10-04 12:11:00").getTime(),
     open: 145.1801,
     low: 145.15,
     high: 145.2,
@@ -1646,7 +1646,7 @@ export const chartData = [
     volume: 115419,
   },
   {
-    date: "2022-10-04 12:10:00",
+    date: new Date("2022-10-04 12:10:00").getTime(),
     open: 145.205,
     low: 145.13,
     high: 145.23,
@@ -1654,7 +1654,7 @@ export const chartData = [
     volume: 648848,
   },
   {
-    date: "2022-10-04 12:09:00",
+    date: new Date("2022-10-04 12:09:00").getTime(),
     open: 145.2845,
     low: 145.1877,
     high: 145.29,
@@ -1662,7 +1662,7 @@ export const chartData = [
     volume: 113916,
   },
   {
-    date: "2022-10-04 12:08:00",
+    date: new Date("2022-10-04 12:08:00").getTime(),
     open: 145.16,
     low: 145.13,
     high: 145.29,
@@ -1670,7 +1670,7 @@ export const chartData = [
     volume: 92940,
   },
   {
-    date: "2022-10-04 12:07:00",
+    date: new Date("2022-10-04 12:07:00").getTime(),
     open: 145.0978,
     low: 145.09,
     high: 145.2,
@@ -1678,7 +1678,7 @@ export const chartData = [
     volume: 113703,
   },
   {
-    date: "2022-10-04 12:06:00",
+    date: new Date("2022-10-04 12:06:00").getTime(),
     open: 145.205,
     low: 145.07,
     high: 145.21,
@@ -1686,7 +1686,7 @@ export const chartData = [
     volume: 107275,
   },
   {
-    date: "2022-10-04 12:05:00",
+    date: new Date("2022-10-04 12:05:00").getTime(),
     open: 145.3393,
     low: 145.1409,
     high: 145.38,
@@ -1694,7 +1694,7 @@ export const chartData = [
     volume: 191813,
   },
   {
-    date: "2022-10-04 12:04:00",
+    date: new Date("2022-10-04 12:04:00").getTime(),
     open: 145.3101,
     low: 145.26,
     high: 145.335,
@@ -1702,7 +1702,7 @@ export const chartData = [
     volume: 68088,
   },
   {
-    date: "2022-10-04 12:03:00",
+    date: new Date("2022-10-04 12:03:00").getTime(),
     open: 145.29,
     low: 145.29,
     high: 145.36,
@@ -1710,7 +1710,7 @@ export const chartData = [
     volume: 108340,
   },
   {
-    date: "2022-10-04 12:02:00",
+    date: new Date("2022-10-04 12:02:00").getTime(),
     open: 145.21,
     low: 145.185,
     high: 145.29,
@@ -1718,7 +1718,7 @@ export const chartData = [
     volume: 92033,
   },
   {
-    date: "2022-10-04 12:01:00",
+    date: new Date("2022-10-04 12:01:00").getTime(),
     open: 145.22,
     low: 145.185,
     high: 145.245,
@@ -1726,7 +1726,7 @@ export const chartData = [
     volume: 89796,
   },
   {
-    date: "2022-10-04 12:00:00",
+    date: new Date("2022-10-04 12:00:00").getTime(),
     open: 145.285,
     low: 145.2,
     high: 145.29,
@@ -1734,7 +1734,7 @@ export const chartData = [
     volume: 135433,
   },
   {
-    date: "2022-10-04 11:59:00",
+    date: new Date("2022-10-04 11:59:00").getTime(),
     open: 145.235,
     low: 145.21,
     high: 145.29,
@@ -1742,7 +1742,7 @@ export const chartData = [
     volume: 95422,
   },
   {
-    date: "2022-10-04 11:58:00",
+    date: new Date("2022-10-04 11:58:00").getTime(),
     open: 145.1713,
     low: 145.16,
     high: 145.2378,
@@ -1750,7 +1750,7 @@ export const chartData = [
     volume: 105126,
   },
   {
-    date: "2022-10-04 11:57:00",
+    date: new Date("2022-10-04 11:57:00").getTime(),
     open: 145.05,
     low: 145.04,
     high: 145.18,
@@ -1758,7 +1758,7 @@ export const chartData = [
     volume: 116606,
   },
   {
-    date: "2022-10-04 11:56:00",
+    date: new Date("2022-10-04 11:56:00").getTime(),
     open: 145.105,
     low: 145.03,
     high: 145.13,
@@ -1766,7 +1766,7 @@ export const chartData = [
     volume: 94814,
   },
   {
-    date: "2022-10-04 11:55:00",
+    date: new Date("2022-10-04 11:55:00").getTime(),
     open: 145.14,
     low: 144.97,
     high: 145.16,
@@ -1774,7 +1774,7 @@ export const chartData = [
     volume: 205842,
   },
   {
-    date: "2022-10-04 11:54:00",
+    date: new Date("2022-10-04 11:54:00").getTime(),
     open: 145.19,
     low: 145.12,
     high: 145.2,
@@ -1782,7 +1782,7 @@ export const chartData = [
     volume: 79934,
   },
   {
-    date: "2022-10-04 11:53:00",
+    date: new Date("2022-10-04 11:53:00").getTime(),
     open: 145.34,
     low: 145.18,
     high: 145.365,
@@ -1790,7 +1790,7 @@ export const chartData = [
     volume: 102069,
   },
   {
-    date: "2022-10-04 11:52:00",
+    date: new Date("2022-10-04 11:52:00").getTime(),
     open: 145.29,
     low: 145.29,
     high: 145.3805,
@@ -1798,7 +1798,7 @@ export const chartData = [
     volume: 75838,
   },
   {
-    date: "2022-10-04 11:51:00",
+    date: new Date("2022-10-04 11:51:00").getTime(),
     open: 145.29,
     low: 145.29,
     high: 145.37,
@@ -1806,7 +1806,7 @@ export const chartData = [
     volume: 81773,
   },
   {
-    date: "2022-10-04 11:50:00",
+    date: new Date("2022-10-04 11:50:00").getTime(),
     open: 145.2659,
     low: 145.23,
     high: 145.3601,
@@ -1814,7 +1814,7 @@ export const chartData = [
     volume: 115225,
   },
   {
-    date: "2022-10-04 11:49:00",
+    date: new Date("2022-10-04 11:49:00").getTime(),
     open: 145.2955,
     low: 145.24,
     high: 145.36,
@@ -1822,7 +1822,7 @@ export const chartData = [
     volume: 161058,
   },
   {
-    date: "2022-10-04 11:48:00",
+    date: new Date("2022-10-04 11:48:00").getTime(),
     open: 145.3486,
     low: 145.291,
     high: 145.43,
@@ -1830,7 +1830,7 @@ export const chartData = [
     volume: 169704,
   },
   {
-    date: "2022-10-04 11:47:00",
+    date: new Date("2022-10-04 11:47:00").getTime(),
     open: 145.39,
     low: 145.31,
     high: 145.41,
@@ -1838,7 +1838,7 @@ export const chartData = [
     volume: 96262,
   },
   {
-    date: "2022-10-04 11:46:00",
+    date: new Date("2022-10-04 11:46:00").getTime(),
     open: 145.54,
     low: 145.3701,
     high: 145.5469,
@@ -1846,7 +1846,7 @@ export const chartData = [
     volume: 92642,
   },
   {
-    date: "2022-10-04 11:45:00",
+    date: new Date("2022-10-04 11:45:00").getTime(),
     open: 145.6,
     low: 145.48,
     high: 145.62,
@@ -1854,7 +1854,7 @@ export const chartData = [
     volume: 103077,
   },
   {
-    date: "2022-10-04 11:44:00",
+    date: new Date("2022-10-04 11:44:00").getTime(),
     open: 145.5166,
     low: 145.49,
     high: 145.61,
@@ -1862,7 +1862,7 @@ export const chartData = [
     volume: 147258,
   },
   {
-    date: "2022-10-04 11:43:00",
+    date: new Date("2022-10-04 11:43:00").getTime(),
     open: 145.395,
     low: 145.38,
     high: 145.52,
@@ -1870,7 +1870,7 @@ export const chartData = [
     volume: 113680,
   },
   {
-    date: "2022-10-04 11:42:00",
+    date: new Date("2022-10-04 11:42:00").getTime(),
     open: 145.58,
     low: 145.3608,
     high: 145.58,
@@ -1878,7 +1878,7 @@ export const chartData = [
     volume: 149362,
   },
   {
-    date: "2022-10-04 11:41:00",
+    date: new Date("2022-10-04 11:41:00").getTime(),
     open: 145.6,
     low: 145.49,
     high: 145.6,
@@ -1886,7 +1886,7 @@ export const chartData = [
     volume: 152254,
   },
   {
-    date: "2022-10-04 11:40:00",
+    date: new Date("2022-10-04 11:40:00").getTime(),
     open: 145.64,
     low: 145.58,
     high: 145.79,
@@ -1894,7 +1894,7 @@ export const chartData = [
     volume: 285272,
   },
   {
-    date: "2022-10-04 11:39:00",
+    date: new Date("2022-10-04 11:39:00").getTime(),
     open: 145.555,
     low: 145.53,
     high: 145.65,
@@ -1902,7 +1902,7 @@ export const chartData = [
     volume: 177962,
   },
   {
-    date: "2022-10-04 11:38:00",
+    date: new Date("2022-10-04 11:38:00").getTime(),
     open: 145.495,
     low: 145.4,
     high: 145.58,
@@ -1910,7 +1910,7 @@ export const chartData = [
     volume: 153564,
   },
   {
-    date: "2022-10-04 11:37:00",
+    date: new Date("2022-10-04 11:37:00").getTime(),
     open: 145.4299,
     low: 145.425,
     high: 145.53,
@@ -1918,7 +1918,7 @@ export const chartData = [
     volume: 168078,
   },
   {
-    date: "2022-10-04 11:36:00",
+    date: new Date("2022-10-04 11:36:00").getTime(),
     open: 145.359,
     low: 145.285,
     high: 145.47,
@@ -1926,7 +1926,7 @@ export const chartData = [
     volume: 186540,
   },
   {
-    date: "2022-10-04 11:35:00",
+    date: new Date("2022-10-04 11:35:00").getTime(),
     open: 145.18,
     low: 145.1509,
     high: 145.3583,
@@ -1934,7 +1934,7 @@ export const chartData = [
     volume: 111606,
   },
   {
-    date: "2022-10-04 11:34:00",
+    date: new Date("2022-10-04 11:34:00").getTime(),
     open: 145.03,
     low: 144.96,
     high: 145.22,
@@ -1942,7 +1942,7 @@ export const chartData = [
     volume: 272008,
   },
   {
-    date: "2022-10-04 11:33:00",
+    date: new Date("2022-10-04 11:33:00").getTime(),
     open: 145.23,
     low: 145.01,
     high: 145.2494,
@@ -1950,7 +1950,7 @@ export const chartData = [
     volume: 252358,
   },
   {
-    date: "2022-10-04 11:32:00",
+    date: new Date("2022-10-04 11:32:00").getTime(),
     open: 145.361,
     low: 145.18,
     high: 145.4099,
@@ -1958,7 +1958,7 @@ export const chartData = [
     volume: 340920,
   },
   {
-    date: "2022-10-04 11:31:00",
+    date: new Date("2022-10-04 11:31:00").getTime(),
     open: 145.291,
     low: 145.27,
     high: 145.37,
@@ -1966,7 +1966,7 @@ export const chartData = [
     volume: 167013,
   },
   {
-    date: "2022-10-04 11:30:00",
+    date: new Date("2022-10-04 11:30:00").getTime(),
     open: 145.23,
     low: 145.2,
     high: 145.3,
@@ -1974,7 +1974,7 @@ export const chartData = [
     volume: 131854,
   },
   {
-    date: "2022-10-04 11:29:00",
+    date: new Date("2022-10-04 11:29:00").getTime(),
     open: 145.3,
     low: 145.16,
     high: 145.32,
@@ -1982,7 +1982,7 @@ export const chartData = [
     volume: 166641,
   },
   {
-    date: "2022-10-04 11:28:00",
+    date: new Date("2022-10-04 11:28:00").getTime(),
     open: 145.1,
     low: 145.1,
     high: 145.31,
@@ -1990,7 +1990,7 @@ export const chartData = [
     volume: 169328,
   },
   {
-    date: "2022-10-04 11:27:00",
+    date: new Date("2022-10-04 11:27:00").getTime(),
     open: 145.195,
     low: 145.1,
     high: 145.24,
@@ -1998,7 +1998,7 @@ export const chartData = [
     volume: 840858,
   },
   {
-    date: "2022-10-04 11:26:00",
+    date: new Date("2022-10-04 11:26:00").getTime(),
     open: 145.26,
     low: 145.145,
     high: 145.29,
@@ -2006,7 +2006,7 @@ export const chartData = [
     volume: 150773,
   },
   {
-    date: "2022-10-04 11:25:00",
+    date: new Date("2022-10-04 11:25:00").getTime(),
     open: 145.2455,
     low: 145.119,
     high: 145.2599,
@@ -2014,7 +2014,7 @@ export const chartData = [
     volume: 187455,
   },
   {
-    date: "2022-10-04 11:24:00",
+    date: new Date("2022-10-04 11:24:00").getTime(),
     open: 145.2737,
     low: 145.25,
     high: 145.35,
@@ -2022,7 +2022,7 @@ export const chartData = [
     volume: 209402,
   },
   {
-    date: "2022-10-04 11:23:00",
+    date: new Date("2022-10-04 11:23:00").getTime(),
     open: 145.21,
     low: 145.1515,
     high: 145.28,
@@ -2030,7 +2030,7 @@ export const chartData = [
     volume: 151181,
   },
   {
-    date: "2022-10-04 11:22:00",
+    date: new Date("2022-10-04 11:22:00").getTime(),
     open: 145.3,
     low: 145.21,
     high: 145.34,
@@ -2038,7 +2038,7 @@ export const chartData = [
     volume: 196535,
   },
   {
-    date: "2022-10-04 11:21:00",
+    date: new Date("2022-10-04 11:21:00").getTime(),
     open: 145.46,
     low: 145.29,
     high: 145.47,
@@ -2046,7 +2046,7 @@ export const chartData = [
     volume: 220587,
   },
   {
-    date: "2022-10-04 11:20:00",
+    date: new Date("2022-10-04 11:20:00").getTime(),
     open: 145.5,
     low: 145.46,
     high: 145.61,
@@ -2054,7 +2054,7 @@ export const chartData = [
     volume: 172249,
   },
   {
-    date: "2022-10-04 11:19:00",
+    date: new Date("2022-10-04 11:19:00").getTime(),
     open: 145.46,
     low: 145.455,
     high: 145.515,
@@ -2062,7 +2062,7 @@ export const chartData = [
     volume: 121308,
   },
   {
-    date: "2022-10-04 11:18:00",
+    date: new Date("2022-10-04 11:18:00").getTime(),
     open: 145.55,
     low: 145.425,
     high: 145.58,
@@ -2070,7 +2070,7 @@ export const chartData = [
     volume: 186189,
   },
   {
-    date: "2022-10-04 11:17:00",
+    date: new Date("2022-10-04 11:17:00").getTime(),
     open: 145.5301,
     low: 145.5,
     high: 145.56,
@@ -2078,7 +2078,7 @@ export const chartData = [
     volume: 120034,
   },
   {
-    date: "2022-10-04 11:16:00",
+    date: new Date("2022-10-04 11:16:00").getTime(),
     open: 145.5078,
     low: 145.45,
     high: 145.55,
@@ -2086,7 +2086,7 @@ export const chartData = [
     volume: 173275,
   },
   {
-    date: "2022-10-04 11:15:00",
+    date: new Date("2022-10-04 11:15:00").getTime(),
     open: 145.44,
     low: 145.435,
     high: 145.53,
@@ -2094,7 +2094,7 @@ export const chartData = [
     volume: 148234,
   },
   {
-    date: "2022-10-04 11:14:00",
+    date: new Date("2022-10-04 11:14:00").getTime(),
     open: 145.42,
     low: 145.375,
     high: 145.45,
@@ -2102,7 +2102,7 @@ export const chartData = [
     volume: 103203,
   },
   {
-    date: "2022-10-04 11:13:00",
+    date: new Date("2022-10-04 11:13:00").getTime(),
     open: 145.4,
     low: 145.375,
     high: 145.49,
@@ -2110,7 +2110,7 @@ export const chartData = [
     volume: 119074,
   },
   {
-    date: "2022-10-04 11:12:00",
+    date: new Date("2022-10-04 11:12:00").getTime(),
     open: 145.28,
     low: 145.2716,
     high: 145.44,
@@ -2118,7 +2118,7 @@ export const chartData = [
     volume: 171690,
   },
   {
-    date: "2022-10-04 11:11:00",
+    date: new Date("2022-10-04 11:11:00").getTime(),
     open: 145.18,
     low: 145.11,
     high: 145.28,
@@ -2126,7 +2126,7 @@ export const chartData = [
     volume: 219928,
   },
   {
-    date: "2022-10-04 11:10:00",
+    date: new Date("2022-10-04 11:10:00").getTime(),
     open: 145.2708,
     low: 145.04,
     high: 145.275,
@@ -2134,7 +2134,7 @@ export const chartData = [
     volume: 287441,
   },
   {
-    date: "2022-10-04 11:09:00",
+    date: new Date("2022-10-04 11:09:00").getTime(),
     open: 145.34,
     low: 145.26,
     high: 145.48,
@@ -2142,7 +2142,7 @@ export const chartData = [
     volume: 273115,
   },
   {
-    date: "2022-10-04 11:08:00",
+    date: new Date("2022-10-04 11:08:00").getTime(),
     open: 145.36,
     low: 145.29,
     high: 145.3799,
@@ -2150,7 +2150,7 @@ export const chartData = [
     volume: 189696,
   },
   {
-    date: "2022-10-04 11:07:00",
+    date: new Date("2022-10-04 11:07:00").getTime(),
     open: 145.47,
     low: 145.355,
     high: 145.4762,
@@ -2158,7 +2158,7 @@ export const chartData = [
     volume: 125520,
   },
   {
-    date: "2022-10-04 11:06:00",
+    date: new Date("2022-10-04 11:06:00").getTime(),
     open: 145.36,
     low: 145.36,
     high: 145.5299,
@@ -2166,7 +2166,7 @@ export const chartData = [
     volume: 126411,
   },
   {
-    date: "2022-10-04 11:05:00",
+    date: new Date("2022-10-04 11:05:00").getTime(),
     open: 145.47,
     low: 145.34,
     high: 145.485,
@@ -2174,7 +2174,7 @@ export const chartData = [
     volume: 165140,
   },
   {
-    date: "2022-10-04 11:04:00",
+    date: new Date("2022-10-04 11:04:00").getTime(),
     open: 145.5981,
     low: 145.47,
     high: 145.6055,
@@ -2182,7 +2182,7 @@ export const chartData = [
     volume: 148986,
   },
   {
-    date: "2022-10-04 11:03:00",
+    date: new Date("2022-10-04 11:03:00").getTime(),
     open: 145.515,
     low: 145.5,
     high: 145.645,
@@ -2190,7 +2190,7 @@ export const chartData = [
     volume: 138269,
   },
   {
-    date: "2022-10-04 11:02:00",
+    date: new Date("2022-10-04 11:02:00").getTime(),
     open: 145.55,
     low: 145.47,
     high: 145.55,
@@ -2198,7 +2198,7 @@ export const chartData = [
     volume: 190826,
   },
   {
-    date: "2022-10-04 11:01:00",
+    date: new Date("2022-10-04 11:01:00").getTime(),
     open: 145.6409,
     low: 145.5401,
     high: 145.6409,
@@ -2206,7 +2206,7 @@ export const chartData = [
     volume: 151149,
   },
   {
-    date: "2022-10-04 11:00:00",
+    date: new Date("2022-10-04 11:00:00").getTime(),
     open: 145.755,
     low: 145.63,
     high: 145.79,
@@ -2214,7 +2214,7 @@ export const chartData = [
     volume: 153978,
   },
   {
-    date: "2022-10-04 10:59:00",
+    date: new Date("2022-10-04 10:59:00").getTime(),
     open: 145.8,
     low: 145.72,
     high: 145.8397,
@@ -2222,7 +2222,7 @@ export const chartData = [
     volume: 149705,
   },
   {
-    date: "2022-10-04 10:58:00",
+    date: new Date("2022-10-04 10:58:00").getTime(),
     open: 145.7499,
     low: 145.0,
     high: 145.8466,
@@ -2230,7 +2230,7 @@ export const chartData = [
     volume: 158193,
   },
   {
-    date: "2022-10-04 10:57:00",
+    date: new Date("2022-10-04 10:57:00").getTime(),
     open: 145.785,
     low: 145.65,
     high: 145.795,
@@ -2238,7 +2238,7 @@ export const chartData = [
     volume: 170557,
   },
   {
-    date: "2022-10-04 10:56:00",
+    date: new Date("2022-10-04 10:56:00").getTime(),
     open: 145.7155,
     low: 145.68,
     high: 145.83,
@@ -2246,7 +2246,7 @@ export const chartData = [
     volume: 217706,
   },
   {
-    date: "2022-10-04 10:55:00",
+    date: new Date("2022-10-04 10:55:00").getTime(),
     open: 145.665,
     low: 145.65,
     high: 145.7501,
@@ -2254,7 +2254,7 @@ export const chartData = [
     volume: 157535,
   },
   {
-    date: "2022-10-04 10:54:00",
+    date: new Date("2022-10-04 10:54:00").getTime(),
     open: 145.7,
     low: 145.66,
     high: 145.73,
@@ -2262,7 +2262,7 @@ export const chartData = [
     volume: 157305,
   },
   {
-    date: "2022-10-04 10:53:00",
+    date: new Date("2022-10-04 10:53:00").getTime(),
     open: 145.65,
     low: 145.63,
     high: 145.78,
@@ -2270,7 +2270,7 @@ export const chartData = [
     volume: 184284,
   },
   {
-    date: "2022-10-04 10:52:00",
+    date: new Date("2022-10-04 10:52:00").getTime(),
     open: 145.575,
     low: 145.45,
     high: 145.67,
@@ -2278,7 +2278,7 @@ export const chartData = [
     volume: 240879,
   },
   {
-    date: "2022-10-04 10:51:00",
+    date: new Date("2022-10-04 10:51:00").getTime(),
     open: 145.57,
     low: 145.41,
     high: 145.63,
@@ -2286,7 +2286,7 @@ export const chartData = [
     volume: 338541,
   },
   {
-    date: "2022-10-04 10:50:00",
+    date: new Date("2022-10-04 10:50:00").getTime(),
     open: 145.5661,
     low: 145.51,
     high: 145.68,
@@ -2294,7 +2294,7 @@ export const chartData = [
     volume: 307623,
   },
   {
-    date: "2022-10-04 10:49:00",
+    date: new Date("2022-10-04 10:49:00").getTime(),
     open: 145.62,
     low: 145.525,
     high: 145.63,
@@ -2302,7 +2302,7 @@ export const chartData = [
     volume: 196835,
   },
   {
-    date: "2022-10-04 10:48:00",
+    date: new Date("2022-10-04 10:48:00").getTime(),
     open: 145.63,
     low: 145.55,
     high: 145.9192,
@@ -2310,7 +2310,7 @@ export const chartData = [
     volume: 466489,
   },
   {
-    date: "2022-10-04 10:47:00",
+    date: new Date("2022-10-04 10:47:00").getTime(),
     open: 145.625,
     low: 145.58,
     high: 145.69,
@@ -2318,7 +2318,7 @@ export const chartData = [
     volume: 291961,
   },
   {
-    date: "2022-10-04 10:46:00",
+    date: new Date("2022-10-04 10:46:00").getTime(),
     open: 145.78,
     low: 145.57,
     high: 145.79,
@@ -2326,7 +2326,7 @@ export const chartData = [
     volume: 242463,
   },
   {
-    date: "2022-10-04 10:45:00",
+    date: new Date("2022-10-04 10:45:00").getTime(),
     open: 145.875,
     low: 145.6905,
     high: 145.8899,
@@ -2334,7 +2334,7 @@ export const chartData = [
     volume: 321273,
   },
   {
-    date: "2022-10-04 10:44:00",
+    date: new Date("2022-10-04 10:44:00").getTime(),
     open: 146.12,
     low: 145.8,
     high: 146.13,
@@ -2342,7 +2342,7 @@ export const chartData = [
     volume: 293646,
   },
   {
-    date: "2022-10-04 10:43:00",
+    date: new Date("2022-10-04 10:43:00").getTime(),
     open: 146.15,
     low: 146.055,
     high: 146.19,
@@ -2350,7 +2350,7 @@ export const chartData = [
     volume: 291251,
   },
   {
-    date: "2022-10-04 10:42:00",
+    date: new Date("2022-10-04 10:42:00").getTime(),
     open: 146.1699,
     low: 146.12,
     high: 146.19,
@@ -2358,7 +2358,7 @@ export const chartData = [
     volume: 230286,
   },
   {
-    date: "2022-10-04 10:41:00",
+    date: new Date("2022-10-04 10:41:00").getTime(),
     open: 146.1582,
     low: 146.11,
     high: 146.17,
@@ -2366,7 +2366,7 @@ export const chartData = [
     volume: 162356,
   },
   {
-    date: "2022-10-04 10:40:00",
+    date: new Date("2022-10-04 10:40:00").getTime(),
     open: 146.07,
     low: 146.05,
     high: 146.17,
@@ -2374,7 +2374,7 @@ export const chartData = [
     volume: 210159,
   },
   {
-    date: "2022-10-04 10:39:00",
+    date: new Date("2022-10-04 10:39:00").getTime(),
     open: 146.015,
     low: 146.01,
     high: 146.08,
@@ -2382,7 +2382,7 @@ export const chartData = [
     volume: 159205,
   },
   {
-    date: "2022-10-04 10:38:00",
+    date: new Date("2022-10-04 10:38:00").getTime(),
     open: 146.045,
     low: 145.835,
     high: 146.06,
@@ -2390,7 +2390,7 @@ export const chartData = [
     volume: 1100973,
   },
   {
-    date: "2022-10-04 10:37:00",
+    date: new Date("2022-10-04 10:37:00").getTime(),
     open: 146.09,
     low: 146.02,
     high: 146.11,
@@ -2398,7 +2398,7 @@ export const chartData = [
     volume: 217286,
   },
   {
-    date: "2022-10-04 10:36:00",
+    date: new Date("2022-10-04 10:36:00").getTime(),
     open: 146.12,
     low: 146.0601,
     high: 146.1662,
@@ -2406,7 +2406,7 @@ export const chartData = [
     volume: 239602,
   },
   {
-    date: "2022-10-04 10:35:00",
+    date: new Date("2022-10-04 10:35:00").getTime(),
     open: 146.119,
     low: 146.06,
     high: 146.1683,
@@ -2414,7 +2414,7 @@ export const chartData = [
     volume: 297433,
   },
   {
-    date: "2022-10-04 10:34:00",
+    date: new Date("2022-10-04 10:34:00").getTime(),
     open: 146.005,
     low: 146.005,
     high: 146.22,
@@ -2422,7 +2422,7 @@ export const chartData = [
     volume: 340318,
   },
   {
-    date: "2022-10-04 10:33:00",
+    date: new Date("2022-10-04 10:33:00").getTime(),
     open: 145.915,
     low: 145.8855,
     high: 146.01,
@@ -2430,7 +2430,7 @@ export const chartData = [
     volume: 145066,
   },
   {
-    date: "2022-10-04 10:32:00",
+    date: new Date("2022-10-04 10:32:00").getTime(),
     open: 145.9788,
     low: 145.8726,
     high: 146.04,
@@ -2438,7 +2438,7 @@ export const chartData = [
     volume: 304291,
   },
   {
-    date: "2022-10-04 10:31:00",
+    date: new Date("2022-10-04 10:31:00").getTime(),
     open: 145.8815,
     low: 145.86,
     high: 145.99,
@@ -2446,7 +2446,7 @@ export const chartData = [
     volume: 148957,
   },
   {
-    date: "2022-10-04 10:30:00",
+    date: new Date("2022-10-04 10:30:00").getTime(),
     open: 145.72,
     low: 145.72,
     high: 145.91,
@@ -2454,7 +2454,7 @@ export const chartData = [
     volume: 166205,
   },
   {
-    date: "2022-10-04 10:29:00",
+    date: new Date("2022-10-04 10:29:00").getTime(),
     open: 145.98,
     low: 145.72,
     high: 145.98,
@@ -2462,7 +2462,7 @@ export const chartData = [
     volume: 208131,
   },
   {
-    date: "2022-10-04 10:28:00",
+    date: new Date("2022-10-04 10:28:00").getTime(),
     open: 145.86,
     low: 145.85,
     high: 145.98,
@@ -2470,7 +2470,7 @@ export const chartData = [
     volume: 193509,
   },
   {
-    date: "2022-10-04 10:27:00",
+    date: new Date("2022-10-04 10:27:00").getTime(),
     open: 145.9,
     low: 145.8,
     high: 145.95,
@@ -2478,7 +2478,7 @@ export const chartData = [
     volume: 203271,
   },
   {
-    date: "2022-10-04 10:26:00",
+    date: new Date("2022-10-04 10:26:00").getTime(),
     open: 145.855,
     low: 145.83,
     high: 145.92,
@@ -2486,7 +2486,7 @@ export const chartData = [
     volume: 156431,
   },
   {
-    date: "2022-10-04 10:25:00",
+    date: new Date("2022-10-04 10:25:00").getTime(),
     open: 145.89,
     low: 145.825,
     high: 145.91,
@@ -2494,7 +2494,7 @@ export const chartData = [
     volume: 123717,
   },
   {
-    date: "2022-10-04 10:24:00",
+    date: new Date("2022-10-04 10:24:00").getTime(),
     open: 145.91,
     low: 145.79,
     high: 145.915,
@@ -2502,7 +2502,7 @@ export const chartData = [
     volume: 149800,
   },
   {
-    date: "2022-10-04 10:23:00",
+    date: new Date("2022-10-04 10:23:00").getTime(),
     open: 145.96,
     low: 145.81,
     high: 145.99,
@@ -2510,7 +2510,7 @@ export const chartData = [
     volume: 230246,
   },
   {
-    date: "2022-10-04 10:22:00",
+    date: new Date("2022-10-04 10:22:00").getTime(),
     open: 145.85,
     low: 145.77,
     high: 145.9807,
@@ -2518,7 +2518,7 @@ export const chartData = [
     volume: 180091,
   },
   {
-    date: "2022-10-04 10:21:00",
+    date: new Date("2022-10-04 10:21:00").getTime(),
     open: 145.7882,
     low: 145.75,
     high: 145.85,
@@ -2526,7 +2526,7 @@ export const chartData = [
     volume: 215124,
   },
   {
-    date: "2022-10-04 10:20:00",
+    date: new Date("2022-10-04 10:20:00").getTime(),
     open: 145.8908,
     low: 145.78,
     high: 145.92,
@@ -2534,7 +2534,7 @@ export const chartData = [
     volume: 178425,
   },
   {
-    date: "2022-10-04 10:19:00",
+    date: new Date("2022-10-04 10:19:00").getTime(),
     open: 146.04,
     low: 145.8805,
     high: 146.09,
@@ -2542,7 +2542,7 @@ export const chartData = [
     volume: 232960,
   },
   {
-    date: "2022-10-04 10:18:00",
+    date: new Date("2022-10-04 10:18:00").getTime(),
     open: 145.885,
     low: 145.87,
     high: 146.0422,
@@ -2550,7 +2550,7 @@ export const chartData = [
     volume: 186827,
   },
   {
-    date: "2022-10-04 10:17:00",
+    date: new Date("2022-10-04 10:17:00").getTime(),
     open: 146.0516,
     low: 145.86,
     high: 146.1,
@@ -2558,7 +2558,7 @@ export const chartData = [
     volume: 283928,
   },
   {
-    date: "2022-10-04 10:16:00",
+    date: new Date("2022-10-04 10:16:00").getTime(),
     open: 146.05,
     low: 145.9507,
     high: 146.065,
@@ -2566,7 +2566,7 @@ export const chartData = [
     volume: 206988,
   },
   {
-    date: "2022-10-04 10:15:00",
+    date: new Date("2022-10-04 10:15:00").getTime(),
     open: 145.95,
     low: 145.91,
     high: 146.05,
@@ -2574,7 +2574,7 @@ export const chartData = [
     volume: 219230,
   },
   {
-    date: "2022-10-04 10:14:00",
+    date: new Date("2022-10-04 10:14:00").getTime(),
     open: 145.9899,
     low: 145.9,
     high: 146.03,
@@ -2582,7 +2582,7 @@ export const chartData = [
     volume: 157911,
   },
   {
-    date: "2022-10-04 10:13:00",
+    date: new Date("2022-10-04 10:13:00").getTime(),
     open: 146.0103,
     low: 145.84,
     high: 146.06,
@@ -2590,7 +2590,7 @@ export const chartData = [
     volume: 299143,
   },
   {
-    date: "2022-10-04 10:12:00",
+    date: new Date("2022-10-04 10:12:00").getTime(),
     open: 145.9,
     low: 145.9,
     high: 146.08,
@@ -2598,7 +2598,7 @@ export const chartData = [
     volume: 330160,
   },
   {
-    date: "2022-10-04 10:11:00",
+    date: new Date("2022-10-04 10:11:00").getTime(),
     open: 145.81,
     low: 145.7881,
     high: 146.01,
@@ -2606,7 +2606,7 @@ export const chartData = [
     volume: 472183,
   },
   {
-    date: "2022-10-04 10:10:00",
+    date: new Date("2022-10-04 10:10:00").getTime(),
     open: 145.755,
     low: 145.6962,
     high: 145.83,
@@ -2614,7 +2614,7 @@ export const chartData = [
     volume: 241018,
   },
   {
-    date: "2022-10-04 10:09:00",
+    date: new Date("2022-10-04 10:09:00").getTime(),
     open: 145.5799,
     low: 145.545,
     high: 145.76,
@@ -2622,7 +2622,7 @@ export const chartData = [
     volume: 193700,
   },
   {
-    date: "2022-10-04 10:08:00",
+    date: new Date("2022-10-04 10:08:00").getTime(),
     open: 145.5909,
     low: 145.46,
     high: 145.61,
@@ -2630,7 +2630,7 @@ export const chartData = [
     volume: 256656,
   },
   {
-    date: "2022-10-04 10:07:00",
+    date: new Date("2022-10-04 10:07:00").getTime(),
     open: 145.58,
     low: 145.57,
     high: 145.74,
@@ -2638,7 +2638,7 @@ export const chartData = [
     volume: 262876,
   },
   {
-    date: "2022-10-04 10:06:00",
+    date: new Date("2022-10-04 10:06:00").getTime(),
     open: 145.65,
     low: 145.5405,
     high: 145.81,
@@ -2646,7 +2646,7 @@ export const chartData = [
     volume: 278114,
   },
   {
-    date: "2022-10-04 10:05:00",
+    date: new Date("2022-10-04 10:05:00").getTime(),
     open: 145.8,
     low: 145.62,
     high: 145.845,
@@ -2654,7 +2654,7 @@ export const chartData = [
     volume: 316630,
   },
   {
-    date: "2022-10-04 10:04:00",
+    date: new Date("2022-10-04 10:04:00").getTime(),
     open: 145.67,
     low: 145.6,
     high: 145.83,
@@ -2662,7 +2662,7 @@ export const chartData = [
     volume: 333618,
   },
   {
-    date: "2022-10-04 10:03:00",
+    date: new Date("2022-10-04 10:03:00").getTime(),
     open: 145.7259,
     low: 145.6,
     high: 145.775,
@@ -2670,7 +2670,7 @@ export const chartData = [
     volume: 354155,
   },
   {
-    date: "2022-10-04 10:02:00",
+    date: new Date("2022-10-04 10:02:00").getTime(),
     open: 145.7841,
     low: 145.64,
     high: 145.8178,
@@ -2678,7 +2678,7 @@ export const chartData = [
     volume: 419103,
   },
   {
-    date: "2022-10-04 10:01:00",
+    date: new Date("2022-10-04 10:01:00").getTime(),
     open: 145.28,
     low: 145.28,
     high: 145.7801,
@@ -2686,7 +2686,7 @@ export const chartData = [
     volume: 575223,
   },
   {
-    date: "2022-10-04 10:00:00",
+    date: new Date("2022-10-04 10:00:00").getTime(),
     open: 145.085,
     low: 145.045,
     high: 145.47,
@@ -2694,7 +2694,7 @@ export const chartData = [
     volume: 675818,
   },
   {
-    date: "2022-10-04 09:59:00",
+    date: new Date("2022-10-04 09:59:00").getTime(),
     open: 145.1,
     low: 145.06,
     high: 145.14,
@@ -2702,7 +2702,7 @@ export const chartData = [
     volume: 223178,
   },
   {
-    date: "2022-10-04 09:58:00",
+    date: new Date("2022-10-04 09:58:00").getTime(),
     open: 145.085,
     low: 144.98,
     high: 145.11,
@@ -2710,7 +2710,7 @@ export const chartData = [
     volume: 306943,
   },
   {
-    date: "2022-10-04 09:57:00",
+    date: new Date("2022-10-04 09:57:00").getTime(),
     open: 144.8566,
     low: 144.78,
     high: 145.08,
@@ -2718,7 +2718,7 @@ export const chartData = [
     volume: 232608,
   },
   {
-    date: "2022-10-04 09:56:00",
+    date: new Date("2022-10-04 09:56:00").getTime(),
     open: 144.9,
     low: 144.77,
     high: 144.98,
@@ -2726,7 +2726,7 @@ export const chartData = [
     volume: 219615,
   },
   {
-    date: "2022-10-04 09:55:00",
+    date: new Date("2022-10-04 09:55:00").getTime(),
     open: 144.7896,
     low: 144.75,
     high: 144.93,
@@ -2734,7 +2734,7 @@ export const chartData = [
     volume: 240194,
   },
   {
-    date: "2022-10-04 09:54:00",
+    date: new Date("2022-10-04 09:54:00").getTime(),
     open: 144.7067,
     low: 144.6,
     high: 144.8799,
@@ -2742,7 +2742,7 @@ export const chartData = [
     volume: 422344,
   },
   {
-    date: "2022-10-04 09:53:00",
+    date: new Date("2022-10-04 09:53:00").getTime(),
     open: 144.92,
     low: 144.6946,
     high: 144.93,
@@ -2750,7 +2750,7 @@ export const chartData = [
     volume: 411451,
   },
   {
-    date: "2022-10-04 09:52:00",
+    date: new Date("2022-10-04 09:52:00").getTime(),
     open: 145.1118,
     low: 144.88,
     high: 145.125,
@@ -2758,7 +2758,7 @@ export const chartData = [
     volume: 339858,
   },
   {
-    date: "2022-10-04 09:51:00",
+    date: new Date("2022-10-04 09:51:00").getTime(),
     open: 145.23,
     low: 145.0,
     high: 145.24,
@@ -2766,7 +2766,7 @@ export const chartData = [
     volume: 703069,
   },
   {
-    date: "2022-10-04 09:50:00",
+    date: new Date("2022-10-04 09:50:00").getTime(),
     open: 145.21,
     low: 145.19,
     high: 145.29,
@@ -2774,7 +2774,7 @@ export const chartData = [
     volume: 223838,
   },
   {
-    date: "2022-10-04 09:49:00",
+    date: new Date("2022-10-04 09:49:00").getTime(),
     open: 145.16,
     low: 145.14,
     high: 145.31,
@@ -2782,7 +2782,7 @@ export const chartData = [
     volume: 335282,
   },
   {
-    date: "2022-10-04 09:48:00",
+    date: new Date("2022-10-04 09:48:00").getTime(),
     open: 145.0,
     low: 145.0,
     high: 145.2,
@@ -2790,7 +2790,7 @@ export const chartData = [
     volume: 290043,
   },
   {
-    date: "2022-10-04 09:47:00",
+    date: new Date("2022-10-04 09:47:00").getTime(),
     open: 145.06,
     low: 144.97,
     high: 145.19,
@@ -2798,7 +2798,7 @@ export const chartData = [
     volume: 345895,
   },
   {
-    date: "2022-10-04 09:46:00",
+    date: new Date("2022-10-04 09:46:00").getTime(),
     open: 145.02,
     low: 144.9455,
     high: 145.23,
@@ -2806,7 +2806,7 @@ export const chartData = [
     volume: 360959,
   },
   {
-    date: "2022-10-04 09:45:00",
+    date: new Date("2022-10-04 09:45:00").getTime(),
     open: 144.725,
     low: 144.51,
     high: 145.05,
@@ -2814,7 +2814,7 @@ export const chartData = [
     volume: 528403,
   },
   {
-    date: "2022-10-04 09:44:00",
+    date: new Date("2022-10-04 09:44:00").getTime(),
     open: 144.7685,
     low: 144.71,
     high: 144.98,
@@ -2822,7 +2822,7 @@ export const chartData = [
     volume: 476747,
   },
   {
-    date: "2022-10-04 09:43:00",
+    date: new Date("2022-10-04 09:43:00").getTime(),
     open: 145.13,
     low: 144.71,
     high: 145.14,
@@ -2830,7 +2830,7 @@ export const chartData = [
     volume: 457403,
   },
   {
-    date: "2022-10-04 09:42:00",
+    date: new Date("2022-10-04 09:42:00").getTime(),
     open: 145.0675,
     low: 145.05,
     high: 145.27,
@@ -2838,7 +2838,7 @@ export const chartData = [
     volume: 327660,
   },
   {
-    date: "2022-10-04 09:41:00",
+    date: new Date("2022-10-04 09:41:00").getTime(),
     open: 145.23,
     low: 145.06,
     high: 145.27,
@@ -2846,7 +2846,7 @@ export const chartData = [
     volume: 303771,
   },
   {
-    date: "2022-10-04 09:40:00",
+    date: new Date("2022-10-04 09:40:00").getTime(),
     open: 145.2776,
     low: 145.12,
     high: 145.31,
@@ -2854,7 +2854,7 @@ export const chartData = [
     volume: 407526,
   },
   {
-    date: "2022-10-04 09:39:00",
+    date: new Date("2022-10-04 09:39:00").getTime(),
     open: 144.9,
     low: 144.9,
     high: 145.34,
@@ -2862,7 +2862,7 @@ export const chartData = [
     volume: 575600,
   },
   {
-    date: "2022-10-04 09:38:00",
+    date: new Date("2022-10-04 09:38:00").getTime(),
     open: 144.94,
     low: 144.86,
     high: 145.0,
@@ -2870,7 +2870,7 @@ export const chartData = [
     volume: 241772,
   },
   {
-    date: "2022-10-04 09:37:00",
+    date: new Date("2022-10-04 09:37:00").getTime(),
     open: 145.07,
     low: 144.84,
     high: 145.11,
@@ -2878,7 +2878,7 @@ export const chartData = [
     volume: 380792,
   },
   {
-    date: "2022-10-04 09:36:00",
+    date: new Date("2022-10-04 09:36:00").getTime(),
     open: 144.99,
     low: 144.93,
     high: 145.24,
@@ -2886,7 +2886,7 @@ export const chartData = [
     volume: 478100,
   },
   {
-    date: "2022-10-04 09:35:00",
+    date: new Date("2022-10-04 09:35:00").getTime(),
     open: 144.77,
     low: 144.7,
     high: 145.14,
@@ -2894,7 +2894,7 @@ export const chartData = [
     volume: 655050,
   },
   {
-    date: "2022-10-04 09:34:00",
+    date: new Date("2022-10-04 09:34:00").getTime(),
     open: 144.72,
     low: 144.61,
     high: 144.94,
@@ -2902,7 +2902,7 @@ export const chartData = [
     volume: 412696,
   },
   {
-    date: "2022-10-04 09:33:00",
+    date: new Date("2022-10-04 09:33:00").getTime(),
     open: 144.6299,
     low: 144.58,
     high: 144.92,
@@ -2910,7 +2910,7 @@ export const chartData = [
     volume: 550660,
   },
   {
-    date: "2022-10-04 09:32:00",
+    date: new Date("2022-10-04 09:32:00").getTime(),
     open: 144.6,
     low: 144.5,
     high: 144.79,
@@ -2918,7 +2918,7 @@ export const chartData = [
     volume: 493349,
   },
   {
-    date: "2022-10-04 09:31:00",
+    date: new Date("2022-10-04 09:31:00").getTime(),
     open: 144.96,
     low: 144.58,
     high: 145.035,
@@ -2926,7 +2926,7 @@ export const chartData = [
     volume: 448459,
   },
   {
-    date: "2022-10-04 09:30:00",
+    date: new Date("2022-10-04 09:30:00").getTime(),
     open: 145.03,
     low: 144.71,
     high: 145.34,
