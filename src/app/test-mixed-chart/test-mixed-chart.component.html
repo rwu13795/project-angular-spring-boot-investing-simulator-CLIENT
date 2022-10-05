@@ -7,7 +7,9 @@
       [xaxis]="chartCandleOptions.xaxis!"
       [yaxis]="chartCandleOptions.yaxis!"
       [tooltip]="chartCandleOptions.tooltip!"
+      [stroke]="chartCandleOptions.stroke!"
       [plotOptions]="chartCandleOptions.plotOptions!"
+      [legend]="chartCandleOptions.legend!"
       [autoUpdateSeries]="true"
     ></apx-chart>
   </div>
@@ -38,3 +40,4 @@
     ></apx-chart>
   </div>
 </div>
+<button (click)="addNewBar()">add new bar</button>

@@ -11,6 +11,7 @@ import { DigitSlideComponent } from "./digit-slide/digit-slide.component";
 import { StockChartComponent } from "./stock/stock-chart/stock-chart.component";
 import { StockComponent } from "./stock/stock.component";
 import { TestChartComponent } from "./test-chart/test-chart.component";
+import { TestMixedChartComponent } from "./test-mixed-chart/test-mixed-chart.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TestChartComponent } from "./test-chart/test-chart.component";
     StockComponent,
     StockChartComponent,
     TestChartComponent,
+    TestMixedChartComponent,
   ],
   imports: [
     BrowserModule,
