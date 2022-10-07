@@ -21,17 +21,18 @@ export interface Response_historyPrice {
 }
 
 export interface CandleData {
-  x: Date | number;
-  y: (number | string)[]; // [open, high, low, close]
+  x: number; // timestamp
+  y: number[]; // [open, high, low, close]
 }
 export interface VolumnData {
-  x: Date | number;
-  y: number; // [open, high, low, close]
+  x: number; // timestamp
+  y: number;
 }
 
 export interface ChartData {
   volumns: VolumnData[];
   candles: CandleData[];
+  candleLine: VolumnData[];
 }
 
 @Injectable({ providedIn: "root" })
@@ -86,22 +87,37 @@ export class StockService {
     return this.http
       .get<Response_historyPrice[]>(
         `${this.FMP_API}/historical-chart/1min/AAPL`,
-        {
-          params,
-        }
+        { params }
       )
       .pipe(
         map<Response_historyPrice[], ChartData>((responseData) => {
-          const data: ChartData = { volumns: [], candles: [] };
+          const data: ChartData = { volumns: [], candles: [], candleLine: [] };
 
-          for (let i = responseData.length - 1; i >= 0; i--) {
-            const { date, open, high, low, close, volume } = responseData[i];
-            data.candles.push({
-              x: new Date(date),
-              y: [open, high, low, close],
-            });
-            data.volumns.push({ x: new Date(date), y: volume });
-          }
+          // put some "placeholders" at the start of the arrays
+          const firstEntryTimestamp =
+            responseData[responseData.length - 1].date;
+          const lastEntryTimestamp = responseData[0].date;
+          // for(let i = 7; i >=0 ; i--) {
+          //   data.candles.push({
+          //     x: new Date(date),
+          //     y: [-1],
+          //   });
+          //   data.volumns.push({ x: new Date(date), y: volume });
+          //   data.candleLine.push({ x: new Date(date), y: close });
+          // }
+
+          // for (let i = responseData.length - 1; i >= 0; i--) {
+          //   const { date, open, high, low, close, volume } = responseData[i];
+          //   data.candles.push({
+          //     x: new Date(date),
+          //     y: [open, high, low, close],
+          //   });
+          //   data.volumns.push({ x: new Date(date), y: volume });
+          //   // use the "close" price for the line chart
+          //   data.candleLine.push({ x: new Date(date), y: close });
+          // }
+
+          // put some "placeholders" at the end of the arrays
 
           return data;
         })

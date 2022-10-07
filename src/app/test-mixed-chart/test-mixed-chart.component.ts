@@ -38,12 +38,12 @@ export class TestMixedChartComponent implements OnInit {
   public chartCandleOptions: Partial<ChartOptions>;
   public chartBarOptions: Partial<ChartOptions>;
 
-  public data: ChartData = { volumns: [], candles: [] };
+  public data: ChartData = { volumns: [], candles: [], candleLine: [] };
   public candleLine: VolumnData[] = [];
 
   updateTimer?: any;
   intialUpdate: boolean = true;
-  newDataUpdate: boolean = false;
+  newDataAdded: boolean = false;
 
   array = [
     [145.235, 145.2, 145.2989, 145.2499],
@@ -58,22 +58,21 @@ export class TestMixedChartComponent implements OnInit {
     for (let i = chartData.length - 1; i >= 0; i--) {
       const { date, open, high, low, close, volume } = chartData[i];
       this.data.candles.push({
-        x: new Date(date),
+        x: date,
         y: [open, high, low, close],
       });
-      this.data.volumns.push({ x: new Date(date), y: volume });
-      this.candleLine.push({ x: new Date(date), y: close });
+      this.data.volumns.push({ x: date, y: volume });
+      this.candleLine.push({ x: date, y: close });
     }
 
-    const lastTimestamp = this.data.candles[this.data.candles.length - 1]
-      .x as Date;
+    const lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
     for (let i = 0; i < 8; i++) {
       this.data.candles.push({
-        x: lastTimestamp.getTime() + 60000 * i,
-        y: [""],
+        x: lastTimestamp + 60000 * i,
+        y: [-1],
       });
       this.data.volumns.push({
-        x: lastTimestamp.getTime() + 60000 * i,
+        x: lastTimestamp + 60000 * i,
         y: 0,
       });
     }
@@ -105,7 +104,7 @@ export class TestMixedChartComponent implements OnInit {
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
 
           // don't show the tooltip for the "placeholder" data
-          if (data.y[0] === "") return "<span></span>";
+          if (data.y[0] === -1) return "<span></span>";
 
           if (seriesIndex === 1) {
             if (data.y === 0) return "<span></span>";
@@ -164,18 +163,36 @@ export class TestMixedChartComponent implements OnInit {
           // ---- (1) ---- //
           updated: (chart, options) => {
             if (this.intialUpdate) {
-              this.chartCandle.updateOptions({
-                yaxis: this.chartCandleOptions.yaxis,
-              });
               this.intialUpdate = false;
-            }
-            if (this.newDataUpdate) {
-              this.chartCandle.updateOptions({
+              chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
               });
+            }
+            if (this.newDataAdded) {
+              this.newDataAdded = false;
+              chart.updateOptions({
+                yaxis: this.chartCandleOptions.yaxis,
+              });
+
+              // ---- (3) ---- //
               const { min, max } = options.config.xaxis;
-              this.newDataUpdate = false;
-              this.lastXaxis = [min, max];
+              if (min && max && min !== 0 && max !== 0) {
+                if (this.lastXaxis.length < 1) {
+                  this.lastXaxis = [min + 60000, max + 60000];
+                } else {
+                  this.lastXaxis = [
+                    this.lastXaxis[0] + 60000,
+                    this.lastXaxis[1] + 60000,
+                  ];
+                }
+              } else {
+                console.log(this.lastXaxis);
+                this.lastXaxis = [
+                  this.lastXaxis[0] + 60000,
+                  this.lastXaxis[1] + 60000,
+                ];
+              }
+              chart.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
             }
           },
           zoomed: (chart, lastZoomValues) => {},
@@ -285,7 +302,7 @@ export class TestMixedChartComponent implements OnInit {
           enabled: true,
           xaxis: {
             min: 1664908620000,
-            max: lastTimestamp.getTime() + 60000 * 7,
+            max: lastTimestamp + 60000 * 7,
           },
           // fill: {
           //   color: "#ccc",
@@ -302,6 +319,8 @@ export class TestMixedChartComponent implements OnInit {
             this.chartCandle.updateOptions({
               yaxis: this.chartCandleOptions.yaxis,
             });
+            // ---- (3) ---- //
+            this.lastXaxis = [options.xaxis.min, options.xaxis.max];
           },
         },
       },
@@ -359,10 +378,8 @@ export class TestMixedChartComponent implements OnInit {
     let yy = this.array[this.index];
     this.index++;
 
-    let replaceTimestamp = this.data.candles[this.data.candles.length - 7]
-      .x as Date;
-    let lastTimestamp = this.data.candles[this.data.candles.length - 1]
-      .x as Date;
+    let replaceTimestamp = this.data.candles[this.data.candles.length - 7].x;
+    let lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
     this.data.candles[this.data.candles.length - 7] = {
       x: replaceTimestamp,
       y: yy,
@@ -374,11 +391,11 @@ export class TestMixedChartComponent implements OnInit {
     };
 
     this.data.candles.push({
-      x: new Date(lastTimestamp).getTime() + 60000,
-      y: [""],
+      x: lastTimestamp + 60000,
+      y: [-1],
     });
     this.data.volumns.push({
-      x: new Date(lastTimestamp).getTime() + 60000,
+      x: lastTimestamp + 60000,
       y: 0,
     });
     this.candleLine.push({
@@ -401,16 +418,16 @@ export class TestMixedChartComponent implements OnInit {
       { data: this.candleLine },
     ]);
 
-    this.newDataUpdate = true;
+    this.newDataAdded = true;
 
-    if (this.lastXaxis.length > 0) {
-      console.log("lastXaxis", this.lastXaxis);
-      // the "60000" is the 1-min interval is exactly the next bar's "xaxis"
-      this.chartCandle.zoomX(
-        this.lastXaxis[0] + 60000,
-        this.lastXaxis[1] + 60000
-      );
-    }
+    // if (this.lastXaxis.length > 0) {
+    //   console.log("lastXaxis", this.lastXaxis);
+    //   // the "60000" is the 1-min interval is exactly the next bar's "xaxis"
+    //   this.chartCandle.zoomX(
+    //     this.lastXaxis[0] + 60000,
+    //     this.lastXaxis[1] + 60000
+    //   );
+    // }
   }
 
   private numberFormatter(value: number, decimal: number = 0): string {
@@ -447,4 +464,13 @@ export class TestMixedChartComponent implements OnInit {
 (2) I need to set the "forceNiceScale: false" in yaxis, since
     the "brushScrolled" will reset all the "yaxis" option to default !!!
    
+
+(3) ---- Last Xaxis ----
+        
+    If the user did not use the "brushScroll" to scroll the chart
+    the "xaxis" will be the latest "xaxis" inside the "updated" event
+    options. If the user DID use the "brushScroll", the "xaxis" in the
+    "updated" event options will be [0, 0], I will need to track
+    the "xaxis" inside the "brushScrolled" event, and store them in the variable
+
 */

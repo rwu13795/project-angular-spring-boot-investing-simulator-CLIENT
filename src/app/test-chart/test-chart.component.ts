@@ -33,177 +33,173 @@ export type ChartOptions = {
 export class TestChartComponent implements OnInit {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @ViewChild("chartBar") chartBar!: ChartComponent;
-  public chartCandleOptions: Partial<ChartOptions>;
-  public chartBarOptions: Partial<ChartOptions>;
+  // public chartCandleOptions: Partial<ChartOptions>;
+  // public chartBarOptions: Partial<ChartOptions>;
 
-  public data: ChartData = { volumns: [], candles: [] };
-  public dataTimeMap: { [timestamp: number]: number } = {};
+  // public data: ChartData = { volumns: [], candles: [] };
+  // public dataTimeMap: { [timestamp: number]: number } = {};
   updateTimer?: any;
   intialUpdate: boolean = true;
 
   constructor() {
-    for (let i = chartData.length - 1; i >= 0; i--) {
-      const { date, open, high, low, close, volume } = chartData[i];
-      this.data.candles.push({
-        x: new Date(date),
-        y: [open, high, low, close],
-      });
-      this.data.volumns.push({ x: new Date(date), y: volume });
-
-      this.dataTimeMap[date] = chartData.length - 1 - i;
-    }
-
-    this.chartCandleOptions = {
-      series: [
-        {
-          name: "candle",
-          data: this.data.candles,
-        },
-      ],
-      chart: {
-        type: "candlestick",
-        height: 500,
-        id: "candles",
-        toolbar: {
-          show: true,
-          tools: {
-            download: false,
-            selection: true,
-            zoom: true,
-            zoomin: true,
-            zoomout: true,
-            pan: true,
-            reset: true,
-          },
-        },
-        zoom: {
-          enabled: true,
-        },
-        events: {
-          // ---- (1) ---- //
-          updated: (chart, option) => {
-            if (this.intialUpdate) {
-              this.chartCandle.updateOptions({
-                yaxis: {
-                  min: 144,
-                  max: 146.5,
-                  tickAmount: 10,
-                  forceNiceScale: false,
-                },
-              });
-              this.intialUpdate = false;
-            }
-          },
-          zoomed: (chart, lastZoomValues) => {},
-          scrolled: (chart, lastZoomValues) => {},
-        },
-        animations: {
-          enabled: false,
-        },
-      },
-      plotOptions: {
-        candlestick: {
-          colors: {
-            upward: "#65eb3c",
-            downward: "#c71919",
-          },
-        },
-      },
-      xaxis: {
-        type: "datetime",
-      },
-      yaxis: {
-        min: 144,
-        max: 146.5,
-        tickAmount: 10,
-        forceNiceScale: false,
-      },
-      tooltip: {
-        enabled: true,
-      },
-    };
-
-    this.chartBarOptions = {
-      series: [
-        {
-          name: "volume",
-          data: this.data.volumns,
-        },
-      ],
-      chart: {
-        height: 300,
-        type: "bar",
-        brush: {
-          enabled: true,
-          target: "candles",
-        },
-        selection: {
-          enabled: true,
-          xaxis: {
-            min: 1664908620000,
-            max: 1664910480000,
-          },
-          // fill: {
-          //   color: "#ccc",
-          //   opacity: 0.4,
-          // },
-          // stroke: {
-          //   color: "#0D47A1",
-          // },
-        },
-        events: {
-          // selection: (chart, { xaxis, yaxis }) => {},
-
-          // ---- (2) ---- //
-          brushScrolled: (chart, options?) => {
-            this.chartCandle.updateOptions({
-              yaxis: {
-                min: 144,
-                max: 146.5,
-                tickAmount: 10,
-                forceNiceScale: false,
-              },
-            });
-          },
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "80%",
-          colors: {
-            ranges: [
-              {
-                from: -1000,
-                to: 0,
-                color: "#F15B46",
-              },
-              {
-                from: 1,
-                to: 10000,
-                color: "#FEB019",
-              },
-            ],
-          },
-        },
-      },
-      stroke: {
-        width: 0,
-      },
-      xaxis: {
-        type: "datetime",
-        axisBorder: {
-          offsetX: 13,
-        },
-      },
-      yaxis: {
-        labels: {
-          show: true,
-        },
-      },
-    };
+    // for (let i = chartData.length - 1; i >= 0; i--) {
+    //   const { date, open, high, low, close, volume } = chartData[i];
+    //   this.data.candles.push({
+    //     x: new Date(date),
+    //     y: [open, high, low, close],
+    //   });
+    //   this.data.volumns.push({ x: new Date(date), y: volume });
+    //   this.dataTimeMap[date] = chartData.length - 1 - i;
+    // }
+    // this.chartCandleOptions = {
+    //   series: [
+    //     {
+    //       name: "candle",
+    //       data: this.data.candles,
+    //     },
+    //   ],
+    //   chart: {
+    //     type: "candlestick",
+    //     height: 500,
+    //     id: "candles",
+    //     toolbar: {
+    //       show: true,
+    //       tools: {
+    //         download: false,
+    //         selection: true,
+    //         zoom: true,
+    //         zoomin: true,
+    //         zoomout: true,
+    //         pan: true,
+    //         reset: true,
+    //       },
+    //     },
+    //     zoom: {
+    //       enabled: true,
+    //     },
+    //     events: {
+    //       // ---- (1) ---- //
+    //       updated: (chart, option) => {
+    //         if (this.intialUpdate) {
+    //           this.chartCandle.updateOptions({
+    //             yaxis: {
+    //               min: 144,
+    //               max: 146.5,
+    //               tickAmount: 10,
+    //               forceNiceScale: false,
+    //             },
+    //           });
+    //           this.intialUpdate = false;
+    //         }
+    //       },
+    //       zoomed: (chart, lastZoomValues) => {},
+    //       scrolled: (chart, lastZoomValues) => {},
+    //     },
+    //     animations: {
+    //       enabled: false,
+    //     },
+    //   },
+    //   plotOptions: {
+    //     candlestick: {
+    //       colors: {
+    //         upward: "#65eb3c",
+    //         downward: "#c71919",
+    //       },
+    //     },
+    //   },
+    //   xaxis: {
+    //     type: "datetime",
+    //   },
+    //   yaxis: {
+    //     min: 144,
+    //     max: 146.5,
+    //     tickAmount: 10,
+    //     forceNiceScale: false,
+    //   },
+    //   tooltip: {
+    //     enabled: true,
+    //   },
+    // };
+    // this.chartBarOptions = {
+    //   series: [
+    //     {
+    //       name: "volume",
+    //       data: this.data.volumns,
+    //     },
+    //   ],
+    //   chart: {
+    //     height: 300,
+    //     type: "bar",
+    //     brush: {
+    //       enabled: true,
+    //       target: "candles",
+    //     },
+    //     selection: {
+    //       enabled: true,
+    //       xaxis: {
+    //         min: 1664908620000,
+    //         max: 1664910480000,
+    //       },
+    //       // fill: {
+    //       //   color: "#ccc",
+    //       //   opacity: 0.4,
+    //       // },
+    //       // stroke: {
+    //       //   color: "#0D47A1",
+    //       // },
+    //     },
+    //     events: {
+    //       // selection: (chart, { xaxis, yaxis }) => {},
+    //       // ---- (2) ---- //
+    //       brushScrolled: (chart, options?) => {
+    //         this.chartCandle.updateOptions({
+    //           yaxis: {
+    //             min: 144,
+    //             max: 146.5,
+    //             tickAmount: 10,
+    //             forceNiceScale: false,
+    //           },
+    //         });
+    //       },
+    //     },
+    //   },
+    //   dataLabels: {
+    //     enabled: false,
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       columnWidth: "80%",
+    //       colors: {
+    //         ranges: [
+    //           {
+    //             from: -1000,
+    //             to: 0,
+    //             color: "#F15B46",
+    //           },
+    //           {
+    //             from: 1,
+    //             to: 10000,
+    //             color: "#FEB019",
+    //           },
+    //         ],
+    //       },
+    //     },
+    //   },
+    //   stroke: {
+    //     width: 0,
+    //   },
+    //   xaxis: {
+    //     type: "datetime",
+    //     axisBorder: {
+    //       offsetX: 13,
+    //     },
+    //   },
+    //   yaxis: {
+    //     labels: {
+    //       show: true,
+    //     },
+    //   },
+    // };
   }
 
   ngOnInit(): void {
