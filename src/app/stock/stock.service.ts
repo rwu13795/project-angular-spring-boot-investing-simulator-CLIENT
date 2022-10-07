@@ -33,6 +33,8 @@ export interface ChartData {
   volumns: VolumnData[];
   candles: CandleData[];
   candleLine: VolumnData[];
+  highBound: number;
+  lowBound: number;
 }
 
 @Injectable({ providedIn: "root" })
@@ -76,10 +78,33 @@ export class StockService {
   }
 
   fetchHistoryPrice() {
+    // used to get the current Eastern GMT-0400 hour, if it is
+    // greater than or equal to 16, then the market is close for NYSE and Nasdaq
+    // new Date().getUTCHours() - 4
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    let date = today.getDate();
+    const dayOfWeek = today.getDay();
+
+    if (dayOfWeek === 6) {
+      // 86400000 ms = 1 day
+      date = new Date(today.getTime() - 86400000).getDate();
+    }
+    if (dayOfWeek === 7) {
+      // 86400000 ms = 1 day
+      date = new Date(today.getTime() - 86400000 * 2).getDate();
+    }
+    // Did NOT have the time to implement the holidays check
+
+    const dayString = `${year}-${month < 10 ? `0${month}` : month}-${
+      date < 10 ? `0${date}` : date
+    }`;
     const params = new HttpParams({
       fromObject: {
-        to: "2022-10-04",
-        from: "2022-10-04",
+        to: dayString,
+        from: dayString,
         apikey: this.API_KEY,
       },
     });
@@ -91,33 +116,59 @@ export class StockService {
       )
       .pipe(
         map<Response_historyPrice[], ChartData>((responseData) => {
-          const data: ChartData = { volumns: [], candles: [], candleLine: [] };
+          const data: ChartData = {
+            volumns: [],
+            candles: [],
+            candleLine: [],
+            highBound: -1,
+            lowBound: Infinity,
+          };
 
           // put some "placeholders" at the start of the arrays
           const firstEntryTimestamp =
             responseData[responseData.length - 1].date;
-          const lastEntryTimestamp = responseData[0].date;
-          // for(let i = 7; i >=0 ; i--) {
-          //   data.candles.push({
-          //     x: new Date(date),
-          //     y: [-1],
-          //   });
-          //   data.volumns.push({ x: new Date(date), y: volume });
-          //   data.candleLine.push({ x: new Date(date), y: close });
-          // }
+          for (let i = 8; i >= 1; i--) {
+            const timestamp =
+              new Date(firstEntryTimestamp).getTime() - 60000 * i * 1;
+            data.candles.push({
+              x: timestamp,
+              y: [-1],
+            });
+            data.volumns.push({ x: timestamp, y: 0 });
+          }
 
-          // for (let i = responseData.length - 1; i >= 0; i--) {
-          //   const { date, open, high, low, close, volume } = responseData[i];
-          //   data.candles.push({
-          //     x: new Date(date),
-          //     y: [open, high, low, close],
-          //   });
-          //   data.volumns.push({ x: new Date(date), y: volume });
-          //   // use the "close" price for the line chart
-          //   data.candleLine.push({ x: new Date(date), y: close });
-          // }
+          for (let i = responseData.length - 1; i >= 0; i--) {
+            const { date, open, high, low, close, volume } = responseData[i];
+
+            // get the price range
+            if (high * 1.002 > data.highBound) {
+              data.highBound = high * 1.002;
+            }
+            if (low * 0.998 < data.lowBound) {
+              data.lowBound = low * 0.998;
+            }
+
+            // map the data into seperate arrays for the charts
+            data.candles.push({
+              x: new Date(date).getTime(),
+              y: [open, high, low, close],
+            });
+            data.volumns.push({ x: new Date(date).getTime(), y: volume });
+            // use the "close" price for the line chart
+            data.candleLine.push({ x: new Date(date).getTime(), y: close });
+          }
 
           // put some "placeholders" at the end of the arrays
+          const lastEntryTimestamp = responseData[0].date;
+          for (let i = 1; i <= 8; i++) {
+            const timestamp =
+              new Date(lastEntryTimestamp).getTime() + 60000 * i * 1;
+            data.candles.push({
+              x: timestamp,
+              y: [-1],
+            });
+            data.volumns.push({ x: timestamp, y: 0 });
+          }
 
           return data;
         })

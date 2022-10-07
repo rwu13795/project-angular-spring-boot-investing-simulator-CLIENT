@@ -1,5 +1,5 @@
 <div class="chart-box">
-  <div id="chart-candlestick">
+  <div id="chart-candlestick" *ngIf="chartCandleOptions">
     <apx-chart
       #chartCandle
       [series]="chartCandleOptions.series!"
@@ -26,7 +26,7 @@
     ></apx-chart>
   </div> -->
 
-  <div id="chart-bar">
+  <div id="chart-bar" *ngIf="chartBarOptions">
     <apx-chart
       #chartBar
       [series]="chartBarOptions.series!"

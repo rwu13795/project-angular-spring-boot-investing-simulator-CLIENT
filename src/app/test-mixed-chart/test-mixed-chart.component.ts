@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 
 import {
   ChartComponent,
@@ -10,7 +10,8 @@ import {
   ApexDataLabels,
   ApexStroke,
 } from "ng-apexcharts";
-import { ChartData, VolumnData } from "../stock/stock.service";
+import { Subscription } from "rxjs";
+import { ChartData, StockService, VolumnData } from "../stock/stock.service";
 
 import { chartData, seriesData, seriesDataLinear } from "../test-chart/ohlc";
 
@@ -32,14 +33,20 @@ export type ChartOptions = {
   templateUrl: "./test-mixed-chart.component.html",
   styleUrls: ["./test-mixed-chart.component.css"],
 })
-export class TestMixedChartComponent implements OnInit {
+export class TestMixedChartComponent implements OnInit, OnDestroy {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @ViewChild("chartBar") chartBar!: ChartComponent;
-  public chartCandleOptions: Partial<ChartOptions>;
-  public chartBarOptions: Partial<ChartOptions>;
+  chartCandleOptions?: Partial<ChartOptions>;
+  chartBarOptions?: Partial<ChartOptions>;
 
-  public data: ChartData = { volumns: [], candles: [], candleLine: [] };
-  public candleLine: VolumnData[] = [];
+  data$?: Subscription;
+  data: ChartData = {
+    volumns: [],
+    candles: [],
+    candleLine: [],
+    highBound: 0,
+    lowBound: 0,
+  };
 
   updateTimer?: any;
   intialUpdate: boolean = true;
@@ -54,41 +61,97 @@ export class TestMixedChartComponent implements OnInit {
   index = 0;
   lastXaxis: number[] = [];
 
-  constructor() {
-    for (let i = chartData.length - 1; i >= 0; i--) {
-      const { date, open, high, low, close, volume } = chartData[i];
-      this.data.candles.push({
-        x: date,
-        y: [open, high, low, close],
-      });
-      this.data.volumns.push({ x: date, y: volume });
-      this.candleLine.push({ x: date, y: close });
-    }
+  constructor(private stockService: StockService) {}
 
-    const lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
-    for (let i = 0; i < 8; i++) {
-      this.data.candles.push({
-        x: lastTimestamp + 60000 * i,
-        y: [-1],
-      });
-      this.data.volumns.push({
-        x: lastTimestamp + 60000 * i,
-        y: 0,
-      });
-    }
+  ngOnInit(): void {
+    this.data$ = this.stockService.fetchHistoryPrice().subscribe((data) => {
+      this.data = data;
 
-    /*************** Chart Candle Options ***************/
+      this.setCandleOptions();
+      this.setVolumnOptions();
+    });
+  }
+
+  addNewBar() {
+    if (this.index > 3) {
+      this.index = 0;
+    }
+    let yy = this.array[this.index];
+    this.index++;
+
+    let replaceTimestamp = this.data.candles[this.data.candles.length - 7].x;
+    let lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
+    this.data.candles[this.data.candles.length - 7] = {
+      x: replaceTimestamp,
+      y: yy,
+    };
+
+    this.data.volumns[this.data.volumns.length - 7] = {
+      x: replaceTimestamp,
+      y: 45122,
+    };
+
+    this.data.candles.push({
+      x: lastTimestamp + 60000,
+      y: [-1],
+    });
+    this.data.volumns.push({
+      x: lastTimestamp + 60000,
+      y: 0,
+    });
+    // this.candleLine.push({
+    //   x: replaceTimestamp,
+    //   y: yy[3],
+    // });
+
+    // this.chartOptions.series = [
+    //   {
+    //     data: copy,
+    //   },
+    // ];
+
+    // each upda
+    this.chartCandle.updateSeries([
+      { data: this.data.candles },
+      { data: this.data.volumns },
+    ]);
+
+    this.chartBar.updateSeries([
+      { data: this.data.volumns },
+      // { data: this.candleLine },
+    ]);
+
+    this.newDataAdded = true;
+
+    // if (this.lastXaxis.length > 0) {
+    //   console.log("lastXaxis", this.lastXaxis);
+    //   // the "60000" is the 1-min interval is exactly the next bar's "xaxis"
+    //   this.chartCandle.zoomX(
+    //     this.lastXaxis[0] + 60000,
+    //     this.lastXaxis[1] + 60000
+    //   );
+    // }
+  }
+
+  /** *************************
+   *
+   *  Set Candles Bars Options
+   *
+   * **************************/
+  private setCandleOptions() {
     this.chartCandleOptions = {
       series: [
         {
           name: "candle",
           type: "candlestick",
           data: this.data.candles,
+          color: "#00E396",
         },
         {
           name: "Volumns",
           type: "bar",
           data: this.data.volumns,
+          color: "#0035e3",
         },
       ],
       tooltip: {
@@ -162,6 +225,8 @@ export class TestMixedChartComponent implements OnInit {
         events: {
           // ---- (1) ---- //
           updated: (chart, options) => {
+            if (!this.chartCandleOptions) return;
+
             if (this.intialUpdate) {
               this.intialUpdate = false;
               chart.updateOptions({
@@ -207,6 +272,7 @@ export class TestMixedChartComponent implements OnInit {
       },
       plotOptions: {
         bar: {
+          columnWidth: "80%",
           colors: {
             ranges: [
               {
@@ -220,21 +286,21 @@ export class TestMixedChartComponent implements OnInit {
       },
       legend: {
         show: true,
-        labels: {
-          colors: ["#00E396", "#0035e3"],
-          useSeriesColors: true,
-        },
+        labels: { useSeriesColors: true },
       },
       xaxis: {
         type: "datetime",
-        // offsetX: -11,
-        // offsetY: -11,
+        labels: {
+          formatter: (val, opts) => {
+            return new Date(val).toLocaleTimeString();
+          },
+        },
       },
       yaxis: [
         {
           seriesName: "candle",
-          min: 144,
-          max: 146.5,
+          min: this.data.lowBound,
+          max: this.data.highBound,
           tickAmount: 10,
           forceNiceScale: false,
           axisTicks: { show: true, offsetX: -4 },
@@ -276,19 +342,29 @@ export class TestMixedChartComponent implements OnInit {
         },
       ],
     };
+  }
 
-    /*************** Chart Bar Options ***************/
+  /** *************************
+   *
+   *  Set Volumns Bars Options
+   *
+   * **************************/
+  private setVolumnOptions() {
+    const selectionMinBound = this.data.candles.length > 30 ? 31 : 16;
+
     this.chartBarOptions = {
       series: [
+        {
+          name: "candleLine",
+          type: "line",
+          data: this.data.candleLine,
+          color: "#00E396",
+        },
         {
           name: "volume",
           type: "bar",
           data: this.data.volumns,
-        },
-        {
-          name: "candleLine",
-          type: "line",
-          data: this.candleLine,
+          color: "#0035e3",
         },
       ],
       chart: {
@@ -301,8 +377,9 @@ export class TestMixedChartComponent implements OnInit {
         selection: {
           enabled: true,
           xaxis: {
-            min: 1664908620000,
-            max: lastTimestamp + 60000 * 7,
+            min: this.data.candles[this.data.candles.length - selectionMinBound]
+              .x,
+            max: this.data.candles[this.data.candles.length - 1].x + 60000 * 6,
           },
           // fill: {
           //   color: "#ccc",
@@ -316,11 +393,13 @@ export class TestMixedChartComponent implements OnInit {
           // selection: (chart, { xaxis, yaxis }) => {},
           // ---- (2) ---- //
           brushScrolled: (chart, options?) => {
-            this.chartCandle.updateOptions({
-              yaxis: this.chartCandleOptions.yaxis,
-            });
-            // ---- (3) ---- //
-            this.lastXaxis = [options.xaxis.min, options.xaxis.max];
+            if (this.chartCandleOptions) {
+              this.chartCandle.updateOptions({
+                yaxis: this.chartCandleOptions.yaxis,
+              });
+              // ---- (3) ---- //
+              this.lastXaxis = [options.xaxis.min, options.xaxis.max];
+            }
           },
         },
       },
@@ -342,7 +421,7 @@ export class TestMixedChartComponent implements OnInit {
         },
       },
       stroke: {
-        width: [1, 3],
+        width: [3, 1],
       },
       xaxis: {
         type: "datetime",
@@ -352,82 +431,19 @@ export class TestMixedChartComponent implements OnInit {
       },
       yaxis: [
         {
-          seriesName: "volume",
-          labels: { show: false },
+          seriesName: "candleLine",
+          min: this.data.lowBound,
+          max: this.data.highBound,
+          forceNiceScale: false,
+          labels: { show: true },
         },
         {
-          seriesName: "candleLine",
+          seriesName: "volume",
           opposite: true,
-          min: 144,
-          max: 146.5,
-          forceNiceScale: false,
-          labels: { show: false },
+          labels: { show: true },
         },
       ],
     };
-  }
-
-  ngOnInit(): void {
-    // console.log(this.chartBar);
-  }
-
-  addNewBar() {
-    if (this.index > 3) {
-      this.index = 0;
-    }
-    let yy = this.array[this.index];
-    this.index++;
-
-    let replaceTimestamp = this.data.candles[this.data.candles.length - 7].x;
-    let lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
-    this.data.candles[this.data.candles.length - 7] = {
-      x: replaceTimestamp,
-      y: yy,
-    };
-
-    this.data.volumns[this.data.volumns.length - 7] = {
-      x: replaceTimestamp,
-      y: 45122,
-    };
-
-    this.data.candles.push({
-      x: lastTimestamp + 60000,
-      y: [-1],
-    });
-    this.data.volumns.push({
-      x: lastTimestamp + 60000,
-      y: 0,
-    });
-    this.candleLine.push({
-      x: replaceTimestamp,
-      y: yy[3],
-    });
-
-    // this.chartOptions.series = [
-    //   {
-    //     data: copy,
-    //   },
-    // ];
-    this.chartCandle.updateSeries([
-      { data: this.data.candles },
-      { data: this.data.volumns },
-    ]);
-
-    this.chartBar.updateSeries([
-      { data: this.data.volumns },
-      { data: this.candleLine },
-    ]);
-
-    this.newDataAdded = true;
-
-    // if (this.lastXaxis.length > 0) {
-    //   console.log("lastXaxis", this.lastXaxis);
-    //   // the "60000" is the 1-min interval is exactly the next bar's "xaxis"
-    //   this.chartCandle.zoomX(
-    //     this.lastXaxis[0] + 60000,
-    //     this.lastXaxis[1] + 60000
-    //   );
-    // }
   }
 
   private numberFormatter(value: number, decimal: number = 0): string {
@@ -435,6 +451,10 @@ export class TestMixedChartComponent implements OnInit {
       return Math.floor(value).toString();
     }
     return value.toString();
+  }
+
+  ngOnDestroy(): void {
+    if (this.data$) this.data$.unsubscribe();
   }
 }
 
@@ -451,15 +471,15 @@ export class TestMixedChartComponent implements OnInit {
             max: 1664910480000,
           },
         }, 
-    But after the selection, the fuking default "forceNiceScale: false"
-    kicks in, and I have to set the "yaxis" option again!
+    But after the "selection", the "yaxis" option will be set back to default!!
+    I have to set the "yaxis" option again!
 
     I should set the "yaxis" option in the "selection" event, BUT
     this "selection" event has a fukking bug, it will break
     the "brushScrolled" sync!!!!
 
     At the end, I have to set the "yaxis" option inside this
-    "updated" event !!
+    "updated" event!!
 
 (2) I need to set the "forceNiceScale: false" in yaxis, since
     the "brushScrolled" will reset all the "yaxis" option to default !!!
