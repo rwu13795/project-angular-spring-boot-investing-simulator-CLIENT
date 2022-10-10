@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 
 import {
   ChartComponent,
@@ -14,7 +22,8 @@ import {
   ApexLegend,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
-import { ChartData, StockService } from "../../stock.service";
+import { ChartData, CandleData } from "../../stock-models";
+import { StockService } from "../../stock.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -37,8 +46,12 @@ export type ChartOptions = {
 export class MixedChartComponent implements OnInit, OnDestroy {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @ViewChild("chartBar") chartBar!: ChartComponent;
+  @Input() symbol: string = "";
+
   public chartCandleOptions?: Partial<ChartOptions>;
   public chartBarOptions?: Partial<ChartOptions>;
+  public isLoading: boolean = true;
+  public errorMessage?: string;
 
   private data$?: Subscription;
   private data: ChartData = {
@@ -47,11 +60,16 @@ export class MixedChartComponent implements OnInit, OnDestroy {
     candleLine: [],
     highBound: 0,
     lowBound: 0,
+    currentTotalVolume: 0,
   };
+  private realTimePrice$?: Subscription;
+  public realTimePrice: number = 0;
+  private firstRealTime: boolean = true;
 
   private updateTimer?: any;
   private intialUpdate: boolean = true;
   private newDataAdded: boolean = false;
+  private dataUpdated: boolean = false;
 
   array = [
     [141.235, 141.2, 141.2989, 141.2499],
@@ -65,12 +83,21 @@ export class MixedChartComponent implements OnInit, OnDestroy {
   constructor(private stockService: StockService) {}
 
   ngOnInit(): void {
-    this.data$ = this.stockService.fetchHistoryPrice("1D").subscribe((data) => {
-      this.data = data;
+    this.data$ = this.stockService
+      .fetchHistoryPrice("1D", this.symbol)
+      .subscribe((data) => {
+        if (data.candles.length === 0) {
+          this.errorMessage = `Could not find any result for the symbol: ${this.symbol}`;
+          this.isLoading = false;
+          return;
+        }
+        this.data = data;
+        this.realTimePrice = data.candleLine[data.candleLine.length - 1].y;
 
-      this.setCandleOptions();
-      this.setVolumnOptions();
-    });
+        this.setCandleOptions();
+        this.setVolumnOptions();
+        this.isLoading = false;
+      });
   }
 
   addNewBar() {
@@ -123,6 +150,127 @@ export class MixedChartComponent implements OnInit, OnDestroy {
     ]);
 
     this.newDataAdded = true;
+  }
+
+  getRealTimePrice() {
+    const lastDataPoint = this.data.candles[this.data.candles.length - 1];
+    const secondLastDataPoint = this.data.candles[this.data.candles.length - 2];
+
+    this.realTimePrice$ = this.stockService
+      .getRealTimePrice()
+      .subscribe(([data]) => {
+        const { timestamp, volume, price } = data;
+        const timestampMS = timestamp * 1000;
+
+        console.log("price-------------", price);
+
+        // if (timestampMS < lastDataPoint.x.getTime()) {
+        //   console.log("timestampMS < lastDataPoint.x.getTime()");
+        //   return;
+        // }
+        // for the chart "updated" event
+        this.dataUpdated = true;
+
+        if (this.firstRealTime) {
+          this.firstRealTime = false;
+          this.newDataAdded = true;
+
+          console.log("firstRealTime");
+
+          // The historical 1-min data is usually 1:30 min behind the real time price
+          // timestamp, if I use the real-time time stamp, then there will be
+          // irregular time-line on the chart, which makes the bar width changed in
+          // a unpredictable way. I have to add each data point "x" using the
+          // exact 1-min interval> Then in the tooltip, I will use the real-time
+          // timestamp instead of the timestamp in "x"
+          this.data.candles.push({
+            x: new Date(timestampMS - 60000),
+            y: [lastDataPoint.y[3], price, price, price],
+          });
+          this.data.volumns.push({
+            x: new Date(timestampMS - 60000),
+            y: volume - this.data.currentTotalVolume,
+          });
+          this.data.currentTotalVolume = volume;
+
+          this.data.candleLine.push({
+            x: new Date(timestampMS - 60000),
+            y: price,
+          });
+        } else {
+          // add new data point for every 1 min
+          if (timestampMS - secondLastDataPoint.x.getTime() > 60000) {
+            this.newDataAdded = true;
+            console.log("adding");
+
+            this.data.candles.push({
+              x: new Date(lastDataPoint.x.getTime() + 60000),
+              y: [lastDataPoint.y[3], price, price, price],
+            });
+            this.data.volumns.push({
+              x: new Date(lastDataPoint.x.getTime() + 60000),
+              y: volume - this.data.currentTotalVolume,
+            });
+            this.data.currentTotalVolume = volume;
+
+            this.data.candleLine.push({
+              x: new Date(lastDataPoint.x.getTime() + 60000),
+              y: price,
+            });
+          } else {
+            let [open, high, low, close] = lastDataPoint.y;
+            if (price > high) high = price;
+            if (price < low) low = price;
+
+            console.log(open, high, low, close);
+
+            this.data.candles[this.data.candles.length - 1] = {
+              x: lastDataPoint.x,
+              y: [open, high, low, price],
+            };
+            this.data.volumns[this.data.volumns.length - 1] = {
+              x: lastDataPoint.x,
+              y: volume - this.data.currentTotalVolume,
+            };
+            this.data.candleLine[this.data.candleLine.length - 1] = {
+              x: lastDataPoint.x,
+              y: price,
+            };
+          }
+        }
+
+        this.chartCandle.updateSeries([
+          { data: this.data.candles },
+          { data: this.data.volumns },
+        ]);
+
+        this.chartBar.updateSeries([
+          { data: this.data.candleLine },
+          { data: this.data.volumns },
+        ]);
+      });
+  }
+
+  private addNewDataPoint(
+    timestampMS: number,
+    lastDataPoint: CandleData,
+    price: number,
+    volume: number
+  ) {
+    this.data.candles.push({
+      x: new Date(timestampMS),
+      y: [lastDataPoint.y[3], price, price, price],
+    });
+    this.data.volumns.push({
+      x: new Date(timestampMS),
+      y: volume - this.data.currentTotalVolume,
+    });
+    this.data.currentTotalVolume = volume;
+
+    this.data.candleLine.push({
+      x: new Date(timestampMS),
+      y: price,
+    });
   }
 
   /** *************************
@@ -206,10 +354,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
         id: "candles",
         toolbar: {
           show: false,
-          tools: {
-            selection: false,
-            zoom: false,
-          },
+          tools: { zoom: false },
         },
         zoom: {
           enabled: true,
@@ -224,43 +369,50 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
               });
+
+              console.log("intialUpdate");
             }
-            if (this.newDataAdded) {
-              this.newDataAdded = false;
+            if (this.dataUpdated) {
+              this.dataUpdated = false;
+
+              console.log("dataUpdated");
               chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
               });
 
               // ---- (3) ---- //
-              const { min, max } = options.config.xaxis;
-              if (min && max && min !== 0 && max !== 0) {
-                if (this.lastXaxis.length < 1) {
-                  this.lastXaxis = [min + 60000, max + 60000];
+              if (this.newDataAdded) {
+                this.newDataAdded = false;
+                console.log("newDataAdded");
+
+                const { min, max } = options.config.xaxis;
+                if (min && max && min !== 0 && max !== 0) {
+                  if (this.lastXaxis.length < 1) {
+                    this.lastXaxis = [min + 60000, max + 60000];
+                  } else {
+                    this.lastXaxis = [
+                      this.lastXaxis[0] + 60000,
+                      this.lastXaxis[1] + 60000,
+                    ];
+                  }
                 } else {
                   this.lastXaxis = [
                     this.lastXaxis[0] + 60000,
                     this.lastXaxis[1] + 60000,
                   ];
                 }
-              } else {
-                console.log(this.lastXaxis);
-                this.lastXaxis = [
-                  this.lastXaxis[0] + 60000,
-                  this.lastXaxis[1] + 60000,
-                ];
               }
+
+              // if (this.dataUpdated) {
+              //   this.lastXaxis = [
+              //     this.lastXaxis[0] - 60000,
+              //     this.lastXaxis[1] - 60000,
+              //   ];
+              // }
+
               chart.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
             }
           },
-          // animationEnd: (chart, options) => {
-          //   chart.updateOptions({
-          //     animations: {
-          //       enabled: false,
-          //     },
-          //   });
-          // },
-          zoomed: (chart, lastZoomValues) => {},
-          scrolled: (chart, lastZoomValues) => {},
         },
         animations: {
           enabled: false,
@@ -463,6 +615,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.data$) this.data$.unsubscribe();
+    if (this.realTimePrice$) this.realTimePrice$.unsubscribe();
   }
 }
 

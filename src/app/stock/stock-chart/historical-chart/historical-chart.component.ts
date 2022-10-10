@@ -22,7 +22,8 @@ import {
   ApexMarkers,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
-import { ChartData, StockService } from "../../stock.service";
+import { ChartData } from "../../stock-models";
+import { StockService } from "../../stock.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -48,6 +49,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
   public chartCandleOptions?: Partial<ChartOptions>;
 
   @Input() option: string = "5D";
+  @Input() symbol: string = "";
 
   private data$?: Subscription;
   private data: ChartData = {
@@ -56,20 +58,23 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
     candleLine: [],
     highBound: 0,
     lowBound: 0,
+    currentTotalVolume: 0,
   };
 
   constructor(private stockService: StockService) {}
 
   ngOnInit(): void {
-    this.data$ = this.stockService.fetchHistoryPrice("5D").subscribe((data) => {
-      this.data = data;
-      this.setChartCandleOptions();
-    });
+    this.data$ = this.stockService
+      .fetchHistoryPrice("5D", this.symbol)
+      .subscribe((data) => {
+        this.data = data;
+        this.setChartCandleOptions();
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const option = changes["option"].currentValue;
-    const storedData = this.stockService.getStoredDate(option);
+    this.option = changes["option"].currentValue;
+    const storedData = this.stockService.getStoredChartDate(this.option);
     if (storedData) {
       console.log("storedData---- found");
       this.data = storedData;
@@ -78,7 +83,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this.data$ = this.stockService
-      .fetchHistoryPrice(changes["option"].currentValue)
+      .fetchHistoryPrice(this.option, this.symbol)
       .subscribe((data) => {
         this.data = data;
         this.setChartCandleOptions();

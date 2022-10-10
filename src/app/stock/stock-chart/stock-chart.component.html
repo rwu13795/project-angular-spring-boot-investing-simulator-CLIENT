@@ -7,9 +7,10 @@
     <button (click)="onSelectDayRange('6M')">6M</button>
     <button (click)="onSelectDayRange('1Y')">1Y</button>
   </div>
-  <app-mixed-chart *ngIf="option === '1D'"></app-mixed-chart>
+  <app-mixed-chart *ngIf="option === '1D'" [symbol]="symbol"></app-mixed-chart>
   <app-historical-chart
     *ngIf="option !== '1D'"
     [option]="option"
+    [symbol]="symbol"
   ></app-historical-chart>
 </main>

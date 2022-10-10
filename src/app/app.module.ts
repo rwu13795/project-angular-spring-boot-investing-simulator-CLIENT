@@ -21,7 +21,7 @@ import { StockModule } from "./stock/stock.module";
     FormsModule,
     HttpClientModule,
     NgApexchartsModule,
-    StockModule,
+    // StockModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

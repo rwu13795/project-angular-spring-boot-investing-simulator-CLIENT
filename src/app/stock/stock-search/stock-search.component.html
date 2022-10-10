@@ -1,0 +1,14 @@
+<main>
+  <div>List</div>
+  <hr />
+  <div *ngFor="let stock of stockSearchResult">
+    <div>Symbol: {{ stock.symbol }}</div>
+    <div>Name: {{ stock.name }}</div>
+    <a [routerLink]="['chart', stock.symbol]">To the chart</a>
+    <hr />
+  </div>
+
+  <label>Search</label>
+  <input (keyup)="onInputChange($event)" />
+  <button type="button" (click)="onSearchStockByName()">Send</button>
+</main>

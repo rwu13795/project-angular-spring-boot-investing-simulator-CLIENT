@@ -1,7 +1,6 @@
 <main>
-  <h2 *ngIf="!chartCandleOptions || !chartBarOptions">
-    Loading...............
-  </h2>
+  <h2 *ngIf="isLoading">Loading...............</h2>
+  <h3 *ngIf="errorMessage">{{ errorMessage }}</h3>
   <div class="chart-box" *ngIf="chartCandleOptions && chartBarOptions">
     <div id="chart-candlestick">
       <apx-chart
@@ -31,5 +30,5 @@
       ></apx-chart>
     </div>
   </div>
-  <button (click)="addNewBar()">add new bar</button>
+  <button (click)="getRealTimePrice()">add new bar</button>
 </main>

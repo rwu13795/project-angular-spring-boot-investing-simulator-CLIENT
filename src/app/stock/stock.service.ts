@@ -1,55 +1,15 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { from, Observable, Subject } from "rxjs";
+import { from, Observable, Subject, throwError } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
-
-export interface Response_searchByName {
-  symbol: string;
-  name: string;
-  currency: string;
-  stockExchange: string;
-  exchangeShortName: string;
-}
-
-export interface Response_historyPrice {
-  date: string;
-  open: number;
-  low: number;
-  high: number;
-  close: number;
-  volume: number;
-}
-
-interface Response_historyPriceFull {
-  // for the daily price api "/historical-price-full"
-  historical: Response_historyPrice[];
-}
-
-export interface CandleData {
-  x: Date; // timestamp
-  y: number[]; // [open, high, low, close]
-}
-export interface VolumnData {
-  x: Date; // timestamp
-  y: number;
-}
-
-export interface ChartData {
-  volumns: VolumnData[];
-  candles: CandleData[];
-  candleLine: VolumnData[];
-  highBound: number;
-  lowBound: number;
-}
-
-interface StoredData {
-  ["5D"]: ChartData | null;
-  ["1M"]: ChartData | null;
-  ["3M"]: ChartData | null;
-  ["6M"]: ChartData | null;
-  ["1Y"]: ChartData | null;
-  [range: string]: ChartData | null;
-}
+import {
+  ChartData,
+  Response_searchByName,
+  Response_historyPriceFull,
+  Response_historyPrice,
+  RealTimePrice,
+  StoredChartData,
+} from "./stock-models";
 
 @Injectable({ providedIn: "root" })
 export class StockService {
@@ -60,7 +20,8 @@ export class StockService {
 
   private API_KEY = "bebf0264afd8447938b0ae54509c1513";
 
-  private storedData: StoredData = {
+  private currentSymbol: string = "";
+  private storedChartData: StoredChartData = {
     ["5D"]: null,
     ["1M"]: null,
     ["3M"]: null,
@@ -74,16 +35,16 @@ export class StockService {
     const params = new HttpParams({
       fromObject: {
         query: inputValue,
-        limit: 10,
+        limit: 20,
         exchange: "NASDAQ",
-        // apikey: this.API_KEY,
+        apikey: this.API_KEY,
       },
     });
 
     // Spring boot
     // get<Response_searchByName[]>(`${this.SERVER_URL}/stock/search`
     return this.http
-      .get<Response_searchByName[]>(`${this.SERVER_URL}/stock/search`, {
+      .get<Response_searchByName[]>(`${this.FMP_API}/search`, {
         params,
       })
       .pipe(
@@ -99,19 +60,20 @@ export class StockService {
       );
   }
 
-  fetchHistoryPrice(option: string) {
+  public fetchHistoryPrice(option: string, symbol: string) {
     // used to get the current Eastern GMT-0400 hour, if it is
     // greater than or equal to 16, then the market is close for NYSE and Nasdaq
     // new Date().getUTCHours() - 4
 
+    this.currentSymbol = symbol;
     const { from, to, timeRange, interval } = this.getTimeRange(option);
     const params = new HttpParams({
       fromObject: { from, to, apikey: this.API_KEY },
     });
 
-    let apiUrl = `${this.FMP_API}/historical-chart/${timeRange}/AAPL`;
+    let apiUrl = `${this.FMP_API}/historical-chart/${timeRange}/${symbol}`;
     if (timeRange === "") {
-      apiUrl = `${this.FMP_API}/historical-price-full/AAPL`;
+      apiUrl = `${this.FMP_API}/historical-price-full/${symbol}`;
       return this.http.get<Response_historyPriceFull>(apiUrl, { params }).pipe(
         map<Response_historyPriceFull, ChartData>((responseData) => {
           return this.mapResponseData(
@@ -129,8 +91,20 @@ export class StockService {
     );
   }
 
-  public getStoredDate(option: "5D" | "1M" | "3M" | "6M" | "1Y") {
-    return this.storedData[option];
+  public getRealTimePrice() {
+    const params = new HttpParams({
+      fromObject: { apikey: this.API_KEY },
+    });
+    return this.http.get<RealTimePrice[]>(
+      `${this.FMP_API}/quote/${this.currentSymbol}`,
+      {
+        params,
+      }
+    );
+  }
+
+  public getStoredChartDate(option: string) {
+    return this.storedChartData[option];
   }
 
   private mapResponseData(
@@ -144,25 +118,28 @@ export class StockService {
       candleLine: [],
       highBound: -1,
       lowBound: Infinity,
+      currentTotalVolume: 0,
     };
 
-    // put some "placeholders" at the start of the arrays
-    if (option === "1D") {
-      const firstEntryTimestamp = responseData[responseData.length - 1].date;
-      for (let i = 6; i >= 1; i--) {
-        const timestamp = new Date(
-          new Date(firstEntryTimestamp).getTime() - interval * i
-        );
-        data.candles.push({
-          x: timestamp,
-          y: [-1],
-        });
-        data.volumns.push({ x: timestamp, y: 0 });
-      }
-    }
+    // put 6 "placeholders" at the start of the arrays
+    // if (option === "1D") {
+    //   const firstEntryTimestamp = responseData[responseData.length - 1].date;
+    //   for (let i = 6; i >= 1; i--) {
+    //     const timestamp = new Date(
+    //       new Date(firstEntryTimestamp).getTime() - interval * i
+    //     );
+    //     data.candles.push({
+    //       x: timestamp,
+    //       y: [-1],
+    //     });
+    //     data.volumns.push({ x: timestamp, y: 0 });
+    //   }
+    // }
 
     for (let i = responseData.length - 1; i >= 0; i--) {
       const { date, open, high, low, close, volume } = responseData[i];
+
+      data.currentTotalVolume += volume;
 
       // get the price range
       if (high * 1.002 > data.highBound) {
@@ -182,22 +159,22 @@ export class StockService {
       data.candleLine.push({ x: new Date(date), y: close });
     }
 
-    // put some "placeholders" at the end of the arrays
-    if (option === "1D") {
-      const lastEntryTimestamp = responseData[0].date;
-      for (let i = 1; i <= 6; i++) {
-        const timestamp = new Date(
-          new Date(lastEntryTimestamp).getTime() + interval * i
-        );
-        data.candles.push({
-          x: timestamp,
-          y: [-1],
-        });
-        data.volumns.push({ x: timestamp, y: 0 });
-      }
-    }
+    // put 6 "placeholders" at the end of the arrays
+    // if (option === "1D") {
+    //   const lastEntryTimestamp = responseData[0].date;
+    //   for (let i = 1; i <= 6; i++) {
+    //     const timestamp = new Date(
+    //       new Date(lastEntryTimestamp).getTime() + interval * i
+    //     );
+    //     data.candles.push({
+    //       x: timestamp,
+    //       y: [-1],
+    //     });
+    //     data.volumns.push({ x: timestamp, y: 0 });
+    //   }
+    // }
 
-    this.storedData[option] = data;
+    this.storedChartData[option] = data;
 
     return data;
   }

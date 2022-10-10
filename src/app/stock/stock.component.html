@@ -1,15 +1,18 @@
 <main>
-  <div>List</div>
-  <hr />
-  <div *ngFor="let stock of stockSearchResult">
-    <div>Symbol: {{ stock.symbol }}</div>
-    <div>Name: {{ stock.name }}</div>
-    <hr />
-  </div>
+  <li>
+    <ul>
+      Financial summary
+    </ul>
+    <ul>
+      Financial statement
+    </ul>
+    <ul>
+      chart
+    </ul>
+    <ul>
+      company profile
+    </ul>
+  </li>
 
-  <label>Search</label>
-  <input (keyup)="onInputChange($event)" />
-  <button type="button" (click)="onSearchStockByName()">Send</button>
-
-  <app-stock-chart></app-stock-chart>
+  <router-outlet></router-outlet>
 </main>
