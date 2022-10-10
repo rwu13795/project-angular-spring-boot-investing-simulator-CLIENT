@@ -79,7 +79,7 @@ export class StockComponent implements OnInit, OnDestroy {
 
   fetchHistory() {
     this.chartData$ = this.stockService
-      .fetchHistoryPrice()
+      .fetchHistoryPrice("1D")
       .subscribe((data) => {
         this.candelData = data.candles;
         this.volumnData = data.volumns;

@@ -11,9 +11,7 @@ import {
   ApexStroke,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
-import { ChartData, StockService, VolumnData } from "../stock/stock.service";
-
-import { chartData, seriesData, seriesDataLinear } from "../test-chart/ohlc";
+import { ChartData, StockService } from "../../stock.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -29,11 +27,11 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: "app-test-mixed-chart",
-  templateUrl: "./test-mixed-chart.component.html",
-  styleUrls: ["./test-mixed-chart.component.css"],
+  selector: "app-historical-chart",
+  templateUrl: "./historical-chart.component.html",
+  styleUrls: ["./historical-chart.component.css"],
 })
-export class TestMixedChartComponent implements OnInit, OnDestroy {
+export class HistoricalChartComponent implements OnInit, OnDestroy {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @ViewChild("chartBar") chartBar!: ChartComponent;
   public chartCandleOptions?: Partial<ChartOptions>;
@@ -64,11 +62,10 @@ export class TestMixedChartComponent implements OnInit, OnDestroy {
   constructor(private stockService: StockService) {}
 
   ngOnInit(): void {
-    this.data$ = this.stockService.fetchHistoryPrice("1D").subscribe((data) => {
+    this.data$ = this.stockService.fetchHistoryPrice("5D").subscribe((data) => {
       this.data = data;
 
       this.setCandleOptions();
-      this.setVolumnOptions();
     });
   }
 
@@ -83,14 +80,14 @@ export class TestMixedChartComponent implements OnInit, OnDestroy {
     let yy = this.array[this.index];
     this.index++;
 
-    let replaceTimestamp = this.data.candles[this.data.candles.length - 6].x;
+    let replaceTimestamp = this.data.candles[this.data.candles.length - 8].x;
     let lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
-    this.data.candles[this.data.candles.length - 6] = {
+    this.data.candles[this.data.candles.length - 8] = {
       x: replaceTimestamp,
       y: yy,
     };
 
-    this.data.volumns[this.data.volumns.length - 6] = {
+    this.data.volumns[this.data.volumns.length - 8] = {
       x: replaceTimestamp,
       y: 45122,
     };
@@ -161,6 +158,8 @@ export class TestMixedChartComponent implements OnInit, OnDestroy {
           const data =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
 
+          console.log(w);
+
           // don't show the tooltip for the "placeholder" data
           if (data.y[0] === -1) return "<span></span>";
 
@@ -218,55 +217,46 @@ export class TestMixedChartComponent implements OnInit, OnDestroy {
           enabled: true,
         },
         events: {
-          // ---- (1) ---- //
-          updated: (chart, options) => {
-            if (!this.chartCandleOptions) return;
-
-            if (this.intialUpdate) {
-              this.intialUpdate = false;
-              chart.updateOptions({
-                yaxis: this.chartCandleOptions.yaxis,
-              });
-            }
-            if (this.newDataAdded) {
-              this.newDataAdded = false;
-              chart.updateOptions({
-                yaxis: this.chartCandleOptions.yaxis,
-              });
-
-              // ---- (3) ---- //
-              const { min, max } = options.config.xaxis;
-              if (min && max && min !== 0 && max !== 0) {
-                if (this.lastXaxis.length < 1) {
-                  this.lastXaxis = [min + 60000, max + 60000];
-                } else {
-                  this.lastXaxis = [
-                    this.lastXaxis[0] + 60000,
-                    this.lastXaxis[1] + 60000,
-                  ];
-                }
-              } else {
-                console.log(this.lastXaxis);
-                this.lastXaxis = [
-                  this.lastXaxis[0] + 60000,
-                  this.lastXaxis[1] + 60000,
-                ];
-              }
-              chart.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
-            }
-          },
-          // animationEnd: (chart, options) => {
-          //   chart.updateOptions({
-          //     animations: {
-          //       enabled: false,
-          //     },
-          //   });
-          // },
-          zoomed: (chart, lastZoomValues) => {},
-          scrolled: (chart, lastZoomValues) => {},
+          //   // ---- (1) ---- //
+          //   updated: (chart, options) => {
+          //     if (!this.chartCandleOptions) return;
+          //     if (this.intialUpdate) {
+          //       this.intialUpdate = false;
+          //       chart.updateOptions({
+          //         yaxis: this.chartCandleOptions.yaxis,
+          //       });
+          //     }
+          //     if (this.newDataAdded) {
+          //       this.newDataAdded = false;
+          //       chart.updateOptions({
+          //         yaxis: this.chartCandleOptions.yaxis,
+          //       });
+          //       // ---- (3) ---- //
+          //       const { min, max } = options.config.xaxis;
+          //       if (min && max && min !== 0 && max !== 0) {
+          //         if (this.lastXaxis.length < 1) {
+          //           this.lastXaxis = [min + 60000, max + 60000];
+          //         } else {
+          //           this.lastXaxis = [
+          //             this.lastXaxis[0] + 60000,
+          //             this.lastXaxis[1] + 60000,
+          //           ];
+          //         }
+          //       } else {
+          //         console.log(this.lastXaxis);
+          //         this.lastXaxis = [
+          //           this.lastXaxis[0] + 60000,
+          //           this.lastXaxis[1] + 60000,
+          //         ];
+          //       }
+          //       chart.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
+          //     }
+          //   },
+          //   zoomed: (chart, lastZoomValues) => {},
+          //   scrolled: (chart, lastZoomValues) => {},
         },
         animations: {
-          enabled: false,
+          enabled: true,
         },
       },
       stroke: {
@@ -291,10 +281,25 @@ export class TestMixedChartComponent implements OnInit, OnDestroy {
         labels: { useSeriesColors: true },
       },
       xaxis: {
-        type: "datetime",
+        type: "category",
+        tickAmount: 5,
         labels: {
-          formatter: (val, opts) => {
+          formatter: (val, options) => {
             return new Date(val).toLocaleDateString();
+          },
+        },
+        tooltip: {
+          enabled: true,
+          // this library is so fucked up, the value passed to the formatter,
+          // when the type of the "xaxis" is "category", is just the dataPointIndex
+          // number of the series, not the "x" date value. I have to extract the "date"
+          // by using the properties inside the options
+          formatter: (val, options: any) => {
+            const { w, seriesIndex, dataPointIndex } = options;
+            const date =
+              w.globals.initialSeries[seriesIndex].data[dataPointIndex].x;
+
+            return new Date(date).toLocaleString();
           },
         },
       },
@@ -341,114 +346,6 @@ export class TestMixedChartComponent implements OnInit, OnDestroy {
             style: { color: "#0035e3" },
           },
           tooltip: { enabled: false },
-        },
-      ],
-    };
-  }
-
-  /** *************************
-   *
-   *  Set Volumns Bars Options
-   *
-   * **************************/
-  private setVolumnOptions() {
-    const selectionMinBound = this.data.candles.length > 30 ? 31 : 16;
-
-    this.chartBarOptions = {
-      series: [
-        {
-          name: "candleLine",
-          type: "line",
-          data: this.data.candleLine,
-          color: "#00E396",
-        },
-        {
-          name: "volume",
-          type: "bar",
-          data: this.data.volumns,
-          color: "#0035e3",
-        },
-      ],
-      chart: {
-        height: 300,
-        type: "bar",
-        brush: {
-          enabled: true,
-          target: "candles",
-        },
-        selection: {
-          enabled: true,
-          xaxis: {
-            min: this.data.candles[
-              this.data.candles.length - selectionMinBound
-            ].x.getTime(),
-            max:
-              this.data.candles[this.data.candles.length - 1].x.getTime() +
-              60000,
-          },
-          // fill: {
-          //   color: "#ccc",
-          //   opacity: 0.4,
-          // },
-          // stroke: {
-          //   color: "#0D47A1",
-          // },
-        },
-        events: {
-          // selection: (chart, { xaxis, yaxis }) => {},
-          // ---- (2) ---- //
-          brushScrolled: (chart, options?) => {
-            if (this.chartCandleOptions) {
-              this.chartCandle.updateOptions({
-                yaxis: this.chartCandleOptions.yaxis,
-              });
-              // ---- (3) ---- //
-              this.lastXaxis = [options.xaxis.min, options.xaxis.max];
-            }
-          },
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      plotOptions: {
-        bar: {
-          columnWidth: "80%",
-          colors: {
-            ranges: [
-              {
-                from: 0,
-                to: 10000000000,
-                color: "#0035e3",
-              },
-            ],
-          },
-        },
-      },
-      stroke: {
-        width: [3, 1],
-      },
-      xaxis: {
-        type: "datetime",
-        // labels: {
-        //   formatter: (val, opts) => {
-        //     return new Date(val).toLocaleTimeString();
-        //   },
-        // },
-      },
-      yaxis: [
-        {
-          seriesName: "candleLine",
-          min: this.data.lowBound,
-          max: this.data.highBound,
-          forceNiceScale: false,
-          labels: { show: true },
-        },
-        {
-          seriesName: "volume",
-          opposite: true,
-          labels: { show: true },
-          forceNiceScale: true,
         },
       ],
     };

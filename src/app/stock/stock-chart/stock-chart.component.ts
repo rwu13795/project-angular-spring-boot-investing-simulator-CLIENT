@@ -153,7 +153,7 @@ export class StockChartComponent implements OnInit {
 
   fetchHistory() {
     this.chartData$ = this.stockService
-      .fetchHistoryPrice()
+      .fetchHistoryPrice("1D")
       .subscribe((data) => {
         this.candleData = data.candles;
         this.volumnData = data.volumns;

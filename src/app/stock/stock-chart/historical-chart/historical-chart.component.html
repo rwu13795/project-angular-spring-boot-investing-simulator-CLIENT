@@ -2,7 +2,7 @@
   <h2 *ngIf="!chartCandleOptions || !chartBarOptions">
     Loading...............
   </h2>
-  <div class="chart-box" *ngIf="chartCandleOptions && chartBarOptions">
+  <div class="chart-box" *ngIf="chartCandleOptions">
     <div class="button_group">
       <button (click)="onSelectDayRange('1D')">1D (Real Time)</button>
       <button (click)="onSelectDayRange('5D')">5D</button>
@@ -22,19 +22,6 @@
         [stroke]="chartCandleOptions.stroke!"
         [plotOptions]="chartCandleOptions.plotOptions!"
         [legend]="chartCandleOptions.legend!"
-        [autoUpdateSeries]="true"
-      ></apx-chart>
-    </div>
-    <div id="chart-bar">
-      <apx-chart
-        #chartBar
-        [series]="chartBarOptions.series!"
-        [chart]="chartBarOptions.chart!"
-        [xaxis]="chartBarOptions.xaxis!"
-        [yaxis]="chartBarOptions.yaxis!"
-        [dataLabels]="chartBarOptions.dataLabels!"
-        [stroke]="chartBarOptions.stroke!"
-        [plotOptions]="chartBarOptions.plotOptions!"
         [autoUpdateSeries]="true"
       ></apx-chart>
     </div>
