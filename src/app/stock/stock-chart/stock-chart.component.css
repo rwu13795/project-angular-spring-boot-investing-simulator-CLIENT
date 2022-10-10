@@ -1,12 +1,9 @@
-.chart-box {
-  max-width: 650px;
-  margin: 35px auto;
-}
-#chart-candlestick,
-#chart-bar {
-  max-width: 640px;
+main {
+  width: 100vw;
 }
 
-#chart-bar {
-  margin-top: -30px;
+.button_groups {
+  display: flex;
+  flex-flow: row nowrap;
+  float: right;
 }

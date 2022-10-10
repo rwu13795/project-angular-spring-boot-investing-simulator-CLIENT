@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { from, Observable, Subject } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
 
 export interface Response_searchByName {
@@ -37,14 +37,30 @@ export interface ChartData {
   lowBound: number;
 }
 
+interface FetchedData {
+  ["5D"]: ChartData | null;
+  ["1M"]: ChartData | null;
+  ["3M"]: ChartData | null;
+  ["6M"]: ChartData | null;
+  ["1Y"]: ChartData | null;
+}
+
 @Injectable({ providedIn: "root" })
 export class StockService {
-  FMP_API = "https://financialmodelingprep.com/api/v3";
+  private FMP_API = "https://financialmodelingprep.com/api/v3";
 
   // for spring boot server
-  SERVER_URL = "http://localhost:8080/api";
+  private SERVER_URL = "http://localhost:8080/api";
 
-  API_KEY = "bebf0264afd8447938b0ae54509c1513";
+  private API_KEY = "bebf0264afd8447938b0ae54509c1513";
+
+  private storedData: FetchedData = {
+    ["5D"]: null,
+    ["1M"]: null,
+    ["3M"]: null,
+    ["6M"]: null,
+    ["1Y"]: null,
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -155,10 +171,35 @@ export class StockService {
             }
           }
 
-          console.log(data);
+          switch (option) {
+            case "5D": {
+              this.storedData["5D"] = data;
+              break;
+            }
+            case "1M": {
+              this.storedData["1M"] = data;
+              break;
+            }
+            // case "3M": {
+            //   break;
+            // }
+            // case "6M": {
+            //   break;
+            // }
+            // case "1Y": {
+            //   break;
+            // }
+            default:
+              break;
+          }
+
           return data;
         })
       );
+  }
+
+  getStoredDate(option: "5D" | "1M" | "3M" | "6M" | "1Y") {
+    return this.storedData[option];
   }
 
   private getTimeRange(option: string): {
@@ -190,9 +231,13 @@ export class StockService {
         interval = 60000 * 15;
         break;
       }
-      // case "1M": {
-      //   break;
-      // }
+      case "1M": {
+        from_date = new Date(to_date.getTime() - 86400000 * 30);
+        from_date = this.fromWeekendsToMonday(from_date);
+        timeRange = "1hour";
+        interval = 60000 * 60;
+        break;
+      }
       // case "3M": {
       //   break;
       // }
@@ -229,7 +274,16 @@ export class StockService {
     }`;
   }
 
-  // private fromWeekendsToMonday(date: Date): Date {}
+  private fromWeekendsToMonday(date: Date): Date {
+    const dayOfWeek = date.getDay();
+    if (dayOfWeek === 0) {
+      return new Date(date.getTime() + 86400000);
+    }
+    if (dayOfWeek === 6) {
+      return new Date(date.getTime() + 86400000 * 2);
+    }
+    return date;
+  }
 
   private fromWeekendsToWeekday(date: Date): Date {
     // back track the date if date is on weekend

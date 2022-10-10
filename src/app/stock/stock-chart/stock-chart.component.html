@@ -1,47 +1,15 @@
 <main>
-  <div class="chart-box" *ngIf="chartCandleOptions && chartBarOptions">
-    <div
-      id="chart-candlestick"
-      *ngIf="
-        chartCandleOptions.series &&
-        chartCandleOptions.chart &&
-        chartCandleOptions.xaxis &&
-        chartCandleOptions.yaxis &&
-        chartCandleOptions.plotOptions
-      "
-    >
-      <apx-chart
-        #chartCandle
-        [series]="chartCandleOptions.series"
-        [chart]="chartCandleOptions.chart"
-        [xaxis]="chartCandleOptions.xaxis"
-        [yaxis]="chartCandleOptions.yaxis"
-        [plotOptions]="chartCandleOptions.plotOptions"
-      ></apx-chart>
-    </div>
-    <div
-      id="chart-bar"
-      *ngIf="
-        chartBarOptions.series &&
-        chartBarOptions.chart &&
-        chartBarOptions.xaxis &&
-        chartBarOptions.yaxis &&
-        chartBarOptions.dataLabels &&
-        chartBarOptions.stroke &&
-        chartBarOptions.plotOptions
-      "
-    >
-      <apx-chart
-        #chartBar
-        [series]="chartBarOptions.series"
-        [chart]="chartBarOptions.chart"
-        [xaxis]="chartBarOptions.xaxis"
-        [yaxis]="chartBarOptions.yaxis"
-        [dataLabels]="chartBarOptions.dataLabels"
-        [stroke]="chartBarOptions.stroke"
-        [plotOptions]="chartBarOptions.plotOptions"
-      ></apx-chart>
-    </div>
+  <div class="button_group">
+    <button (click)="onSelectDayRange('1D')">1D (Real Time)</button>
+    <button (click)="onSelectDayRange('5D')">5D</button>
+    <button (click)="onSelectDayRange('1M')">1M</button>
+    <button (click)="onSelectDayRange('3M')">3M</button>
+    <button (click)="onSelectDayRange('6M')">6M</button>
+    <button (click)="onSelectDayRange('1Y')">1Y</button>
   </div>
-  <button (click)="fetchHistory()">get history</button>
+  <app-mixed-chart *ngIf="option === '1D'"></app-mixed-chart>
+  <app-historical-chart
+    *ngIf="option !== '1D'"
+    [option]="option"
+  ></app-historical-chart>
 </main>

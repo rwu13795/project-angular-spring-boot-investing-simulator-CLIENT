@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 
 import {
   ChartComponent,
@@ -9,6 +17,9 @@ import {
   ApexPlotOptions,
   ApexDataLabels,
   ApexStroke,
+  ApexTooltip,
+  ApexLegend,
+  ApexMarkers,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
 import { ChartData, StockService } from "../../stock.service";
@@ -31,11 +42,12 @@ export type ChartOptions = {
   templateUrl: "./historical-chart.component.html",
   styleUrls: ["./historical-chart.component.css"],
 })
-export class HistoricalChartComponent implements OnInit, OnDestroy {
+export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @ViewChild("chartBar") chartBar!: ChartComponent;
   public chartCandleOptions?: Partial<ChartOptions>;
-  public chartBarOptions?: Partial<ChartOptions>;
+
+  @Input() option: string = "5D";
 
   private data$?: Subscription;
   private data: ChartData = {
@@ -46,95 +58,42 @@ export class HistoricalChartComponent implements OnInit, OnDestroy {
     lowBound: 0,
   };
 
-  private updateTimer?: any;
-  private intialUpdate: boolean = true;
-  private newDataAdded: boolean = false;
-
-  array = [
-    [141.235, 141.2, 141.2989, 141.2499],
-    [141.16, 141.15, 141.28, 141.2379],
-    [141.12, 141.08, 141.17, 141.16],
-    [141.12, 141.07, 141.14, 141.12],
-  ];
-  index = 0;
-  lastXaxis: number[] = [];
-
   constructor(private stockService: StockService) {}
 
   ngOnInit(): void {
     this.data$ = this.stockService.fetchHistoryPrice("5D").subscribe((data) => {
       this.data = data;
-
-      this.setCandleOptions();
+      this.setChartCandleOptions();
     });
   }
 
-  onSelectDayRange(option: string) {
-    console.log(option);
-  }
-
-  addNewBar() {
-    if (this.index > 3) {
-      this.index = 0;
+  ngOnChanges(changes: SimpleChanges): void {
+    const option = changes["option"].currentValue;
+    const storedData = this.stockService.getStoredDate(option);
+    if (storedData) {
+      console.log("storedData---- found");
+      this.data = storedData;
+      this.setChartCandleOptions();
+      return;
     }
-    let yy = this.array[this.index];
-    this.index++;
 
-    let replaceTimestamp = this.data.candles[this.data.candles.length - 8].x;
-    let lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
-    this.data.candles[this.data.candles.length - 8] = {
-      x: replaceTimestamp,
-      y: yy,
-    };
-
-    this.data.volumns[this.data.volumns.length - 8] = {
-      x: replaceTimestamp,
-      y: 45122,
-    };
-
-    this.data.candles.push({
-      x: new Date(lastTimestamp.getTime() + 60000),
-      y: [-1],
-    });
-    this.data.volumns.push({
-      x: new Date(lastTimestamp.getTime() + 60000),
-      y: 0,
-    });
-    // this.candleLine.push({
-    //   x: replaceTimestamp,
-    //   y: yy[3],
-    // });
-
-    // this.chartOptions.series = [
-    //   {
-    //     data: copy,
-    //   },
-    // ];
-
-    // each upda
-    this.chartCandle.updateSeries([
-      { data: this.data.candles },
-      { data: this.data.volumns },
-    ]);
-
-    this.chartBar.updateSeries([
-      { data: this.data.candleLine },
-      { data: this.data.volumns },
-    ]);
-
-    this.newDataAdded = true;
+    this.data$ = this.stockService
+      .fetchHistoryPrice(changes["option"].currentValue)
+      .subscribe((data) => {
+        this.data = data;
+        this.setChartCandleOptions();
+      });
   }
 
-  /** *************************
-   *
-   *  Set Candles Bars Options
-   *
-   * **************************/
-  private setCandleOptions() {
+  ngOnDestroy(): void {
+    if (this.data$) this.data$.unsubscribe();
+  }
+
+  private setChartCandleOptions() {
     this.chartCandleOptions = {
       series: [
         {
-          name: "candle",
+          name: "Candles",
           type: "candlestick",
           data: this.data.candles,
           color: "#00E396",
@@ -146,21 +105,34 @@ export class HistoricalChartComponent implements OnInit, OnDestroy {
           color: "#0035e3",
         },
       ],
+      chart: {
+        stacked: false,
+        type: "candlestick",
+        height: 500,
+        id: "candles",
+        toolbar: {
+          show: true,
+          tools: {
+            // selection: true,
+            zoomin: true,
+            zoomout: true,
+            zoom: true,
+          },
+        },
+        // ---- (3) ---- //
+        zoom: {
+          enabled: true,
+          type: "x",
+          autoScaleYaxis: false,
+        },
+        animations: { enabled: true },
+      },
       tooltip: {
-        // multiple series datapoint won't share the same tooltip
         shared: false,
-        custom: ({ series, seriesIndex, dataPointIndex, w }) => {
-          // "seriesIndex" is number of the of the series data, 0 is the
-          // "candle", 1 is the "Volumns". ONLY useful when the tooltip is
-          // shared between the series
-
-          // console.log(series, seriesIndex, dataPointIndex, w);
+        custom: ({ seriesIndex, dataPointIndex, w }) => {
           const data =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
 
-          console.log(w);
-
-          // don't show the tooltip for the "placeholder" data
           if (data.y[0] === -1) return "<span></span>";
 
           if (seriesIndex === 1) {
@@ -186,82 +158,8 @@ export class HistoricalChartComponent implements OnInit, OnDestroy {
           );
         },
         enabled: true,
-        y: {
-          formatter: undefined,
-          title: {
-            formatter: (seriesName) => "",
-          },
-        },
-        x: {
-          formatter: (value, opts?) => {
-            // the value is the MS timestamp, any date string or date object
-            // will be automatically converted to timestamp
-
-            return new Date(value).toLocaleTimeString();
-          },
-        },
       },
-      chart: {
-        stacked: false,
-        type: "candlestick",
-        height: 500,
-        id: "candles",
-        toolbar: {
-          show: false,
-          tools: {
-            selection: false,
-            zoom: false,
-          },
-        },
-        zoom: {
-          enabled: true,
-        },
-        events: {
-          //   // ---- (1) ---- //
-          //   updated: (chart, options) => {
-          //     if (!this.chartCandleOptions) return;
-          //     if (this.intialUpdate) {
-          //       this.intialUpdate = false;
-          //       chart.updateOptions({
-          //         yaxis: this.chartCandleOptions.yaxis,
-          //       });
-          //     }
-          //     if (this.newDataAdded) {
-          //       this.newDataAdded = false;
-          //       chart.updateOptions({
-          //         yaxis: this.chartCandleOptions.yaxis,
-          //       });
-          //       // ---- (3) ---- //
-          //       const { min, max } = options.config.xaxis;
-          //       if (min && max && min !== 0 && max !== 0) {
-          //         if (this.lastXaxis.length < 1) {
-          //           this.lastXaxis = [min + 60000, max + 60000];
-          //         } else {
-          //           this.lastXaxis = [
-          //             this.lastXaxis[0] + 60000,
-          //             this.lastXaxis[1] + 60000,
-          //           ];
-          //         }
-          //       } else {
-          //         console.log(this.lastXaxis);
-          //         this.lastXaxis = [
-          //           this.lastXaxis[0] + 60000,
-          //           this.lastXaxis[1] + 60000,
-          //         ];
-          //       }
-          //       chart.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
-          //     }
-          //   },
-          //   zoomed: (chart, lastZoomValues) => {},
-          //   scrolled: (chart, lastZoomValues) => {},
-        },
-        animations: {
-          enabled: true,
-        },
-      },
-      stroke: {
-        width: [1, 1],
-      },
+      stroke: { width: [1, 1] },
       plotOptions: {
         bar: {
           columnWidth: "80%",
@@ -281,6 +179,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy {
         labels: { useSeriesColors: true },
       },
       xaxis: {
+        // ---- (1) ---- //
         type: "category",
         tickAmount: 5,
         labels: {
@@ -288,24 +187,21 @@ export class HistoricalChartComponent implements OnInit, OnDestroy {
             return new Date(val).toLocaleDateString();
           },
         },
+        tickPlacement: "on",
         tooltip: {
           enabled: true,
-          // this library is so fucked up, the value passed to the formatter,
-          // when the type of the "xaxis" is "category", is just the dataPointIndex
-          // number of the series, not the "x" date value. I have to extract the "date"
-          // by using the properties inside the options
+          // ---- (2) ---- //
           formatter: (val, options: any) => {
             const { w, seriesIndex, dataPointIndex } = options;
             const date =
               w.globals.initialSeries[seriesIndex].data[dataPointIndex].x;
-
             return new Date(date).toLocaleString();
           },
         },
       },
       yaxis: [
         {
-          seriesName: "candle",
+          seriesName: "Candles",
           min: this.data.lowBound,
           max: this.data.highBound,
           tickAmount: 10,
@@ -357,45 +253,22 @@ export class HistoricalChartComponent implements OnInit, OnDestroy {
     }
     return value.toString();
   }
-
-  ngOnDestroy(): void {
-    if (this.data$) this.data$.unsubscribe();
-  }
 }
 
 /*
 
-(1) After the chart is loaded, I have to select a range of initial
-    data points in the volumnBar which will sync with the candleBar
-    by adding the option in the "chart" option
+(1) Have to use "category" type, if I use "datetime" for the time range
+    which is more than 1 day, some ugly emtpy space between the time gap 
+    will be rendered on the chart
 
-        selection: {
-          enabled: true,
-          xaxis: {
-            min: 1664908620000,
-            max: 1664910480000,
-          },
-        }, 
-    But after the "selection", the "yaxis" option will be set back to default!!
-    I have to set the "yaxis" option again!
+(2) this library is so fucked up, the value passed to the formatter,
+    when the type of the "xaxis" is "category", is just the dataPointIndex
+    number of the series, not the "x" date value. I have to extract the "date"
+    by using the properties inside the options
 
-    I should set the "yaxis" option in the "selection" event, BUT
-    this "selection" event has a fukking bug, it will break
-    the "brushScrolled" sync!!!!
-
-    At the end, I have to set the "yaxis" option inside this
-    "updated" event!!
-
-(2) I need to set the "forceNiceScale: false" in yaxis, since
-    the "brushScrolled" will reset all the "yaxis" option to default !!!
-   
-
-(3) ---- Last Xaxis ----
-        
-    If the user did not use the "brushScroll" to scroll the chart
-    the "xaxis" will be the latest "xaxis" inside the "updated" event
-    options. If the user DID use the "brushScroll", the "xaxis" in the
-    "updated" event options will be [0, 0], I will need to track
-    the "xaxis" inside the "brushScrolled" event, and store them in the variable
+(3) When the type "xaxis" is set to "category", the bar width won't resize
+    after zooming in!! NO SOLUTION !!    
+    
+    only in type: 'datetime', the column bar can be resized !!
 
 */

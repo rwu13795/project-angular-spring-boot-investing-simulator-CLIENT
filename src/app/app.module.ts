@@ -6,31 +6,22 @@ import { NgApexchartsModule } from "ng-apexcharts";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { CustomChartComponent } from "./chart/custom-chart.component";
+
 import { DigitSlideComponent } from "./digit-slide/digit-slide.component";
 import { HistoricalChartComponent } from "./stock/stock-chart/historical-chart/historical-chart.component";
 import { StockChartComponent } from "./stock/stock-chart/stock-chart.component";
 import { StockComponent } from "./stock/stock.component";
-import { TestChartComponent } from "./test-chart/test-chart.component";
-import { TestMixedChartComponent } from "./test-mixed-chart/test-mixed-chart.component";
+import { StockModule } from "./stock/stock.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CustomChartComponent,
-    DigitSlideComponent,
-    StockComponent,
-    StockChartComponent,
-    TestChartComponent,
-    TestMixedChartComponent,
-    HistoricalChartComponent,
-  ],
+  declarations: [AppComponent, DigitSlideComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgApexchartsModule,
     FormsModule,
     HttpClientModule,
+    NgApexchartsModule,
+    StockModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

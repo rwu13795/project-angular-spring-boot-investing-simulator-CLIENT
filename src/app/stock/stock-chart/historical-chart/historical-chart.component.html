@@ -1,16 +1,6 @@
 <main>
-  <h2 *ngIf="!chartCandleOptions || !chartBarOptions">
-    Loading...............
-  </h2>
+  <h2 *ngIf="!chartCandleOptions">Loading...............</h2>
   <div class="chart-box" *ngIf="chartCandleOptions">
-    <div class="button_group">
-      <button (click)="onSelectDayRange('1D')">1D (Real Time)</button>
-      <button (click)="onSelectDayRange('5D')">5D</button>
-      <button (click)="onSelectDayRange('1M')">1M</button>
-      <button (click)="onSelectDayRange('3M')">3M</button>
-      <button (click)="onSelectDayRange('6M')">6M</button>
-      <button (click)="onSelectDayRange('1Y')">1Y</button>
-    </div>
     <div id="chart-candlestick">
       <apx-chart
         #chartCandle
@@ -26,5 +16,4 @@
       ></apx-chart>
     </div>
   </div>
-  <button (click)="addNewBar()">add new bar</button>
 </main>
