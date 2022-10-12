@@ -1,0 +1,16 @@
+<main>
+  <div>{{ timeRange }}</div>
+  <apx-chart
+    *ngIf="chartOptions"
+    #area_chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [colors]="chartOptions.colors!"
+    [yaxis]="chartOptions.yaxis!"
+    [dataLabels]="chartOptions.dataLabels!"
+    [markers]="chartOptions.markers!"
+    [stroke]="chartOptions.stroke!"
+    [xaxis]="chartOptions.xaxis!"
+    [tooltip]="chartOptions.tooltip!"
+  ></apx-chart>
+</main>

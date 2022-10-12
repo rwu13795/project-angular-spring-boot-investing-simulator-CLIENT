@@ -4,6 +4,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
+import { AreaChartComponent } from "./stock-chart/area-chart/area-chart.component";
 
 import { HistoricalChartComponent } from "./stock-chart/historical-chart/historical-chart.component";
 import { MixedChartComponent } from "./stock-chart/mixed-chart/mixed-chart.component";
@@ -19,6 +20,7 @@ import { StockComponent } from "./stock.component";
     HistoricalChartComponent,
     MixedChartComponent,
     RevenueChartComponent,
+    AreaChartComponent,
     StockChartComponent,
     StockMenuComponent,
     StockComponent,

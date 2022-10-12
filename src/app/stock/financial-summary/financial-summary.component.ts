@@ -10,6 +10,7 @@ import { setCurrentSymbol } from "../stock-state/stock.actions";
 })
 export class FinancialSummaryComponent implements OnInit {
   public symbol: string = "";
+  public news: string = "";
 
   constructor(private route: ActivatedRoute, private store: Store) {}
 

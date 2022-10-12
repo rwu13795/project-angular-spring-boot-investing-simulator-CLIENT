@@ -24,15 +24,15 @@ export interface CandleData {
   x: Date; // timestamp
   y: number[]; // [open, high, low, close]
 }
-export interface VolumnData {
+export interface VolumeData {
   x: Date; // timestamp
   y: number;
 }
 
 export interface ChartData {
-  volumns: VolumnData[];
+  volumes: VolumeData[];
   candles: CandleData[];
-  candleLine: VolumnData[];
+  candleLine: VolumeData[];
   highBound: number;
   lowBound: number;
   currentTotalVolume: number;

@@ -1,0 +1,39 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.summary {
+  margin: 40px auto;
+}
+
+.chart-group {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.chart-wrapper {
+  width: 48%;
+}
+
+@media screen and (max-width: 765px) {
+  .chart-group {
+    flex-flow: row wrap;
+  }
+  .chart-wrapper {
+    width: 90%;
+  }
+}

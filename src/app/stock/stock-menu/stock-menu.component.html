@@ -1,4 +1,6 @@
 <main>
+  <h2>{{ symbol }}</h2>
+
   <li *ngIf="symbol !== ''">
     <ul>
       <a [routerLink]="['financial-summary', symbol]">Financial summary</a>

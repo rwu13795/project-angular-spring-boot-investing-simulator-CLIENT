@@ -1,5 +1,15 @@
 <main>
   <h1>summary</h1>
-  <div>{{ symbol }}</div>
-  <app-revenue-chart [symbol]="symbol"></app-revenue-chart>
+  <div class="summary">table ----------------------------</div>
+
+  <div class="chart-group">
+    <div class="chart-wrapper">
+      <app-area-chart [symbol]="symbol"></app-area-chart>
+    </div>
+    <div class="chart-wrapper">
+      <app-revenue-chart [symbol]="symbol"></app-revenue-chart>
+    </div>
+  </div>
+
+  <div>Lastest {{ symbol }} News</div>
 </main>

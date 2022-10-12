@@ -24,6 +24,7 @@ import {
 import { Subscription } from "rxjs";
 import { ChartData } from "../../stock-models";
 import { StockService } from "../../stock.service";
+import { StockChartService } from "../stock-chart.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -53,7 +54,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
 
   private data$?: Subscription;
   private data: ChartData = {
-    volumns: [],
+    volumes: [],
     candles: [],
     candleLine: [],
     highBound: 0,
@@ -61,11 +62,14 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
     currentTotalVolume: 0,
   };
 
-  constructor(private stockService: StockService) {}
+  constructor(
+    private stockService: StockService,
+    private stockChartService: StockChartService
+  ) {}
 
   ngOnInit(): void {
     this.data$ = this.stockService
-      .fetchHistoryPrice("5D", this.symbol)
+      .fetchHistoryPrice(this.option, this.symbol)
       .subscribe((data) => {
         this.data = data;
         this.setChartCandleOptions();
@@ -101,12 +105,12 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           name: "Candles",
           type: "candlestick",
           data: this.data.candles,
-          color: "#00E396",
+          color: "#00b746",
         },
         {
           name: "Volumns",
           type: "bar",
-          data: this.data.volumns,
+          data: this.data.volumes,
           color: "#0035e3",
         },
       ],
@@ -138,29 +142,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           const data =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
 
-          if (data.y[0] === -1) return "<span></span>";
-
-          if (seriesIndex === 1) {
-            if (data.y === 0) return "<span></span>";
-            return `<div style='padding: 6px'><b>Volumns</b>: ${data.y}</div>`;
-          }
-
-          return (
-            "<div style='padding: 6px;'>" +
-            "<div><b>Open</b>: " +
-            data.y[0] +
-            "</div>" +
-            "<div><b>High</b>: " +
-            data.y[1] +
-            "</div>" +
-            "<div><b>Low</b>: " +
-            data.y[2] +
-            "</div>" +
-            "<div><b>Close</b>: " +
-            data.y[3] +
-            "</div>" +
-            "</div>"
-          );
+          return this.stockChartService.setCustomTooltip(data, seriesIndex);
         },
         enabled: true,
       },
@@ -214,16 +196,16 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           axisTicks: { show: true, offsetX: -4 },
           axisBorder: {
             show: true,
-            color: "#00E396",
+            color: "#00b746",
             offsetX: -4,
           },
           labels: {
-            style: { colors: "#00E396" },
+            style: { colors: "#00b746" },
             offsetX: -10,
           },
           title: {
             text: "Price",
-            style: { color: "#00E396" },
+            style: { color: "#00b746" },
           },
           tooltip: { enabled: false },
         },
@@ -243,7 +225,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             formatter: (val, opts) => this.numberFormatter(val),
           },
           title: {
-            text: "Volumns",
+            text: "Volume",
             style: { color: "#0035e3" },
           },
           tooltip: { enabled: false },

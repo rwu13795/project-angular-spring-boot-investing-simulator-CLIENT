@@ -123,17 +123,16 @@ export class StockService {
     return this.storedChartData[option];
   }
 
-  /* **************************** */
-  /*        Helper methods        */
-  /* **************************** */
-
+  /* ************************************************************************** */
+  /*                            Helper methods                                  */
+  /* ************************************************************************** */
   private mapResponseData(
     responseData: Response_historyPrice[],
     option: string,
     interval: number
   ): ChartData {
     const data: ChartData = {
-      volumns: [],
+      volumes: [],
       candles: [],
       candleLine: [],
       highBound: -1,
@@ -153,7 +152,7 @@ export class StockService {
           x: timestamp,
           y: [-1, 0, 0, 0, timestamp.getTime()],
         });
-        data.volumns.push({ x: timestamp, y: 0 });
+        data.volumes.push({ x: timestamp, y: 0 });
       }
     }
 
@@ -175,7 +174,7 @@ export class StockService {
         x: new Date(date),
         y: [open, high, low, close, new Date(date).getTime()],
       });
-      data.volumns.push({ x: new Date(date), y: volume });
+      data.volumes.push({ x: new Date(date), y: volume });
       // use the "close" price for the line chart
       data.candleLine.push({ x: new Date(date), y: close });
     }
@@ -191,7 +190,7 @@ export class StockService {
     //       x: timestamp,
     //       y: [-1],
     //     });
-    //     data.volumns.push({ x: timestamp, y: 0 });
+    //     data.volumes.push({ x: timestamp, y: 0 });
     //   }
     // }
 

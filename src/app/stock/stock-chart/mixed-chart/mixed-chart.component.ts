@@ -24,6 +24,7 @@ import {
 import { Subscription } from "rxjs";
 import { ChartData, CandleData } from "../../stock-models";
 import { StockService } from "../../stock.service";
+import { StockChartService } from "../stock-chart.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -55,7 +56,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
 
   private data$?: Subscription;
   private data: ChartData = {
-    volumns: [],
+    volumes: [],
     candles: [],
     candleLine: [],
     highBound: 0,
@@ -73,7 +74,10 @@ export class MixedChartComponent implements OnInit, OnDestroy {
   private dataUpdated: boolean = false;
   private lastXaxis: number[] = [];
 
-  constructor(private stockService: StockService) {}
+  constructor(
+    private stockService: StockService,
+    private stockChartService: StockChartService
+  ) {}
 
   ngOnInit(): void {
     this.data$ = this.stockService
@@ -123,7 +127,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
             x: new Date(lastDataPoint.x.getTime() + 60000),
             y: [lastDataPoint.y[3], price, price, price, timestampMS],
           });
-          this.data.volumns.push({
+          this.data.volumes.push({
             x: new Date(lastDataPoint.x.getTime() + 60000),
             // the real-time volume somehow includes some volumes that should be
             // included in the historical 1-min data. Google "volumes don't match"
@@ -149,7 +153,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               x: new Date(lastDataPoint.x.getTime() + 60000),
               y: [lastDataPoint.y[3], price, price, price, timestampMS],
             });
-            this.data.volumns.push({
+            this.data.volumes.push({
               x: new Date(lastDataPoint.x.getTime() + 60000),
               y: this.currentMinVolume,
             });
@@ -170,7 +174,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               x: lastDataPoint.x,
               y: [open, high, low, price, timestampMS],
             };
-            this.data.volumns[this.data.volumns.length - 1] = {
+            this.data.volumes[this.data.volumes.length - 1] = {
               x: lastDataPoint.x,
               y: this.currentMinVolume,
             };
@@ -183,12 +187,12 @@ export class MixedChartComponent implements OnInit, OnDestroy {
 
         this.chartCandle.updateSeries([
           { data: this.data.candles },
-          { data: this.data.volumns },
+          { data: this.data.volumes },
         ]);
 
         this.chartBar.updateSeries([
           { data: this.data.candleLine },
-          { data: this.data.volumns },
+          { data: this.data.volumes },
         ]);
       });
   }
@@ -205,12 +209,12 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           name: "Candles",
           type: "candlestick",
           data: this.data.candles,
-          color: "#00E396",
+          color: "#00b746",
         },
         {
           name: "Volumes",
           type: "bar",
-          data: this.data.volumns,
+          data: this.data.volumes,
           color: "#0035e3",
         },
       ],
@@ -267,6 +271,8 @@ export class MixedChartComponent implements OnInit, OnDestroy {
                   ];
                 }
               }
+              // some unknown error occurs when I try to use zoomX(), but there
+              // is no issue found in the chart
               try {
                 this.chartCandle.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
               } catch (err) {
@@ -286,34 +292,11 @@ export class MixedChartComponent implements OnInit, OnDestroy {
         // for the crosshair label
         custom: ({ series, seriesIndex, dataPointIndex, w }) => {
           // "seriesIndex" is number of the of the series data, 0 is the
-          // "candle", 1 is the "Volumns". ONLY useful when the tooltip is
+          // "candle", 1 is the "Volumes". ONLY useful when the tooltip is
           // shared between the series
           const data =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
-
-          // don't show the tooltip for the "placeholder" data
-          if (data.y[0] === -1) return "<span></span>";
-
-          if (seriesIndex === 1) {
-            if (data.y === 0) return "<span></span>";
-            return `<div style='padding: 6px'><b>Volumns</b>: ${data.y}</div>`;
-          }
-          return (
-            "<div style='padding: 6px;'>" +
-            "<div><b>Open</b>: " +
-            data.y[0] +
-            "</div>" +
-            "<div><b>High</b>: " +
-            data.y[1] +
-            "</div>" +
-            "<div><b>Low</b>: " +
-            data.y[2] +
-            "</div>" +
-            "<div><b>Close</b>: " +
-            data.y[3] +
-            "</div>" +
-            "</div>"
-          );
+          return this.stockChartService.setCustomTooltip(data, seriesIndex);
         },
         // y: {  formatter: ()=>{} }
         x: {
@@ -365,16 +348,16 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           axisTicks: { show: true, offsetX: -4 },
           axisBorder: {
             show: true,
-            color: "#00E396",
+            color: "#00b746",
             offsetX: -4,
           },
           labels: {
-            style: { colors: "#00E396" },
+            style: { colors: "#00b746" },
             offsetX: -10,
           },
           title: {
             text: "Price",
-            style: { color: "#00E396" },
+            style: { color: "#00b746" },
           },
           tooltip: { enabled: false },
         },
@@ -393,7 +376,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
             formatter: (val, opts) => this.numberFormatter(val),
           },
           title: {
-            text: "Volumns",
+            text: "Volume",
             style: { color: "#0035e3" },
           },
           tooltip: { enabled: false },
@@ -416,12 +399,12 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           name: "Prices",
           type: "line",
           data: this.data.candleLine,
-          color: "#00E396",
+          color: "#00b746",
         },
         {
           name: "Volumes",
           type: "bar",
-          data: this.data.volumns,
+          data: this.data.volumes,
           color: "#0035e3",
         },
       ],
