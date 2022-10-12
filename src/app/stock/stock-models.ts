@@ -22,7 +22,7 @@ export interface Response_historyPriceFull {
 
 export interface CandleData {
   x: Date; // timestamp
-  y: number[]; // [open, high, low, close]
+  y: number[]; // [open, high, low, close, real-time-timestamp]
 }
 export interface VolumeData {
   x: Date; // timestamp

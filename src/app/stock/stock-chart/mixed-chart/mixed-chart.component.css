@@ -1,19 +1,24 @@
 main {
-  width: 100vw;
+  width: 100%;
 }
 
 .chart-box {
   max-width: 100vw;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 #chart-candlestick,
 #chart-bar {
-  min-width: 90%;
-  max-width: 90%;
-  margin: 35px auto;
+  min-width: 96%;
+  max-width: 96%;
+  margin: 35px 0 4px 0;
 }
 
 #chart-bar {
-  margin-top: -30px;
+  margin-top: -12px;
+  border: 1px solid red;
 }
 
 .button_groups {

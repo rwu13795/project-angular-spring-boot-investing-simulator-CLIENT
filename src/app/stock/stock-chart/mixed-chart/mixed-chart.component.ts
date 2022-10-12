@@ -73,6 +73,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
   private newDataAdded: boolean = false;
   private dataUpdated: boolean = false;
   private lastXaxis: number[] = [];
+  private showVolumes: boolean = true;
 
   constructor(
     private stockService: StockService,
@@ -80,6 +81,12 @@ export class MixedChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.getHistoricalData();
+
+    this.setUpdateTimer();
+  }
+
+  getHistoricalData() {
     this.data$ = this.stockService
       .fetchHistoryPrice("1D", this.symbol)
       .subscribe((data) => {
@@ -98,6 +105,8 @@ export class MixedChartComponent implements OnInit, OnDestroy {
   }
 
   getRealTimePrice() {
+    if (new Date().getUTCHours() - 4 >= 16) return;
+
     const lastDataPoint = this.data.candles[this.data.candles.length - 1];
     const secondLastDataPoint = this.data.candles[this.data.candles.length - 2];
 
@@ -106,20 +115,19 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       .subscribe(([data]) => {
         const { timestamp, volume, price } = data;
         const timestampMS = timestamp * 1000;
-
         console.log("price-------------", price);
 
         this.dataUpdated = true;
+        this.updateChartBoundary(price);
 
         if (this.firstRealTime) {
           this.firstRealTime = false;
           this.newDataAdded = true;
-
-          // The historical 1-min data is usually 1:30 min behind the real time price
+          // The historical 1-min data is usually 1-min or more behind the real time price
           // timestamp, if I use the real-time time stamp, then there will be
           // irregular time-line on the chart, which makes the bar width changed in
           // a unpredictable way. I have to add each data point "x" using the
-          // exact 1-min interval> Then in the tooltip, I will use the real-time
+          // exact 1-min interval. In the tooltip, I will use the real-time
           // timestamp instead of the timestamp in "xaxix" by adding the real-time
           // timestamp in the x:[] as fifth element, then use the formatter in
           // the "tooltip.x" to extract this timestamp and use it as x-label
@@ -129,11 +137,12 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           });
           this.data.volumes.push({
             x: new Date(lastDataPoint.x.getTime() + 60000),
-            // the real-time volume somehow includes some volumes that should be
-            // included in the historical 1-min data. Google "volumes don't match"
-            // So I have to deduct some volume from the first update, otherwise,
+            // the intraday historical data somehow does NOT include the additionall
+            // volumes that are presented in the real-time data
+            // Google "intraday volumes don't match"
+            // So I have to deduct some volumes from the first update, otherwise,
             // the volume will fluctuate in an ugly way
-            y: (volume - this.data.currentTotalVolume) * 0.35,
+            y: (volume - this.data.currentTotalVolume) * 0.2,
           });
           this.data.candleLine.push({
             x: new Date(lastDataPoint.x.getTime() + 60000),
@@ -143,7 +152,9 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           this.data.currentTotalVolume = volume;
         } else {
           // add new data point for every 1 min
-          if (timestampMS - secondLastDataPoint.x.getTime() > 60000) {
+          // Use the timestamp in "x", since it is the real-time timestamp
+          const slTimestamp = new Date(secondLastDataPoint.y[4]).getTime();
+          if (timestampMS - slTimestamp > 60000) {
             this.newDataAdded = true;
             console.log("adding");
             this.currentMinVolume =
@@ -197,6 +208,25 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       });
   }
 
+  setUpdateTimer() {
+    if (new Date().getUTCHours() - 4 >= 16) return;
+    this.updateTimer = setInterval(() => {
+      if (this.updateTimer && this.realTimePrice$) {
+        clearInterval(this.updateTimer);
+        this.realTimePrice$.unsubscribe();
+        console.log("4pm -============= market close!!!");
+        return;
+      }
+      this.getRealTimePrice();
+    }, 10000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.data$) this.data$.unsubscribe();
+    if (this.realTimePrice$) this.realTimePrice$.unsubscribe();
+    if (this.updateTimer) clearInterval(this.updateTimer);
+  }
+
   /** *************************
    *
    *  Set Candles Bars Options
@@ -221,7 +251,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       chart: {
         stacked: false,
         type: "candlestick",
-        height: 500,
+        height: 580,
         id: "Candles",
         toolbar: {
           show: false,
@@ -245,6 +275,10 @@ export class MixedChartComponent implements OnInit, OnDestroy {
             }
             if (this.dataUpdated) {
               this.dataUpdated = false;
+              if (!this.showVolumes) {
+                chart.hideSeries("Volumes");
+              }
+
               console.log("dataUpdated");
               chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
@@ -280,6 +314,9 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               }
             }
           },
+          legendClick: (chartContext, seriesIndex, config) => {
+            if (seriesIndex === 1) this.showVolumes = !this.showVolumes;
+          },
         },
         animations: {
           enabled: false,
@@ -292,22 +329,25 @@ export class MixedChartComponent implements OnInit, OnDestroy {
         // for the crosshair label
         custom: ({ series, seriesIndex, dataPointIndex, w }) => {
           // "seriesIndex" is number of the of the series data, 0 is the
-          // "candle", 1 is the "Volumes". ONLY useful when the tooltip is
+          // "Candles", 1 is the "Volumes". ONLY useful when the tooltip is
           // shared between the series
-          const data =
-            w.globals.initialSeries[seriesIndex].data[dataPointIndex];
+          let data = series[1][dataPointIndex];
+          if (seriesIndex === 0) {
+            data = w.globals.initialSeries[seriesIndex].data[dataPointIndex];
+            // if user toggle off the candles and use the scrollBrush, the candles
+            // data will be undefined in above, but the dataPointIndex is available
+            // so I have to use this dataPointIndex to find the current candle data point
+            // in the "this.data.candles"
+            if (!data) {
+              data = this.data.candles[dataPointIndex];
+            }
+          }
           return this.stockChartService.setCustomTooltip(data, seriesIndex);
         },
         // y: {  formatter: ()=>{} }
         x: {
           formatter: (value, opts?) => {
-            let timestamp = value;
-            if (opts && opts.w) {
-              const dataPointIndex = opts.dataPointIndex;
-              timestamp =
-                opts.w.globals.initialSeries[0].data[dataPointIndex].y[4];
-            }
-            return new Date(timestamp).toLocaleTimeString();
+            return new Date(value).toLocaleTimeString();
           },
         },
       },
@@ -334,9 +374,11 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       },
       xaxis: {
         type: "datetime",
-        // labels: {}
-        // Use the x-label to convert the timestamp label
-        // in the "tooltip" option instead of the "xaxis"
+        labels: {
+          formatter: (value, timestamp?, opts?) => {
+            return new Date(value).toLocaleTimeString();
+          },
+        },
       },
       yaxis: [
         {
@@ -354,6 +396,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           labels: {
             style: { colors: "#00b746" },
             offsetX: -10,
+            formatter: (val, opts) => this.stockChartService.toLocalString(val),
           },
           title: {
             text: "Price",
@@ -373,7 +416,8 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           labels: {
             style: { colors: "#0035e3" },
             offsetX: -20,
-            formatter: (val, opts) => this.numberFormatter(val),
+            formatter: (val, opts) =>
+              this.stockChartService.toSignificantDigit(val),
           },
           title: {
             text: "Volume",
@@ -409,7 +453,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
         },
       ],
       chart: {
-        height: 300,
+        height: 220,
         type: "bar",
         brush: {
           enabled: true,
@@ -490,16 +534,28 @@ export class MixedChartComponent implements OnInit, OnDestroy {
     };
   }
 
-  private numberFormatter(value: number, decimal: number = 0): string {
-    if (decimal === 0) {
-      return Math.floor(value).toString();
+  private updateChartsYaxis() {
+    console.log("updating boundary");
+    if (this.chartCandleOptions && this.chartBarOptions) {
+      (this.chartCandleOptions.yaxis as ApexYAxis[])[0].min =
+        this.data.lowBound;
+      (this.chartCandleOptions.yaxis as ApexYAxis[])[0].max =
+        this.data.highBound;
+
+      (this.chartBarOptions.yaxis as ApexYAxis[])[0].min = this.data.lowBound;
+      (this.chartBarOptions.yaxis as ApexYAxis[])[0].max = this.data.highBound;
     }
-    return value.toString();
   }
 
-  ngOnDestroy(): void {
-    if (this.data$) this.data$.unsubscribe();
-    if (this.realTimePrice$) this.realTimePrice$.unsubscribe();
+  private updateChartBoundary(price: number) {
+    if (price * 1.001 > this.data.highBound) {
+      this.data.highBound = price * 1.001;
+      this.updateChartsYaxis();
+    }
+    if (price * 0.999 < this.data.lowBound) {
+      this.data.lowBound = price * 0.999;
+      this.updateChartsYaxis();
+    }
   }
 }
 

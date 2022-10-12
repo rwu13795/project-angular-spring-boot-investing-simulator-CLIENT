@@ -162,11 +162,11 @@ export class StockService {
       data.currentTotalVolume += volume;
 
       // get the price range
-      if (high * 1.002 > data.highBound) {
-        data.highBound = high * 1.002;
+      if (high * 1.001 > data.highBound) {
+        data.highBound = high * 1.001;
       }
-      if (low * 0.998 < data.lowBound) {
-        data.lowBound = low * 0.998;
+      if (low * 0.999 < data.lowBound) {
+        data.lowBound = low * 0.999;
       }
 
       // map the data into seperate arrays for the charts
