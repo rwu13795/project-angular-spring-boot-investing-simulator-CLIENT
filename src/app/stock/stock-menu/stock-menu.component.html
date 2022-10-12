@@ -1,0 +1,16 @@
+<main>
+  <li *ngIf="symbol !== ''">
+    <ul>
+      <a [routerLink]="['financial-summary', symbol]">Financial summary</a>
+    </ul>
+    <ul>
+      Financial statement
+    </ul>
+    <ul>
+      <a [routerLink]="['chart', symbol]">chart</a>
+    </ul>
+    <ul>
+      company profile
+    </ul>
+  </li>
+</main>

@@ -65,20 +65,13 @@ export class MixedChartComponent implements OnInit, OnDestroy {
   private realTimePrice$?: Subscription;
   public realTimePrice: number = 0;
   private firstRealTime: boolean = true;
+  private currentMinVolume = 0;
 
   private updateTimer?: any;
   private intialUpdate: boolean = true;
   private newDataAdded: boolean = false;
   private dataUpdated: boolean = false;
-
-  array = [
-    [141.235, 141.2, 141.2989, 141.2499],
-    [141.16, 141.15, 141.28, 141.2379],
-    [141.12, 141.08, 141.17, 141.16],
-    [141.12, 141.07, 141.14, 141.12],
-  ];
-  index = 0;
-  lastXaxis: number[] = [];
+  private lastXaxis: number[] = [];
 
   constructor(private stockService: StockService) {}
 
@@ -100,58 +93,6 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       });
   }
 
-  addNewBar() {
-    if (this.index > 3) {
-      this.index = 0;
-    }
-    let yy = this.array[this.index];
-    this.index++;
-
-    let replaceTimestamp = this.data.candles[this.data.candles.length - 6].x;
-    let lastTimestamp = this.data.candles[this.data.candles.length - 1].x;
-    this.data.candles[this.data.candles.length - 6] = {
-      x: replaceTimestamp,
-      y: yy,
-    };
-
-    this.data.volumns[this.data.volumns.length - 6] = {
-      x: replaceTimestamp,
-      y: 45122,
-    };
-
-    this.data.candles.push({
-      x: new Date(lastTimestamp.getTime() + 60000),
-      y: [-1],
-    });
-    this.data.volumns.push({
-      x: new Date(lastTimestamp.getTime() + 60000),
-      y: 0,
-    });
-    // this.candleLine.push({
-    //   x: replaceTimestamp,
-    //   y: yy[3],
-    // });
-
-    // this.chartOptions.series = [
-    //   {
-    //     data: copy,
-    //   },
-    // ];
-
-    // each upda
-    this.chartCandle.updateSeries([
-      { data: this.data.candles },
-      { data: this.data.volumns },
-    ]);
-
-    this.chartBar.updateSeries([
-      { data: this.data.candleLine },
-      { data: this.data.volumns },
-    ]);
-
-    this.newDataAdded = true;
-  }
-
   getRealTimePrice() {
     const lastDataPoint = this.data.candles[this.data.candles.length - 1];
     const secondLastDataPoint = this.data.candles[this.data.candles.length - 2];
@@ -164,73 +105,74 @@ export class MixedChartComponent implements OnInit, OnDestroy {
 
         console.log("price-------------", price);
 
-        // if (timestampMS < lastDataPoint.x.getTime()) {
-        //   console.log("timestampMS < lastDataPoint.x.getTime()");
-        //   return;
-        // }
-        // for the chart "updated" event
         this.dataUpdated = true;
 
         if (this.firstRealTime) {
           this.firstRealTime = false;
           this.newDataAdded = true;
 
-          console.log("firstRealTime");
-
           // The historical 1-min data is usually 1:30 min behind the real time price
           // timestamp, if I use the real-time time stamp, then there will be
           // irregular time-line on the chart, which makes the bar width changed in
           // a unpredictable way. I have to add each data point "x" using the
           // exact 1-min interval> Then in the tooltip, I will use the real-time
-          // timestamp instead of the timestamp in "x"
+          // timestamp instead of the timestamp in "xaxix" by adding the real-time
+          // timestamp in the x:[] as fifth element, then use the formatter in
+          // the "tooltip.x" to extract this timestamp and use it as x-label
           this.data.candles.push({
-            x: new Date(timestampMS - 60000),
-            y: [lastDataPoint.y[3], price, price, price],
+            x: new Date(lastDataPoint.x.getTime() + 60000),
+            y: [lastDataPoint.y[3], price, price, price, timestampMS],
           });
           this.data.volumns.push({
-            x: new Date(timestampMS - 60000),
-            y: volume - this.data.currentTotalVolume,
+            x: new Date(lastDataPoint.x.getTime() + 60000),
+            // the real-time volume somehow includes some volumes that should be
+            // included in the historical 1-min data. Google "volumes don't match"
+            // So I have to deduct some volume from the first update, otherwise,
+            // the volume will fluctuate in an ugly way
+            y: (volume - this.data.currentTotalVolume) * 0.35,
           });
-          this.data.currentTotalVolume = volume;
-
           this.data.candleLine.push({
-            x: new Date(timestampMS - 60000),
+            x: new Date(lastDataPoint.x.getTime() + 60000),
             y: price,
           });
+
+          this.data.currentTotalVolume = volume;
         } else {
           // add new data point for every 1 min
           if (timestampMS - secondLastDataPoint.x.getTime() > 60000) {
             this.newDataAdded = true;
             console.log("adding");
+            this.currentMinVolume =
+              volume - this.data.currentTotalVolume - this.currentMinVolume;
 
             this.data.candles.push({
               x: new Date(lastDataPoint.x.getTime() + 60000),
-              y: [lastDataPoint.y[3], price, price, price],
+              y: [lastDataPoint.y[3], price, price, price, timestampMS],
             });
             this.data.volumns.push({
               x: new Date(lastDataPoint.x.getTime() + 60000),
-              y: volume - this.data.currentTotalVolume,
+              y: this.currentMinVolume,
             });
-            this.data.currentTotalVolume = volume;
-
             this.data.candleLine.push({
               x: new Date(lastDataPoint.x.getTime() + 60000),
               y: price,
             });
+
+            this.data.currentTotalVolume = volume - this.currentMinVolume;
           } else {
             let [open, high, low, close] = lastDataPoint.y;
             if (price > high) high = price;
             if (price < low) low = price;
 
-            console.log(open, high, low, close);
+            this.currentMinVolume = volume - this.data.currentTotalVolume;
 
             this.data.candles[this.data.candles.length - 1] = {
               x: lastDataPoint.x,
-              y: [open, high, low, price],
+              y: [open, high, low, price, timestampMS],
             };
             this.data.volumns[this.data.volumns.length - 1] = {
               x: lastDataPoint.x,
-              y: volume - this.data.currentTotalVolume,
+              y: this.currentMinVolume,
             };
             this.data.candleLine[this.data.candleLine.length - 1] = {
               x: lastDataPoint.x,
@@ -251,28 +193,6 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       });
   }
 
-  private addNewDataPoint(
-    timestampMS: number,
-    lastDataPoint: CandleData,
-    price: number,
-    volume: number
-  ) {
-    this.data.candles.push({
-      x: new Date(timestampMS),
-      y: [lastDataPoint.y[3], price, price, price],
-    });
-    this.data.volumns.push({
-      x: new Date(timestampMS),
-      y: volume - this.data.currentTotalVolume,
-    });
-    this.data.currentTotalVolume = volume;
-
-    this.data.candleLine.push({
-      x: new Date(timestampMS),
-      y: price,
-    });
-  }
-
   /** *************************
    *
    *  Set Candles Bars Options
@@ -282,76 +202,23 @@ export class MixedChartComponent implements OnInit, OnDestroy {
     this.chartCandleOptions = {
       series: [
         {
-          name: "candle",
+          name: "Candles",
           type: "candlestick",
           data: this.data.candles,
           color: "#00E396",
         },
         {
-          name: "Volumns",
+          name: "Volumes",
           type: "bar",
           data: this.data.volumns,
           color: "#0035e3",
         },
       ],
-      tooltip: {
-        // multiple series datapoint won't share the same tooltip
-        shared: false,
-        custom: ({ series, seriesIndex, dataPointIndex, w }) => {
-          // "seriesIndex" is number of the of the series data, 0 is the
-          // "candle", 1 is the "Volumns". ONLY useful when the tooltip is
-          // shared between the series
-
-          // console.log(series, seriesIndex, dataPointIndex, w);
-          const data =
-            w.globals.initialSeries[seriesIndex].data[dataPointIndex];
-
-          // don't show the tooltip for the "placeholder" data
-          if (data.y[0] === -1) return "<span></span>";
-
-          if (seriesIndex === 1) {
-            if (data.y === 0) return "<span></span>";
-            return `<div style='padding: 6px'><b>Volumns</b>: ${data.y}</div>`;
-          }
-
-          return (
-            "<div style='padding: 6px;'>" +
-            "<div><b>Open</b>: " +
-            data.y[0] +
-            "</div>" +
-            "<div><b>High</b>: " +
-            data.y[1] +
-            "</div>" +
-            "<div><b>Low</b>: " +
-            data.y[2] +
-            "</div>" +
-            "<div><b>Close</b>: " +
-            data.y[3] +
-            "</div>" +
-            "</div>"
-          );
-        },
-        enabled: true,
-        // y: {
-        //   formatter: undefined,
-        //   title: {
-        //     formatter: (seriesName) => "",
-        //   },
-        // },
-        // x: {
-        //   formatter: (value, opts?) => {
-        //     // the value is the MS timestamp, any date string or date object
-        //     // will be automatically converted to timestamp
-
-        //     return new Date(value).toLocaleTimeString();
-        //   },
-        // },
-      },
       chart: {
         stacked: false,
         type: "candlestick",
         height: 500,
-        id: "candles",
+        id: "Candles",
         toolbar: {
           show: false,
           tools: { zoom: false },
@@ -374,12 +241,10 @@ export class MixedChartComponent implements OnInit, OnDestroy {
             }
             if (this.dataUpdated) {
               this.dataUpdated = false;
-
               console.log("dataUpdated");
               chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
               });
-
               // ---- (3) ---- //
               if (this.newDataAdded) {
                 this.newDataAdded = false;
@@ -402,20 +267,65 @@ export class MixedChartComponent implements OnInit, OnDestroy {
                   ];
                 }
               }
-
-              // if (this.dataUpdated) {
-              //   this.lastXaxis = [
-              //     this.lastXaxis[0] - 60000,
-              //     this.lastXaxis[1] - 60000,
-              //   ];
-              // }
-
-              chart.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
+              try {
+                this.chartCandle.zoomX(this.lastXaxis[0], this.lastXaxis[1]);
+              } catch (err) {
+                console.log("zoomX false error...");
+              }
             }
           },
         },
         animations: {
           enabled: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        // multiple series datapoint won't share the same tooltip
+        shared: false,
+        // for the crosshair label
+        custom: ({ series, seriesIndex, dataPointIndex, w }) => {
+          // "seriesIndex" is number of the of the series data, 0 is the
+          // "candle", 1 is the "Volumns". ONLY useful when the tooltip is
+          // shared between the series
+          const data =
+            w.globals.initialSeries[seriesIndex].data[dataPointIndex];
+
+          // don't show the tooltip for the "placeholder" data
+          if (data.y[0] === -1) return "<span></span>";
+
+          if (seriesIndex === 1) {
+            if (data.y === 0) return "<span></span>";
+            return `<div style='padding: 6px'><b>Volumns</b>: ${data.y}</div>`;
+          }
+          return (
+            "<div style='padding: 6px;'>" +
+            "<div><b>Open</b>: " +
+            data.y[0] +
+            "</div>" +
+            "<div><b>High</b>: " +
+            data.y[1] +
+            "</div>" +
+            "<div><b>Low</b>: " +
+            data.y[2] +
+            "</div>" +
+            "<div><b>Close</b>: " +
+            data.y[3] +
+            "</div>" +
+            "</div>"
+          );
+        },
+        // y: {  formatter: ()=>{} }
+        x: {
+          formatter: (value, opts?) => {
+            let timestamp = value;
+            if (opts && opts.w) {
+              const dataPointIndex = opts.dataPointIndex;
+              timestamp =
+                opts.w.globals.initialSeries[0].data[dataPointIndex].y[4];
+            }
+            return new Date(timestamp).toLocaleTimeString();
+          },
         },
       },
       stroke: {
@@ -441,15 +351,13 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       },
       xaxis: {
         type: "datetime",
-        labels: {
-          formatter: (val, opts) => {
-            return new Date(val).toLocaleTimeString();
-          },
-        },
+        // labels: {}
+        // Use the x-label to convert the timestamp label
+        // in the "tooltip" option instead of the "xaxis"
       },
       yaxis: [
         {
-          seriesName: "candle",
+          seriesName: "Candles",
           min: this.data.lowBound,
           max: this.data.highBound,
           tickAmount: 10,
@@ -471,7 +379,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           tooltip: { enabled: false },
         },
         {
-          seriesName: "Volumns",
+          seriesName: "Volumes",
           opposite: true,
           axisTicks: { show: true, offsetX: -8 },
           axisBorder: {
@@ -479,7 +387,6 @@ export class MixedChartComponent implements OnInit, OnDestroy {
             color: "#0035e3",
             offsetX: -8,
           },
-
           labels: {
             style: { colors: "#0035e3" },
             offsetX: -20,
@@ -506,13 +413,13 @@ export class MixedChartComponent implements OnInit, OnDestroy {
     this.chartBarOptions = {
       series: [
         {
-          name: "candleLine",
+          name: "Prices",
           type: "line",
           data: this.data.candleLine,
           color: "#00E396",
         },
         {
-          name: "volume",
+          name: "Volumes",
           type: "bar",
           data: this.data.volumns,
           color: "#0035e3",
@@ -523,7 +430,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
         type: "bar",
         brush: {
           enabled: true,
-          target: "candles",
+          target: "Candles",
         },
         selection: {
           enabled: true,
@@ -580,24 +487,18 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       xaxis: {
         type: "datetime",
         // tickAmount: 5,
-        labels: {
-          show: false,
-          // formatter: (val, opts) => {
-          //   return new Date(val).toLocaleTimeString();
-          // },
-          // offsetX: 20,
-        },
+        labels: { show: false },
       },
       yaxis: [
         {
-          seriesName: "candleLine",
+          seriesName: "CandleLine",
           min: this.data.lowBound,
           max: this.data.highBound,
           forceNiceScale: false,
           labels: { show: false },
         },
         {
-          seriesName: "volume",
+          seriesName: "VolumeBar",
           opposite: true,
           labels: { show: false },
           forceNiceScale: true,

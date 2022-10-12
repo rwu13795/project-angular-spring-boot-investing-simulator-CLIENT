@@ -4,7 +4,9 @@
   <div *ngFor="let stock of stockSearchResult">
     <div>Symbol: {{ stock.symbol }}</div>
     <div>Name: {{ stock.name }}</div>
-    <a [routerLink]="['chart', stock.symbol]">To the chart</a>
+    <a [routerLink]="['financial-summary', stock.symbol]"
+      >To the financial-summary</a
+    >
     <hr />
   </div>
 

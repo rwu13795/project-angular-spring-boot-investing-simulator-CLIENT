@@ -7,17 +7,16 @@ import {
   Response_searchByName,
   Response_historyPriceFull,
   Response_historyPrice,
-  RealTimePrice,
+  Response_realTimePrice,
   StoredChartData,
+  Response_incomeStatement,
 } from "./stock-models";
 
 @Injectable({ providedIn: "root" })
 export class StockService {
   private FMP_API = "https://financialmodelingprep.com/api/v3";
-
   // for spring boot server
   private SERVER_URL = "http://localhost:8080/api";
-
   private API_KEY = "bebf0264afd8447938b0ae54509c1513";
 
   private currentSymbol: string = "";
@@ -95,17 +94,38 @@ export class StockService {
     const params = new HttpParams({
       fromObject: { apikey: this.API_KEY },
     });
-    return this.http.get<RealTimePrice[]>(
+    return this.http.get<Response_realTimePrice[]>(
       `${this.FMP_API}/quote/${this.currentSymbol}`,
-      {
-        params,
-      }
+      { params }
+    );
+  }
+
+  public getIncomeStatements(
+    symbol: string,
+    isFullYear: boolean,
+    limit: number
+  ) {
+    this.currentSymbol = symbol;
+    const params = new HttpParams({
+      fromObject: {
+        oeriod: isFullYear ? "annual" : "quarter",
+        limit,
+        apikey: this.API_KEY,
+      },
+    });
+    return this.http.get<Response_incomeStatement[]>(
+      `${this.FMP_API}/income-statement/${this.currentSymbol}`,
+      { params }
     );
   }
 
   public getStoredChartDate(option: string) {
     return this.storedChartData[option];
   }
+
+  /* **************************** */
+  /*        Helper methods        */
+  /* **************************** */
 
   private mapResponseData(
     responseData: Response_historyPrice[],
@@ -121,20 +141,21 @@ export class StockService {
       currentTotalVolume: 0,
     };
 
-    // put 6 "placeholders" at the start of the arrays
-    // if (option === "1D") {
-    //   const firstEntryTimestamp = responseData[responseData.length - 1].date;
-    //   for (let i = 6; i >= 1; i--) {
-    //     const timestamp = new Date(
-    //       new Date(firstEntryTimestamp).getTime() - interval * i
-    //     );
-    //     data.candles.push({
-    //       x: timestamp,
-    //       y: [-1],
-    //     });
-    //     data.volumns.push({ x: timestamp, y: 0 });
-    //   }
-    // }
+    // put some "placeholders" at the start of the arrays in order to enable
+    // the brushScroll to select the first couple of data-points in the mixed-chart
+    if (option === "1D") {
+      const firstEntryTimestamp = responseData[responseData.length - 1].date;
+      for (let i = 6; i >= 1; i--) {
+        const timestamp = new Date(
+          new Date(firstEntryTimestamp).getTime() - interval * i
+        );
+        data.candles.push({
+          x: timestamp,
+          y: [-1, 0, 0, 0, timestamp.getTime()],
+        });
+        data.volumns.push({ x: timestamp, y: 0 });
+      }
+    }
 
     for (let i = responseData.length - 1; i >= 0; i--) {
       const { date, open, high, low, close, volume } = responseData[i];
@@ -152,7 +173,7 @@ export class StockService {
       // map the data into seperate arrays for the charts
       data.candles.push({
         x: new Date(date),
-        y: [open, high, low, close],
+        y: [open, high, low, close, new Date(date).getTime()],
       });
       data.volumns.push({ x: new Date(date), y: volume });
       // use the "close" price for the line chart
@@ -162,7 +183,7 @@ export class StockService {
     // put 6 "placeholders" at the end of the arrays
     // if (option === "1D") {
     //   const lastEntryTimestamp = responseData[0].date;
-    //   for (let i = 1; i <= 6; i++) {
+    //   for (let i = 1; i <= 5; i++) {
     //     const timestamp = new Date(
     //       new Date(lastEntryTimestamp).getTime() + interval * i
     //     );
@@ -234,6 +255,13 @@ export class StockService {
         from_date = this.fromWeekendsToMonday(from_date);
         timeRange = "";
         interval = 60000 * 60 * 24;
+        break;
+      }
+      case "5Y": {
+        from_date = new Date(to_date.getTime() - 86400000 * 365 * 5);
+        from_date = this.fromWeekendsToMonday(from_date);
+        timeRange = "";
+        interval = 60000 * 60 * 24 * 5;
         break;
       }
       default: {
