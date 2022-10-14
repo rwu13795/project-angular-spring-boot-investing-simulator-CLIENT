@@ -11,7 +11,7 @@ import { StoreRouterConnectingModule } from "@ngrx/router-store";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
-import { DigitSlideComponent } from "./digit-slide/digit-slide.component";
+import { DigitCylinderComponent } from "./common/digit-cylinder/digit-cylinder.component";
 import { HistoricalChartComponent } from "./stock/stock-chart/historical-chart/historical-chart.component";
 import { StockChartComponent } from "./stock/stock-chart/stock-chart.component";
 import { StockComponent } from "./stock/stock.component";
@@ -20,7 +20,7 @@ import { appReducer } from "./ngrx-store/app.reducer";
 import { environment } from "src/environments/environment.prod";
 
 @NgModule({
-  declarations: [AppComponent, DigitSlideComponent],
+  declarations: [AppComponent, DigitCylinderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

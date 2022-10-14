@@ -209,6 +209,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           labels: {
             style: { colors: "#00b746" },
             offsetX: -10,
+            formatter: (val, opts) => this.stockChartService.toLocalString(val),
           },
           title: {
             text: "Price",
@@ -228,7 +229,8 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           labels: {
             style: { colors: "#0035e3" },
             offsetX: -20,
-            formatter: (val, opts) => this.numberFormatter(val),
+            formatter: (val, opts) =>
+              this.stockChartService.toSignificantDigit(val),
           },
           title: {
             text: "Volume",

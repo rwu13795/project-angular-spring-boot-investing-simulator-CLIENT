@@ -2,8 +2,8 @@
   <h2 *ngIf="isLoading">Loading...............</h2>
   <h3 *ngIf="errorMessage">{{ errorMessage }}</h3>
   <h4>{{ realTimePrice }}</h4>
-  <div class="chart-box" *ngIf="chartCandleOptions">
-    <div id="chart-candlestick">
+  <div class="chart-box">
+    <div id="chart-candlestick" *ngIf="chartCandleOptions">
       <apx-chart
         #chartCandle
         [series]="chartCandleOptions.series!"

@@ -7,14 +7,12 @@ import {
 } from "@angular/core";
 
 @Component({
-  selector: "app-digit-slide",
-  templateUrl: "./digit-slide.component.html",
-  styleUrls: ["./digit-slide.component.css"],
+  selector: "app-digit-cylinder",
+  templateUrl: "./digit-cylinder.component.html",
+  styleUrls: ["./digit-cylinder.component.css"],
 })
-export class DigitSlideComponent implements OnInit, OnChanges {
+export class DigitCylinderComponent implements OnInit, OnChanges {
   @Input() digit: number = 0;
-
-  inputTimer?: any;
 
   ngOnInit(): void {
     console.log(this.digit);
@@ -24,12 +22,12 @@ export class DigitSlideComponent implements OnInit, OnChanges {
     console.log(changes["digit"].currentValue);
 
     let newNum = changes["digit"].currentValue;
-    let slide = document.getElementById("slide");
-    if (slide) {
-      console.log(slide);
-      let slideDistance = slide.offsetHeight / 10;
+    let cylinder = document.getElementById("cylinder");
+    if (cylinder) {
+      console.log(cylinder);
+      let distance = cylinder.offsetHeight / 10;
 
-      slide.style.transform = `translateY(${slideDistance * newNum}px)`;
+      cylinder.style.transform = `translateY(${distance * newNum}px)`;
     }
   }
 

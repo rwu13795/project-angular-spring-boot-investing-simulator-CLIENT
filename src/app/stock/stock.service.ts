@@ -123,6 +123,22 @@ export class StockService {
     return this.storedChartData[option];
   }
 
+  public isMarketOpened(): boolean {
+    const UTCHours = new Date().getUTCHours();
+    const UTCMinutes = new Date().getUTCMinutes();
+    const UTCday = new Date().getUTCDay();
+
+    if (UTCday === 6 || UTCday === 0) return false;
+
+    if (UTCHours < 13 || UTCHours >= 20) {
+      return false;
+    }
+    if (UTCHours >= 13 && UTCHours < 14 && UTCMinutes < 30) {
+      return false;
+    }
+    return true;
+  }
+
   /* ************************************************************************** */
   /*                            Helper methods                                  */
   /* ************************************************************************** */
@@ -210,7 +226,7 @@ export class StockService {
     interval: number;
   } {
     let to_date = new Date();
-    to_date = this.fromWeekendsToWeekday(to_date);
+    to_date = this.fromWeekendsToFriday(to_date);
 
     let to: string = this.getDayString(
       to_date.getFullYear(),
@@ -267,8 +283,22 @@ export class StockService {
         interval = 60000 * 60 * 24 * 5;
         break;
       }
+      // default is "1D"
       default: {
-        // default is "1D"
+        const UTCday = new Date().getUTCDay();
+        // If the day is NOT a week day, and the time is between 12:00AM and 9:30AM,
+        // then I need to fetch the data of yesterday. Otherwise, the api will
+        // return data of the ast 2 days, since there is NO data for the current day yet
+        if (!this.isMarketOpened() && UTCday !== 6 && UTCday !== 0) {
+          const UTCHours = new Date().getUTCHours();
+          const UTCMinutes = new Date().getUTCMinutes();
+          if (
+            UTCHours >= 0 &&
+            (UTCHours < 13 || (UTCHours === 13 && UTCMinutes < 30))
+          ) {
+            to_date = new Date(to_date.getTime() - 86400000);
+          }
+        }
         from_date = to_date;
         timeRange = "1min";
         interval = 60000;
@@ -305,7 +335,7 @@ export class StockService {
     return date;
   }
 
-  private fromWeekendsToWeekday(date: Date): Date {
+  private fromWeekendsToFriday(date: Date): Date {
     // back track the date if date is on weekend
     if (date.getDay() === 6) {
       // 86400000 ms = 1 day

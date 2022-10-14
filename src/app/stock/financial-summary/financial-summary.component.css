@@ -14,6 +14,24 @@ main {
 
 .summary {
   margin: 40px auto;
+  max-height: 250px;
+  width: 90%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+.cell {
+  height: 60px;
+  width: 33.33%;
+  border-bottom: blue solid 1px;
+  border-right: blue solid 1px;
+}
+.cell:nth-child(9),
+.cell:nth-child(10),
+.cell:nth-child(11),
+.cell:nth-child(12) {
+  border-right: none;
 }
 
 .chart-group {
@@ -35,5 +53,19 @@ main {
   }
   .chart-wrapper {
     width: 90%;
+  }
+  .summary {
+    max-height: 380px;
+  }
+  .cell {
+    width: 50%;
+  }
+  .cell:nth-child(7),
+  .cell:nth-child(8),
+  .cell:nth-child(9),
+  .cell:nth-child(10),
+  .cell:nth-child(11),
+  .cell:nth-child(12) {
+    border-right: none;
   }
 }

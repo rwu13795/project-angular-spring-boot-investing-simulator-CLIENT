@@ -75,6 +75,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   private zoomedHighBound: number = 0;
   private zoomedLowBound: number = Infinity;
   private isZoomed: boolean = false;
+  private scrolledDelayTimer?: any;
 
   constructor(
     private stockService: StockService,
@@ -233,18 +234,13 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
         },
         events: {
           mounted: (chart, options) => {
-            try {
-              // zoom to the last 30 entries on mounted
-              const minXaxis = this.data.candles.length - 30;
-              this.lastXaxis = [
-                this.data.candles[minXaxis < 0 ? 0 : minXaxis].x.getTime(),
-                this.data.candles[this.data.candles.length - 1].x.getTime() +
-                  60000 * 8,
-              ];
-              chart.zoomX(...this.lastXaxis);
-            } catch (err) {
-              console.log("zoomX false error...");
-            }
+            const minXaxis = this.data.candles.length - 30;
+            this.lastXaxis = [
+              this.data.candles[minXaxis < 0 ? 0 : minXaxis].x.getTime(),
+              this.data.candles[this.data.candles.length - 1].x.getTime() +
+                60000 * 8,
+            ];
+            this.zoomTo(this.lastXaxis[0], this.lastXaxis[1]);
           },
           updated: (chart, options) => {
             if (!this.chartCandleOptions) return;
@@ -254,65 +250,63 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
               if (!this.showVolumes) {
                 chart.hideSeries("Volumes");
               }
-
               console.log("dataUpdated");
-              chart.updateOptions({
-                yaxis: this.chartCandleOptions.yaxis,
-              });
+              chart.updateOptions({ yaxis: this.chartCandleOptions.yaxis });
+
+              // if the chart has been reset, the xaixs will be undefined
+              if (!this.lastXaxis[0] || !this.lastXaxis[1]) return;
+              // if user zoomed the chart and the datapoints are not part of the
+              // newest, don't shift the bars after adding new datapoints, just retain
+              // the current zoomed coordinates
+              if (
+                this.lastXaxis[1] <
+                  this.data.candles[this.data.candles.length - 1].x.getTime() &&
+                this.isZoomed
+              ) {
+                console.log("no zoom, user is at the middle of data");
+                this.zoomTo(this.lastXaxis[0], this.lastXaxis[1]);
+                return;
+              }
+
               // ---- (3) ---- //
               if (this.newDataAdded) {
                 this.newDataAdded = false;
                 console.log("newDataAdded");
-
-                const { min, max } = options.config.xaxis;
-                // if (min && max && min !== 0 && max !== 0) {
-                //   console.log("newDataAdded ------ min, max")
-                //   if (this.lastXaxis.length < 1) {
-                //     this.lastXaxis = [min + 60000, max + 60000];
-                //   } else {
-                //     this.lastXaxis = [
-                //       this.lastXaxis[0] + 60000,
-                //       this.lastXaxis[1] + 60000,
-                //     ];
-                //   }
-                // } else {
-                //   console.log("newDataAdded ------ !min && !max");
-                //   this.lastXaxis = [
-                //     this.lastXaxis[0] + 60000,
-                //     this.lastXaxis[1] + 60000,
-                //   ];
-                // }
-                const lastDataPointTimestamp =
-                  this.data.candles[this.data.candles.length - 1].x.getTime();
-                if (this.isZoomed && max >= lastDataPointTimestamp) {
-                  // some unknown error occurs when I try to use zoomX(), but there
-                  // is no issue found in the chart
-                  console.log("zoomX to the new Data point");
-                  try {
-                    chart.zoomX(min + 60000, max + 60000);
-                  } catch (err) {
-                    console.log("zoomX false error...");
-                  }
-                } else {
-                  console.log("User is in the middle of data, don't zoomX");
-                }
+                // only shift the bars after adding new data, otherwise, zoom to
+                // the previous xaxis coordinates
+                this.lastXaxis = [
+                  this.lastXaxis[0] + 60000,
+                  this.lastXaxis[1] + 60000,
+                ];
+                console.log("zoomX to the new Data point");
               }
+              this.zoomTo(this.lastXaxis[0], this.lastXaxis[1]);
             }
           },
           // --- (2) --- //
           zoomed: (chart, { xaxis, yaxis }) => {
             // min and max is the timestamp related to the chart data time stamp
             const { min, max } = xaxis;
+            this.lastXaxis = [min, max];
             this.isZoomed = true;
+
             if (!min || !max) {
+              console.log("resetting, !min !max");
               this.resetChartYaxis();
               return;
             }
 
             const [minDataPointIndex, maxDataPointIndex] =
               this.getMinMaxDataPointIndex(min, max);
-
-            if (!minDataPointIndex || !maxDataPointIndex) {
+            console.log(
+              "minDataPointIndex, maxDataPointIndex",
+              minDataPointIndex,
+              maxDataPointIndex
+            );
+            if (
+              minDataPointIndex === undefined ||
+              maxDataPointIndex === undefined
+            ) {
               this.resetChartYaxis();
               return;
             }
@@ -321,6 +315,25 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
 
             this.updateZoomedHighLowBound(minDataPointIndex, maxDataPointIndex);
           },
+          scrolled: (chart, { xaxis }) => {
+            const { min, max } = xaxis;
+            this.lastXaxis = [min, max];
+            // I could put the same logic in the "zoomed" event here to update the
+            // boundary when the chart is scrolled
+            if (this.scrolledDelayTimer) clearTimeout(this.scrolledDelayTimer);
+            // set a 400ms delay for the "scrolled", otherwise, the "updateZoomedHighLowBound"
+            // will be triggered on every slight "scrolled"
+            this.scrolledDelayTimer = setTimeout(() => {
+              console.log("scrolled------------------------------");
+              const [minDataPointIndex, maxDataPointIndex] =
+                this.getMinMaxDataPointIndex(min, max);
+              this.updateZoomedHighLowBound(
+                minDataPointIndex,
+                maxDataPointIndex
+              );
+            }, 400);
+          },
+
           legendClick: (chartContext, seriesIndex, config) => {
             if (seriesIndex === 1) this.showVolumes = !this.showVolumes;
           },
@@ -365,7 +378,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
           },
         },
       },
-
       stroke: {
         width: [1, 1],
       },
@@ -446,10 +458,14 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private setUpdateTimer(): void {
-    if (!this.isMarketOpened()) return;
+    if (!this.stockService.isMarketOpened()) return;
 
     this.updateTimer = setInterval(() => {
-      if (this.updateTimer && this.realTimePrice$ && !this.isMarketOpened()) {
+      if (
+        this.updateTimer &&
+        this.realTimePrice$ &&
+        !this.stockService.isMarketOpened()
+      ) {
         clearInterval(this.updateTimer);
         this.realTimePrice$.unsubscribe();
         console.log("---------- 4PM market closed! ----------");
@@ -457,19 +473,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.getRealTimePrice();
     }, 10000);
-  }
-
-  private isMarketOpened(): boolean {
-    const UTCHours = new Date().getUTCHours();
-    const UTCMinutes = new Date().getUTCMinutes();
-
-    if (UTCHours < 13 || UTCHours >= 20) {
-      return false;
-    }
-    if (UTCHours >= 13 && UTCHours < 14 && UTCMinutes < 30) {
-      return false;
-    }
-    return true;
   }
 
   private resetChartYaxis() {
@@ -551,11 +554,13 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   private updateChartsYaxis() {
     if (!this.chartCandleOptions) return;
     if (this.isZoomed) {
+      console.log("updateChartsYaxis ----- isZoomed");
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].min =
         this.zoomedLowBound;
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].max =
         this.zoomedHighBound;
     } else {
+      console.log("updateChartsYaxis ----- NO Zoomed");
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].min =
         this.data.lowBound;
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].max =
@@ -566,15 +571,35 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateChartBoundary(price: number) {
-    if (price * 1.002 > this.data.highBound) {
-      this.data.highBound = price * 1.002;
-      this.zoomedHighBound = price * 1.002;
+    if (price * 1.001 > this.data.highBound) {
+      console.log("----- updateing data highBound  ----- ");
+
+      this.data.highBound = price * 1.001;
       this.updateChartsYaxis();
     }
-    if (price * 0.998 < this.data.lowBound) {
-      this.data.lowBound = price * 0.998;
-      this.zoomedLowBound = price * 0.998;
+    if (price * 0.999 < this.data.lowBound) {
+      console.log("----- updateing data lowBound  ----- ");
+      this.data.lowBound = price * 0.999;
       this.updateChartsYaxis();
+    }
+
+    if (price * 1.001 > this.zoomedHighBound) {
+      console.log("----- updateing data zoomedHighBound  ----- ");
+      this.zoomedHighBound = price * 1.001;
+      this.updateChartsYaxis();
+    }
+    if (price * 0.999 < this.zoomedLowBound) {
+      console.log("----- updateing data zoomedHighBound  ----- ");
+      this.zoomedLowBound = price * 0.999;
+      this.updateChartsYaxis();
+    }
+  }
+
+  private zoomTo(min: number, max: number) {
+    try {
+      this.chartCandle.zoomX(min, max);
+    } catch (err) {
+      console.log("zoomX false error...");
     }
   }
 }
