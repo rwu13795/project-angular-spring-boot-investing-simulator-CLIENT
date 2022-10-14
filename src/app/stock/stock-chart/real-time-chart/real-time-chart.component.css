@@ -1,0 +1,22 @@
+main {
+  width: 100%;
+}
+
+.chart-box {
+  max-width: 100vw;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+#chart-candlestick {
+  min-width: 96%;
+  max-width: 96%;
+  margin: 35px 0 4px 0;
+}
+
+.button_groups {
+  display: flex;
+  flex-flow: row nowrap;
+  float: right;
+}

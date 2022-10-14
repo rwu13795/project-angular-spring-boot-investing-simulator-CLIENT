@@ -142,19 +142,19 @@ export class StockService {
 
     // put some "placeholders" at the start of the arrays in order to enable
     // the brushScroll to select the first couple of data-points in the mixed-chart
-    if (option === "1D") {
-      const firstEntryTimestamp = responseData[responseData.length - 1].date;
-      for (let i = 6; i >= 1; i--) {
-        const timestamp = new Date(
-          new Date(firstEntryTimestamp).getTime() - interval * i
-        );
-        data.candles.push({
-          x: timestamp,
-          y: [-1, 0, 0, 0, timestamp.getTime()],
-        });
-        data.volumes.push({ x: timestamp, y: 0 });
-      }
-    }
+    // if (option === "1D") {
+    //   const firstEntryTimestamp = responseData[responseData.length - 1].date;
+    //   for (let i = 6; i >= 1; i--) {
+    //     const timestamp = new Date(
+    //       new Date(firstEntryTimestamp).getTime() - interval * i
+    //     );
+    //     data.candles.push({
+    //       x: timestamp,
+    //       y: [-1, 0, 0, 0, timestamp.getTime()],
+    //     });
+    //     data.volumes.push({ x: timestamp, y: 0 });
+    //   }
+    // }
 
     for (let i = responseData.length - 1; i >= 0; i--) {
       const { date, open, high, low, close, volume } = responseData[i];
@@ -176,7 +176,11 @@ export class StockService {
       });
       data.volumes.push({ x: new Date(date), y: volume });
       // use the "close" price for the line chart
-      data.candleLine.push({ x: new Date(date), y: close });
+      data.candleLine.push({
+        x: new Date(date),
+        y: close,
+        meta: [open, high, low, close, new Date(date).getTime()],
+      });
     }
 
     // put 6 "placeholders" at the end of the arrays

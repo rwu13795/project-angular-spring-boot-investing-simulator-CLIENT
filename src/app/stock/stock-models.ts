@@ -28,11 +28,16 @@ export interface VolumeData {
   x: Date; // timestamp
   y: number;
 }
+export interface CandleLineData {
+  x: Date; // timestamp
+  y: number;
+  meta: number[];
+}
 
 export interface ChartData {
   volumes: VolumeData[];
   candles: CandleData[];
-  candleLine: VolumeData[];
+  candleLine: CandleLineData[];
   highBound: number;
   lowBound: number;
   currentTotalVolume: number;

@@ -50,7 +50,7 @@ export class RevenueChartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.incomeStatement$ = this.stockService
-      .getIncomeStatements(this.symbol, this.isFullYear, 5)
+      .getIncomeStatements(this.symbol, this.isFullYear, 6)
       .subscribe((data) => this.setChartOptions(data));
   }
 
@@ -96,6 +96,12 @@ export class RevenueChartComponent implements OnInit, OnDestroy {
       },
       xaxis: {
         categories: xaxisCategories,
+        labels: {
+          show: true,
+          formatter: (val) => {
+            return new Date(val).getFullYear().toString();
+          },
+        },
       },
       yaxis: {
         labels: {
@@ -105,6 +111,7 @@ export class RevenueChartComponent implements OnInit, OnDestroy {
           },
         },
       },
+
       fill: {
         opacity: 1,
       },

@@ -2,7 +2,7 @@
   <h2 *ngIf="isLoading">Loading...............</h2>
   <h3 *ngIf="errorMessage">{{ errorMessage }}</h3>
   <h4>{{ realTimePrice }}</h4>
-  <div class="chart-box" *ngIf="chartCandleOptions && chartBarOptions">
+  <div class="chart-box" *ngIf="chartCandleOptions">
     <div id="chart-candlestick">
       <apx-chart
         #chartCandle
@@ -14,19 +14,6 @@
         [stroke]="chartCandleOptions.stroke!"
         [plotOptions]="chartCandleOptions.plotOptions!"
         [legend]="chartCandleOptions!.legend!"
-        [autoUpdateSeries]="true"
-      ></apx-chart>
-    </div>
-    <div id="chart-bar">
-      <apx-chart
-        #chartBar
-        [series]="chartBarOptions.series!"
-        [chart]="chartBarOptions.chart!"
-        [xaxis]="chartBarOptions.xaxis!"
-        [yaxis]="chartBarOptions.yaxis!"
-        [dataLabels]="chartBarOptions.dataLabels!"
-        [stroke]="chartBarOptions.stroke!"
-        [plotOptions]="chartBarOptions.plotOptions!"
         [autoUpdateSeries]="true"
       ></apx-chart>
     </div>

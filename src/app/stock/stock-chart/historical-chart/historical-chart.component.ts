@@ -102,13 +102,13 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
     this.chartCandleOptions = {
       series: [
         {
-          name: "Candles",
-          type: "candlestick",
-          data: this.data.candles,
+          name: "Prices",
+          type: "line",
+          data: this.data.candleLine,
           color: "#00b746",
         },
         {
-          name: "Volumns",
+          name: "Volumes",
           type: "bar",
           data: this.data.volumes,
           color: "#0035e3",
@@ -116,9 +116,8 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
       ],
       chart: {
         stacked: false,
-        type: "candlestick",
+        type: "line",
         height: 500,
-        id: "candles",
         toolbar: {
           show: true,
           tools: {
@@ -126,6 +125,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             zoomin: true,
             zoomout: true,
             zoom: true,
+            download: false,
           },
         },
         // ---- (3) ---- //
@@ -137,16 +137,23 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
         animations: { enabled: true },
       },
       tooltip: {
-        shared: false,
+        // with "line" and "bar" chart, the tooltip has to be shared, otherwise,
+        // the tooltip won't be available for the "line"
+        shared: true,
+        enabled: true,
         custom: ({ seriesIndex, dataPointIndex, w }) => {
           const data =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
 
-          return this.stockChartService.setCustomTooltip(data, seriesIndex);
+          // console.log(data, seriesIndex);
+          return this.stockChartService.setCustomTooltip(
+            data,
+            seriesIndex,
+            "line"
+          );
         },
-        enabled: true,
       },
-      stroke: { width: [1, 1] },
+      stroke: { width: [4, 1] },
       plotOptions: {
         bar: {
           columnWidth: "80%",
@@ -154,7 +161,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             ranges: [
               {
                 from: 0,
-                to: 10000000000,
+                to: 1000000000000,
                 color: "#0035e3",
               },
             ],
@@ -165,6 +172,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
         show: true,
         labels: { useSeriesColors: true },
       },
+
       xaxis: {
         // ---- (1) ---- //
         type: "category",
@@ -191,8 +199,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           seriesName: "Candles",
           min: this.data.lowBound,
           max: this.data.highBound,
-          tickAmount: 10,
-          forceNiceScale: false,
+          tickAmount: 8,
           axisTicks: { show: true, offsetX: -4 },
           axisBorder: {
             show: true,
@@ -207,10 +214,10 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             text: "Price",
             style: { color: "#00b746" },
           },
-          tooltip: { enabled: false },
+          tooltip: { enabled: true },
         },
         {
-          seriesName: "Volumns",
+          seriesName: "Volumes",
           opposite: true,
           axisTicks: { show: true, offsetX: -8 },
           axisBorder: {
@@ -218,7 +225,6 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             color: "#0035e3",
             offsetX: -8,
           },
-
           labels: {
             style: { colors: "#0035e3" },
             offsetX: -20,

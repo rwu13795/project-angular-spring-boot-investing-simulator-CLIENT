@@ -16,6 +16,7 @@ import {
 import { Subscription } from "rxjs";
 import { ChartData } from "../../stock-models";
 import { StockService } from "../../stock.service";
+import { StockChartService } from "../stock-chart.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -45,7 +46,10 @@ export class AreaChartComponent implements OnInit, OnDestroy {
   private chartData$?: Subscription;
   public timeRange: string = "";
 
-  constructor(private stockService: StockService) {}
+  constructor(
+    private stockService: StockService,
+    private stockChartService: StockChartService
+  ) {}
 
   ngOnInit(): void {
     this.chartData$ = this.stockService
@@ -70,6 +74,14 @@ export class AreaChartComponent implements OnInit, OnDestroy {
       dataLabels: { enabled: false },
       markers: {
         size: 0,
+      },
+      yaxis: {
+        labels: {
+          show: true,
+          formatter: (value) => {
+            return this.stockChartService.toLocalString(value);
+          },
+        },
       },
       xaxis: {
         type: "category",
