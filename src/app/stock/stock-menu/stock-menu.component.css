@@ -1,0 +1,33 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 1400px;
+}
+
+.menu-wrapper {
+  height: 60px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-link {
+  padding: 6px 12px;
+  text-align: center;
+  transition: all 0.5s;
+}
+.menu-link:hover {
+  background-color: aquamarine;
+  transition: all 0.5s;
+}
+
+.active {
+  background-color: aquamarine;
+}

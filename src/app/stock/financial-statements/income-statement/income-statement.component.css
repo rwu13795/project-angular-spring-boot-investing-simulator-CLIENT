@@ -1,0 +1,18 @@
+.table-wrapper {
+  max-width: 600px;
+  overflow-x: auto;
+}
+
+.table-head {
+  min-width: 250px;
+  /* for the sticky position */
+  z-index: 2;
+  position: sticky;
+  left: 0;
+  background-color: azure;
+}
+
+.table-head:first-child {
+  text-align: left;
+  border-top-left-radius: 7px;
+}

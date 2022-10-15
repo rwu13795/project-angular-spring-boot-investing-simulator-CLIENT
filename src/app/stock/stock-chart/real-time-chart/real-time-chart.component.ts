@@ -115,7 +115,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
     const secondLastDataPoint = this.data.candles[this.data.candles.length - 2];
 
     this.realTimePrice$ = this.stockService
-      .getRealTimePrice()
+      .getRealTimePrice(this.symbol)
       .subscribe(([data]) => {
         const { timestamp, volume, price } = data;
         const timestampMS = timestamp * 1000;

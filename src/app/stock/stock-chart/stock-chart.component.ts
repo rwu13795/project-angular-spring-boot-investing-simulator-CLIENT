@@ -17,7 +17,6 @@ export class StockChartComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.symbol = params["symbol"].toUpperCase();
-      this.store.dispatch(setCurrentSymbol({ symbol: this.symbol }));
     });
   }
 

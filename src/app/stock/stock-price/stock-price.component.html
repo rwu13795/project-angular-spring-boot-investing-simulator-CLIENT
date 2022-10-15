@@ -1,0 +1,12 @@
+<main>
+  <div class="price-wrapper" *ngIf="profile">
+    <div>
+      <img [src]="profile.image" class="logo" />
+    </div>
+    <div>{{ profile.companyName }} ({{ profile.symbol }})</div>
+    <div>Price: {{ price }}</div>
+    <div>Changes: {{ changes }}</div>
+    <div *ngIf="changePercentage">{{ changePercentage["1D"] }}%</div>
+  </div>
+  <div *ngIf="!profile" class="loading"><h3>Loading</h3></div>
+</main>

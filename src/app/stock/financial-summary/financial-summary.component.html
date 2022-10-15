@@ -1,18 +1,28 @@
 <main>
   <h1>summary</h1>
   <div class="summary">
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
+    <div class="cell">Symbol {{ financialSummary?.symbol }}</div>
+    <div class="cell">Price {{ financialSummary?.price }}</div>
+    <div class="cell">Beta {{ financialSummary?.beta }}</div>
+    <div class="cell">Volume Avg. {{ financialSummary?.volumeAvg }}</div>
+    <div class="cell">Market Cap {{ financialSummary?.marketCap }}</div>
+    <div class="cell">
+      Outstanding Shares {{ financialSummary?.outstandingShares }}
+    </div>
+    <div class="cell">Open {{ financialSummary?.open }}</div>
+    <div class="cell">Previous Close {{ financialSummary?.previousClose }}</div>
+    <div class="cell">Day Low {{ financialSummary?.dayLow }}</div>
+    <div class="cell">Day High {{ financialSummary?.dayHigh }}</div>
+    <div class="cell">52 Week Range {{ financialSummary?.range }}</div>
+    <div class="cell">EPS {{ financialSummary?.EPS }}</div>
+    <div class="cell">ROE returnOnEquity % {{ financialSummary?.ROE }}</div>
+    <div class="cell">ROA returnOnAssets % {{ financialSummary?.ROA }}</div>
+    <div class="cell">
+      Operating Margin % {{ financialSummary?.operatingMargin }}
+    </div>
+    <div class="cell">Debt / Equity % {{ financialSummary?.debtEquity }}</div>
+    <div class="cell">P/E priceEarningsRatioTTM {{ financialSummary?.pe }}</div>
+    <div class="cell">P/B priceToBookRatioTTM {{ financialSummary?.pb }}</div>
   </div>
 
   <div class="chart-group">

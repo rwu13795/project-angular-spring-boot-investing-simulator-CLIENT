@@ -1,0 +1,11 @@
+.menu-wrapper {
+  margin: 20px auto;
+  width: 60%;
+  min-height: 50px;
+  background-color: azure;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

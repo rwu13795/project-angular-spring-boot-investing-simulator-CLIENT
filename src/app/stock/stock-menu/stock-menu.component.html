@@ -1,18 +1,14 @@
 <main>
-  <h2>{{ symbol }}</h2>
-
-  <li *ngIf="symbol !== ''">
-    <ul>
-      <a [routerLink]="['financial-summary', symbol]">Financial summary</a>
-    </ul>
-    <ul>
-      Financial statement
-    </ul>
-    <ul>
-      <a [routerLink]="['chart', symbol]">chart</a>
-    </ul>
-    <ul>
-      company profile
-    </ul>
-  </li>
+  <div class="menu-wrapper" *ngIf="symbol !== ''">
+    <a class="menu-link" [routerLink]="['financial-summary', symbol]"
+      >Financial Summary</a
+    >
+    <a class="menu-link" [routerLink]="['financial-statements', symbol]"
+      >Financial Statements</a
+    >
+    <a div class="menu-link" [routerLink]="['chart', symbol]">chart</a>
+    <a class="menu-link" [routerLink]="['company-profile', symbol]"
+      >company profile</a
+    >
+  </div>
 </main>

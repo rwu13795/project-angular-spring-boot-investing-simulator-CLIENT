@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 1400px;
+}
+
+.price-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  max-height: 60px;
+}
+
+.loading {
+  height: 64px;
+}

@@ -1,0 +1,104 @@
+<main>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th class="table-head">Year</th>
+          <th *ngFor="let elem of incomeStatements">{{ elem.year }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="table-head">Revenue</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.revenue }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Cost of Revenue</th>
+          <td *ngFor="let elem of incomeStatements">
+            {{ elem.costOfRevenue }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Gross Profit</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">
+            Selling, General and Administrative Expenses
+          </th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Research and Development Expenses</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Expenses</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Cost and Expenses</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Operating Income</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Interest Expense</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Income Tax Expense</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Earnings before Tax</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Net Income</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Earnings Per Share Basic</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Earnings Per Share Diluted</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Weighted Average Shares Outstanding</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">
+            Weighted Average Shares Outstanding (Diluted)
+          </th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Gross Margin</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">EBIT Margin</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Profit Margin</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">EBITDA</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Earnings Before Tax Margin</th>
+          <td *ngFor="let elem of incomeStatements">{{ elem.grossProfit }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

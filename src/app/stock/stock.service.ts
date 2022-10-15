@@ -10,6 +10,8 @@ import {
   Response_realTimePrice,
   StoredChartData,
   Response_incomeStatement,
+  Response_quoteShort,
+  Response_financialRatio,
 } from "./stock-models";
 
 @Injectable({ providedIn: "root" })
@@ -90,12 +92,23 @@ export class StockService {
     );
   }
 
-  public getRealTimePrice() {
+  public getRealTimePrice(symbol: string) {
+    this.currentSymbol = symbol;
     const params = new HttpParams({
       fromObject: { apikey: this.API_KEY },
     });
     return this.http.get<Response_realTimePrice[]>(
       `${this.FMP_API}/quote/${this.currentSymbol}`,
+      { params }
+    );
+  }
+
+  public getQuoteShort(symbol: string) {
+    const params = new HttpParams({
+      fromObject: { apikey: this.API_KEY },
+    });
+    return this.http.get<Response_quoteShort[]>(
+      `${this.FMP_API}/quote-short/${symbol}`,
       { params }
     );
   }
@@ -115,6 +128,19 @@ export class StockService {
     });
     return this.http.get<Response_incomeStatement[]>(
       `${this.FMP_API}/income-statement/${this.currentSymbol}`,
+      { params }
+    );
+  }
+
+  public getFiancialRatios(symbol: string) {
+    this.currentSymbol = symbol;
+    const params = new HttpParams({
+      fromObject: {
+        apikey: this.API_KEY,
+      },
+    });
+    return this.http.get<Response_financialRatio[]>(
+      `${this.FMP_API}/ratios-ttm/${this.currentSymbol}`,
       { params }
     );
   }
@@ -156,27 +182,10 @@ export class StockService {
       currentTotalVolume: 0,
     };
 
-    // put some "placeholders" at the start of the arrays in order to enable
-    // the brushScroll to select the first couple of data-points in the mixed-chart
-    // if (option === "1D") {
-    //   const firstEntryTimestamp = responseData[responseData.length - 1].date;
-    //   for (let i = 6; i >= 1; i--) {
-    //     const timestamp = new Date(
-    //       new Date(firstEntryTimestamp).getTime() - interval * i
-    //     );
-    //     data.candles.push({
-    //       x: timestamp,
-    //       y: [-1, 0, 0, 0, timestamp.getTime()],
-    //     });
-    //     data.volumes.push({ x: timestamp, y: 0 });
-    //   }
-    // }
-
     for (let i = responseData.length - 1; i >= 0; i--) {
       const { date, open, high, low, close, volume } = responseData[i];
 
       data.currentTotalVolume += volume;
-
       // get the price range
       if (high * 1.001 > data.highBound) {
         data.highBound = high * 1.001;
@@ -184,7 +193,6 @@ export class StockService {
       if (low * 0.999 < data.lowBound) {
         data.lowBound = low * 0.999;
       }
-
       // map the data into seperate arrays for the charts
       data.candles.push({
         x: new Date(date),
@@ -198,21 +206,6 @@ export class StockService {
         meta: [open, high, low, close, new Date(date).getTime()],
       });
     }
-
-    // put 6 "placeholders" at the end of the arrays
-    // if (option === "1D") {
-    //   const lastEntryTimestamp = responseData[0].date;
-    //   for (let i = 1; i <= 5; i++) {
-    //     const timestamp = new Date(
-    //       new Date(lastEntryTimestamp).getTime() + interval * i
-    //     );
-    //     data.candles.push({
-    //       x: timestamp,
-    //       y: [-1],
-    //     });
-    //     data.volumes.push({ x: timestamp, y: 0 });
-    //   }
-    // }
 
     this.storedChartData[option] = data;
 

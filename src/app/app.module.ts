@@ -18,6 +18,8 @@ import { StockComponent } from "./stock/stock.component";
 import { StockModule } from "./stock/stock.module";
 import { appReducer } from "./ngrx-store/app.reducer";
 import { environment } from "src/environments/environment.prod";
+import { EffectsModule } from "@ngrx/effects";
+import { StockEffects } from "./stock/stock-state/stock.effects";
 
 @NgModule({
   declarations: [AppComponent, DigitCylinderComponent],
@@ -34,6 +36,7 @@ import { environment } from "src/environments/environment.prod";
       logOnly: environment.production,
     }),
     StoreRouterConnectingModule.forRoot(),
+    EffectsModule.forRoot([StockEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

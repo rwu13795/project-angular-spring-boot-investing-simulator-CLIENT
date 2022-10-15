@@ -12,16 +12,9 @@ import { selectCurrentSymbol } from "./stock-state/stock.selectors";
   styleUrls: ["./stock.component.css"],
 })
 export class StockComponent implements OnInit, OnDestroy {
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {}
 
-  ngOnInit(): void {
-    console.log(this.route);
-    this.route.url.subscribe((url) => {
-      // this.symbol = params["symbol"].toUpperCase();
-
-      console.log("in stock component url", url);
-    });
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {}
 }
