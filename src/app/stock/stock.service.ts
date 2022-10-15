@@ -121,7 +121,7 @@ export class StockService {
     this.currentSymbol = symbol;
     const params = new HttpParams({
       fromObject: {
-        oeriod: isFullYear ? "annual" : "quarter",
+        period: isFullYear ? "annual" : "quarter",
         limit,
         apikey: this.API_KEY,
       },
