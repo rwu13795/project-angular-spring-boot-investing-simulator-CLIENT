@@ -285,11 +285,14 @@ export class StockService {
         if (!this.isMarketOpened() && UTCday !== 6 && UTCday !== 0) {
           const UTCHours = new Date().getUTCHours();
           const UTCMinutes = new Date().getUTCMinutes();
+          const oneDay = 86400000;
           if (
             UTCHours >= 0 &&
             (UTCHours < 13 || (UTCHours === 13 && UTCMinutes < 30))
           ) {
-            to_date = new Date(to_date.getTime() - 86400000);
+            to_date = new Date(
+              to_date.getTime() - UTCday === 1 ? oneDay * 3 : oneDay
+            );
           }
         }
         from_date = to_date;

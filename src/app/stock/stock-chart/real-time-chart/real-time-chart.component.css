@@ -3,6 +3,7 @@ main {
 }
 
 .chart-box {
+  height: auto;
   max-width: 98%;
   display: flex;
   flex-flow: column nowrap;

@@ -52,6 +52,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   public chartBarOptions?: Partial<ChartOptions>;
   public isLoading: boolean = true;
   public errorMessage?: string;
+  public today: string = "";
 
   private data$?: Subscription;
   private data: ChartData = {
@@ -102,6 +103,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.data = data;
         this.realTimePrice = data.candleLine[data.candleLine.length - 1].y;
+        this.today = data.candles[0].x.toLocaleDateString();
 
         this.setCandleOptions();
         this.isLoading = false;
@@ -215,7 +217,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       chart: {
         stacked: false,
         type: "candlestick",
-        height: 580,
+        height: 700,
         id: "Candles",
         toolbar: {
           show: true,
@@ -398,6 +400,9 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       legend: {
         show: true,
         labels: { useSeriesColors: true },
+        markers: { radius: 2 },
+        offsetY: 10,
+        height: 40,
       },
       xaxis: {
         type: "datetime",

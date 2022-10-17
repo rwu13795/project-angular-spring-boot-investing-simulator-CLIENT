@@ -117,7 +117,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
       chart: {
         stacked: false,
         type: "line",
-        height: 500,
+        height: 700,
         toolbar: {
           show: true,
           tools: {
@@ -171,6 +171,8 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
       legend: {
         show: true,
         labels: { useSeriesColors: true },
+        offsetY: -10,
+        markers: { radius: 2 },
       },
 
       xaxis: {
