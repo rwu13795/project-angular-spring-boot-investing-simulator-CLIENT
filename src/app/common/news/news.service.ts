@@ -1,15 +1,9 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-
-import {
-  FinancialStatementType,
-  Response_balanceSheet,
-  Response_cashFlow,
-  Response_incomeStatement,
-} from "./financial-statements.models";
+import { Response_news } from "./news.models";
 
 @Injectable({ providedIn: "root" })
-export class FinancialStatementsService {
+export class NewsService {
   private FMP_API = "https://financialmodelingprep.com/api/v3";
   // for spring boot server
   private SERVER_URL = "http://localhost:8080/api";
@@ -17,21 +11,16 @@ export class FinancialStatementsService {
 
   constructor(private http: HttpClient) {}
 
-  public getFinancialStatements<
-    T extends
-      | Response_incomeStatement
-      | Response_balanceSheet
-      | Response_cashFlow
-  >(symbol: string, statementType: FinancialStatementType) {
+  public fetchNews(symbol: string = "", page: number = 0) {
     const params = new HttpParams({
       fromObject: {
-        period: "annual",
-        limit: 20,
+        tickers: symbol,
+        page,
         apikey: this.API_KEY,
       },
     });
 
-    return this.http.get<T[]>(`${this.FMP_API}/${statementType}/${symbol}`, {
+    return this.http.get<Response_news[]>(`${this.FMP_API}/stock_news`, {
       params,
     });
   }

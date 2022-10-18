@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { Response_incomeStatement } from "../../stock-models";
+
+import { Response_incomeStatement } from "../financial-statements.models";
 import { FinancialStatementsService } from "../financial-statements.service";
 
 @Component({
@@ -17,9 +18,17 @@ export class IncomeStatementComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.financialStatementsService
-      .getIncomeStatements(this.symbol)
+      .getFinancialStatements<Response_incomeStatement>(
+        this.symbol,
+        "income-statement"
+      )
       .subscribe((data) => {
         this.incomeStatements = data;
+        for (let elem of this.incomeStatements) {
+          for (let [k, v] of Object.entries(elem)) {
+            elem[k] = v.toLocaleString();
+          }
+        }
       });
   }
 

@@ -1,0 +1,204 @@
+<main>
+  <h3>Balance Sheet</h3>
+  <div>Currency is in USD</div>
+  <div class="table-wrapper">
+    <table *ngIf="balanceSheet.length > 0">
+      <thead>
+        <tr>
+          <th class="table-head">Year</th>
+          <th *ngFor="let elem of balanceSheet">{{ elem.calendarYear }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="table-head">Total assets</th>
+          <td *ngFor="let elem of balanceSheet">{{ elem.totalAssets }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Total Current Assets</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalCurrentAssets }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Cash and Short Term Investments</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.cashAndShortTermInvestments }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Cash and Cash Equivalents</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.cashAndCashEquivalents }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Short Term Investments</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.shortTermInvestments }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Receivables</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.netReceivables }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Inventory</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.inventory }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Current Assets</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.otherCurrentAssets }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total non-current Assets</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalNonCurrentAssets }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Property, Plant & Equipment Net</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.propertyPlantEquipmentNet }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Goodwill and Intangible Assets</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.goodwillAndIntangibleAssets }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Goodwill</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.goodwill }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Intangible Assets</th>
+          <td *ngFor="let elem of balanceSheet">{{ elem.intangibleAssets }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Long Term Investments</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.longTermInvestments }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other non-current Assets</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.otherNonCurrentAssets }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total Liabilities</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalLiabilities }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total Current Liabilities</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalCurrentLiabilities }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Payables</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.accountPayables }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Short Term Debt</th>
+          <td *ngFor="let elem of balanceSheet">{{ elem.shortTermDebt }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Deferred Revenue</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.deferredRevenue }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Current Liabilities</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.otherCurrentLiabilities }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total non-current Liabilities</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalNonCurrentLiabilities }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Long Term Debt</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.longTermDebt }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other non-current Liabilities</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.otherNonCurrentLiabilities }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total Stockholders Equity</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalStockholdersEquity }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Common Stock</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.commonStock }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Retained Earnings</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.retainedEarnings }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">
+            Accumulated Other Comprehensive Income/Loss
+          </th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.accumulatedOtherComprehensiveIncomeLoss }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Stockholders Equity</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.othertotalStockholdersEquity }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total Debt</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalDebt }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Total Investments</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.totalInvestments }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Net Debt</th>
+          <td *ngFor="let elem of balanceSheet">
+            {{ elem.netDebt }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

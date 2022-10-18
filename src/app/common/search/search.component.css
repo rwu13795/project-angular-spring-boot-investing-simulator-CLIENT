@@ -1,0 +1,25 @@
+main {
+  min-width: 200px;
+  height: 80px;
+}
+
+.search-wrapper {
+  position: relative;
+  min-width: 200px;
+}
+
+.results-wrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  max-height: 500px;
+  overflow-y: auto;
+  border: blue 2px solid;
+  background-color: azure;
+}
+
+.result {
+  display: flex;
+  flex-flow: column nowrap;
+}

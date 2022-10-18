@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { selectCompanyProfile } from "../stock-state/stock.selectors";
 
 @Component({
   selector: "app-company-profile",
@@ -6,7 +8,9 @@ import { Component, Input, OnInit } from "@angular/core";
   styleUrls: ["./company-profile.component.css"],
 })
 export class CompanyProfileComponent implements OnInit {
-  constructor() {}
+  public profile = this.store.select(selectCompanyProfile);
+
+  constructor(private store: Store) {}
 
   ngOnInit(): void {}
 

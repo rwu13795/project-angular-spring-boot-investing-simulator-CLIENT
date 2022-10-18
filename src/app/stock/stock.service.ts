@@ -2,14 +2,13 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { from, Observable, Subject, throwError } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
+import { Response_incomeStatement } from "./financial-statements/financial-statements.models";
 import {
   ChartData,
-  Response_searchByName,
   Response_historyPriceFull,
   Response_historyPrice,
   Response_realTimePrice,
   StoredChartData,
-  Response_incomeStatement,
   Response_quoteShort,
   Response_financialRatio,
 } from "./stock-models";
@@ -31,35 +30,6 @@ export class StockService {
   };
 
   constructor(private http: HttpClient) {}
-
-  searchStockByName(inputValue: string): Observable<Response_searchByName[]> {
-    const params = new HttpParams({
-      fromObject: {
-        query: inputValue,
-        limit: 20,
-        exchange: "NASDAQ",
-        apikey: this.API_KEY,
-      },
-    });
-
-    // Spring boot
-    // get<Response_searchByName[]>(`${this.SERVER_URL}/stock/search`
-    return this.http
-      .get<Response_searchByName[]>(`${this.FMP_API}/search`, {
-        params,
-      })
-      .pipe(
-        map<Response_searchByName[], Response_searchByName[]>(
-          (responseData) => {
-            return responseData.sort((a, b) => {
-              if (a.symbol < b.symbol) return -1;
-              else if (a.symbol > b.symbol) return 1;
-              else return 0;
-            });
-          }
-        )
-      );
-  }
 
   public fetchHistoryPrice(option: string, symbol: string) {
     // used to get the current Eastern GMT-0400 hour, if it is

@@ -7,22 +7,23 @@ import {
   UrlTree,
 } from "@angular/router";
 import { map, Observable, take, tap } from "rxjs";
-import { Response_quoteShort } from "../stock-models";
-import { StockService } from "../stock.service";
+
 import { Store } from "@ngrx/store";
+import { Response_quoteShort } from "./stock-models";
 import {
   clearStockState,
-  fetchCompanyProfile,
-  fetchPriceChangePercentage,
   setCurrentSymbol,
-} from "../stock-state/stock.actions";
+  fetchPriceChangePercentage,
+  fetchCompanyProfile,
+} from "./stock-state/stock.actions";
 import {
-  selectCompanyProfile,
   selectCurrentSymbol,
-} from "../stock-state/stock.selectors";
+  selectCompanyProfile,
+} from "./stock-state/stock.selectors";
+import { StockService } from "./stock.service";
 
 @Injectable({ providedIn: "root" })
-export class StockSearchGuard implements CanActivate {
+export class StockGuard implements CanActivate {
   constructor(
     private stockService: StockService,
     private router: Router,

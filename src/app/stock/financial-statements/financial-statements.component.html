@@ -1,10 +1,23 @@
 <main>
   <div class="menu-wrapper">
-    <div>Income Statement</div>
+    <div (click)="onSelectStatement('income-statement')">Income Statement</div>
     <div>|</div>
-    <div>Balance Sheet</div>
+    <div (click)="onSelectStatement('balance-sheet-statement')">
+      Balance Sheet
+    </div>
     <div>|</div>
-    <div>Cash Flow</div>
+    <div (click)="onSelectStatement('cash-flow-statement')">Cash Flow</div>
   </div>
-  <app-income-statement [symbol]="symbol"></app-income-statement>
+  <app-income-statement
+    [symbol]="symbol"
+    *ngIf="type === 'income-statement'"
+  ></app-income-statement>
+  <app-balance-sheet
+    [symbol]="symbol"
+    *ngIf="type === 'balance-sheet-statement'"
+  ></app-balance-sheet>
+  <app-cash-flow
+    [symbol]="symbol"
+    *ngIf="type === 'cash-flow-statement'"
+  ></app-cash-flow>
 </main>

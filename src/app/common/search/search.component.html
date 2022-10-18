@@ -1,0 +1,24 @@
+<main>
+  <div class="search-wrapper">
+    <label>Search</label>
+    <input (keyup)="onInputChange($event)" [value]="inputValue" />
+    <button type="button" (click)="onSearchStockByName()">Send</button>
+
+    <div class="results-wrapper" *ngIf="searchResult.length > 0">
+      <div class="result" *ngFor="let stock of searchResult" (click)="clear()">
+        <div>Symbol: {{ stock.symbol }}</div>
+        <div>Name: {{ stock.name }}</div>
+        <a [routerLink]="['stock', 'financial-summary', stock.symbol]"
+          >To the financial-summary</a
+        >
+        <hr />
+      </div>
+    </div>
+    <div
+      class="results-wrapper"
+      *ngIf="searchResult.length === 0 && inputValue !== ''"
+    >
+      No result
+    </div>
+  </div>
+</main>

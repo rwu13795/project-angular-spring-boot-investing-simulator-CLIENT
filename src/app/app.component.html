@@ -1,8 +1,14 @@
 <main>
-  <div><h1>App Component</h1></div>
-  <a [routerLink]="['stock']">To Stock</a>
+  <app-header></app-header>
 
-  <app-digit-cylinder [digit]="+digit"></app-digit-cylinder>
+  <div><h1>App Component</h1></div>
+
+  <router-outlet></router-outlet>
+</main>
+
+<!-- 
+
+<app-digit-cylinder [digit]="+digit"></app-digit-cylinder>
   <div>
     <button onclick="increase()">+</button>
 
@@ -19,5 +25,5 @@
       <button type="submit">change</button>
     </form>
   </div>
-  <router-outlet></router-outlet>
-</main>
+
+ -->

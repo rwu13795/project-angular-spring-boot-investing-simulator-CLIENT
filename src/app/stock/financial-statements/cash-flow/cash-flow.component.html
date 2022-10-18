@@ -1,0 +1,182 @@
+<main>
+  <h3>Balance Sheet</h3>
+  <div>Currency is in USD</div>
+  <div class="table-wrapper">
+    <table *ngIf="cashFlow.length > 0">
+      <thead>
+        <tr>
+          <th class="table-head">Year</th>
+          <th *ngFor="let elem of cashFlow">{{ elem.calendarYear }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="table-head">Operating Cash Flow</th>
+          <td *ngFor="let elem of cashFlow">{{ elem.operatingCashFlow }}</td>
+        </tr>
+        <tr>
+          <th class="table-head">Net Income</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.netIncome }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Depreciation & Amortization</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.depreciationAndAmortization }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Deferred Income Taxes</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.deferredIncomeTax }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Stock-based Compensation</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.stockBasedCompensation }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Change in Working Capital</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.changeInWorkingCapital }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other non-cash Items</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.otherNonCashItems }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Investing Cash Flow</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.netCashUsedForInvestingActivites }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Investments in PPE</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.investmentsInPropertyPlantAndEquipment }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Acquisitions</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.acquisitionsNet }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Investment Purchases</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.purchasesOfInvestments }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Sales/Maturities of Investments</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.salesMaturitiesOfInvestments }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Investing Activites</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.otherInvestingActivites }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Financing Cash Flow</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.netCashUsedProvidedByFinancingActivities }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Debt Repayment</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.debtRepayment }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Dividends Payments</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.dividendsPaid }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Common Stock Repurchased</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.commonStockRepurchased }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Common Stock Issuance</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.commonStockIssued }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Financing Activites</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.otherFinancingActivites }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Accounts Receivables</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.accountsReceivables }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Accounts Payables</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.accountsPayables }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Inventory</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.inventory }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Other Working Capital</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.otherWorkingCapital }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Cash at Beginning of Period</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.cashAtBeginningOfPeriod }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Cash at End of Period</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.cashAtEndOfPeriod }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Capital Expenditure</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.capitalExpenditure }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Net Cash Flow</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.netChangeInCash }}
+          </td>
+        </tr>
+        <tr>
+          <th class="table-head">Free Cash Flow</th>
+          <td *ngFor="let elem of cashFlow">
+            {{ elem.freeCashFlow }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

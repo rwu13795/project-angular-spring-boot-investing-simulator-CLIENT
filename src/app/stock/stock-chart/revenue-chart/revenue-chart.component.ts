@@ -13,7 +13,7 @@ import {
   ApexTooltip,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
-import { Response_incomeStatement } from "../../stock-models";
+import { Response_incomeStatement } from "../../financial-statements/financial-statements.models";
 import { StockService } from "../../stock.service";
 import { StockChartService } from "../stock-chart.service";
 

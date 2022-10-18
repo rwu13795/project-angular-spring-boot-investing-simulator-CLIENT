@@ -1,0 +1,13 @@
+<main>
+  Lastest {{ symbol }} News
+  <hr />
+  <div *ngFor="let entry of news">
+    <div>Symbol {{ entry.symbol }}</div>
+    <div>Date {{ entry.publishedDate }}</div>
+    <div>Title{{ entry.title }}</div>
+    <img [src]="entry.image" alt="news_image" loading="lazy" />
+    <div>text {{ entry.text }}</div>
+    <div>Link {{ entry.url }}</div>
+    <hr />
+  </div>
+</main>

@@ -1,28 +1,29 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { Response_searchByName } from "../stock-models";
-import { StockService } from "../stock.service";
+
+import { Response_searchByName } from "./search.models";
+import { SearchService } from "./search.service";
 
 @Component({
-  selector: "app-stock-search.",
-  templateUrl: "./stock-search.component.html",
-  styleUrls: ["./stock-search.component.css"],
+  selector: "app-search.",
+  templateUrl: "./search.component.html",
+  styleUrls: ["./search.component.css"],
 })
-export class StockSearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit, OnDestroy {
   inputValue: string = "";
-  stockSearchResult: Response_searchByName[] = [];
-  stockSearchResult$?: Subscription;
+  searchResult: Response_searchByName[] = [];
+  searchResult$?: Subscription;
   inputTimer?: any;
 
-  constructor(private stockService: StockService) {}
+  constructor(private searchService: SearchService) {}
 
   ngOnInit(): void {}
 
   onSearchStockByName() {
-    this.stockSearchResult$ = this.stockService
+    this.searchResult$ = this.searchService
       .searchStockByName(this.inputValue)
       .subscribe((data) => {
-        this.stockSearchResult = data;
+        this.searchResult = data;
       });
   }
 
@@ -42,17 +43,22 @@ export class StockSearchComponent implements OnInit, OnDestroy {
         value = "goog";
       }
 
-      this.stockSearchResult$ = this.stockService
+      this.searchResult$ = this.searchService
         .searchStockByName(value)
         .subscribe((data) => {
-          this.stockSearchResult = data;
+          this.searchResult = data;
         });
 
       this.inputValue = value;
     }, 800);
   }
 
+  clear() {
+    this.searchResult = [];
+    this.inputValue = "";
+  }
+
   ngOnDestroy(): void {
-    if (this.stockSearchResult$) this.stockSearchResult$.unsubscribe();
+    if (this.searchResult$) this.searchResult$.unsubscribe();
   }
 }

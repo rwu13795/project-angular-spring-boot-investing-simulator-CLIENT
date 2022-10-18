@@ -5,39 +5,38 @@ import { FinancialStatementsComponent } from "./financial-statements/financial-s
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
 import { Stock404Component } from "./stock-404/stock-404.component";
 import { StockChartComponent } from "./stock-chart/stock-chart.component";
-import { StockSearchComponent } from "./stock-search/stock-search.component";
-import { StockSearchGuard } from "./stock-search/stock-search.guard";
 import { StockComponent } from "./stock.component";
+import { StockGuard } from "./stock.guard";
 
 const routes: Routes = [
   {
     path: "",
     component: StockComponent,
     children: [
-      { path: "", component: StockSearchComponent },
+      // { path: "", component: StockSearchComponent },
       { path: "financial-summary", redirectTo: "" },
       {
         path: "financial-summary/:symbol",
         component: FinancialSummaryComponent,
-        canActivate: [StockSearchGuard],
+        canActivate: [StockGuard],
       },
       { path: "financial-statements", redirectTo: "" },
       {
         path: "financial-statements/:symbol",
         component: FinancialStatementsComponent,
-        canActivate: [StockSearchGuard],
+        canActivate: [StockGuard],
       },
       { path: "chart", redirectTo: "" },
       {
         path: "chart/:symbol",
         component: StockChartComponent,
-        canActivate: [StockSearchGuard],
+        canActivate: [StockGuard],
       },
       { path: "company-profile", redirectTo: "" },
       {
         path: "company-profile/:symbol",
         component: CompanyProfileComponent,
-        canActivate: [StockSearchGuard],
+        canActivate: [StockGuard],
       },
       { path: "no-result", redirectTo: "" },
       {
