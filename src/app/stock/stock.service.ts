@@ -197,50 +197,51 @@ export class StockService {
       to_date.getDate()
     );
 
+    const oneDay = 86400000;
     let from_date: Date;
     let timeRange: string;
     let interval: number;
     switch (option) {
       case "5D": {
         if (to_date.getDay() === 5) {
-          from_date = new Date(to_date.getTime() - 86400000 * 4);
+          from_date = new Date(to_date.getTime() - oneDay * 4);
         } else {
-          from_date = new Date(to_date.getTime() - 86400000 * 6);
+          from_date = new Date(to_date.getTime() - oneDay * 6);
         }
         timeRange = "15min";
         interval = 60000 * 15;
         break;
       }
       case "1M": {
-        from_date = new Date(to_date.getTime() - 86400000 * 30);
+        from_date = new Date(to_date.getTime() - oneDay * 30);
         from_date = this.fromWeekendsToMonday(from_date);
         timeRange = "1hour";
         interval = 60000 * 60;
         break;
       }
       case "3M": {
-        from_date = new Date(to_date.getTime() - 86400000 * 90);
+        from_date = new Date(to_date.getTime() - oneDay * 90);
         from_date = this.fromWeekendsToMonday(from_date);
         timeRange = "4hour";
         interval = 60000 * 60 * 4;
         break;
       }
       case "6M": {
-        from_date = new Date(to_date.getTime() - 86400000 * 180);
+        from_date = new Date(to_date.getTime() - oneDay * 180);
         from_date = this.fromWeekendsToMonday(from_date);
         timeRange = "";
         interval = 60000 * 60 * 24;
         break;
       }
       case "1Y": {
-        from_date = new Date(to_date.getTime() - 86400000 * 365);
+        from_date = new Date(to_date.getTime() - oneDay * 365);
         from_date = this.fromWeekendsToMonday(from_date);
         timeRange = "";
         interval = 60000 * 60 * 24;
         break;
       }
       case "5Y": {
-        from_date = new Date(to_date.getTime() - 86400000 * 365 * 5);
+        from_date = new Date(to_date.getTime() - oneDay * 365 * 5);
         from_date = this.fromWeekendsToMonday(from_date);
         timeRange = "";
         interval = 60000 * 60 * 24 * 5;
@@ -255,13 +256,13 @@ export class StockService {
         if (!this.isMarketOpened() && UTCday !== 6 && UTCday !== 0) {
           const UTCHours = new Date().getUTCHours();
           const UTCMinutes = new Date().getUTCMinutes();
-          const oneDay = 86400000;
           if (
             UTCHours >= 0 &&
             (UTCHours < 13 || (UTCHours === 13 && UTCMinutes < 30))
           ) {
+            console.log(to_date.getTime() - UTCday === 1 ? oneDay * 3 : oneDay);
             to_date = new Date(
-              to_date.getTime() - UTCday === 1 ? oneDay * 3 : oneDay
+              to_date.getTime() - (UTCday === 1 ? oneDay * 3 : oneDay)
             );
           }
         }

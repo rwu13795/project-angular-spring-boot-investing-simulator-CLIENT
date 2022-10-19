@@ -79,6 +79,7 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   loadMoreNews() {
+    // ---- (1) ----- //
     this.newsToBeDisplayed.push(
       ...this.news.slice(
         ++this.partNumber * this.ENTRY_LIMIT,
@@ -102,8 +103,9 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
     }, 500);
   }
 
-  backToTop() {
+  onBackToTop() {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    this.showBackToTop = false;
   }
 
   ngOnDestroy(): void {

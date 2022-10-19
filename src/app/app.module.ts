@@ -15,6 +15,7 @@ import { environment } from "src/environments/environment.prod";
 import { StockEffects } from "./stock/stock-state/stock.effects";
 import { HomeComponent } from "./home/home.component";
 import { SharedModule } from "./shared/shared.module";
+import { NavigationModule } from "./navigation/navigation.module";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -24,6 +25,7 @@ import { SharedModule } from "./shared/shared.module";
     FormsModule,
     HttpClientModule,
     NgApexchartsModule,
+    NavigationModule,
     SharedModule,
     // ngrx store //
     StoreModule.forRoot(appReducer),

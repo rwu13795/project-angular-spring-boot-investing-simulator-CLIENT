@@ -16,7 +16,7 @@ export class NewsService {
       fromObject: {
         tickers: symbol,
         page,
-        limit: 30,
+        limit: 100,
         apikey: this.API_KEY,
       },
     });
