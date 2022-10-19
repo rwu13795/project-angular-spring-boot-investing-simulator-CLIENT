@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { NgApexchartsModule } from "ng-apexcharts";
 
-import { NewsComponent } from "../common/news/news.component";
+import { SharedModule } from "../shared/shared.module";
 import { CompanyProfileComponent } from "./company-profile/company-profile.component";
 import { FinancialStatementsModule } from "./financial-statements/financial-statements.module";
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
@@ -33,13 +33,13 @@ import { StockComponent } from "./stock.component";
     CompanyProfileComponent,
     Stock404Component,
     StockPriceComponent,
-    NewsComponent,
   ],
   imports: [
     RouterModule,
     NgApexchartsModule,
     CommonModule,
     StockRoutingModule,
+    SharedModule,
     FinancialStatementsModule,
   ],
 })

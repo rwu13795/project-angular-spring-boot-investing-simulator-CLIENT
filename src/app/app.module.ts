@@ -6,30 +6,25 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { EffectsModule } from "@ngrx/effects";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { DigitCylinderComponent } from "./common/digit-cylinder/digit-cylinder.component";
 import { appReducer } from "./ngrx-store/app.reducer";
 import { environment } from "src/environments/environment.prod";
-import { EffectsModule } from "@ngrx/effects";
 import { StockEffects } from "./stock/stock-state/stock.effects";
-import { HeaderComponent } from "./common/header/header.component";
-import { SearchComponent } from "./common/search/search.component";
+import { HomeComponent } from "./home/home.component";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DigitCylinderComponent,
-    HeaderComponent,
-    SearchComponent,
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     NgApexchartsModule,
+    SharedModule,
     // ngrx store //
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({

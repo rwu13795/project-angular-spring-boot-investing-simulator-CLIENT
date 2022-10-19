@@ -1,0 +1,28 @@
+<main>
+  Lastest {{ symbol }} News
+  <hr />
+  <div *ngFor="let entry of newsToBeDisplayed; index as i">
+    <div *ngIf="i !== newsToBeDisplayed.length - 1">
+      <div>Symbol {{ entry.symbol }}</div>
+      <div>Date {{ entry.publishedDate }}</div>
+      <div>Title{{ entry.title }}</div>
+      <img [src]="entry.image" alt="news_image" loading="lazy" />
+      <div>text {{ entry.text }}</div>
+      <div>Link {{ entry.url }}</div>
+      <hr />
+    </div>
+    <!-- attach the ref id to the last entry -->
+    <div *ngIf="i === newsToBeDisplayed.length - 1" #last_entry>
+      <div>Symbol {{ entry.symbol }}</div>
+      <div>Date {{ entry.publishedDate }}</div>
+      <div>Title{{ entry.title }}</div>
+      <img [src]="entry.image" alt="news_image" loading="lazy" />
+      <div>text {{ entry.text }}</div>
+      <div>Link {{ entry.url }}</div>
+      <hr />
+    </div>
+  </div>
+  <div class="back-to-top" *ngIf="showBackToTop">
+    <button (click)="backToTop()">Back To Top</button>
+  </div>
+</main>
