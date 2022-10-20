@@ -7,7 +7,7 @@ import { AppState } from "src/app/ngrx-store/app.reducer";
 import {
   selectChangePercentage,
   selectCompanyProfile,
-  selectCurrentChanges,
+  selectChangeInPrice,
   selectCurrentPrice,
   selectCurrentSymbol,
 } from "../stock-state/stock.selectors";
@@ -25,14 +25,14 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   private symbol$?: Subscription;
   private profile$?: Subscription;
   private price$?: Subscription;
-  private changes$?: Subscription;
+  private changeInPrice$?: Subscription;
   private changePercentage$?: Subscription;
 
   public symbol: string = "";
   public profile: Response_companyProfile | null = null;
   public price: number = 0;
-  public changes: number = 0;
-  public changePercentage: Response_priceChangePercentage | null = null;
+  public changeInPrice: number = 0;
+  public changePercentage: number = 0;
 
   constructor(private store: Store<AppState>) {}
 
@@ -46,9 +46,9 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     this.price$ = this.store
       .select(selectCurrentPrice)
       .subscribe((data) => (this.price = data));
-    this.price$ = this.store
-      .select(selectCurrentChanges)
-      .subscribe((data) => (this.changes = data));
+    this.changeInPrice$ = this.store
+      .select(selectChangeInPrice)
+      .subscribe((data) => (this.changeInPrice = data));
     this.changePercentage$ = this.store
       .select(selectChangePercentage)
       .subscribe((data) => (this.changePercentage = data));
@@ -58,7 +58,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     if (this.symbol$) this.symbol$.unsubscribe();
     if (this.profile$) this.profile$.unsubscribe();
     if (this.price$) this.price$.unsubscribe();
-    if (this.changes$) this.changes$.unsubscribe();
+    if (this.changeInPrice$) this.changeInPrice$.unsubscribe();
     if (this.changePercentage$) this.changePercentage$.unsubscribe();
   }
 }

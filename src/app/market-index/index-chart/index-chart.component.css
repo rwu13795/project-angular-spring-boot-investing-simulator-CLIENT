@@ -1,0 +1,5 @@
+.button_groups {
+  display: flex;
+  flex-flow: row nowrap;
+  float: right;
+}

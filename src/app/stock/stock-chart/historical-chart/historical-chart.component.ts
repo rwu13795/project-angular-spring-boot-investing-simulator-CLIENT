@@ -77,7 +77,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.option = changes["option"].currentValue;
+    // this.option = changes["option"].currentValue;
     const storedData = this.stockService.getStoredChartDate(this.option);
     if (storedData) {
       console.log("storedData---- found");
@@ -178,8 +178,9 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
       xaxis: {
         // ---- (1) ---- //
         type: "category",
-        tickAmount: 5,
+        tickAmount: 7,
         labels: {
+          style: { fontWeight: "bold" },
           formatter: (val, options) => {
             return new Date(val).toLocaleDateString();
           },
@@ -209,7 +210,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             offsetX: -4,
           },
           labels: {
-            style: { colors: "#00b746" },
+            style: { colors: "#00b746", fontWeight: "bold" },
             offsetX: -10,
             formatter: (val, opts) => this.stockChartService.toLocalString(val),
           },
@@ -217,7 +218,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             text: "Price",
             style: { color: "#00b746" },
           },
-          tooltip: { enabled: true },
+          tooltip: { enabled: false },
         },
         {
           seriesName: "Volumes",
@@ -229,7 +230,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
             offsetX: -8,
           },
           labels: {
-            style: { colors: "#0035e3" },
+            style: { colors: "#0035e3", fontWeight: "bold" },
             offsetX: -20,
             formatter: (val, opts) =>
               this.stockChartService.toSignificantDigit(val),

@@ -35,3 +35,8 @@ export const setCurrentPrice = createAction(
 );
 
 export const clearStockState = createAction("[Stock] Clear Stock State");
+
+export const setCurrentTimeRange = createAction(
+  "[Stock] Set Current Time Range",
+  props<{ timeRange: string }>()
+);

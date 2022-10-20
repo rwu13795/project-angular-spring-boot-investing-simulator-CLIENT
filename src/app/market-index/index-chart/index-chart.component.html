@@ -1,0 +1,24 @@
+<main>
+  <div class="button_group">
+    <button (click)="onSelectDayRange('1D')">1D</button>
+    <button (click)="onSelectDayRange('5D')">5D</button>
+    <button (click)="onSelectDayRange('1M')">1M</button>
+    <button (click)="onSelectDayRange('3M')">3M</button>
+    <button (click)="onSelectDayRange('6M')">6M</button>
+    <button (click)="onSelectDayRange('1Y')">1Y</button>
+    <button (click)="onSelectDayRange('5Y')">5Y</button>
+  </div>
+  <apx-chart
+    *ngIf="chartOptions"
+    #index_chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [colors]="chartOptions.colors!"
+    [yaxis]="chartOptions.yaxis!"
+    [dataLabels]="chartOptions.dataLabels!"
+    [markers]="chartOptions.markers!"
+    [stroke]="chartOptions.stroke!"
+    [xaxis]="chartOptions.xaxis!"
+    [tooltip]="chartOptions.tooltip!"
+  ></apx-chart>
+</main>

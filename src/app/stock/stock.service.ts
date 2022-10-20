@@ -21,6 +21,8 @@ export class StockService {
   private API_KEY = "bebf0264afd8447938b0ae54509c1513";
 
   private currentSymbol: string = "";
+  // store the history data points in the service since user might keep switching
+  // between the time range.
   private storedChartData: StoredChartData = {
     ["5D"]: null,
     ["1M"]: null,
@@ -37,7 +39,6 @@ export class StockService {
     // greater than or equal to 16, then the market is close for NYSE and Nasdaq
     // new Date().getUTCHours() - 4
 
-    this.currentSymbol = symbol;
     const { from, to, timeRange, interval } = this.getTimeRange(option);
     const params = new HttpParams({
       fromObject: { from, to, apikey: this.API_KEY },
@@ -64,12 +65,11 @@ export class StockService {
   }
 
   public getRealTimePrice(symbol: string) {
-    this.currentSymbol = symbol;
     const params = new HttpParams({
       fromObject: { apikey: this.API_KEY },
     });
     return this.http.get<Response_realTimePrice[]>(
-      `${this.FMP_API}/quote/${this.currentSymbol}`,
+      `${this.FMP_API}/quote/${symbol}`,
       { params }
     );
   }
@@ -89,7 +89,6 @@ export class StockService {
     isFullYear: boolean,
     limit: number
   ) {
-    this.currentSymbol = symbol;
     const params = new HttpParams({
       fromObject: {
         period: isFullYear ? "annual" : "quarter",
@@ -98,20 +97,19 @@ export class StockService {
       },
     });
     return this.http.get<Response_incomeStatement[]>(
-      `${this.FMP_API}/income-statement/${this.currentSymbol}`,
+      `${this.FMP_API}/income-statement/${symbol}`,
       { params }
     );
   }
 
   public getFiancialRatios(symbol: string) {
-    this.currentSymbol = symbol;
     const params = new HttpParams({
       fromObject: {
         apikey: this.API_KEY,
       },
     });
     return this.http.get<Response_financialRatio[]>(
-      `${this.FMP_API}/ratios-ttm/${this.currentSymbol}`,
+      `${this.FMP_API}/ratios-ttm/${symbol}`,
       { params }
     );
   }
@@ -192,12 +190,6 @@ export class StockService {
     let to_date = new Date();
     to_date = this.fromWeekendsToFriday(to_date);
 
-    let to: string = this.getDayString(
-      to_date.getFullYear(),
-      to_date.getMonth() + 1,
-      to_date.getDate()
-    );
-
     const oneDay = 86400000;
     let from_date: Date;
     let timeRange: string;
@@ -261,7 +253,6 @@ export class StockService {
             UTCHours >= 0 &&
             (UTCHours < 13 || (UTCHours === 13 && UTCMinutes < 30))
           ) {
-            console.log(to_date.getTime() - UTCday === 1 ? oneDay * 3 : oneDay);
             to_date = new Date(
               to_date.getTime() - (UTCday === 1 ? oneDay * 3 : oneDay)
             );
@@ -270,6 +261,7 @@ export class StockService {
         from_date = to_date;
         timeRange = "1min";
         interval = 60000;
+
         break;
       }
     }
@@ -280,7 +272,11 @@ export class StockService {
         from_date.getMonth() + 1,
         from_date.getDate()
       ),
-      to,
+      to: this.getDayString(
+        to_date.getFullYear(),
+        to_date.getMonth() + 1,
+        to_date.getDate()
+      ),
       timeRange,
       interval,
     };

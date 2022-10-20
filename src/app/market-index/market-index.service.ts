@@ -2,12 +2,9 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Response_realTimePrice } from "../stock/stock-models";
 import { StockService } from "../stock/stock.service";
-import {
-  MajorIndex,
-  RealTimeIndex,
-  Response_realTimeIndex,
-} from "./market-index-models";
+import { MajorIndex, RealTimeIndex } from "./market-index-models";
 
 @Injectable({ providedIn: "root" })
 export class MarketIndexService {
@@ -64,37 +61,35 @@ export class MarketIndexService {
     },
   };
 
-  constructor(private http: HttpClient, private stockService: StockService) {}
+  constructor(private stockService: StockService) {}
 
   public fetchAllMajorIndices() {
     const symbolString: string = this.symbols.join();
 
-    const params = new HttpParams({
-      fromObject: {
-        apikey: this.API_KEY,
-      },
-    });
-
-    console.log("symbols string", symbolString);
-
-    return this.http
-      .get<Response_realTimeIndex[]>(`${this.FMP_API}/quote/${symbolString}`, {
-        params,
+    // Both the index and stock price use the same fmp-api route "/quote" to
+    // get the current price/quote. But for the index, I need to map the
+    // response data before pass them to the component
+    return this.stockService.getRealTimePrice(symbolString).pipe(
+      map<Response_realTimePrice[], RealTimeIndex[]>((data) => {
+        return data.map((index) => {
+          return {
+            ...index,
+            _symbol: this.majorIndex[index.symbol].symbol,
+            name: this.majorIndex[index.symbol].name,
+          };
+        });
       })
-      .pipe(
-        map<Response_realTimeIndex[], RealTimeIndex[]>((data) => {
-          return data.map((index) => {
-            return {
-              ...index,
-              _symbol: this.majorIndex[index.symbol].symbol,
-              name: this.majorIndex[index.symbol].name,
-            };
-          });
-        })
-      );
+    );
   }
 
   public fetchIndexHistory(option: string, symbol: string) {
     return this.stockService.fetchHistoryPrice(option, symbol);
+  }
+
+  public getIndexNormalSymbol(tickerSymbol: string) {
+    if (this.majorIndex[tickerSymbol]) {
+      return this.majorIndex[tickerSymbol].symbol;
+    }
+    return "";
   }
 }

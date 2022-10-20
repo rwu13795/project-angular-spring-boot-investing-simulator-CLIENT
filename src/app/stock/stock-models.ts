@@ -110,7 +110,7 @@ export interface Response_companyProfile {
 }
 
 export interface Response_priceChangePercentage {
-  symbol: string;
+  // symbol: string;
   "1D": number;
   "5D": number;
   "1M": number;
@@ -122,6 +122,7 @@ export interface Response_priceChangePercentage {
   "5Y": number;
   "10Y": number;
   max: number;
+  [timeRange: string]: number;
 }
 
 export interface Response_financialRatio {

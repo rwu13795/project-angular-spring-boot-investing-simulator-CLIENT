@@ -11,12 +11,9 @@ export const selectCurrentPrice = createSelector(selectStockState, (state) => {
   return state.currentPrice;
 });
 
-export const selectCurrentChanges = createSelector(
-  selectStockState,
-  (state) => {
-    return state.currentChanges;
-  }
-);
+export const selectChangeInPrice = createSelector(selectStockState, (state) => {
+  return state.currentChangeInPrice;
+});
 
 export const selectCompanyProfile = createSelector(
   selectStockState,
@@ -28,6 +25,6 @@ export const selectCompanyProfile = createSelector(
 export const selectChangePercentage = createSelector(
   selectStockState,
   (state) => {
-    return state.changePercentage;
+    return state.currentChangePercentage;
   }
 );

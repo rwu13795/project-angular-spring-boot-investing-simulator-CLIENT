@@ -10,17 +10,21 @@ import * as actions from "./stock.actions";
 export interface StockState {
   currentSymbol: string;
   currentPrice: number;
-  currentChanges: number;
+  currentChangeInPrice: number;
+  currentChangePercentage: number;
+  currentTimeRange: string;
   companyProfile: Response_companyProfile | null;
-  changePercentage: Response_priceChangePercentage | null;
+  allChangePercentage: Response_priceChangePercentage | null;
 }
 
 const initialState: StockState = {
   currentSymbol: "",
   currentPrice: 0,
-  currentChanges: 0,
+  currentChangeInPrice: 0,
+  currentChangePercentage: 0,
+  currentTimeRange: "1D",
   companyProfile: null,
-  changePercentage: null,
+  allChangePercentage: null,
 };
 
 export const stockReducer = createReducer(
@@ -36,13 +40,14 @@ export const stockReducer = createReducer(
     produce(state, (draft) => {
       draft.companyProfile = profile;
       draft.currentPrice = profile.price;
-      draft.currentChanges = profile.changes;
+      draft.currentChangeInPrice = profile.changes;
     })
   ),
 
   on(actions.setPriceChangePercentage, (state, { changePercentage }) =>
     produce(state, (draft) => {
-      draft.changePercentage = changePercentage;
+      draft.allChangePercentage = changePercentage;
+      draft.currentChangePercentage = changePercentage["1D"];
     })
   ),
 
@@ -57,9 +62,27 @@ export const stockReducer = createReducer(
       console.log({ ...initialState });
       draft.currentSymbol = "";
       draft.currentPrice = 0;
-      draft.currentChanges = 0;
+      draft.currentChangeInPrice = 0;
+      draft.currentChangePercentage = 0;
+      draft.currentTimeRange = "1D";
       draft.companyProfile = null;
-      draft.changePercentage = null;
+      draft.allChangePercentage = null;
+    })
+  ),
+
+  on(actions.setCurrentTimeRange, (state, { timeRange }) =>
+    produce(state, (draft) => {
+      draft.currentTimeRange = timeRange;
+
+      if (state.allChangePercentage && state.allChangePercentage[timeRange]) {
+        // calculate the price change for the specific time range
+        draft.currentChangeInPrice =
+          state.currentPrice -
+          state.currentPrice /
+            (1 + state.allChangePercentage[timeRange] * 0.01);
+
+        draft.currentChangePercentage = state.allChangePercentage[timeRange];
+      }
     })
   )
 );

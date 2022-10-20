@@ -407,6 +407,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       xaxis: {
         type: "datetime",
         labels: {
+          style: { fontWeight: "bold" },
           formatter: (value, timestamp?, opts?) => {
             return new Date(value).toLocaleTimeString();
           },
@@ -426,7 +427,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
             offsetX: -4,
           },
           labels: {
-            style: { colors: "#00b746" },
+            style: { colors: "#00b746", fontWeight: "bold" },
             offsetX: -10,
             formatter: (val, opts) => this.stockChartService.toLocalString(val),
           },
@@ -447,7 +448,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
             offsetX: -8,
           },
           labels: {
-            style: { colors: "#0035e3" },
+            style: { colors: "#0035e3", fontWeight: "bold" },
             offsetX: -20,
             formatter: (val, opts) =>
               this.stockChartService.toSignificantDigit(val),
