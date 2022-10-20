@@ -1,0 +1,8 @@
+.indices-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.index-box {
+  width: 160px;
+}

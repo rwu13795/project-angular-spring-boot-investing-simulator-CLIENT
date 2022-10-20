@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./stock/stock.module").then((m) => m.StockModule),
   },
-  { path: "*", component: Page404Component },
+  { path: "**", component: Page404Component },
 ];
 
 @NgModule({

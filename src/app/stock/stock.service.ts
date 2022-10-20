@@ -27,6 +27,7 @@ export class StockService {
     ["3M"]: null,
     ["6M"]: null,
     ["1Y"]: null,
+    ["5Y"]: null,
   };
 
   constructor(private http: HttpClient) {}
@@ -252,7 +253,7 @@ export class StockService {
         const UTCday = new Date().getUTCDay();
         // If the day is NOT a week day, and the time is between 12:00AM and 9:30AM,
         // then I need to fetch the data of yesterday. Otherwise, the api will
-        // return data of the ast 2 days, since there is NO data for the current day yet
+        // return data of last 2 days, since there is NO data for the current day yet
         if (!this.isMarketOpened() && UTCday !== 6 && UTCday !== 0) {
           const UTCHours = new Date().getUTCHours();
           const UTCMinutes = new Date().getUTCMinutes();

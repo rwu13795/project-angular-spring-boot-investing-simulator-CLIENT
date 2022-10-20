@@ -16,6 +16,7 @@ import { StockEffects } from "./stock/stock-state/stock.effects";
 import { HomeComponent } from "./home/home.component";
 import { SharedModule } from "./shared/shared.module";
 import { NavigationModule } from "./navigation/navigation.module";
+import { MarketIndexModule } from "./market-index/market-index.module";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -27,6 +28,7 @@ import { NavigationModule } from "./navigation/navigation.module";
     NgApexchartsModule,
     NavigationModule,
     SharedModule,
+    MarketIndexModule,
     // ngrx store //
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({

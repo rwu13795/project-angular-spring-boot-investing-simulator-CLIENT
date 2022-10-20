@@ -1,0 +1,12 @@
+<main>
+  <h3>Major Indices</h3>
+  <div class="indices-wrapper">
+    <div *ngFor="let index of indices">
+      <div>{{ index.name }}</div>
+      <div>{{ index.symbol }}</div>
+      <div>{{ index.price }}</div>
+      <div>change: {{ index.change }}</div>
+      <div>change %: {{ index.changesPercentage }}</div>
+    </div>
+  </div>
+</main>
