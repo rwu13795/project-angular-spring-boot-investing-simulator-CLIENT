@@ -4,7 +4,13 @@
       <img [src]="profile.image" class="logo" />
     </div>
     <div>{{ profile.companyName }} ({{ profile.symbol }})</div>
-    <div>Price: {{ price }}</div>
+    <div class="digits-wrapper">
+      Price:
+
+      <div *ngFor="let digit of digitsString">
+        <app-digit-cylinder [currentDigit]="digit"></app-digit-cylinder>
+      </div>
+    </div>
     <div>Changes: {{ changeInPrice }}</div>
     <div *ngIf="changePercentage">{{ changePercentage }}%</div>
   </div>

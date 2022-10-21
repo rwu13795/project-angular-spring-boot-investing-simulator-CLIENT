@@ -9,14 +9,14 @@ import { NgForm } from "@angular/forms";
 export class AppComponent {
   title = "client";
 
-  @ViewChild("formRef") form!: NgForm;
-  digit = "0";
+  digitsString: string[] = ["9", "9", "9", ".", "9", "9"];
+  newDigitsString: string[] = ["9", "9", "9", ".", "9", "9"];
 
-  changeDigit() {
-    // this.form.value;
-    console.log("this.form.value;: ", this.form.value);
-    this.digit = this.form.value.digit;
+  changeDigit(num: number) {
+    this.digitsString = this.newDigitsString;
+    this.newDigitsString = [...num.toFixed(2).toString()];
 
-    console.log(this.digit);
+    console.log("old", this.digitsString);
+    console.log("new", this.newDigitsString);
   }
 }

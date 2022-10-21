@@ -1,0 +1,5 @@
+.digits-wrapper {
+  display: flex;
+  flex-flow: nowrap row;
+  width: 800px;
+}

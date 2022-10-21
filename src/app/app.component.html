@@ -1,27 +1,21 @@
 <main>
-  <app-navigation-bar></app-navigation-bar>
+  <!-- <app-navigation-bar></app-navigation-bar>
 
-  <router-outlet></router-outlet>
-</main>
+  <router-outlet></router-outlet> -->
 
-<!-- 
-
-<app-digit-cylinder [digit]="+digit"></app-digit-cylinder>
-  <div>
-    <button onclick="increase()">+</button>
-
-    <form #formRef="ngForm" (ngSubmit)="changeDigit()">
-      <input
-        type="number"
-        id="num"
-        value="0"
-        min="0"
-        max="9"
-        name="digit"
-        ngModel
-      />
-      <button type="submit">change</button>
-    </form>
+  <div class="digits-wrapper">
+    <div *ngFor="let digit of newDigitsString; index as i">
+      <app-digit-cylinder
+        [currentDigit]="digit"
+        [previousDigit]="digitsString[i]"
+      ></app-digit-cylinder>
+    </div>
   </div>
 
- -->
+  <button (click)="changeDigit(123.4343)">123.4343</button>
+  <button (click)="changeDigit(125.6)">125.60</button>
+  <button (click)="changeDigit(125.9)">125.90</button>
+  <button (click)="changeDigit(9464)">9464</button>
+  <button (click)="changeDigit(55.37)">55.37</button>
+  <button (click)="changeDigit(-11.9)">-11.9</button>
+</main>

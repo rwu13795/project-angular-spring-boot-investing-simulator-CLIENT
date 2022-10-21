@@ -33,6 +33,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   public price: number = 0;
   public changeInPrice: number = 0;
   public changePercentage: number = 0;
+  public digitsString: string[] = ["0"];
 
   constructor(private store: Store<AppState>) {}
 
@@ -40,15 +41,20 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
       .subscribe((data) => (this.symbol = data));
+
     this.profile$ = this.store
       .select(selectCompanyProfile)
       .subscribe((data) => (this.profile = data));
-    this.price$ = this.store
-      .select(selectCurrentPrice)
-      .subscribe((data) => (this.price = data));
+
+    this.price$ = this.store.select(selectCurrentPrice).subscribe((data) => {
+      this.price = data;
+      this.digitsString = [...this.price.toFixed(3).toString()];
+    });
+
     this.changeInPrice$ = this.store
       .select(selectChangeInPrice)
       .subscribe((data) => (this.changeInPrice = data));
+
     this.changePercentage$ = this.store
       .select(selectChangePercentage)
       .subscribe((data) => (this.changePercentage = data));

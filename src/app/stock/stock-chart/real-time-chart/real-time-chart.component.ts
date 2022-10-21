@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
+import { Store } from "@ngrx/store";
 
 import {
   ChartComponent,
@@ -23,6 +24,7 @@ import {
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
 import { ChartData, CandleData } from "../../stock-models";
+import { setCurrentPrice } from "../../stock-state/stock.actions";
 import { StockService } from "../../stock.service";
 import { StockChartService } from "../stock-chart.service";
 
@@ -80,7 +82,8 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private stockService: StockService,
-    private stockChartService: StockChartService
+    private stockChartService: StockChartService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +126,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
         const timestampMS = timestamp * 1000;
         console.log("price-------------", price);
 
+        this.store.dispatch(setCurrentPrice({ currentPrice: price }));
         this.realTimePrice = price;
         this.dataUpdated = true;
         this.updateChartBoundary(price);
