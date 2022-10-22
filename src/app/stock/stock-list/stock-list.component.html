@@ -1,0 +1,40 @@
+<main>
+  <h1>List</h1>
+  <div class="list-menu">
+    <h3 (click)="onSelectOption(ListTypes.actives)">Most Searched</h3>
+    <h3 (click)="onSelectOption(ListTypes.gainers)">Top Performing</h3>
+    <h3 (click)="onSelectOption(ListTypes.losers)">Worst Performing</h3>
+  </div>
+  <div *ngIf="listType === 'actives'" class="list-wrapper">
+    <div *ngFor="let entry of lists.actives" class="entry-wrapper">
+      <div>{{ entry.symbol }}</div>
+      <div>{{ entry.name }}</div>
+      <div>{{ entry.price }}</div>
+      <div>{{ entry.change }}</div>
+      <div>{{ entry.changesPercentage }}</div>
+    </div>
+  </div>
+  <div *ngIf="listType === 'gainers'" class="list-wrapper">
+    <div *ngFor="let entry of lists.gainers" class="entry-wrapper">
+      <div>{{ entry.symbol }}</div>
+      <div>{{ entry.name }}</div>
+      <div>{{ entry.price }}</div>
+      <div>{{ entry.change }}</div>
+      <div>{{ entry.changesPercentage }}</div>
+    </div>
+  </div>
+  <div *ngIf="listType === 'losers'" class="list-wrapper">
+    <div *ngFor="let entry of lists.losers" class="entry-wrapper">
+      <div>{{ entry.symbol }}</div>
+      <div>{{ entry.name }}</div>
+      <div>{{ entry.price }}</div>
+      <div>{{ entry.change }}</div>
+      <div>{{ entry.changesPercentage }}</div>
+    </div>
+  </div>
+  <button (click)="onSort(SortBy.name)">sort by name</button>
+  <button (click)="onSort(SortBy.symbol)">sort by symbol</button>
+  <button (click)="onSort(SortBy.price)">sort by price</button>
+  <button (click)="onSort(SortBy.changeInPrice)">sort by change</button>
+  <button (click)="onSort(SortBy.changePercentage)">sort by percentage</button>
+</main>

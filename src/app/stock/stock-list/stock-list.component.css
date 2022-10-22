@@ -1,0 +1,23 @@
+.list-menu {
+  max-width: 900px;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 50px;
+}
+
+.list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.entry-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 30px;
+}
+
+.entry-wrapper:nth-child(odd) {
+  background-color: aquamarine;
+}

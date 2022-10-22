@@ -75,6 +75,8 @@ export class FinancialSummaryComponent implements OnInit {
             this.store.select(selectCompanyProfile).pipe(take(1)),
           ])
             .pipe(
+              // forkJoin is very similar to Promise.all, it will execute and wait
+              // for all the aync http request.
               // The responses will be passed into an array [response_1, response_2]
               map(([[realTimePrice], [financialRatio], profile]) => {
                 if (!profile) return;

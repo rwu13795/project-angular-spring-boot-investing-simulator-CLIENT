@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { ListTypes } from "../stock-list/stock-list-models";
 import {
   Response_companyProfile,
   Response_priceChangePercentage,
@@ -49,4 +50,9 @@ export const clearStockState = createAction("[Stock] Clear Stock State");
 export const setCurrentTimeRange = createAction(
   "[Stock] Set Current Time Range",
   props<{ timeRange: string }>()
+);
+
+export const setStockListOption = createAction(
+  "[Stock] Set Stock List Option",
+  props<{ listType: ListTypes }>()
 );

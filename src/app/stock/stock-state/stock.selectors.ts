@@ -50,3 +50,10 @@ export const selectCompanyProfile = createSelector(
 export const selectTimeRange = createSelector(selectStockState, (state) => {
   return state.currentTimeRange;
 });
+
+export const selectStockListOption = createSelector(
+  selectStockState,
+  (state) => {
+    return state.stockListOption;
+  }
+);
