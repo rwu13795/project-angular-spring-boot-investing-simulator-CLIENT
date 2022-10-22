@@ -11,14 +11,18 @@ export const selectCurrentPrice = createSelector(selectStockState, (state) => {
   return state.currentPrice;
 });
 
+export const selectPreviousPrice = createSelector(selectStockState, (state) => {
+  return state.previousPrice;
+});
+
 export const selectChangeInPrice = createSelector(selectStockState, (state) => {
   return state.currentChangeInPrice;
 });
 
-export const selectCompanyProfile = createSelector(
+export const selectPreviousChangeInPrice = createSelector(
   selectStockState,
   (state) => {
-    return state.companyProfile;
+    return state.previousChangeInPrice;
   }
 );
 
@@ -28,3 +32,21 @@ export const selectChangePercentage = createSelector(
     return state.currentChangePercentage;
   }
 );
+
+export const selectPreviousChangePercentage = createSelector(
+  selectStockState,
+  (state) => {
+    return state.previousChangePercentage;
+  }
+);
+
+export const selectCompanyProfile = createSelector(
+  selectStockState,
+  (state) => {
+    return state.companyProfile;
+  }
+);
+
+export const selectTimeRange = createSelector(selectStockState, (state) => {
+  return state.currentTimeRange;
+});

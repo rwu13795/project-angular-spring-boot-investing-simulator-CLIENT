@@ -10,8 +10,11 @@ import * as actions from "./stock.actions";
 export interface StockState {
   currentSymbol: string;
   currentPrice: number;
+  previousPrice: number;
   currentChangeInPrice: number;
+  previousChangeInPrice: number;
   currentChangePercentage: number;
+  previousChangePercentage: number;
   currentTimeRange: string;
   companyProfile: Response_companyProfile | null;
   allChangePercentage: Response_priceChangePercentage | null;
@@ -20,8 +23,11 @@ export interface StockState {
 const initialState: StockState = {
   currentSymbol: "",
   currentPrice: 0,
+  previousPrice: 0,
   currentChangeInPrice: 0,
+  previousChangeInPrice: 0,
   currentChangePercentage: 0,
+  previousChangePercentage: 0,
   currentTimeRange: "1D",
   companyProfile: null,
   allChangePercentage: null,
@@ -40,7 +46,9 @@ export const stockReducer = createReducer(
     produce(state, (draft) => {
       draft.companyProfile = profile;
       draft.currentPrice = profile.price;
+      draft.previousPrice = profile.price;
       draft.currentChangeInPrice = profile.changes;
+      draft.previousChangeInPrice = profile.changes;
     })
   ),
 
@@ -48,12 +56,28 @@ export const stockReducer = createReducer(
     produce(state, (draft) => {
       draft.allChangePercentage = changePercentage;
       draft.currentChangePercentage = changePercentage["1D"];
+      draft.previousChangePercentage = changePercentage["1D"];
     })
   ),
 
   on(actions.setCurrentPrice, (state, { currentPrice }) =>
     produce(state, (draft) => {
+      draft.previousPrice = state.currentPrice;
       draft.currentPrice = currentPrice;
+    })
+  ),
+
+  on(actions.setCurrentChangeInPrice, (state, { changeInPrice }) =>
+    produce(state, (draft) => {
+      draft.previousChangeInPrice = state.currentChangeInPrice;
+      draft.currentChangeInPrice = changeInPrice;
+    })
+  ),
+
+  on(actions.setCurrentChangePercentage, (state, { changePercentage }) =>
+    produce(state, (draft) => {
+      draft.previousChangePercentage = state.currentChangePercentage;
+      draft.currentChangePercentage = changePercentage;
     })
   ),
 
@@ -62,8 +86,11 @@ export const stockReducer = createReducer(
       console.log({ ...initialState });
       draft.currentSymbol = "";
       draft.currentPrice = 0;
+      draft.previousPrice = 0;
       draft.currentChangeInPrice = 0;
+      draft.previousChangeInPrice = 0;
       draft.currentChangePercentage = 0;
+      draft.previousChangePercentage = 0;
       draft.currentTimeRange = "1D";
       draft.companyProfile = null;
       draft.allChangePercentage = null;
@@ -76,12 +103,19 @@ export const stockReducer = createReducer(
 
       if (state.allChangePercentage && state.allChangePercentage[timeRange]) {
         // calculate the price change for the specific time range
+
         draft.currentChangeInPrice =
           state.currentPrice -
           state.currentPrice /
             (1 + state.allChangePercentage[timeRange] * 0.01);
-
         draft.currentChangePercentage = state.allChangePercentage[timeRange];
+
+        // since the changes for each specific time range is not related to
+        // each other closely, setting the  changes of "5D" as the previous value
+        // of "1M" is meaningless. I should set the values to 0, so that the
+        // transition starts from "0"
+        draft.previousChangeInPrice = 0;
+        draft.previousChangePercentage = 0;
       }
     })
   )

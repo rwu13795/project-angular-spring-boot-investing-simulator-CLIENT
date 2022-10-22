@@ -10,6 +10,10 @@ import {
   selectChangeInPrice,
   selectCurrentPrice,
   selectCurrentSymbol,
+  selectPreviousPrice,
+  selectPreviousChangeInPrice,
+  selectPreviousChangePercentage,
+  selectTimeRange,
 } from "../stock-state/stock.selectors";
 import {
   Response_companyProfile,
@@ -25,15 +29,21 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   private symbol$?: Subscription;
   private profile$?: Subscription;
   private price$?: Subscription;
+  private previousPrice$?: Subscription;
   private changeInPrice$?: Subscription;
+  private previousChangeInPrice$?: Subscription;
   private changePercentage$?: Subscription;
+  private previousChangePercentage$?: Subscription;
 
   public symbol: string = "";
   public profile: Response_companyProfile | null = null;
-  public price: number = 0;
-  public changeInPrice: number = 0;
-  public changePercentage: number = 0;
-  public digitsString: string[] = ["0"];
+  public price: string[] = ["0"];
+  public previousPrice: string[] = ["0"];
+  public changeInPrice: string[] = ["0"];
+  public previousChangeInPrice: string[] = ["0"];
+  public changePercentage: string[] = ["0"];
+  public previousChangePercentage: string[] = ["0"];
+  public timeRange = this.store.select(selectTimeRange);
 
   constructor(private store: Store<AppState>) {}
 
@@ -47,17 +57,35 @@ export class StockPriceComponent implements OnInit, OnDestroy {
       .subscribe((data) => (this.profile = data));
 
     this.price$ = this.store.select(selectCurrentPrice).subscribe((data) => {
-      this.price = data;
-      this.digitsString = [...this.price.toFixed(3).toString()];
+      this.price = this.toStringArray(data);
     });
+    this.previousPrice$ = this.store
+      .select(selectPreviousPrice)
+      .subscribe((data) => {
+        this.previousPrice = this.toStringArray(data);
+      });
 
     this.changeInPrice$ = this.store
       .select(selectChangeInPrice)
-      .subscribe((data) => (this.changeInPrice = data));
+      .subscribe((data) => {
+        this.changeInPrice = this.toStringArray(data);
+      });
+    this.previousChangeInPrice$ = this.store
+      .select(selectPreviousChangeInPrice)
+      .subscribe((data) => {
+        this.previousChangeInPrice = this.toStringArray(data);
+      });
 
     this.changePercentage$ = this.store
       .select(selectChangePercentage)
-      .subscribe((data) => (this.changePercentage = data));
+      .subscribe((data) => {
+        this.changePercentage = this.toStringArray(data);
+      });
+    this.previousChangePercentage$ = this.store
+      .select(selectPreviousChangePercentage)
+      .subscribe((data) => {
+        this.previousChangePercentage = this.toStringArray(data);
+      });
   }
 
   ngOnDestroy(): void {
@@ -66,5 +94,13 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     if (this.price$) this.price$.unsubscribe();
     if (this.changeInPrice$) this.changeInPrice$.unsubscribe();
     if (this.changePercentage$) this.changePercentage$.unsubscribe();
+    if (this.previousPrice$) this.previousPrice$.unsubscribe();
+    if (this.previousChangeInPrice$) this.previousChangeInPrice$.unsubscribe();
+    if (this.previousChangePercentage$)
+      this.previousChangePercentage$.unsubscribe();
+  }
+
+  private toStringArray(data: number): string[] {
+    return [...data.toFixed(2).toString()];
   }
 }

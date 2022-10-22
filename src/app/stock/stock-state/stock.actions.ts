@@ -34,6 +34,16 @@ export const setCurrentPrice = createAction(
   props<{ currentPrice: number }>()
 );
 
+export const setCurrentChangeInPrice = createAction(
+  "[Stock] Set Current Change In Price",
+  props<{ changeInPrice: number }>()
+);
+
+export const setCurrentChangePercentage = createAction(
+  "[Stock] Set Current Change Percentage",
+  props<{ changePercentage: number }>()
+);
+
 export const clearStockState = createAction("[Stock] Clear Stock State");
 
 export const setCurrentTimeRange = createAction(

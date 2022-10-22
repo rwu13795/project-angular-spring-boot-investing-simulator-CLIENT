@@ -7,12 +7,34 @@
     <div class="digits-wrapper">
       Price:
 
-      <div *ngFor="let digit of digitsString">
-        <app-digit-cylinder [currentDigit]="digit"></app-digit-cylinder>
+      <div *ngFor="let digit of price; index as i">
+        <app-digit-cylinder
+          [currentDigit]="digit"
+          [previousDigit]="previousPrice[i]"
+        ></app-digit-cylinder>
       </div>
     </div>
-    <div>Changes: {{ changeInPrice }}</div>
-    <div *ngIf="changePercentage">{{ changePercentage }}%</div>
+    <div class="digits-wrapper">
+      Changes:
+      <div *ngFor="let digit of changeInPrice; index as i">
+        <app-digit-cylinder
+          [currentDigit]="digit"
+          [previousDigit]="previousChangeInPrice[i]"
+          [timeRange]="timeRange | async"
+        ></app-digit-cylinder>
+      </div>
+    </div>
+
+    <div class="digits-wrapper">
+      <div *ngFor="let digit of changePercentage; index as i">
+        <app-digit-cylinder
+          [currentDigit]="digit"
+          [previousDigit]="previousChangePercentage[i]"
+          [timeRange]="timeRange | async"
+        ></app-digit-cylinder>
+      </div>
+      %
+    </div>
   </div>
   <div *ngIf="!profile" class="loading"><h3>Loading</h3></div>
 </main>

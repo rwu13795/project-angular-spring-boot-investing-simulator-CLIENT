@@ -24,7 +24,11 @@ import {
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
 import { ChartData, CandleData } from "../../stock-models";
-import { setCurrentPrice } from "../../stock-state/stock.actions";
+import {
+  setCurrentChangeInPrice,
+  setCurrentChangePercentage,
+  setCurrentPrice,
+} from "../../stock-state/stock.actions";
 import { StockService } from "../../stock.service";
 import { StockChartService } from "../stock-chart.service";
 
@@ -122,11 +126,17 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
     this.realTimePrice$ = this.stockService
       .getRealTimePrice(this.symbol)
       .subscribe(([data]) => {
-        const { timestamp, volume, price } = data;
+        const { timestamp, volume, price, changesPercentage, change } = data;
         const timestampMS = timestamp * 1000;
         console.log("price-------------", price);
 
+        // for the stock-price component
         this.store.dispatch(setCurrentPrice({ currentPrice: price }));
+        this.store.dispatch(setCurrentChangeInPrice({ changeInPrice: change }));
+        this.store.dispatch(
+          setCurrentChangePercentage({ changePercentage: changesPercentage })
+        );
+
         this.realTimePrice = price;
         this.dataUpdated = true;
         this.updateChartBoundary(price);
