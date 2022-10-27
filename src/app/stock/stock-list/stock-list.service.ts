@@ -58,6 +58,16 @@ export class StockListService {
     return { ...this.lists };
   }
 
+  public getPreviewList() {
+    if (!this.lists.actives || !this.lists.gainers || !this.lists.losers)
+      return;
+    return {
+      [ListTypes.actives]: this.lists.actives.slice(0, 5),
+      [ListTypes.gainers]: this.lists.gainers.slice(0, 5),
+      [ListTypes.losers]: this.lists.losers.slice(0, 5),
+    };
+  }
+
   public sortList(
     listType: ListTypes,
     sortBy: SortBy,

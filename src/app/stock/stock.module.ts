@@ -46,5 +46,6 @@ import { StockComponent } from "./stock.component";
     SharedModule,
     FinancialStatementsModule,
   ],
+  exports: [StockListPreviewComponent],
 })
 export class StockModule {}

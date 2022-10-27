@@ -17,6 +17,7 @@ import { HomeComponent } from "./home/home.component";
 import { SharedModule } from "./shared/shared.module";
 import { NavigationModule } from "./navigation/navigation.module";
 import { MarketIndexModule } from "./market-index/market-index.module";
+import { StockModule } from "./stock/stock.module";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -29,6 +30,7 @@ import { MarketIndexModule } from "./market-index/market-index.module";
     NavigationModule,
     SharedModule,
     MarketIndexModule,
+    StockModule,
     // ngrx store //
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
