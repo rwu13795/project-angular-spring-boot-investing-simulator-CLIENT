@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -35,7 +43,7 @@ export type ChartOptions = {
   templateUrl: "./revenue-chart.component.html",
   styleUrls: ["./revenue-chart.component.css"],
 })
-export class RevenueChartComponent implements OnInit, OnDestroy {
+export class RevenueChartComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("revenue-chart") chart!: ChartComponent;
   public chartOptions?: Partial<ChartOptions>;
 
@@ -49,9 +57,11 @@ export class RevenueChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.incomeStatement$ = this.stockService
-      .getIncomeStatements(this.symbol, this.isFullYear, 6)
-      .subscribe((data) => this.setChartOptions(data));
+    this.fetchChartData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.fetchChartData();
   }
 
   ngOnDestroy(): void {
@@ -123,5 +133,11 @@ export class RevenueChartComponent implements OnInit, OnDestroy {
         },
       },
     };
+  }
+
+  private fetchChartData() {
+    this.incomeStatement$ = this.stockService
+      .getIncomeStatements(this.symbol, this.isFullYear, 6)
+      .subscribe((data) => this.setChartOptions(data));
   }
 }

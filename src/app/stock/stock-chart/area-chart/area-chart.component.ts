@@ -1,4 +1,12 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 import {
   ChartComponent,
   ApexChart,
@@ -38,13 +46,13 @@ export type ChartOptions = {
   templateUrl: "./area-chart.component.html",
   styleUrls: ["./area-chart.component.css"],
 })
-export class AreaChartComponent implements OnInit, OnDestroy {
+export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("area_chart", { static: false }) chart!: ChartComponent;
-  public chartOptions?: Partial<ChartOptions>;
-
   @Input() symbol: string = "";
   private chartData$?: Subscription;
+  public chartOptions?: Partial<ChartOptions>;
   public timeRange: string = "";
+  public loading: boolean = true;
 
   constructor(
     private stockService: StockService,
@@ -52,15 +60,11 @@ export class AreaChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.chartData$ = this.stockService
-      .fetchHistoryPrice("3M", this.symbol)
-      .subscribe((data) => {
-        this.timeRange = `${data.candleLine[0].x.toLocaleDateString()} - ${data.candleLine[
-          data.candleLine.length - 1
-        ].x.toLocaleDateString()}`;
+    this.fetchChartData();
+  }
 
-        this.setChartOptions(data);
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    this.fetchChartData();
   }
 
   ngOnDestroy(): void {
@@ -113,6 +117,20 @@ export class AreaChartComponent implements OnInit, OnDestroy {
         },
       },
     };
+  }
+
+  private fetchChartData() {
+    this.loading = true;
+    this.chartData$ = this.stockService
+      .fetchHistoryPrice("3M", this.symbol)
+      .subscribe((data) => {
+        this.timeRange = `${data.candleLine[0].x.toLocaleDateString()} - ${data.candleLine[
+          data.candleLine.length - 1
+        ].x.toLocaleDateString()}`;
+
+        this.setChartOptions(data);
+        this.loading = false;
+      });
   }
 }
 

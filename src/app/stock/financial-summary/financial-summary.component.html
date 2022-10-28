@@ -1,38 +1,51 @@
 <main>
-  <h1>summary</h1>
-  <div class="summary">
-    <div class="cell">Symbol {{ financialSummary?.symbol }}</div>
-    <div class="cell">Price {{ financialSummary?.price }}</div>
-    <div class="cell">Beta {{ financialSummary?.beta }}</div>
-    <div class="cell">Volume Avg. {{ financialSummary?.volumeAvg }}</div>
-    <div class="cell">Market Cap {{ financialSummary?.marketCap }}</div>
-    <div class="cell">
-      Outstanding Shares {{ financialSummary?.outstandingShares }}
+  <div class="container-left">
+    <h1>summary</h1>
+    <div class="summary">
+      <div class="cell">Symbol {{ financialSummary?.symbol }}</div>
+      <div class="cell">Price {{ financialSummary?.price }}</div>
+      <div class="cell">Beta {{ financialSummary?.beta }}</div>
+      <div class="cell">Volume Avg. {{ financialSummary?.volumeAvg }}</div>
+      <div class="cell">Market Cap {{ financialSummary?.marketCap }}</div>
+      <div class="cell">
+        Outstanding Shares {{ financialSummary?.outstandingShares }}
+      </div>
+      <div class="cell">Open {{ financialSummary?.open }}</div>
+      <div class="cell">
+        Previous Close {{ financialSummary?.previousClose }}
+      </div>
+      <div class="cell">Day Low {{ financialSummary?.dayLow }}</div>
+      <div class="cell">Day High {{ financialSummary?.dayHigh }}</div>
+      <div class="cell">52 Week Range {{ financialSummary?.range }}</div>
+      <div class="cell">EPS {{ financialSummary?.EPS }}</div>
+      <div class="cell">ROE returnOnEquity % {{ financialSummary?.ROE }}</div>
+      <div class="cell">ROA returnOnAssets % {{ financialSummary?.ROA }}</div>
+      <div class="cell">
+        Operating Margin % {{ financialSummary?.operatingMargin }}
+      </div>
+      <div class="cell">Debt / Equity % {{ financialSummary?.debtEquity }}</div>
+      <div class="cell">
+        P/E priceEarningsRatioTTM {{ financialSummary?.pe }}
+      </div>
+      <div class="cell">P/B priceToBookRatioTTM {{ financialSummary?.pb }}</div>
     </div>
-    <div class="cell">Open {{ financialSummary?.open }}</div>
-    <div class="cell">Previous Close {{ financialSummary?.previousClose }}</div>
-    <div class="cell">Day Low {{ financialSummary?.dayLow }}</div>
-    <div class="cell">Day High {{ financialSummary?.dayHigh }}</div>
-    <div class="cell">52 Week Range {{ financialSummary?.range }}</div>
-    <div class="cell">EPS {{ financialSummary?.EPS }}</div>
-    <div class="cell">ROE returnOnEquity % {{ financialSummary?.ROE }}</div>
-    <div class="cell">ROA returnOnAssets % {{ financialSummary?.ROA }}</div>
-    <div class="cell">
-      Operating Margin % {{ financialSummary?.operatingMargin }}
+
+    <div class="chart-group">
+      <div class="chart-wrapper">
+        <app-area-chart [symbol]="symbol"></app-area-chart>
+      </div>
+      <div class="chart-wrapper">
+        <app-revenue-chart [symbol]="symbol"></app-revenue-chart>
+      </div>
     </div>
-    <div class="cell">Debt / Equity % {{ financialSummary?.debtEquity }}</div>
-    <div class="cell">P/E priceEarningsRatioTTM {{ financialSummary?.pe }}</div>
-    <div class="cell">P/B priceToBookRatioTTM {{ financialSummary?.pb }}</div>
+
+    <div class="preview-list" *ngIf="isLargeScreen === false">
+      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    </div>
+    <app-news [symbol]="symbol"></app-news>
   </div>
 
-  <div class="chart-group">
-    <div class="chart-wrapper">
-      <app-area-chart [symbol]="symbol"></app-area-chart>
-    </div>
-    <div class="chart-wrapper">
-      <app-revenue-chart [symbol]="symbol"></app-revenue-chart>
-    </div>
+  <div class="container-right" *ngIf="isLargeScreen === true">
+    <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
   </div>
-
-  <app-news [symbol]="symbol"></app-news>
 </main>

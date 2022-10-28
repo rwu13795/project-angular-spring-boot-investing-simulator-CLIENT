@@ -1,0 +1,10 @@
+main {
+  max-width: 200px;
+}
+
+@media screen and (max-width: 1200px) {
+  .list {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+}

@@ -1,5 +1,4 @@
 main {
-  width: 100vw;
   max-height: 100px;
   display: flex;
   flex-flow: row nowrap;

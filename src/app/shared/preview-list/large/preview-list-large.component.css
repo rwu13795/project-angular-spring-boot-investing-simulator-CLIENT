@@ -21,3 +21,7 @@
 .entry-wrapper:nth-child(odd) {
   background-color: aquamarine;
 }
+
+.highlight {
+  background-color: burlywood;
+}

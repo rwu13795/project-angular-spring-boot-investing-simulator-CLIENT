@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
@@ -45,11 +46,13 @@ export class FinancialSummaryComponent implements OnInit {
   private financialSummary$?: Subscription;
   private selector$?: Subscription;
   public financialSummary?: FinancialSummary;
+  public isLargeScreen?: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private stockService: StockService,
-    private store: Store
+    private store: Store,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +60,16 @@ export class FinancialSummaryComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.symbol = params["symbol"].toUpperCase();
     });
+
+    this.breakpointObserver
+      .observe(["(min-width: 1200px)"])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isLargeScreen = true;
+        } else {
+          this.isLargeScreen = false;
+        }
+      });
 
     // when the component is mounted, the profile might not be fetched yet,
     // so when I select the profile the first time, it might be null.

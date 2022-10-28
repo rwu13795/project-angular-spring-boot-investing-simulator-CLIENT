@@ -14,8 +14,6 @@ import { MixedChartComponent } from "./stock-chart/mixed-chart/mixed-chart.compo
 import { RealTimeChartComponent } from "./stock-chart/real-time-chart/real-time-chart.component";
 import { RevenueChartComponent } from "./stock-chart/revenue-chart/revenue-chart.component";
 import { StockChartComponent } from "./stock-chart/stock-chart.component";
-import { StockListPreviewComponent } from "./stock-list/stock-list-preview/stock-list-previewcomponent";
-import { StockListComponent } from "./stock-list/stock-list.component";
 import { StockMenuComponent } from "./stock-menu/stock-menu.component";
 import { StockPriceComponent } from "./stock-price/stock-price.component";
 import { StockRoutingModule } from "./stock-routing.module";
@@ -35,8 +33,6 @@ import { StockComponent } from "./stock.component";
     CompanyProfileComponent,
     Stock404Component,
     StockPriceComponent,
-    StockListComponent,
-    StockListPreviewComponent,
   ],
   imports: [
     RouterModule,
@@ -46,6 +42,5 @@ import { StockComponent } from "./stock.component";
     SharedModule,
     FinancialStatementsModule,
   ],
-  exports: [StockListPreviewComponent],
 })
 export class StockModule {}

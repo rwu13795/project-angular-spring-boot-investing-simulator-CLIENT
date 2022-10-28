@@ -1,16 +1,25 @@
 <main>
-  <div>Portfolio</div>
-  <hr />
+  <div class="container-left">
+    <div>Portfolio</div>
+    <hr />
 
-  <app-index-preview></app-index-preview>
+    <app-index-preview></app-index-preview>
 
-  <a [routerLink]="['/stock/performance']">To list</a>
+    <a [routerLink]="['/performance']">To list</a>
 
-  <div>
-    <h1>Previes List</h1>
-    <app-stock-list-preview></app-stock-list-preview>
+    <div class="preview-list-small-screen" *ngIf="isLargeScreen === false">
+      <h1>Preview List</h1>
+      <app-preview-list-small></app-preview-list-small>
+    </div>
+
+    <hr />
+    <app-news></app-news>
   </div>
 
-  <hr />
-  <app-news></app-news>
+  <div class="container-right" *ngIf="isLargeScreen === true">
+    <div class="preview-list-large-screen">
+      <h1>Preview List</h1>
+      <app-preview-list-small></app-preview-list-small>
+    </div>
+  </div>
 </main>

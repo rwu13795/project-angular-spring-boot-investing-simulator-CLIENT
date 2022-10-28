@@ -18,6 +18,8 @@ import { SharedModule } from "./shared/shared.module";
 import { NavigationModule } from "./navigation/navigation.module";
 import { MarketIndexModule } from "./market-index/market-index.module";
 import { StockModule } from "./stock/stock.module";
+import { LayoutModule } from "@angular/cdk/layout";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -28,6 +30,7 @@ import { StockModule } from "./stock/stock.module";
     HttpClientModule,
     NgApexchartsModule,
     NavigationModule,
+    LayoutModule,
     SharedModule,
     MarketIndexModule,
     StockModule,
@@ -39,6 +42,7 @@ import { StockModule } from "./stock/stock.module";
     }),
     StoreRouterConnectingModule.forRoot(),
     EffectsModule.forRoot([StockEffects]),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

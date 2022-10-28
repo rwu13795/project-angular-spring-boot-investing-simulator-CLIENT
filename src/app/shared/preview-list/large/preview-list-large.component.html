@@ -1,0 +1,47 @@
+<main>
+  <h1>List</h1>
+  <div class="list-menu">
+    <h3
+      (click)="onSelectOption(ListTypes.actives)"
+      [ngClass]="{ highlight: listType === ListTypes.actives }"
+    >
+      Most Searched
+    </h3>
+    <h3
+      (click)="onSelectOption(ListTypes.gainers)"
+      [ngClass]="{ highlight: listType === ListTypes.gainers }"
+    >
+      Top Performing
+    </h3>
+    <h3
+      (click)="onSelectOption(ListTypes.losers)"
+      [ngClass]="{ highlight: listType === ListTypes.losers }"
+    >
+      Worst Performing
+    </h3>
+  </div>
+  <div
+    *ngIf="listType === ListTypes.actives && lists.actives"
+    class="list-wrapper"
+  >
+    <app-preview-list-large-entry
+      [list]="lists.actives"
+    ></app-preview-list-large-entry>
+  </div>
+  <div
+    *ngIf="listType === ListTypes.gainers && lists.gainers"
+    class="list-wrapper"
+  >
+    <app-preview-list-large-entry
+      [list]="lists.gainers"
+    ></app-preview-list-large-entry>
+  </div>
+  <div
+    *ngIf="listType === ListTypes.losers && lists.losers"
+    class="list-wrapper"
+  >
+    <app-preview-list-large-entry
+      [list]="lists.losers"
+    ></app-preview-list-large-entry>
+  </div>
+</main>

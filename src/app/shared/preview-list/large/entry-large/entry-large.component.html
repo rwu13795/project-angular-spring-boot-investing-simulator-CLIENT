@@ -1,0 +1,31 @@
+<main *ngIf="list">
+  <table>
+    <thead>
+      <tr>
+        <th (click)="onSort(SortBy.symbol)">
+          Symbol <mat-icon>sort</mat-icon>
+        </th>
+        <th (click)="onSort(SortBy.name)">Name <mat-icon>sort</mat-icon></th>
+        <th (click)="onSort(SortBy.price)">Price <mat-icon>sort</mat-icon></th>
+        <th (click)="onSort(SortBy.changeInPrice)">
+          Change <mat-icon>sort</mat-icon>
+        </th>
+        <th (click)="onSort(SortBy.changePercentage)">
+          Change(%) <mat-icon>sort</mat-icon>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let entry of list"
+        [routerLink]="['/stock', 'financial-summary', entry.symbol]"
+      >
+        <td>{{ entry.symbol }}</td>
+        <td>{{ entry.name }}</td>
+        <td>${{ entry.price }}</td>
+        <td>{{ entry.change }}</td>
+        <td>{{ entry.changesPercentage }}%</td>
+      </tr>
+    </tbody>
+  </table>
+</main>

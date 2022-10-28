@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import produce from "immer";
-import { ListTypes } from "../stock-list/stock-list-models";
+import { ListTypes } from "../../shared/preview-list/preview-list-models";
+
 import {
   Response_companyProfile,
   Response_priceChangePercentage,

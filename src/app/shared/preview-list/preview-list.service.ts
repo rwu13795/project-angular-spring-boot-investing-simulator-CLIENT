@@ -1,16 +1,19 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { forkJoin, map, tap } from "rxjs";
+import { Response_realTimePrice } from "src/app/stock/stock-models";
 import {
   ListTypes,
+  Response_peerStocks,
   Response_stockList,
   SortBy,
   StockPerformanceLists,
-} from "./stock-list-models";
+} from "./preview-list-models";
 
 @Injectable({ providedIn: "root" })
-export class StockListService {
+export class PreviewListService {
   private FMP_API = "https://financialmodelingprep.com/api/v3";
+  private FMP_API_V4 = "https://financialmodelingprep.com/api/v4";
 
   private SERVER_URL = "http://localhost:8080/api";
   private API_KEY = "bebf0264afd8447938b0ae54509c1513";
@@ -20,6 +23,8 @@ export class StockListService {
     [ListTypes.gainers]: null,
     [ListTypes.losers]: null,
   };
+  private peerStockList: Response_realTimePrice[] = [];
+  private currentSymbol: string | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -80,7 +85,43 @@ export class StockListService {
     return this.sortByValue(sortBy, ascending, tempList);
   }
 
-  public fetchPeerStocks(symbol: string) {}
+  public getPeerStockList(symbol: string) {
+    if (this.currentSymbol === symbol) return this.peerStockList;
+
+    this.peerStockList = [];
+    this.currentSymbol = symbol;
+    return [];
+  }
+
+  public fetchPeerStockList(symbol: string) {
+    this.currentSymbol = symbol;
+    const params = new HttpParams({
+      fromObject: { symbol, apikey: this.API_KEY },
+    });
+    return this.http
+      .get<Response_peerStocks[]>(`${this.FMP_API_V4}/stock_peers`, { params })
+      .pipe(
+        map((data) => {
+          return this.fetchPeerStockInfo(data[0].peersList.join());
+        })
+      );
+  }
+
+  private fetchPeerStockInfo(symbolList: string) {
+    const params = new HttpParams({
+      fromObject: { apikey: this.API_KEY },
+    });
+
+    return this.http
+      .get<Response_realTimePrice[]>(`${this.FMP_API}/quote/${symbolList}`, {
+        params,
+      })
+      .pipe(
+        tap((data) => {
+          this.peerStockList = data;
+        })
+      );
+  }
 
   private sortByValue(
     sortBy: SortBy,

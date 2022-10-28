@@ -5,6 +5,7 @@ import { HomeComponent } from "./home/home.component";
 import { MarketIndexComponent } from "./market-index/market-index.component";
 import { MarketIndexGuard } from "./market-index/market-index.guard";
 import { Page404Component } from "./shared/page-404/page-404.component";
+import { PreviewListLargeComponent } from "./shared/preview-list/large/preview-list-large.component";
 
 const routes: Routes = [
   { path: "", pathMatch: "full", component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
     component: MarketIndexComponent,
     canActivate: [MarketIndexGuard],
   },
+  { path: "performance", component: PreviewListLargeComponent },
   { path: "**", component: Page404Component },
 ];
 

@@ -1,0 +1,37 @@
+<main *ngIf="previewList && !symbol">
+  <div class="list">
+    <h3 (click)="onSelectOption(ListTypes.actives)">Most Searched</h3>
+    <div *ngFor="let entry of previewList.actives">
+      <app-preview-list-small-entry
+        [entry]="entry"
+      ></app-preview-list-small-entry>
+    </div>
+  </div>
+  <div class="list">
+    <h3 (click)="onSelectOption(ListTypes.gainers)">Top Performing</h3>
+    <div *ngFor="let entry of previewList.gainers">
+      <app-preview-list-small-entry
+        [entry]="entry"
+      ></app-preview-list-small-entry>
+    </div>
+  </div>
+  <div class="list">
+    <h3 (click)="onSelectOption(ListTypes.losers)">Worst Performing</h3>
+    <div *ngFor="let entry of previewList.losers">
+      <app-preview-list-small-entry
+        [entry]="entry"
+      ></app-preview-list-small-entry>
+    </div>
+  </div>
+</main>
+
+<main *ngIf="symbol && peerList">
+  <div class="list">
+    <h3>People Also Watch</h3>
+    <div *ngFor="let entry of peerList">
+      <app-preview-list-small-entry
+        [entry]="entry"
+      ></app-preview-list-small-entry>
+    </div>
+  </div>
+</main>

@@ -1,7 +1,7 @@
 <main>
   <div>{{ timeRange }}</div>
   <apx-chart
-    *ngIf="chartOptions"
+    *ngIf="chartOptions && !loading"
     #area_chart
     [series]="chartOptions.series!"
     [chart]="chartOptions.chart!"
@@ -13,4 +13,5 @@
     [xaxis]="chartOptions.xaxis!"
     [tooltip]="chartOptions.tooltip!"
   ></apx-chart>
+  <div *ngIf="loading">Loading place holder</div>
 </main>

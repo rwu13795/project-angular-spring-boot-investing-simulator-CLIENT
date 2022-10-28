@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 
 @Component({
@@ -6,9 +7,22 @@ import { Component, Input, OnDestroy, OnInit } from "@angular/core";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  constructor() {}
+  public isLargeScreen?: boolean;
 
-  ngOnInit(): void {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  ngOnInit(): void {
+    // use Angular material CDK to observe the current window width
+    this.breakpointObserver
+      .observe(["(min-width: 1200px)"])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isLargeScreen = true;
+        } else {
+          this.isLargeScreen = false;
+        }
+      });
+  }
 
   ngOnDestroy(): void {}
 }

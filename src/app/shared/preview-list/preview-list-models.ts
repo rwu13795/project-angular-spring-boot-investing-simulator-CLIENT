@@ -26,3 +26,8 @@ export enum SortBy {
   changeInPrice = "changeInPrice",
   changePercentage = "changePercentage",
 }
+
+export interface Response_peerStocks {
+  symbol: string;
+  peersList: string[];
+}

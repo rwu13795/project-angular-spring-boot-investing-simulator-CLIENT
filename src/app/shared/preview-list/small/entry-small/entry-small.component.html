@@ -1,0 +1,8 @@
+<main *ngIf="entry">
+  <div [routerLink]="['/stock', 'financial-summary', entry.symbol]">
+    <div>{{ entry.symbol }}</div>
+    <div>${{ entry.price }}</div>
+    <div>{{ entry.change }}</div>
+    <div>{{ entry.changesPercentage }}%</div>
+  </div>
+</main>

@@ -1,5 +1,8 @@
-.digits-wrapper {
+:host {
+  width: 100vw;
   display: flex;
-  flex-flow: nowrap row;
-  width: 800px;
+  justify-content: center;
+}
+
+main {
 }
