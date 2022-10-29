@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { SignInComponent } from "./auth/sign-in/sign-in.component";
 
 import { HomeComponent } from "./home/home.component";
 import { MarketIndexComponent } from "./market-index/market-index.component";
@@ -9,18 +10,28 @@ import { PreviewListLargeComponent } from "./shared/preview-list/large/preview-l
 
 const routes: Routes = [
   { path: "", pathMatch: "full", component: HomeComponent },
+
   {
     path: "stock",
     loadChildren: () =>
       import("./stock/stock.module").then((m) => m.StockModule),
   },
+
   { path: "market-index", component: MarketIndexComponent },
   {
     path: "market-index/:symbol",
     component: MarketIndexComponent,
     canActivate: [MarketIndexGuard],
   },
+
   { path: "performance", component: PreviewListLargeComponent },
+
+  {
+    path: "auth",
+    component: SignInComponent,
+    children: [{ path: "sign-in", component: SignInComponent }],
+  },
+
   { path: "**", component: Page404Component },
 ];
 

@@ -19,7 +19,8 @@ import { NavigationModule } from "./navigation/navigation.module";
 import { MarketIndexModule } from "./market-index/market-index.module";
 import { StockModule } from "./stock/stock.module";
 import { LayoutModule } from "@angular/cdk/layout";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -34,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     MarketIndexModule,
     StockModule,
+    AuthModule,
     // ngrx store //
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({

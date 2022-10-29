@@ -97,6 +97,7 @@ main {
 @media screen and (max-width: 1200px) {
   .container-left {
     border-right: none;
+    width: 94%;
   }
 
   .container-right {

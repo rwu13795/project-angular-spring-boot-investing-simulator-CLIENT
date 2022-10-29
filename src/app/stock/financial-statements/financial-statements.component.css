@@ -1,6 +1,30 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.container-left {
+  width: 75%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-right: solid red 2px;
+  overflow: hidden;
+}
+
 .menu-wrapper {
   margin: 20px auto;
-  width: 60%;
+  width: 100%;
   min-height: 50px;
   background-color: azure;
   display: flex;
@@ -8,4 +32,30 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.container-right {
+  min-height: 90vh;
+  width: 22%;
+}
+
+.preview-list {
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .container-left {
+    border-right: none;
+    width: 94%;
+  }
+
+  .container-right {
+    display: none;
+  }
+
+  .preview-list {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+  }
 }

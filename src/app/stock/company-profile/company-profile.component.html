@@ -1,9 +1,19 @@
 <main>
-  <h1>Profile</h1>
-  <div>CEO {{ (profile | async)?.ceo }}</div>
-  <div>Sector {{ (profile | async)?.sector }}</div>
-  <div>Industry {{ (profile | async)?.industry }}</div>
-  <div>Website {{ (profile | async)?.website }}</div>
-  <div>Exchange {{ (profile | async)?.exchange }}</div>
-  <div>Description: {{ (profile | async)?.description }}</div>
+  <div class="container-left">
+    <h1>Profile</h1>
+    <div>CEO {{ (profile | async)?.ceo }}</div>
+    <div>Sector {{ (profile | async)?.sector }}</div>
+    <div>Industry {{ (profile | async)?.industry }}</div>
+    <div>Website {{ (profile | async)?.website }}</div>
+    <div>Exchange {{ (profile | async)?.exchange }}</div>
+    <div>Description: {{ (profile | async)?.description }}</div>
+
+    <div class="preview-list" *ngIf="isLargeScreen === false">
+      <app-preview-list-small></app-preview-list-small>
+    </div>
+  </div>
+
+  <div class="container-right" *ngIf="isLargeScreen === true">
+    <app-preview-list-small></app-preview-list-small>
+  </div>
 </main>

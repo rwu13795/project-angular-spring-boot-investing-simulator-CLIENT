@@ -1,23 +1,35 @@
 <main>
-  <div class="menu-wrapper">
-    <div (click)="onSelectStatement('income-statement')">Income Statement</div>
-    <div>|</div>
-    <div (click)="onSelectStatement('balance-sheet-statement')">
-      Balance Sheet
+  <div class="container-left">
+    <div class="menu-wrapper">
+      <div (click)="onSelectStatement('income-statement')">
+        Income Statement
+      </div>
+      <div>|</div>
+      <div (click)="onSelectStatement('balance-sheet-statement')">
+        Balance Sheet
+      </div>
+      <div>|</div>
+      <div (click)="onSelectStatement('cash-flow-statement')">Cash Flow</div>
     </div>
-    <div>|</div>
-    <div (click)="onSelectStatement('cash-flow-statement')">Cash Flow</div>
+    <app-income-statement
+      [symbol]="symbol"
+      *ngIf="type === 'income-statement'"
+    ></app-income-statement>
+    <app-balance-sheet
+      [symbol]="symbol"
+      *ngIf="type === 'balance-sheet-statement'"
+    ></app-balance-sheet>
+    <app-cash-flow
+      [symbol]="symbol"
+      *ngIf="type === 'cash-flow-statement'"
+    ></app-cash-flow>
+
+    <div class="preview-list" *ngIf="isLargeScreen === false">
+      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    </div>
   </div>
-  <app-income-statement
-    [symbol]="symbol"
-    *ngIf="type === 'income-statement'"
-  ></app-income-statement>
-  <app-balance-sheet
-    [symbol]="symbol"
-    *ngIf="type === 'balance-sheet-statement'"
-  ></app-balance-sheet>
-  <app-cash-flow
-    [symbol]="symbol"
-    *ngIf="type === 'cash-flow-statement'"
-  ></app-cash-flow>
+
+  <div class="container-right" *ngIf="isLargeScreen === true">
+    <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+  </div>
 </main>

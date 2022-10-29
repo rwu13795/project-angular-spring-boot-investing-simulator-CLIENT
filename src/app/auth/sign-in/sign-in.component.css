@@ -1,0 +1,82 @@
+.input-container {
+  margin-bottom: 12px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 300px;
+  max-width: 300px;
+}
+
+.input-box {
+  width: 100%;
+  padding: 10px;
+  border: solid #9df7fa 4px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 20px;
+  background-color: transparent;
+}
+.input-box.ng-invalid.ng-touched {
+  border-color: #db4d54;
+}
+.input-box.ng-pending {
+  border-color: #7a7a7a;
+}
+
+.input-wrapper span {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 12px;
+  pointer-events: none;
+  font-size: 20px;
+  color: gray;
+  transition: all 0.3s;
+}
+
+/* --- Important --- 
+    Since the FormControl will automatically add some CSS class such as 
+    ng-invalid, ng-touched based on the current input, I can use these class
+    inside the CSS file to customize the element using these class
+  */
+.input-box:focus ~ span,
+.input-box:not(:placeholder-shown) ~ span {
+  background-color: #9df7fa;
+}
+
+.input-box.ng-valid.ng-touched {
+  border: solid #2cb67f 4px;
+}
+
+.input-box.ng-valid.ng-touched:focus ~ span,
+.input-box.ng-valid.ng-touched:not(:placeholder-shown) ~ span {
+  background-color: #8cebc5;
+}
+
+.input-box.ng-invalid.ng-touched:focus ~ span,
+/* .input-box.error_box:focus ~ span, */
+.input-box.ng-invalid.ng-touched:not(:placeholder-shown) ~ span {
+  background-color: #dda3a6;
+}
+
+.input-box.ng-pending:focus ~ span,
+.input-box.ng-pending:not(:placeholder-shown) ~ span {
+  background-color: #7a7a7a;
+}
+
+.input-box:focus ~ span,
+.input-box:not(:placeholder-shown) ~ span {
+  transform: translateX(10px) translateY(-42px);
+  transition: all 0.3s;
+  font-size: 11px;
+  padding: 2px 12px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  color: black;
+}
+
+.error-message {
+  min-height: 24px;
+  color: #db4d54;
+}
