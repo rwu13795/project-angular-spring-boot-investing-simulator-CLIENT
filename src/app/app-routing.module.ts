@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { AuthComponent } from "./auth/auth.component";
 import { SignInComponent } from "./auth/sign-in/sign-in.component";
 
 import { HomeComponent } from "./home/home.component";
@@ -28,8 +29,7 @@ const routes: Routes = [
 
   {
     path: "auth",
-    component: SignInComponent,
-    children: [{ path: "sign-in", component: SignInComponent }],
+    loadChildren: () => import("./auth/auth.module").then((m) => m.AuthModule),
   },
 
   { path: "**", component: Page404Component },

@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onSearchStockByName() {
     this.searchResult$ = this.searchService
-      .searchStockByName(this.inputValue)
+      .searchStockByName(this.inputValue, "NASDAQ")
       .subscribe((data) => {
         this.searchResult = data;
       });
@@ -44,7 +44,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
 
       this.searchResult$ = this.searchService
-        .searchStockByName(value)
+        .searchStockByName(value, "NASDAQ")
         .subscribe((data) => {
           this.searchResult = data;
         });

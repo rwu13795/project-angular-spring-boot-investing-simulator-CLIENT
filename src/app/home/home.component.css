@@ -22,7 +22,7 @@ main {
 }
 
 .container-right {
-  min-height: 90vh;
+  height: 101%;
   width: 22%;
 }
 
@@ -32,7 +32,7 @@ main {
 
 .preview-list-large-screen {
   position: sticky;
-  height: 95vh;
+  height: 90vh;
   top: 100px;
   width: 90%;
   overflow: auto;

@@ -1,31 +1,25 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs";
+import { environment } from "src/environments/environment";
 import { Response_searchByName } from "./search.models";
 
 @Injectable({ providedIn: "root" })
 export class SearchService {
-  private FMP_API = "https://financialmodelingprep.com/api/v3";
-  // for spring boot server
-  private SERVER_URL = "http://localhost:8080/api";
-  private API_KEY = "bebf0264afd8447938b0ae54509c1513";
+  private SERVER_URL = environment.SERVER_URL;
 
   constructor(private http: HttpClient) {}
 
-  public searchStockByName(inputValue: string) {
+  public searchStockByName(inputValue: string, exchange: string) {
     const params = new HttpParams({
       fromObject: {
         query: inputValue,
-        limit: 20,
-        exchange: "NASDAQ",
-        apikey: this.API_KEY,
+        exchange,
       },
     });
 
-    // Spring boot
-    // get<Response_searchByName[]>(`${this.SERVER_URL}/stock/search`
     return this.http
-      .get<Response_searchByName[]>(`${this.FMP_API}/search`, {
+      .get<Response_searchByName[]>(`${this.SERVER_URL}/stock/search`, {
         params,
       })
       .pipe(

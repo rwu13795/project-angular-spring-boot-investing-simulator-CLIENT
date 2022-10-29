@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { forkJoin, map, tap } from "rxjs";
 import { Response_realTimePrice } from "src/app/stock/stock-models";
+import { environment } from "src/environments/environment";
 import {
   ListTypes,
   Response_peerStocks,
@@ -12,11 +13,7 @@ import {
 
 @Injectable({ providedIn: "root" })
 export class PreviewListService {
-  private FMP_API = "https://financialmodelingprep.com/api/v3";
-  private FMP_API_V4 = "https://financialmodelingprep.com/api/v4";
-
-  private SERVER_URL = "http://localhost:8080/api";
-  private API_KEY = "bebf0264afd8447938b0ae54509c1513";
+  private SERVER_URL = environment.SERVER_URL;
 
   private lists: StockPerformanceLists = {
     [ListTypes.actives]: null,
@@ -29,22 +26,15 @@ export class PreviewListService {
   constructor(private http: HttpClient) {}
 
   public fetchStockPerformanceList() {
-    const params = new HttpParams({
-      fromObject: { apikey: this.API_KEY },
-    });
-
     return forkJoin([
       this.http.get<Response_stockList[]>(
-        `${this.FMP_API}/stock_market/${ListTypes.gainers}`,
-        { params }
+        `${this.SERVER_URL}/stock/preview/all/${ListTypes.gainers}`
       ),
       this.http.get<Response_stockList[]>(
-        `${this.FMP_API}/stock_market/${ListTypes.losers}`,
-        { params }
+        `${this.SERVER_URL}/stock/preview/all/${ListTypes.losers}`
       ),
       this.http.get<Response_stockList[]>(
-        `${this.FMP_API}/stock_market/${ListTypes.actives}`,
-        { params }
+        `${this.SERVER_URL}/stock/preview/all/${ListTypes.actives}`
       ),
     ]).pipe(
       map<
@@ -96,32 +86,31 @@ export class PreviewListService {
   public fetchPeerStockList(symbol: string) {
     this.currentSymbol = symbol;
     const params = new HttpParams({
-      fromObject: { symbol, apikey: this.API_KEY },
-    });
-    return this.http
-      .get<Response_peerStocks[]>(`${this.FMP_API_V4}/stock_peers`, { params })
-      .pipe(
-        map((data) => {
-          return this.fetchPeerStockInfo(data[0].peersList.join());
-        })
-      );
-  }
-
-  private fetchPeerStockInfo(symbolList: string) {
-    const params = new HttpParams({
-      fromObject: { apikey: this.API_KEY },
+      fromObject: { symbol },
     });
 
     return this.http
-      .get<Response_realTimePrice[]>(`${this.FMP_API}/quote/${symbolList}`, {
+      .get<Response_realTimePrice[]>(`${this.SERVER_URL}/stock/preview/peers`, {
         params,
       })
-      .pipe(
-        tap((data) => {
-          this.peerStockList = data;
-        })
-      );
+      .pipe(tap((data) => (this.peerStockList = data)));
   }
+
+  // private fetchPeerStockInfo(symbolList: string) {
+  //   const params = new HttpParams({
+  //     fromObject: { apikey: this.API_KEY },
+  //   });
+
+  //   return this.http
+  //     .get<Response_realTimePrice[]>(`${this.FMP_API}/quote/${symbolList}`, {
+  //       params,
+  //     })
+  //     .pipe(
+  //       tap((data) => {
+  //         this.peerStockList = data;
+  //       })
+  //     );
+  // }
 
   private sortByValue(
     sortBy: SortBy,

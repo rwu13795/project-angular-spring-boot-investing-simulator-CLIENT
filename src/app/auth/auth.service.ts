@@ -1,9 +1,15 @@
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
+import { environment } from "src/environments/environment";
 import { InputField, InputFieldNames } from "./auth-models";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
+  private SERVER_URL = environment.SERVER_URL;
+
+  constructor(private http: HttpClient) {}
+
   public setInputErrorMessage(
     field: string,
     inputError: InputField,
@@ -46,5 +52,10 @@ export class AuthService {
     }
   }
 
-  public signIn(email: string, password: string) {}
+  public signIn(email: string, password: string) {
+    return this.http.post<any>(`${this.SERVER_URL}/auth/sign-in`, {
+      email,
+      password,
+    });
+  }
 }

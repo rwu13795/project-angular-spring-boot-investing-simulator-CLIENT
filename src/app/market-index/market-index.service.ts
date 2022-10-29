@@ -8,12 +8,7 @@ import { MajorIndex, RealTimeIndex } from "./market-index-models";
 
 @Injectable({ providedIn: "root" })
 export class MarketIndexService {
-  //   private SERVER_URL = environment.SERVER_URL;
-
-  private FMP_API = "https://financialmodelingprep.com/api/v3";
-  // for spring boot server
-  private SERVER_URL = "http://localhost:8080/api";
-  private API_KEY = "bebf0264afd8447938b0ae54509c1513";
+  private SERVER_URL = environment.SERVER_URL;
 
   private symbols: string[] = [
     "^DJI",

@@ -17,11 +17,8 @@ export class NewsService {
       },
     });
 
-    return this.http.get<Response_news[]>(
-      `${this.SERVER_URL}/news/fetch-news`,
-      {
-        params,
-      }
-    );
+    return this.http.get<Response_news[]>(`${this.SERVER_URL}/stock/news`, {
+      params,
+    });
   }
 }

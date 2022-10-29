@@ -79,10 +79,6 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.peerList$ = this.previewListService
       .fetchPeerStockList(symbol)
-      .subscribe((observable) => {
-        observable.subscribe((data) => {
-          this.peerList = data;
-        });
-      });
+      .subscribe((data) => (this.peerList = data));
   }
 }
