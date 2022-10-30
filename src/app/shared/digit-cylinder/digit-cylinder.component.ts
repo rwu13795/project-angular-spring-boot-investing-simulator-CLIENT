@@ -35,7 +35,6 @@ export class DigitCylinderComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     // The @Input() variable will be updated when new input is passed into
     // this component
     // In Angular, if I need to manipulate the DOM, I have to do it in the

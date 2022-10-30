@@ -16,7 +16,9 @@ export class StockChartService {
   }
 
   public toSignificantDigit(value: number): string {
-    if (value <= 0) {
+    if (value === 0) return "0";
+
+    if (value < 0) {
       if (value < -999999999) {
         return `${value / 1000000000}B`;
       } else if (value < 999999) {

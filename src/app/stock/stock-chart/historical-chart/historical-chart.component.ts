@@ -67,14 +67,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
     private stockChartService: StockChartService
   ) {}
 
-  ngOnInit(): void {
-    this.data$ = this.stockService
-      .fetchHistoryPrice(this.option, this.symbol)
-      .subscribe((data) => {
-        this.data = data;
-        this.setChartCandleOptions();
-      });
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     // this.option = changes["option"].currentValue;

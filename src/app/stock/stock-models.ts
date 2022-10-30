@@ -7,10 +7,10 @@ export interface Response_historyPrice {
   volume: number;
 }
 
-export interface Response_historyPriceFull {
-  // for the daily price api "/historical-price-full"
-  historical: Response_historyPrice[];
-}
+// export interface Response_historyPriceFull {
+//   // for the daily price api "/historical-price-full"
+//   historical: Response_historyPrice[];
+// }
 
 export interface CandleData {
   x: Date; // timestamp

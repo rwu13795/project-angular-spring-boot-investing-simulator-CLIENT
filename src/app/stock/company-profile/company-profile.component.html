@@ -9,11 +9,11 @@
     <div>Description: {{ (profile | async)?.description }}</div>
 
     <div class="preview-list" *ngIf="isLargeScreen === false">
-      <app-preview-list-small></app-preview-list-small>
+      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
     </div>
   </div>
 
   <div class="container-right" *ngIf="isLargeScreen === true">
-    <app-preview-list-small></app-preview-list-small>
+    <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
   </div>
 </main>

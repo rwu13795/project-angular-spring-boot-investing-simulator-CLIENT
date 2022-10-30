@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
 import { Response_incomeStatement } from "./financial-statements/financial-statements.models";
 import {
   ChartData,
-  Response_historyPriceFull,
+  // Response_historyPriceFull,
   Response_historyPrice,
   Response_realTimePrice,
   StoredChartData,
@@ -16,10 +16,6 @@ import {
 
 @Injectable({ providedIn: "root" })
 export class StockService {
-  private FMP_API = "https://financialmodelingprep.com/api/v3";
-
-  private API_KEY = "bebf0264afd8447938b0ae54509c1513";
-
   private SERVER_URL = environment.SERVER_URL;
 
   // store the history data points in the service since user might keep switching
@@ -42,21 +38,18 @@ export class StockService {
 
     const { from, to, timeRange, interval } = this.getTimeRange(option);
     const params = new HttpParams({
-      fromObject: { from, to, apikey: this.API_KEY },
+      fromObject: {
+        from,
+        to,
+        time_range: timeRange,
+        symbol,
+        time_option: option,
+      },
     });
 
-    let apiUrl = `${this.FMP_API}/historical-chart/${timeRange}/${symbol}`;
+    let apiUrl = `${this.SERVER_URL}/stock/price/historical-price`;
     if (timeRange === "") {
-      apiUrl = `${this.FMP_API}/historical-price-full/${symbol}`;
-      return this.http.get<Response_historyPriceFull>(apiUrl, { params }).pipe(
-        map<Response_historyPriceFull, ChartData>((responseData) => {
-          return this.mapResponseData(
-            responseData.historical,
-            option,
-            interval
-          );
-        })
-      );
+      apiUrl = `${this.SERVER_URL}/stock/price/historical-price-full`;
     }
     return this.http.get<Response_historyPrice[]>(apiUrl, { params }).pipe(
       map<Response_historyPrice[], ChartData>((responseData) => {
@@ -67,20 +60,20 @@ export class StockService {
 
   public getRealTimePrice(symbol: string) {
     const params = new HttpParams({
-      fromObject: { apikey: this.API_KEY },
+      fromObject: { symbol },
     });
     return this.http.get<Response_realTimePrice[]>(
-      `${this.FMP_API}/quote/${symbol}`,
+      `${this.SERVER_URL}/stock/price/real-time-quote`,
       { params }
     );
   }
 
   public getQuoteShort(symbol: string) {
     const params = new HttpParams({
-      fromObject: { apikey: this.API_KEY },
+      fromObject: { symbol },
     });
     return this.http.get<Response_quoteShort[]>(
-      `${this.FMP_API}/quote-short/${symbol}`,
+      `${this.SERVER_URL}/stock/price/short-quote`,
       { params }
     );
   }
@@ -104,14 +97,12 @@ export class StockService {
     );
   }
 
-  public getFiancialRatios(symbol: string) {
+  public getFinancialRatios(symbol: string) {
     const params = new HttpParams({
-      fromObject: {
-        apikey: this.API_KEY,
-      },
+      fromObject: { symbol },
     });
     return this.http.get<Response_financialRatio[]>(
-      `${this.FMP_API}/ratios-ttm/${symbol}`,
+      `${this.SERVER_URL}/stock/price/financial-ratio`,
       { params }
     );
   }

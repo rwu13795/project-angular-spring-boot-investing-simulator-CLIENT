@@ -25,11 +25,6 @@ export interface AuthResponseData {
 
 @Injectable()
 export class StockEffects {
-  private FMP_API = "https://financialmodelingprep.com/api/v3";
-  // for spring boot server
-
-  private API_KEY = "bebf0264afd8447938b0ae54509c1513";
-
   private SERVER_URL = environment.SERVER_URL;
 
   public fetchCompanyProfile = createEffect(() =>
@@ -37,11 +32,11 @@ export class StockEffects {
       ofType(actions.fetchCompanyProfile),
       switchMap(({ symbol }) => {
         const params = new HttpParams({
-          fromObject: { apikey: this.API_KEY },
+          fromObject: { symbol },
         });
 
         return this.http
-          .get<Response_companyProfile[]>(`${this.FMP_API}/profile/${symbol}`, {
+          .get<Response_companyProfile[]>(`${this.SERVER_URL}/stock/profile`, {
             params,
           })
           .pipe(
@@ -58,15 +53,13 @@ export class StockEffects {
       ofType(actions.fetchPriceChangePercentage),
       switchMap(({ symbol }) => {
         const params = new HttpParams({
-          fromObject: { apikey: this.API_KEY },
+          fromObject: { symbol },
         });
 
         return this.http
           .get<Response_priceChangePercentage[]>(
-            `${this.FMP_API}/stock-price-change/${symbol}`,
-            {
-              params,
-            }
+            `${this.SERVER_URL}/stock/price/price-change`,
+            { params }
           )
           .pipe(
             map((data) => {

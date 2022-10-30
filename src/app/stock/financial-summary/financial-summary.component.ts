@@ -84,7 +84,7 @@ export class FinancialSummaryComponent implements OnInit {
 
           this.financialSummary$ = forkJoin([
             this.stockService.getRealTimePrice(this.symbol).pipe(take(1)),
-            this.stockService.getFiancialRatios(this.symbol).pipe(take(1)),
+            this.stockService.getFinancialRatios(this.symbol).pipe(take(1)),
             this.store.select(selectCompanyProfile).pipe(take(1)),
           ])
             .pipe(
