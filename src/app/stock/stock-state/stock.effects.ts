@@ -6,6 +6,7 @@ import {
 import { Injectable } from "@angular/core";
 import { createEffect, ofType, Actions } from "@ngrx/effects";
 import { map, catchError, switchMap, of, tap } from "rxjs";
+import { environment } from "src/environments/environment";
 import {
   Response_companyProfile,
   Response_priceChangePercentage,
@@ -26,8 +27,10 @@ export interface AuthResponseData {
 export class StockEffects {
   private FMP_API = "https://financialmodelingprep.com/api/v3";
   // for spring boot server
-  private SERVER_URL = "http://localhost:8080/api";
+
   private API_KEY = "bebf0264afd8447938b0ae54509c1513";
+
+  private SERVER_URL = environment.SERVER_URL;
 
   public fetchCompanyProfile = createEffect(() =>
     this.actions$.pipe(

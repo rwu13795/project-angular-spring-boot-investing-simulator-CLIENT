@@ -5,7 +5,6 @@ import { Response_realTimePrice } from "src/app/stock/stock-models";
 import { environment } from "src/environments/environment";
 import {
   ListTypes,
-  Response_peerStocks,
   Response_stockList,
   SortBy,
   StockPerformanceLists,
@@ -95,22 +94,6 @@ export class PreviewListService {
       })
       .pipe(tap((data) => (this.peerStockList = data)));
   }
-
-  // private fetchPeerStockInfo(symbolList: string) {
-  //   const params = new HttpParams({
-  //     fromObject: { apikey: this.API_KEY },
-  //   });
-
-  //   return this.http
-  //     .get<Response_realTimePrice[]>(`${this.FMP_API}/quote/${symbolList}`, {
-  //       params,
-  //     })
-  //     .pipe(
-  //       tap((data) => {
-  //         this.peerStockList = data;
-  //       })
-  //     );
-  // }
 
   private sortByValue(
     sortBy: SortBy,

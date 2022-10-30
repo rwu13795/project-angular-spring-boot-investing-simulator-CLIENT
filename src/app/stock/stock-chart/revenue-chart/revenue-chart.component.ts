@@ -57,7 +57,8 @@ export class RevenueChartComponent implements OnInit, OnDestroy, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.fetchChartData();
+    // since the chart is depending on the Input() symbol, I should fetch the
+    // the data only after the symbol is updated in "ngOnChanges"
   }
 
   ngOnChanges(changes: SimpleChanges): void {

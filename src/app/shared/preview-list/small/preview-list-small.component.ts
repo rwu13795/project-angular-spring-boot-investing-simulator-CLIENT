@@ -21,7 +21,7 @@ import { PreviewListService } from "../preview-list.service";
   styleUrls: ["./preview-list-small.component.css"],
 })
 export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() symbol: string | null = null;
+  @Input() symbol?: string;
   private previewList$?: Subscription;
   private peerList$?: Subscription;
   public previewList?: StockPerformanceLists;
@@ -33,8 +33,10 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    if (this.symbol) {
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.symbol && this.symbol !== "all") {
       this.fetchPeerStockList(this.symbol);
     } else {
       this.previewList = this.previewListService.getPreviewList();
@@ -50,11 +52,6 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
         console.log("found saved lists");
       }
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const symbol = changes["symbol"].currentValue;
-    this.fetchPeerStockList(symbol);
   }
 
   public get ListTypes() {

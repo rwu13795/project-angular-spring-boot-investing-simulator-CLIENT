@@ -9,7 +9,7 @@
 
     <div class="preview-list-small-screen" *ngIf="isLargeScreen === false">
       <h1>Preview List</h1>
-      <app-preview-list-small></app-preview-list-small>
+      <app-preview-list-small [symbol]="'all'"></app-preview-list-small>
     </div>
 
     <hr />
@@ -19,7 +19,7 @@
   <div class="container-right" *ngIf="isLargeScreen === true">
     <div class="preview-list-large-screen">
       <h1>Preview List</h1>
-      <app-preview-list-small></app-preview-list-small>
+      <app-preview-list-small [symbol]="'all'"></app-preview-list-small>
     </div>
   </div>
 </main>

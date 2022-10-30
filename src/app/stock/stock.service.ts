@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { from, Observable, Subject, throwError } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 import { Response_incomeStatement } from "./financial-statements/financial-statements.models";
 import {
   ChartData,
@@ -16,11 +17,11 @@ import {
 @Injectable({ providedIn: "root" })
 export class StockService {
   private FMP_API = "https://financialmodelingprep.com/api/v3";
-  // for spring boot server
-  private SERVER_URL = "http://localhost:8080/api";
+
   private API_KEY = "bebf0264afd8447938b0ae54509c1513";
 
-  private currentSymbol: string = "";
+  private SERVER_URL = environment.SERVER_URL;
+
   // store the history data points in the service since user might keep switching
   // between the time range.
   private storedChartData: StoredChartData = {
@@ -91,13 +92,14 @@ export class StockService {
   ) {
     const params = new HttpParams({
       fromObject: {
+        symbol,
+        type: "income-statement",
         period: isFullYear ? "annual" : "quarter",
         limit,
-        apikey: this.API_KEY,
       },
     });
     return this.http.get<Response_incomeStatement[]>(
-      `${this.FMP_API}/income-statement/${symbol}`,
+      `${this.SERVER_URL}/stock/financial-statement`,
       { params }
     );
   }

@@ -1,4 +1,4 @@
-<main *ngIf="previewList && !symbol">
+<main *ngIf="previewList">
   <div class="list">
     <h3 (click)="onSelectOption(ListTypes.actives)">Most Searched</h3>
     <div *ngFor="let entry of previewList.actives">
