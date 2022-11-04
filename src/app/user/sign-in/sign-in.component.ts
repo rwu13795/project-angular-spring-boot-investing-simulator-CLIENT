@@ -1,20 +1,35 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Validators, FormBuilder } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { Subscription } from "rxjs";
+
 import {
-  Validators,
-  FormGroup,
-  FormBuilder,
-  FormControl,
-} from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { InputField, InputFieldNames, InputFieldTouched } from "../auth-models";
-import { AuthService } from "../auth.service";
+  AuthError,
+  InputField,
+  InputFieldNames,
+  InputFieldTouched,
+  LoadingStatus_user,
+  Response_authError,
+} from "../user-models";
+import { checkAuth, clearAuthError, signIn } from "../user-state/user.actions";
+import {
+  selectAuthError,
+  selectHasAuth,
+  selectLoadingStatus_user,
+  selectUserAccount,
+} from "../user-state/user.selectors";
+import { UserService } from "../user.service";
+
+interface AuthErrorInField {
+  [field: string]: AuthError | null;
+}
 
 @Component({
-  selector: "app-auth-sign-in",
+  selector: "app-user-sign-in",
   templateUrl: "./sign-in.component.html",
   styleUrls: ["./sign-in.component.css"],
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit, OnDestroy {
   public inputError: InputField = {
     [InputFieldNames.email]: "",
     [InputFieldNames.password]: "",
@@ -34,25 +49,52 @@ export class SignInComponent implements OnInit {
     ],
   });
 
+  public hasAuth = this.store.select(selectHasAuth);
+  public account = this.store.select(selectUserAccount);
+  public loadingStatus = this.store.select(selectLoadingStatus_user);
+  public authErrors: AuthErrorInField = {
+    [InputFieldNames.email]: null,
+    [InputFieldNames.password]: null,
+  };
+  private authError$?: Subscription;
+
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private userService: UserService,
+    private store: Store
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authError$ = this.store.select(selectAuthError).subscribe((data) => {
+      if (!data) return;
+      this.authErrors[data.field] = data;
+    });
+  }
 
   get InputFieldNames() {
     return InputFieldNames;
   }
 
+  get LoadingStatus_user() {
+    return LoadingStatus_user;
+  }
+
+  checkAuth() {
+    console.log("checking auth");
+    this.store.dispatch(checkAuth());
+  }
+
   onSubmit() {
     const { email, password } = this.signInForm.value;
+    if (!email || !password) return;
+
     const hasError = this.onSubmitErrorCheck();
     if (hasError) {
-      console.log("has error !!");
+      console.log("has input error !!");
       return;
     }
     console.log(email, password);
+    this.store.dispatch(signIn({ email, password }));
   }
 
   onInput(field: string) {
@@ -60,7 +102,9 @@ export class SignInComponent implements OnInit {
     if (!control) return;
     // ----- (1) ----- //
     // if (field !== InputFieldNames.email) control.markAsTouched();
-    this.authService.setInputErrorMessage(field, this.inputError, control);
+    this.userService.setInputErrorMessage(field, this.inputError, control);
+    this.authErrors[field] = null;
+    this.store.dispatch(clearAuthError());
   }
 
   onChange(field: string) {
@@ -78,10 +122,14 @@ export class SignInComponent implements OnInit {
         if (control.invalid) hasError = true;
         control.markAsTouched();
         this.onChange(key);
-        this.authService.setInputErrorMessage(key, this.inputError, control);
+        this.userService.setInputErrorMessage(key, this.inputError, control);
       }
     }
     return hasError;
+  }
+
+  ngOnDestroy(): void {
+    if (this.authError$) this.authError$.unsubscribe();
   }
 
   // custom validator

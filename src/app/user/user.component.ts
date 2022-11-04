@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-auth",
-  templateUrl: "./auth.component.html",
-  styleUrls: ["./auth.component.css"],
+  selector: "app-user",
+  templateUrl: "./user.component.html",
+  styleUrls: ["./user.component.css"],
 })
-export class AuthComponent implements OnInit {
+export class UserComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

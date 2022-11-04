@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
-import { AuthComponent } from "./auth/auth.component";
-import { SignInComponent } from "./auth/sign-in/sign-in.component";
 
 import { HomeComponent } from "./home/home.component";
 import { MarketIndexComponent } from "./market-index/market-index.component";
@@ -28,8 +26,8 @@ const routes: Routes = [
   { path: "performance", component: PreviewListLargeComponent },
 
   {
-    path: "auth",
-    loadChildren: () => import("./auth/auth.module").then((m) => m.AuthModule),
+    path: "user",
+    loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
   },
 
   { path: "**", component: Page404Component },

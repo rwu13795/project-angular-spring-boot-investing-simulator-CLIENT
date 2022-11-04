@@ -20,7 +20,8 @@ import { MarketIndexModule } from "./market-index/market-index.module";
 import { StockModule } from "./stock/stock.module";
 import { LayoutModule } from "@angular/cdk/layout";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AuthModule } from "./auth/auth.module";
+import { UserModule } from "./user/user.module";
+import { UserEffects } from "./user/user-state/user.effects";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -35,7 +36,7 @@ import { AuthModule } from "./auth/auth.module";
     SharedModule,
     MarketIndexModule,
     StockModule,
-    AuthModule,
+    UserModule,
     // ngrx store //
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
@@ -43,7 +44,7 @@ import { AuthModule } from "./auth/auth.module";
       logOnly: environment.production,
     }),
     StoreRouterConnectingModule.forRoot(),
-    EffectsModule.forRoot([StockEffects]),
+    EffectsModule.forRoot([StockEffects, UserEffects]),
     BrowserAnimationsModule,
   ],
   providers: [],

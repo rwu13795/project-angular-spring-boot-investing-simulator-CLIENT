@@ -1,0 +1,57 @@
+<main>
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <div class="form-group input-wrapper">
+        <input
+          type="email"
+          id="email"
+          class="input-box"
+          formControlName="email"
+          placeholder=" "
+          (change)="onChange('email')"
+          (input)="onInput('email')"
+        />
+        <span>Email</span>
+      </div>
+      <div class="error-message">
+        <span *ngIf="inputTouched[InputFieldNames.email]">{{
+          inputError[InputFieldNames.email]
+        }}</span>
+        <span *ngIf="authErrors[InputFieldNames.email]">{{
+          authErrors[InputFieldNames.email]!.message
+        }}</span>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <div class="form-group input-wrapper">
+        <input
+          type="password"
+          id="password"
+          class="input-box"
+          formControlName="password"
+          placeholder=" "
+          (change)="onChange('password')"
+          (input)="onInput('password')"
+        />
+        <span>Password</span>
+      </div>
+      <div class="error-message">
+        <span *ngIf="inputTouched[InputFieldNames.password]">{{
+          inputError[InputFieldNames.password]
+        }}</span>
+        <span *ngIf="authErrors[InputFieldNames.password]">{{
+          authErrors[InputFieldNames.password]!.message
+        }}</span>
+      </div>
+    </div>
+
+    <button type="submit">Sign In</button>
+  </form>
+
+  <button><div [routerLink]="['/user/sign-up']">To Sign Up</div></button>
+
+  <div>Loading status: {{ loadingStatus | async }}</div>
+  <div>User is authenticate: {{ hasAuth | async }}</div>
+  <div><button (click)="checkAuth()">check auth</button></div>
+</main>

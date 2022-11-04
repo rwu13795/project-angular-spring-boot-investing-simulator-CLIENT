@@ -2,10 +2,10 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 import { environment } from "src/environments/environment";
-import { InputField, InputFieldNames } from "./auth-models";
+import { InputField, InputFieldNames } from "./user-models";
 
 @Injectable({ providedIn: "root" })
-export class AuthService {
+export class UserService {
   private SERVER_URL = environment.SERVER_URL;
 
   constructor(private http: HttpClient) {}
