@@ -5,13 +5,22 @@
         <input
           type="email"
           id="email"
-          class="input-box"
+          [ngClass]="
+            authErrors[InputFieldNames.email]
+              ? 'input-box auth-error-input-box'
+              : 'input-box'
+          "
           formControlName="email"
           placeholder=" "
-          (change)="onChange('email')"
+          (blur)="onBlur('email')"
           (input)="onInput('email')"
         />
-        <span>Email</span>
+        <span
+          [ngClass]="{
+            'auth-error-span-box': authErrors[InputFieldNames.email]
+          }"
+          >Email</span
+        >
       </div>
       <div class="error-message">
         <span *ngIf="inputTouched[InputFieldNames.email]">{{
@@ -28,13 +37,22 @@
         <input
           type="password"
           id="password"
-          class="input-box"
+          [ngClass]="
+            authErrors[InputFieldNames.password]
+              ? 'input-box auth-error-input-box'
+              : 'input-box'
+          "
           formControlName="password"
           placeholder=" "
-          (change)="onChange('password')"
+          (blur)="onBlur('password')"
           (input)="onInput('password')"
         />
-        <span>Password</span>
+        <span
+          [ngClass]="{
+            'auth-error-span-box': authErrors[InputFieldNames.password]
+          }"
+          >Password</span
+        >
       </div>
       <div class="error-message">
         <span *ngIf="inputTouched[InputFieldNames.password]">{{
@@ -52,6 +70,7 @@
   <button><div [routerLink]="['/user/sign-up']">To Sign Up</div></button>
 
   <div>Loading status: {{ loadingStatus | async }}</div>
-  <div>User is authenticate: {{ hasAuth | async }}</div>
+  <div>User is authenticate: {{ hasAuth }}</div>
   <div><button (click)="checkAuth()">check auth</button></div>
+  <div>portfolio: {{ portfolio | async }}</div>
 </main>

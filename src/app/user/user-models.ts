@@ -12,10 +12,6 @@ export interface UserAccount {
   fund: number;
 }
 
-export interface Response_checkAuth {
-  hasAuth: boolean;
-}
-
 export interface AuthError {
   status: number;
   message: string;

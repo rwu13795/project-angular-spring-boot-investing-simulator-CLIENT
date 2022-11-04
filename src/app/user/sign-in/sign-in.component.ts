@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { Validators, FormBuilder } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
@@ -11,11 +17,17 @@ import {
   LoadingStatus_user,
   Response_authError,
 } from "../user-models";
-import { checkAuth, clearAuthError, signIn } from "../user-state/user.actions";
+import {
+  checkAuth,
+  clearAuthError,
+  fetchPortfolio,
+  signIn,
+} from "../user-state/user.actions";
 import {
   selectAuthError,
   selectHasAuth,
   selectLoadingStatus_user,
+  selectPortfolio,
   selectUserAccount,
 } from "../user-state/user.selectors";
 import { UserService } from "../user.service";
@@ -29,7 +41,7 @@ interface AuthErrorInField {
   templateUrl: "./sign-in.component.html",
   styleUrls: ["./sign-in.component.css"],
 })
-export class SignInComponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnInit, OnDestroy, OnChanges {
   public inputError: InputField = {
     [InputFieldNames.email]: "",
     [InputFieldNames.password]: "",
@@ -49,14 +61,16 @@ export class SignInComponent implements OnInit, OnDestroy {
     ],
   });
 
-  public hasAuth = this.store.select(selectHasAuth);
+  private authError$?: Subscription;
+  private hasAuth$?: Subscription;
+  public hasAuth: boolean = false;
   public account = this.store.select(selectUserAccount);
   public loadingStatus = this.store.select(selectLoadingStatus_user);
   public authErrors: AuthErrorInField = {
     [InputFieldNames.email]: null,
     [InputFieldNames.password]: null,
   };
-  private authError$?: Subscription;
+  public portfolio = this.store.select(selectPortfolio);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,6 +83,16 @@ export class SignInComponent implements OnInit, OnDestroy {
       if (!data) return;
       this.authErrors[data.field] = data;
     });
+    this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
+      console.log("select hasAuth", hasAuth);
+      this.hasAuth = hasAuth;
+      if (!hasAuth) return;
+      this.store.dispatch(fetchPortfolio());
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 
   get InputFieldNames() {
@@ -86,31 +110,31 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const { email, password } = this.signInForm.value;
-    if (!email || !password) return;
 
     const hasError = this.onSubmitErrorCheck();
-    if (hasError) {
-      console.log("has input error !!");
-      return;
-    }
-    console.log(email, password);
+    if (hasError || !email || !password) return;
+
     this.store.dispatch(signIn({ email, password }));
   }
 
   onInput(field: string) {
     const control = this.signInForm.get(field);
     if (!control) return;
-    // ----- (1) ----- //
-    // if (field !== InputFieldNames.email) control.markAsTouched();
+    // // ----- (1) ----- //
+    // // if (field !== InputFieldNames.email) control.markAsTouched();
     this.userService.setInputErrorMessage(field, this.inputError, control);
     this.authErrors[field] = null;
     this.store.dispatch(clearAuthError());
   }
 
-  onChange(field: string) {
-    // mark the filed as touched when it is un-focus, then use the it to
-    // display the error message if there is any
+  onBlur(field: string) {
+    // Because I am checking the input error on every single input, I don't
+    // want to display the error message until the focus is off. So I need
+    // to manaully set the "touched" when "onBlur"
+    const control = this.signInForm.get(field);
+    if (!control) return;
     this.inputTouched[field] = true;
+    this.userService.setInputErrorMessage(field, this.inputError, control);
   }
 
   private onSubmitErrorCheck() {
@@ -118,10 +142,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     let hasError: boolean = false;
     for (let key of Object.keys(this.inputError)) {
       const control = this.signInForm.get(key);
+      console.log(control);
       if (control) {
         if (control.invalid) hasError = true;
         control.markAsTouched();
-        this.onChange(key);
+        this.onBlur(key);
         this.userService.setInputErrorMessage(key, this.inputError, control);
       }
     }
@@ -130,6 +155,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.authError$) this.authError$.unsubscribe();
+    if (this.hasAuth$) this.hasAuth$.unsubscribe();
   }
 
   // custom validator

@@ -4,11 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap } from "rxjs";
 
 import { environment } from "src/environments/environment";
-import {
-  Response_authError,
-  Response_checkAuth,
-  UserAccount,
-} from "../user-models";
+import { Response_authError, UserAccount } from "../user-models";
 import * as actions from "./user.actions";
 
 @Injectable()
@@ -20,12 +16,12 @@ export class UserEffects {
       ofType(actions.checkAuth),
       switchMap(() => {
         return this.http
-          .get<Response_checkAuth>(`${this.SERVER_URL}/auth/check-auth`, {
+          .get<UserAccount>(`${this.SERVER_URL}/auth/check-auth`, {
             withCredentials: true,
           })
           .pipe(
             map((data) => {
-              return actions.setAuth({ hasAuth: data.hasAuth });
+              return actions.setUserAccount({ account: data });
             }),
             // set hasAuth to false whenever there is a error response
             catchError((error) => {
@@ -69,34 +65,26 @@ export class UserEffects {
     )
   );
 
+  public fetchPortfolio = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.fetchPortfolio),
+      switchMap(() => {
+        return this.http
+          .get<{ res: string }>(`${this.SERVER_URL}/portfolio/get-portfolio`, {
+            withCredentials: true,
+          })
+          .pipe(
+            map((data) => {
+              return actions.setPortfolio({ portfolio: data.res });
+            }),
+            catchError((error) => {
+              console.log(error);
+              return of(actions.setAuth({ hasAuth: false }));
+            })
+          );
+      })
+    )
+  );
+
   constructor(private actions$: Actions, private http: HttpClient) {}
-
-  private getErrorMessage(errorRes: HttpErrorResponse): string {
-    console.log("HttpErrorResponse------------->", errorRes);
-
-    let errorMessage = "An unknown error occurred!";
-    if (!errorRes.error || !errorRes.error.error) {
-      return errorMessage;
-    }
-
-    switch (errorRes.error.error.message) {
-      case "EMAIL_EXISTS": {
-        errorMessage = "This email exists already";
-        break;
-      }
-      case "INVALID_PASSWORD": {
-        errorMessage = "The password you provided is not correct";
-        break;
-      }
-      case "EMAIL_NOT_FOUND": {
-        errorMessage = "The email you provided does not exist in our record";
-        break;
-      }
-
-      default:
-        break;
-    }
-
-    return errorMessage;
-  }
 }

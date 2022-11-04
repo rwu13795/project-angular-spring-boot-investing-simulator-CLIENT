@@ -21,3 +21,7 @@ export const selectLoadingStatus_user = createSelector(
 export const selectAuthError = createSelector(selectUserState, (state) => {
   return state.authError;
 });
+
+export const selectPortfolio = createSelector(selectUserState, (state) => {
+  return state.portfolio;
+});

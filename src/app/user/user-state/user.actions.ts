@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { AuthError, Response_authError, UserAccount } from "../user-models";
+import { AuthError, UserAccount } from "../user-models";
 
 export const checkAuth = createAction("[User] Check Authentication");
 
@@ -29,3 +29,10 @@ export const setAuthError = createAction(
 );
 
 export const clearAuthError = createAction("[User] Clear Auth Error");
+
+export const fetchPortfolio = createAction("[User] Fetch Portfolio");
+
+export const setPortfolio = createAction(
+  "[User] Sst Portfolio",
+  props<{ portfolio: string }>()
+);
