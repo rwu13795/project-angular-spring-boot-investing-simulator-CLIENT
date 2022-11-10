@@ -1,0 +1,29 @@
+.gradient-break-100 {
+  min-height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--main-500) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  margin-bottom: 1px;
+}
+
+.gradient-break-75 {
+  min-height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--main-500) 0%,
+    rgba(255, 255, 255, 0) 75%
+  );
+  margin-bottom: 1px;
+}
+
+.gradient-break-50 {
+  min-height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--main-500) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  margin-bottom: 1px;
+}

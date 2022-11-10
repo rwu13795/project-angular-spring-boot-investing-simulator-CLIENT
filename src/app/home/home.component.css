@@ -18,7 +18,8 @@ main {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  border-right: solid red 2px;
+  border-right: solid 2px var(--main-600);
+  padding-right: 16px;
 }
 
 .container-right {
@@ -34,20 +35,19 @@ main {
   position: sticky;
   height: 90vh;
   top: 100px;
-  width: 90%;
+  width: 96%;
   overflow: auto;
 }
 
 @media screen and (max-width: 1200px) {
   .container-left {
     border-right: none;
-    width: 94%;
+    padding-right: 0px;
+    width: 100%;
   }
-
   .container-right {
     display: none;
   }
-
   .preview-list-small-screen {
     width: 100%;
     display: flex;

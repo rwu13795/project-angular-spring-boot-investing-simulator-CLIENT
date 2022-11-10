@@ -1,8 +1,18 @@
 <main *ngIf="entry">
-  <div [routerLink]="['/stock', 'financial-summary', entry.symbol]">
-    <div>{{ entry.symbol }}</div>
-    <div>${{ entry.price }}</div>
-    <div>{{ entry.change }}</div>
-    <div>{{ entry.changesPercentage }}%</div>
+  <div
+    [routerLink]="['/stock', 'financial-summary', entry.symbol]"
+    class="wrapper"
+  >
+    <div class="symbol">{{ entry.symbol }}</div>
+    <div
+      [ngClass]="{
+        positive: entry.changesPercentage >= 0,
+        negative: entry.changesPercentage < 0
+      }"
+    >
+      <span *ngIf="entry.changesPercentage > 0">+</span
+      >{{ toFixed_2(entry.changesPercentage) }}%
+    </div>
+    <div class="price">${{ toFixed_2(entry.price) }}</div>
   </div>
 </main>

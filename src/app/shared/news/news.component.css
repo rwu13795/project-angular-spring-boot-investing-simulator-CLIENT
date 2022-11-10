@@ -1,5 +1,115 @@
+:host {
+  width: 100%;
+  display: flex;
+  flex-wrap: column nowrap;
+  justify-content: center;
+}
+
+main {
+  width: 98%;
+}
+
+.gradient-border {
+  min-height: 8px;
+  background: linear-gradient(
+    to right,
+    var(--main-500) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  margin-bottom: 10px;
+}
+
+.news-container {
+  width: 100%;
+  padding: 20px 6px;
+  border-bottom: 2px solid var(--main-600);
+}
+
+.news-box {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+.news-box:hover .news-title,
+.news-box:hover .news-symbol {
+  color: var(--main-400);
+  transition: all 0.3s;
+}
+
+.news-content-left {
+  max-width: min(310px, 20vw);
+  object-fit: contain;
+}
+
+.news-content-right {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.news-title-symbol-date {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  /* gap: 30px; */
+}
+.news-title {
+  width: 65%;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.news-symbol-date {
+  width: 30%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  color: rgb(56, 56, 56);
+}
+.news-symbol {
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+.sqaure {
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--main-600);
+}
+
 .back-to-top {
   position: fixed;
-  bottom: 60px;
-  right: 60px;
+  min-width: 100px;
+  padding: 4px;
+  border-radius: 4px;
+  border: 2px var(--main-400) solid;
+  background-color: var(--main-100);
+  text-align: center;
+  font-weight: bold;
+  bottom: 40px;
+  left: 50%;
+  right: 50%;
+  z-index: 9;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.back-to-top:hover {
+  background-color: var(--main-600);
+  transition: all 0.3s;
+}
+
+@media screen and (max-width: 600px) {
+  .news-content-left {
+    display: none;
+  }
 }

@@ -1,7 +1,10 @@
 <main>
-  <app-navigation-bar></app-navigation-bar>
-
-  <router-outlet></router-outlet>
+  <div class="nav-bar">
+    <app-navigation-bar></app-navigation-bar>
+  </div>
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
 
   <!-- <div class="digits-wrapper">
     <div *ngFor="let digit of newDigitsString; index as i">

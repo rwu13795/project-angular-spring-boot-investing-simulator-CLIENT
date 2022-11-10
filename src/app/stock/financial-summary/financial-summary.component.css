@@ -18,12 +18,21 @@ main {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  border-right: solid red 2px;
+  border-right: solid 2px var(--main-600);
+  padding-right: 16px;
 }
 
 .container-right {
   height: 100%;
   width: 22%;
+}
+
+.preview-list-large-screen {
+  position: sticky;
+  height: 90vh;
+  top: 180px;
+  width: 96%;
+  overflow: auto;
 }
 
 .preview-list {

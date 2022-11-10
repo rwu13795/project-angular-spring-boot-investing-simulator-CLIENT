@@ -1,5 +1,30 @@
 main {
-  max-width: 200px;
+  max-width: 300px;
+}
+
+.list {
+  margin-bottom: 34px;
+}
+
+.header {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  transition: all 0.3s;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.header:hover {
+  color: var(--main-400);
+  transition: all 0.3s;
+}
+
+.header-no-pointer {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
 }
 
 @media screen and (max-width: 1200px) {

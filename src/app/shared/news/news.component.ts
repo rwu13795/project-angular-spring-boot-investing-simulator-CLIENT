@@ -1,4 +1,11 @@
 import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from "@angular/animations";
+import {
   AfterViewChecked,
   Component,
   ElementRef,
@@ -8,6 +15,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { Subscription } from "rxjs";
+import { newsAnimation } from "./news.animation";
 import { Response_news } from "./news.models";
 import { NewsService } from "./news.service";
 
@@ -15,6 +23,7 @@ import { NewsService } from "./news.service";
   selector: "app-news",
   templateUrl: "./news.component.html",
   styleUrls: ["./news.component.css"],
+  animations: [newsAnimation],
 })
 export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
   @Input() symbol: string = "";
@@ -25,7 +34,7 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
   private news: Response_news[] = [];
   private partNumber: number = 0;
   private waiting: boolean = false;
-  private ENTRY_LIMIT: number = 10;
+  private ENTRY_LIMIT: number = 5;
   private timerId?: any;
   // have to bind the class context with the methed in order to pass it as a callback
   private _toggleBackToTop = this.toggleBackToTop.bind(this);
@@ -52,7 +61,7 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
     },
     {
-      rootMargin: "100px",
+      rootMargin: "-50px",
     }
   );
 
@@ -101,6 +110,14 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.timerId = setTimeout(() => {
       this.waiting = false;
     }, 500);
+  }
+
+  toDateString(date: string) {
+    return new Date(date).toDateString().slice(4);
+  }
+
+  openNewWindow(url: string) {
+    window.open(url);
   }
 
   onBackToTop() {

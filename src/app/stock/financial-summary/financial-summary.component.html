@@ -46,6 +46,8 @@
   </div>
 
   <div class="container-right" *ngIf="isLargeScreen === true">
-    <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    <div class="preview-list-large-screen">
+      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    </div>
   </div>
 </main>
