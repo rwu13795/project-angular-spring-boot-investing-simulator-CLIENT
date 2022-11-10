@@ -11,6 +11,7 @@ import { PreviewLargeEntryComponent } from "./preview-list/large/entry-large/ent
 import { PreviewListLargeComponent } from "./preview-list/large/preview-list-large.component";
 import { PreviewSmallEntryComponent } from "./preview-list/small/entry-small/entry-small.component";
 import { PreviewListSmallComponent } from "./preview-list/small/preview-list-small.component";
+import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PreviewListSmallComponent } from "./preview-list/small/preview-list-sma
     PreviewLargeEntryComponent,
     PreviewListSmallComponent,
     PreviewSmallEntryComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [CommonModule, RouterModule, MatIconModule],
   exports: [
@@ -35,6 +37,7 @@ import { PreviewListSmallComponent } from "./preview-list/small/preview-list-sma
     PreviewLargeEntryComponent,
     PreviewListSmallComponent,
     PreviewSmallEntryComponent,
+    LoadingSpinnerComponent,
   ],
 })
 export class SharedModule {}

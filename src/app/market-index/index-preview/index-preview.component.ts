@@ -24,4 +24,8 @@ export class IndexPreviewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.indices$) this.indices$.unsubscribe();
   }
+
+  toFixed_2(number: number) {
+    return number.toFixed(2);
+  }
 }

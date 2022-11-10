@@ -1,14 +1,18 @@
 <main>
   <h3>Major Indices</h3>
-  <div class="indices-wrapper">
-    <div *ngFor="let index of indices">
+  <div class="indices-container">
+    <div class="index-wrapper" *ngFor="let index of indices">
       <a [routerLink]="['/market-index/', index.symbol]">
-        <div>{{ index.name }}</div>
-        <div>{{ index._symbol }}</div>
-        <div>{{ index.price }}</div>
-        <div>change: {{ index.change }}</div>
-        <div>change %: {{ index.changesPercentage }}</div></a
-      >
+        <div class="name">{{ index.name }}</div>
+        <div class="inner-wrapper">
+          <div class="symbol">{{ index._symbol }}</div>
+          <div>{{ index.price }}</div>
+        </div>
+        <div class="inner-wrapper">
+          <div>{{ toFixed_2(index.change) }}</div>
+          <div>({{ toFixed_2(index.changesPercentage) }})%</div>
+        </div>
+      </a>
     </div>
   </div>
 </main>

@@ -1,4 +1,41 @@
 <main>
-  <app-index-preview></app-index-preview>
+  <div *ngIf="targetIndex">
+    <div>{{ targetIndex.name }}</div>
+    <div>{{ targetIndex._symbol }}</div>
+    <div>{{ targetIndex.price }}</div>
+    <div>{{ targetIndex.change }}</div>
+    <div>{{ targetIndex.changesPercentage }}%</div>
+  </div>
+
   <app-index-chart [symbol]="symbol"></app-index-chart>
+
+  <div *ngIf="targetIndex">
+    <h3>Summary</h3>
+    <div>
+      <span>Open</span><span>{{ targetIndex.open }}</span>
+    </div>
+    <div>
+      <span>Prev Close</span><span>{{ targetIndex.previousClose }}</span>
+    </div>
+    <div>
+      <span>Day High</span><span>{{ targetIndex.dayHigh }}</span>
+    </div>
+    <div>
+      <span>Day Low</span><span>{{ targetIndex.dayLow }}</span>
+    </div>
+    <div>
+      <span>52 Week High</span><span>{{ targetIndex.yearHigh }}</span>
+    </div>
+    <div>
+      <span>52 Week low</span><span>{{ targetIndex.yearLow }}</span>
+    </div>
+    <div>
+      <span>Volume</span><span>{{ targetIndex.volume }}</span>
+    </div>
+    <div>
+      <span>Avg Volume</span><span>{{ targetIndex.avgVolume }}</span>
+    </div>
+  </div>
+
+  <app-index-preview></app-index-preview>
 </main>

@@ -12,7 +12,7 @@ export class PreviewSmallEntryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toFixed_2(percentage: number) {
-    return percentage.toFixed(2);
+  toFixed_2(number: number) {
+    return number.toFixed(2);
   }
 }

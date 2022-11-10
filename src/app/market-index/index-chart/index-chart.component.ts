@@ -23,6 +23,7 @@ import {
 import { Subscription } from "rxjs";
 import { StockChartService } from "src/app/stock/stock-chart/stock-chart.service";
 import { ChartData } from "src/app/stock/stock-models";
+import { RealTimeIndex } from "../market-index-models";
 import { MarketIndexService } from "../market-index.service";
 
 export type ChartOptions = {
@@ -51,19 +52,23 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
   private chartData$?: Subscription;
   private normalSymbol: string = "";
   private option: string = "1D";
+
   public chartOptions?: Partial<ChartOptions>;
   public timeRange: string = "";
+  public loading: boolean = true;
+  // display the "placeholder" image on init, and only show loading spinner
+  // for the subsequent changes
+  public usePlaceHolder: boolean = true;
 
   constructor(
     private marketIndexService: MarketIndexService,
     private stockChartService: StockChartService
   ) {}
 
-  ngOnInit(): void {
-    this.fetchIndexHistory();
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.loading = true;
     if (changes["symbol"].currentValue) this.fetchIndexHistory();
   }
 
@@ -72,6 +77,7 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public onSelectDayRange(option: string) {
+    this.loading = true;
     this.option = option;
     this.fetchIndexHistory();
   }
@@ -89,6 +95,8 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
         );
 
         this.setChartOptions(data);
+        this.loading = false;
+        this.usePlaceHolder = false;
       });
   }
 

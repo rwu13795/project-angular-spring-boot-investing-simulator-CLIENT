@@ -56,6 +56,8 @@ export class MarketIndexService {
     },
   };
 
+  private targetIndex: RealTimeIndex | null = null;
+
   constructor(private stockService: StockService) {}
 
   public fetchAllMajorIndices() {
@@ -75,6 +77,38 @@ export class MarketIndexService {
         });
       })
     );
+  }
+
+  public fetchTargetIndex(symbol: string) {
+    // the guard will use this method to check and see if the index symbol
+    // is valid, if it is valid then put the data in the targetIndex
+    return this.stockService.getRealTimePrice(symbol).pipe(
+      map<Response_realTimePrice[], RealTimeIndex | null>((data) => {
+        if (data.length > 0) {
+          const index = data[0];
+          this.targetIndex = {
+            ...index,
+            _symbol: this.majorIndex[index.symbol].symbol,
+            name: this.majorIndex[index.symbol].name,
+          };
+          return this.targetIndex;
+        }
+        return null;
+      })
+    );
+  }
+
+  public getTargetIndex() {
+    // after passing the guard, the targetIndex should not be null anymore,
+    // return the current targetIndex. Also, I need to set the targetIndex
+    // to null, so that the next target index won't using the same data
+    if (this.targetIndex) {
+      console.log("returning exited targetIndex");
+      const temp = { ...this.targetIndex };
+      this.targetIndex = null;
+      return temp;
+    }
+    return null;
   }
 
   public fetchIndexHistory(option: string, symbol: string) {

@@ -62,6 +62,7 @@ export class StockService {
     const params = new HttpParams({
       fromObject: { symbol },
     });
+
     return this.http.get<Response_realTimePrice[]>(
       `${this.SERVER_URL}/stock/price/real-time-quote`,
       { params }
@@ -243,7 +244,7 @@ export class StockService {
           const UTCHours = new Date().getUTCHours();
           const UTCMinutes = new Date().getUTCMinutes();
           if (
-            UTCHours >= 0 &&
+            UTCHours >= 5 &&
             (UTCHours < 13 || (UTCHours === 13 && UTCMinutes < 30))
           ) {
             to_date = new Date(

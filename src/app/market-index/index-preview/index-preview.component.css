@@ -1,10 +1,40 @@
-.indices-wrapper {
-  width: 90%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
+main {
+  display: flex;
+  flex-flow: column nowrap;
 }
 
-.index-box {
-  width: 160px;
+.indices-container {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 30px;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.index-wrapper {
+  width: 300px;
+  text-decoration: none;
+  color: black;
+  border-radius: 4px;
+  border: 2px solid var(--main-700);
+}
+
+.name {
+  font-size: 20px;
+}
+
+.symbol {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.inner-wrapper {
+  font-size: 18px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
 }

@@ -8,17 +8,28 @@
     <button (click)="onSelectDayRange('1Y')">1Y</button>
     <button (click)="onSelectDayRange('5Y')">5Y</button>
   </div>
-  <apx-chart
-    *ngIf="chartOptions"
-    #index_chart
-    [series]="chartOptions.series!"
-    [chart]="chartOptions.chart!"
-    [colors]="chartOptions.colors!"
-    [yaxis]="chartOptions.yaxis!"
-    [dataLabels]="chartOptions.dataLabels!"
-    [markers]="chartOptions.markers!"
-    [stroke]="chartOptions.stroke!"
-    [xaxis]="chartOptions.xaxis!"
-    [tooltip]="chartOptions.tooltip!"
-  ></apx-chart>
+
+  <div class="chart-container">
+    <div *ngIf="loading" class="loading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <img
+      *ngIf="usePlaceHolder"
+      class="chart-placeholder"
+      src="../../../assets/images/chart-loading.png"
+    />
+    <apx-chart
+      *ngIf="chartOptions && !usePlaceHolder"
+      #index_chart
+      [series]="chartOptions.series!"
+      [chart]="chartOptions.chart!"
+      [colors]="chartOptions.colors!"
+      [yaxis]="chartOptions.yaxis!"
+      [dataLabels]="chartOptions.dataLabels!"
+      [markers]="chartOptions.markers!"
+      [stroke]="chartOptions.stroke!"
+      [xaxis]="chartOptions.xaxis!"
+      [tooltip]="chartOptions.tooltip!"
+    ></apx-chart>
+  </div>
 </main>

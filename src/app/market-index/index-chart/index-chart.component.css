@@ -1,5 +1,26 @@
+main {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
 .button_groups {
   display: flex;
   flex-flow: row nowrap;
   float: right;
+}
+
+.chart-container {
+  height: 570px;
+}
+
+.chart-placeholder {
+  height: 550px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.loading {
+  position: absolute;
+  top: 40%;
+  left: 50%;
 }
