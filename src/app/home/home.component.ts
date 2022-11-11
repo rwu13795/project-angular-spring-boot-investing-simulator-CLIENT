@@ -7,7 +7,7 @@ import { Component, Input, OnDestroy, OnInit } from "@angular/core";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public isLargeScreen?: boolean;
+  public isLargeScreen: boolean = true;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 

@@ -1,6 +1,13 @@
+:host {
+  height: 100%;
+  width: 100%;
+}
+
 main {
   max-height: 100px;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
 }

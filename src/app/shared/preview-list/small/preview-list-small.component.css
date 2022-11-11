@@ -1,3 +1,7 @@
+:host {
+  width: 100%;
+}
+
 main {
   max-width: 300px;
 }
@@ -12,7 +16,15 @@ main {
   font-weight: bold;
   transition: all 0.3s;
   cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 16px;
+}
+.read-more {
+  width: 22px;
 }
 
 .header:hover {
@@ -28,8 +40,26 @@ main {
 }
 
 @media screen and (max-width: 1200px) {
+  main {
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 40px;
+    margin-bottom: 50px;
+  }
   .list {
-    display: flex;
-    flex-flow: row nowrap;
+    padding: 0 20px;
+    border-right: solid 2px var(--main-600);
+    margin-bottom: 0;
+  }
+  .list:last-child {
+    border-right: none;
+  }
+}
+
+@media screen and (max-width: 940px) {
+  .header {
+    font-size: min(22px, 2.8vw);
   }
 }

@@ -12,6 +12,7 @@ import {
   StoredChartData,
   Response_quoteShort,
   Response_financialRatio,
+  CustomTimeRange,
 } from "./stock-models";
 
 @Injectable({ providedIn: "root" })
@@ -31,17 +32,17 @@ export class StockService {
 
   constructor(private http: HttpClient) {}
 
-  public fetchHistoryPrice(option: string, symbol: string) {
-    // used to get the current Eastern GMT-0400 hour, if it is
-    // greater than or equal to 16, then the market is close for NYSE and Nasdaq
-    // new Date().getUTCHours() - 4
-
+  public fetchHistoryPrice(
+    option: string,
+    symbol: string,
+    customTimeRange?: CustomTimeRange
+  ) {
     const { from, to, timeRange, interval } = this.getTimeRange(option);
     const params = new HttpParams({
       fromObject: {
         from,
         to,
-        time_range: timeRange,
+        time_range: customTimeRange ? customTimeRange : timeRange,
         symbol,
         time_option: option,
       },

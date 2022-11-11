@@ -1,5 +1,8 @@
 <main>
   <div>{{ timeRange }}</div>
+  <div *ngIf="loading" class="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
   <apx-chart
     *ngIf="chartOptions && !loading"
     #area_chart
@@ -13,5 +16,9 @@
     [xaxis]="chartOptions.xaxis!"
     [tooltip]="chartOptions.tooltip!"
   ></apx-chart>
-  <div *ngIf="loading">Loading place holder</div>
+  <img
+    *ngIf="loading"
+    class="chart-placeholder"
+    src="../../../assets/images/chart-loading.png"
+  />
 </main>

@@ -1,0 +1,42 @@
+<main>
+  <div class="indices-container">
+    <img
+      class="arrow"
+      (click)="scrollHorizontally('left')"
+      src="../../../assets/images/arrow.svg"
+    />
+    <div class="indices-slide" #slideRef>
+      <div
+        class="index-wrapper"
+        *ngFor="let index of indices"
+        [ngClass]="{ active: index.symbol === targetSymbol }"
+        (click)="onSelectIndex(index.symbol, index.name)"
+      >
+        <div class="name">{{ index.name }}</div>
+        <div class="row-wrapper">
+          <div class="column-wrapper">
+            <div class="symbol">{{ index._symbol }}</div>
+            <div>{{ index.price }}</div>
+          </div>
+          <div
+            [ngClass]="index.change >= 0 ? 'positive' : 'negative'"
+            class="column-wrapper"
+          >
+            <div>
+              {{ index.change >= 0 && "+" }}{{ toFixed_2(index.change) }}
+            </div>
+            <div>
+              ({{ index.change >= 0 && "+"
+              }}{{ toFixed_2(index.changesPercentage) }}%)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img
+      class="arrow arrow-right"
+      (click)="scrollHorizontally('right')"
+      src="../../../assets/images/arrow.svg"
+    />
+  </div>
+</main>

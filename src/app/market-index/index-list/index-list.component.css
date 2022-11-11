@@ -1,0 +1,54 @@
+:host {
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+  max-width: 320px;
+}
+
+.wrapper {
+  size: 16px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+  border-bottom: solid 2px var(--main-600);
+  padding-left: 10px;
+  cursor: pointer;
+}
+.active {
+  border-left: 6px solid var(--main-600);
+  padding-left: 4px;
+}
+.wrapper:hover .name {
+  color: var(--main-500);
+  transition: all 0.3s;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 16px;
+}
+
+.name {
+  text-align: center;
+  color: rgb(56, 56, 56);
+  size: 24px;
+  transition: all 0.3s;
+}
+.symbol {
+  size: 20px;
+  font-weight: bold;
+}
+
+.positive {
+  color: var(--color-positive-2);
+}
+.negative {
+  color: var(--color-negative-2);
+}

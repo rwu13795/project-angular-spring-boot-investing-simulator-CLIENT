@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { map } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Response_realTimePrice } from "../stock/stock-models";
@@ -57,6 +57,11 @@ export class MarketIndexService {
   };
 
   private targetIndex: RealTimeIndex | null = null;
+  // use the emitter to the pass the current symbol from index table or slide
+  // back to the index-preview
+  public targetIndexSymbol = new EventEmitter<string>();
+  public targetIndexName = new EventEmitter<string>();
+  public currentDate = new EventEmitter<string>();
 
   constructor(private stockService: StockService) {}
 
@@ -111,8 +116,12 @@ export class MarketIndexService {
     return null;
   }
 
-  public fetchIndexHistory(option: string, symbol: string) {
-    return this.stockService.fetchHistoryPrice(option, symbol);
+  public fetchIndexHistory(option: string, symbol: string, isPreview: boolean) {
+    return this.stockService.fetchHistoryPrice(
+      option,
+      symbol,
+      isPreview ? "15min" : undefined
+    );
   }
 
   public getIndexNormalSymbol(tickerSymbol: string) {

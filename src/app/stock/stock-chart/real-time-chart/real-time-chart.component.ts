@@ -227,13 +227,14 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
           name: "Volumes",
           type: "bar",
           data: this.data.volumes,
-          color: "#0035e3",
+          color: "#005aa3",
         },
       ],
       chart: {
         stacked: false,
         type: "candlestick",
         height: 700,
+        fontFamily: '"Quantico", sans-serif',
         id: "Candles",
         toolbar: {
           show: true,
@@ -407,7 +408,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
               {
                 from: 0,
                 to: 10000000000,
-                color: "#0035e3",
+                color: "#005aa3",
               },
             ],
           },
@@ -460,18 +461,18 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
           axisTicks: { show: true, offsetX: -8 },
           axisBorder: {
             show: true,
-            color: "#0035e3",
+            color: "#005aa3",
             offsetX: -8,
           },
           labels: {
-            style: { colors: "#0035e3", fontWeight: "bold" },
+            style: { colors: "#005aa3", fontWeight: "bold" },
             offsetX: -20,
             formatter: (val, opts) =>
               this.stockChartService.toSignificantDigit(val),
           },
           title: {
             text: "Volume",
-            style: { color: "#0035e3" },
+            style: { color: "#005aa3" },
           },
           tooltip: { enabled: false },
         },

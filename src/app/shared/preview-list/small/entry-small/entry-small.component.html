@@ -1,4 +1,4 @@
-<main *ngIf="entry">
+<main *ngIf="entry" @entryAnimation>
   <div
     [routerLink]="['/stock', 'financial-summary', entry.symbol]"
     class="wrapper"

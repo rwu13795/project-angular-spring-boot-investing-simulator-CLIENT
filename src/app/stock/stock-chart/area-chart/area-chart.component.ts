@@ -75,7 +75,15 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
   private setChartOptions(data: ChartData) {
     this.chartOptions = {
       series: [{ data: data.candleLine, name: "Price" }],
-      chart: { type: "area", height: 350 },
+      chart: {
+        type: "area",
+        height: 350,
+        fontFamily: '"Quantico", sans-serif',
+        toolbar: {
+          show: false,
+          tools: { zoom: false },
+        },
+      },
       dataLabels: { enabled: false },
       markers: {
         size: 0,
@@ -92,6 +100,7 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
         type: "category",
         tickAmount: 6,
         labels: {
+          style: { fontSize: "10px" },
           show: true,
           formatter: (value) => {
             return new Date(value).toLocaleDateString();
@@ -125,9 +134,10 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
     this.chartData$ = this.stockService
       .fetchHistoryPrice("3M", this.symbol)
       .subscribe((data) => {
-        this.timeRange = `${data.candleLine[0].x.toLocaleDateString()} - ${data.candleLine[
-          data.candleLine.length - 1
-        ].x.toLocaleDateString()}`;
+        const from = data.candleLine[0].x.toLocaleDateString();
+        const to =
+          data.candleLine[data.candleLine.length - 1].x.toLocaleDateString();
+        this.timeRange = `${from} - ${to}`;
 
         this.setChartOptions(data);
         this.loading = false;

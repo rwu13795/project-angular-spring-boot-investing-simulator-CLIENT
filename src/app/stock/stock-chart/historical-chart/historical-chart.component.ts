@@ -104,13 +104,14 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           name: "Volumes",
           type: "bar",
           data: this.data.volumes,
-          color: "#0035e3",
+          color: "#005AA3",
         },
       ],
       chart: {
         stacked: false,
         type: "line",
         height: 700,
+        fontFamily: '"Quantico", sans-serif',
         toolbar: {
           show: true,
           tools: {
@@ -155,7 +156,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
               {
                 from: 0,
                 to: 1000000000000,
-                color: "#0035e3",
+                color: "#005AA3",
               },
             ],
           },
@@ -219,30 +220,23 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           axisTicks: { show: true, offsetX: -8 },
           axisBorder: {
             show: true,
-            color: "#0035e3",
+            color: "#005AA3",
             offsetX: -8,
           },
           labels: {
-            style: { colors: "#0035e3", fontWeight: "bold" },
+            style: { colors: "#005AA3", fontWeight: "bold" },
             offsetX: -20,
             formatter: (val, opts) =>
               this.stockChartService.toSignificantDigit(val),
           },
           title: {
             text: "Volume",
-            style: { color: "#0035e3" },
+            style: { color: "#005AA3" },
           },
           tooltip: { enabled: false },
         },
       ],
     };
-  }
-
-  private numberFormatter(value: number, decimal: number = 0): string {
-    if (decimal === 0) {
-      return Math.floor(value).toString();
-    }
-    return value.toString();
   }
 }
 

@@ -52,6 +52,6 @@ main {
   .preview-list-small-screen {
     width: 100%;
     display: flex;
-    overflow-x: auto;
+    justify-content: center;
   }
 }

@@ -1,0 +1,79 @@
+.indices-container {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
+}
+.indices-slide {
+  width: 90%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  overflow: hidden;
+}
+
+.index-wrapper {
+  min-width: 180px;
+  height: 100px;
+  max-height: 100px;
+  padding: 6px 10px;
+  font-size: 14px;
+  border-right: 2px dashed var(--main-600);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.active {
+  border-bottom: 6px solid var(--main-600);
+  border-top: 6px solid var(--main-600);
+  padding: 0px 10px;
+}
+.index-wrapper:hover .name {
+  color: var(--main-500);
+  transition: all 0.3s;
+}
+.index-wrapper:last-child {
+  border-right: none;
+}
+
+.column-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 4px;
+}
+.row-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.name {
+  text-align: center;
+}
+.symbol {
+  font-weight: bold;
+}
+
+.positive {
+  color: var(--color-positive-2);
+}
+.negative {
+  color: var(--color-negative-2);
+}
+
+.arrow {
+  width: 26px;
+  object-fit: contain;
+  cursor: pointer;
+}
+.arrow-right {
+  transform: scaleX(-1);
+}

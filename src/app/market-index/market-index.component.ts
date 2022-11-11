@@ -12,6 +12,7 @@ import { MarketIndexService } from "./market-index.service";
 export class MarketIndexComponent implements OnInit, OnDestroy {
   private fetchTargetIndex$?: Subscription;
   public symbol: string = "^DJI";
+  public dayOption: string = "1D";
   public targetIndex: RealTimeIndex | null = null;
 
   constructor(
@@ -25,8 +26,8 @@ export class MarketIndexComponent implements OnInit, OnDestroy {
 
       if (symbol && symbol !== "") {
         this.symbol = symbol.toUpperCase();
-
         this.targetIndex = this.marketIndexService.getTargetIndex();
+
         if (!this.targetIndex) {
           this.fetchTargetIndex$ = this.marketIndexService
             .fetchTargetIndex(symbol)
@@ -36,6 +37,10 @@ export class MarketIndexComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  public onSelectDayRange(dayOption: string) {
+    this.dayOption = dayOption;
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,17 @@
+:host {
+  width: 100%;
+}
+
+.loading {
+  width: 0;
+  height: 0;
+  position: relative;
+  top: 100px;
+  left: 45%;
+}
+
+.chart-placeholder {
+  height: 350px;
+  width: 100%;
+  object-fit: cover;
+}

@@ -1,18 +1,44 @@
 <main>
-  <h3>Major Indices</h3>
-  <div class="indices-container">
-    <div class="index-wrapper" *ngFor="let index of indices">
-      <a [routerLink]="['/market-index/', index.symbol]">
-        <div class="name">{{ index.name }}</div>
-        <div class="inner-wrapper">
-          <div class="symbol">{{ index._symbol }}</div>
-          <div>{{ index.price }}</div>
+  <div class="title">Major Indices</div>
+  <app-gradient-break [height]="8" [marginBottom]="26"></app-gradient-break>
+
+  <div *ngIf="!showSlideOnly" class="preview-wrapper">
+    <div class="chart-container">
+      <div
+        class="index-name-wrapper"
+        [routerLink]="['/market-index', targetIndexSymbol]"
+      >
+        <div class="index-name">
+          {{ targetIndexName }}
+          <img src="../../../assets/images/read_more.svg" class="read-more" />
         </div>
-        <div class="inner-wrapper">
-          <div>{{ toFixed_2(index.change) }}</div>
-          <div>({{ toFixed_2(index.changesPercentage) }})%</div>
-        </div>
-      </a>
+        {{ currentDate }}
+      </div>
+      <app-index-chart
+        [symbol]="targetIndexSymbol"
+        [isPreview]="true"
+        [chartHeight]="380"
+      ></app-index-chart>
     </div>
+
+    <div class="indices-container">
+      <app-index-list
+        [indices]="indices"
+        class="index-list-container"
+      ></app-index-list>
+      <app-index-slide
+        [indices]="indices"
+        class="index-slide-container"
+      ></app-index-slide>
+    </div>
+  </div>
+
+  <div *ngIf="showSlideOnly">
+    <app-index-slide
+      [indices]="indices"
+      [isPreview]="false"
+      class="index-slide-container"
+      style="display: block"
+    ></app-index-slide>
   </div>
 </main>

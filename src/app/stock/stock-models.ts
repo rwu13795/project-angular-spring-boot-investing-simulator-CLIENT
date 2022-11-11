@@ -133,3 +133,11 @@ export interface Response_financialRatio {
   debtEquityRatioTTM: number;
   priceToBookRatioTTM: number;
 }
+
+export type CustomTimeRange =
+  | "1min"
+  | "5min"
+  | "15min"
+  | "30min"
+  | "1hour"
+  | "4hour";

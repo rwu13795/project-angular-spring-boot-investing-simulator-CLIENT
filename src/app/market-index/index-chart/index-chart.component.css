@@ -1,3 +1,7 @@
+:host {
+  width: 100%;
+}
+
 main {
   display: flex;
   flex-flow: column nowrap;
@@ -12,15 +16,25 @@ main {
 .chart-container {
   height: 570px;
 }
+.chart-container-preview {
+  height: 380px;
+}
 
 .chart-placeholder {
   height: 550px;
   width: 100%;
   object-fit: cover;
 }
+.chart-placeholder-preview {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
 
 .loading {
-  position: absolute;
-  top: 40%;
-  left: 50%;
+  width: 0;
+  height: 0;
+  position: relative;
+  top: 30%;
+  left: 45%;
 }

@@ -253,13 +253,14 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           name: "Volumes",
           type: "bar",
           data: this.data.volumes,
-          color: "#0035e3",
+          color: "#005aa3",
         },
       ],
       chart: {
         stacked: false,
         type: "candlestick",
         height: 580,
+        fontFamily: '"Quantico", sans-serif',
         id: "Candles",
         toolbar: {
           show: false,
@@ -382,7 +383,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               {
                 from: 0,
                 to: 10000000000,
-                color: "#0035e3",
+                color: "#005aa3",
               },
             ],
           },
@@ -431,18 +432,18 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           axisTicks: { show: true, offsetX: -8 },
           axisBorder: {
             show: true,
-            color: "#0035e3",
+            color: "#005aa3",
             offsetX: -8,
           },
           labels: {
-            style: { colors: "#0035e3" },
+            style: { colors: "#005aa3" },
             offsetX: -20,
             formatter: (val, opts) =>
               this.stockChartService.toSignificantDigit(val),
           },
           title: {
             text: "Volume",
-            style: { color: "#0035e3" },
+            style: { color: "#005aa3" },
           },
           tooltip: { enabled: false },
         },
@@ -470,12 +471,13 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           name: "Volumes",
           type: "bar",
           data: this.data.volumes,
-          color: "#0035e3",
+          color: "#005aa3",
         },
       ],
       chart: {
         height: 220,
         type: "bar",
+        fontFamily: '"Quantico", sans-serif',
         brush: {
           enabled: true,
           target: "Candles",
@@ -523,7 +525,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               {
                 from: 0,
                 to: 10000000000,
-                color: "#0035e3",
+                color: "#005aa3",
               },
             ],
           },
@@ -620,16 +622,11 @@ export class MixedChartComponent implements OnInit, OnDestroy {
 
 ---------- NOTE ----------
 
+I did NOT use this mixed-chart
+
 Since there is no solution for updating the high/low price bound dynanmically
 in the mixed-chart, I had to find a workaround for this mess.
 
-In the noraml candles chart, If I use the toolbar to zoom in a certain portion
-of data points, the "zoomed" event in the chart will provide the relative 
-timestamp of those data points. I found a way to extract these "timestamp", and
-use them to find out the range of the currently zoomed data points that are displayed
-in the chart. Once I got the range, I could calculate the high/low price bound of 
-the data points in the current range, and then use the "updateOptions" method to
-update the "yaxis.min" and "yaxis.max" dynamically
-
+I use the real-time-chart instead for the "1D" time range
 
 */

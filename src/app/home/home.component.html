@@ -1,19 +1,13 @@
 <main>
   <div class="container-left">
-    <div>Portfolio</div>
-    <hr />
-
     <app-index-preview></app-index-preview>
 
-    <a [routerLink]="['/performance']">To list</a>
+    <app-user-portfolio-preview></app-user-portfolio-preview>
 
     <div class="preview-list-small-screen" *ngIf="isLargeScreen === false">
-      <h1>Preview List</h1>
       <app-preview-list-small [symbol]="'all'"></app-preview-list-small>
     </div>
 
-    <hr />
-    <hr />
     <app-news></app-news>
   </div>
 

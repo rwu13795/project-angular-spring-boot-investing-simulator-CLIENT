@@ -4,14 +4,18 @@ import { RouterModule } from "@angular/router";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { SharedModule } from "../shared/shared.module";
 import { IndexChartComponent } from "./index-chart/index-chart.component";
+import { IndexListComponent } from "./index-list/index-list.component";
 
 import { IndexPreviewComponent } from "./index-preview/index-preview.component";
+import { IndexSlideComponent } from "./index-slide/index-slide.component";
 import { MarketIndexComponent } from "./market-index.component";
 
 @NgModule({
   declarations: [
     IndexPreviewComponent,
     IndexChartComponent,
+    IndexListComponent,
+    IndexSlideComponent,
     MarketIndexComponent,
   ],
   imports: [CommonModule, RouterModule, NgApexchartsModule, SharedModule],
@@ -21,6 +25,8 @@ import { MarketIndexComponent } from "./market-index.component";
     NgApexchartsModule,
     IndexPreviewComponent,
     IndexChartComponent,
+    IndexListComponent,
+    MarketIndexComponent,
     MarketIndexComponent,
   ],
 })

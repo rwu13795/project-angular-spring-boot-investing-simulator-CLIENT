@@ -49,12 +49,14 @@ export type ChartOptions = {
 export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("index_chart", { static: false }) chart!: ChartComponent;
   @Input() symbol: string = "";
+  @Input() dayOption: string = "1D";
+  @Input() isPreview: boolean = false;
+  @Input() chartHeight: number = 550;
+
   private chartData$?: Subscription;
   private normalSymbol: string = "";
-  private option: string = "1D";
 
   public chartOptions?: Partial<ChartOptions>;
-  public timeRange: string = "";
   public loading: boolean = true;
   // display the "placeholder" image on init, and only show loading spinner
   // for the subsequent changes
@@ -69,32 +71,30 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loading = true;
-    if (changes["symbol"].currentValue) this.fetchIndexHistory();
+    if (changes["dayOption"]) this.fetchIndexHistory();
+    if (changes["symbol"]) {
+      // reset the dayOption when symbol was changed
+      this.dayOption = "1D";
+      this.fetchIndexHistory();
+    }
   }
 
   ngOnDestroy(): void {
     if (this.chartData$) this.chartData$.unsubscribe();
   }
 
-  public onSelectDayRange(option: string) {
-    this.loading = true;
-    this.option = option;
-    this.fetchIndexHistory();
-  }
-
   private fetchIndexHistory() {
     this.chartData$ = this.marketIndexService
-      .fetchIndexHistory(this.option, this.symbol)
+      .fetchIndexHistory(this.dayOption, this.symbol, this.isPreview)
       .subscribe((data) => {
-        this.timeRange = `${data.candleLine[0].x.toLocaleDateString()} - ${data.candleLine[
-          data.candleLine.length - 1
-        ].x.toLocaleDateString()}`;
+        const dateString = data.candleLine[0].x.toLocaleDateString();
 
         this.normalSymbol = this.marketIndexService.getIndexNormalSymbol(
           this.symbol
         );
 
         this.setChartOptions(data);
+        this.marketIndexService.currentDate.emit(dateString);
         this.loading = false;
         this.usePlaceHolder = false;
       });
@@ -103,22 +103,31 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
   private setChartOptions(data: ChartData) {
     this.chartOptions = {
       series: [{ data: data.candleLine, name: this.normalSymbol }],
-      chart: { type: "area", height: 550 },
+      chart: {
+        type: "area",
+        height: this.chartHeight,
+        fontFamily: '"Quantico", sans-serif',
+        toolbar: {
+          show: !this.isPreview,
+          tools: { zoom: true, download: false },
+        },
+      },
       dataLabels: { enabled: false },
       markers: {
         size: 0,
       },
+
       yaxis: {
         axisBorder: {
           show: true,
-          color: "blue",
+          color: "#005aa3",
           offsetX: -2,
         },
         labels: {
           show: true,
-          style: { colors: "blue", fontWeight: "bold" },
+          style: { colors: "#005aa3", fontWeight: "bold" },
           formatter: (value) => {
-            return this.stockChartService.toLocalString(value);
+            return this.stockChartService.toLocalString(value.toFixed(0));
           },
         },
       },
@@ -127,8 +136,14 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
         tickAmount: 6,
         labels: {
           show: true,
-          style: { fontWeight: "bold" },
+          style: {
+            fontWeight: "bold",
+            fontSize: this.isPreview ? "9px" : "12px",
+          },
           formatter: (value) => {
+            if (this.dayOption === "1D") {
+              return new Date(value).toLocaleTimeString();
+            }
             return new Date(value).toLocaleDateString();
           },
         },

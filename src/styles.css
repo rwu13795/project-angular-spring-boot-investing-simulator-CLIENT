@@ -10,8 +10,14 @@
   --main-500: #00ccff;
   --main-600: #00a2d3;
   --main-700: #007aa9;
+  --main-750: #005aa3;
   --main-800: #005581;
   --main-900: #00315b;
+
+  --color-positive-1: #d6ffef;
+  --color-positive-2: #2ecc71;
+  --color-negative-1: #ffdede;
+  --color-negative-2: #e74c3c;
 }
 
 html {
@@ -29,7 +35,7 @@ body {
 main {
   font-family: "Quantico", sans-serif;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1500px;
 }
 
 a,
@@ -47,4 +53,10 @@ button {
 .title {
   font-size: 40px;
   height: 34px;
+}
+
+@media screen and (max-width: 765px) {
+  .title {
+    font-size: min(40px, 7vw);
+  }
 }

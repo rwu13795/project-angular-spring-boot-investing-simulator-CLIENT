@@ -44,12 +44,14 @@ export type ChartOptions = {
   styleUrls: ["./revenue-chart.component.css"],
 })
 export class RevenueChartComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild("revenue-chart") chart!: ChartComponent;
-  public chartOptions?: Partial<ChartOptions>;
-
-  @Input() symbol: string = "";
   private incomeStatement$?: Subscription;
   private isFullYear: boolean = true;
+
+  @ViewChild("revenue-chart") chart!: ChartComponent;
+  @Input() symbol: string = "";
+
+  public chartOptions?: Partial<ChartOptions>;
+  public loading: boolean = true;
 
   constructor(
     private stockService: StockService,
@@ -88,6 +90,7 @@ export class RevenueChartComponent implements OnInit, OnDestroy, OnChanges {
       chart: {
         type: "bar",
         height: 350,
+        fontFamily: '"Quantico", sans-serif',
         toolbar: {
           show: false,
           tools: { zoom: false },
@@ -139,6 +142,9 @@ export class RevenueChartComponent implements OnInit, OnDestroy, OnChanges {
   private fetchChartData() {
     this.incomeStatement$ = this.stockService
       .getIncomeStatements(this.symbol, this.isFullYear, 6)
-      .subscribe((data) => this.setChartOptions(data));
+      .subscribe((data) => {
+        this.setChartOptions(data);
+        this.loading = false;
+      });
   }
 }
