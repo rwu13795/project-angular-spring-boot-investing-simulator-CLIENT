@@ -5,6 +5,7 @@
 main {
   display: flex;
   flex-flow: column nowrap;
+  justify-content: center;
   gap: 16px;
   max-width: 320px;
 }
@@ -51,4 +52,11 @@ main {
 }
 .negative {
   color: var(--color-negative-2);
+}
+
+.loading {
+  width: 84px;
+  position: relative;
+  left: 35%;
+  top: 142px;
 }

@@ -1,0 +1,33 @@
+<main>
+  <div class="digits-wrapper">
+    Point:
+
+    <div *ngFor="let digit of point; index as i">
+      <app-digit-cylinder
+        [currentDigit]="digit"
+        [previousDigit]="previousPoint[i]"
+      ></app-digit-cylinder>
+    </div>
+  </div>
+  <div class="digits-wrapper">
+    Changes:
+    <div *ngFor="let digit of changeInPoint; index as i">
+      <app-digit-cylinder
+        [currentDigit]="digit"
+        [previousDigit]="previousChangeInPoint[i]"
+        [timeRange]="timeRange | async"
+      ></app-digit-cylinder>
+    </div>
+  </div>
+
+  <div class="digits-wrapper">
+    <div *ngFor="let digit of changePercentage; index as i">
+      <app-digit-cylinder
+        [currentDigit]="digit"
+        [previousDigit]="previousChangePercentage[i]"
+        [timeRange]="timeRange | async"
+      ></app-digit-cylinder>
+    </div>
+    %
+  </div>
+</main>

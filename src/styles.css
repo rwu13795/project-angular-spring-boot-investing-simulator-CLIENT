@@ -35,7 +35,7 @@ body {
 main {
   font-family: "Quantico", sans-serif;
   width: 100%;
-  max-width: 1500px;
+  max-width: 1400px;
 }
 
 a,
@@ -57,6 +57,6 @@ button {
 
 @media screen and (max-width: 765px) {
   .title {
-    font-size: min(40px, 7vw);
+    font-size: min(34px, 7vw);
   }
 }

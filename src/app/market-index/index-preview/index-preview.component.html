@@ -1,8 +1,8 @@
-<main>
-  <div class="title">Major Indices</div>
-  <app-gradient-break [height]="8" [marginBottom]="26"></app-gradient-break>
+<main *ngIf="!showSlideOnly">
+  <div class="title">Major Indexes</div>
+  <app-gradient-break [height]="8" [marginBottom]="28"></app-gradient-break>
 
-  <div *ngIf="!showSlideOnly" class="preview-wrapper">
+  <div class="preview-wrapper">
     <div class="chart-container">
       <div
         class="index-name-wrapper"
@@ -23,22 +23,28 @@
 
     <div class="indices-container">
       <app-index-list
+        *ngIf="isLargeScreen"
         [indices]="indices"
         class="index-list-container"
       ></app-index-list>
       <app-index-slide
+        *ngIf="!isLargeScreen"
         [indices]="indices"
         class="index-slide-container"
       ></app-index-slide>
     </div>
   </div>
+</main>
 
-  <div *ngIf="showSlideOnly">
-    <app-index-slide
-      [indices]="indices"
-      [isPreview]="false"
-      class="index-slide-container"
-      style="display: block"
-    ></app-index-slide>
-  </div>
+<main *ngIf="showSlideOnly">
+  <div class="title" style="font-size: 30px">Major Indexes</div>
+  <app-gradient-break [height]="6" [marginBottom]="16"></app-gradient-break>
+
+  <app-index-slide
+    [indices]="indices"
+    [isPreview]="false"
+    [targetIndexSymbol]="targetIndexSymbol"
+    class="index-slide-container"
+    style="display: block"
+  ></app-index-slide>
 </main>

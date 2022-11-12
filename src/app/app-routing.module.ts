@@ -4,8 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { MarketIndexComponent } from "./market-index/market-index.component";
 import { MarketIndexGuard } from "./market-index/market-index.guard";
+import { PreviewListLargeComponent } from "./preview-list/large/preview-list-large.component";
 import { Page404Component } from "./shared/page-404/page-404.component";
-import { PreviewListLargeComponent } from "./shared/preview-list/large/preview-list-large.component";
 
 const routes: Routes = [
   { path: "", pathMatch: "full", component: HomeComponent },

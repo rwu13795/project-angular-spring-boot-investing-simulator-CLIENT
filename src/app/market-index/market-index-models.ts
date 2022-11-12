@@ -9,4 +9,5 @@ export interface MajorIndex {
 
 export interface RealTimeIndex extends Response_realTimePrice {
   _symbol: string;
+  [key: string]: number | string;
 }

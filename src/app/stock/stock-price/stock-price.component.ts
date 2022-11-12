@@ -15,10 +15,7 @@ import {
   selectPreviousChangePercentage,
   selectTimeRange,
 } from "../stock-state/stock.selectors";
-import {
-  Response_companyProfile,
-  Response_priceChangePercentage,
-} from "../stock-models";
+import { Response_companyProfile } from "../stock-models";
 
 @Component({
   selector: "app-stock-price",

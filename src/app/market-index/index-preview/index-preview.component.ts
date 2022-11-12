@@ -2,8 +2,10 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { Subscription } from "rxjs";
@@ -17,19 +19,21 @@ import { MarketIndexService } from "../market-index.service";
   styleUrls: ["./index-preview.component.css"],
 })
 export class IndexPreviewComponent implements OnInit, OnDestroy {
-  private indices$?: Subscription;
+  private fetchAllMajorIndices$?: Subscription;
 
   @Input() showSlideOnly: boolean = false;
+  @Input() isLargeScreen: boolean = true;
+  @Input() symbolFromParams: string = "";
+  @Input() targetIndexSymbol: string = "^DJI";
 
   public indices: RealTimeIndex[] = [];
-  public targetIndexSymbol: string = "^DJI";
   public targetIndexName: string = "Dow Jones Industrial Average";
   public currentDate: string = "";
 
   constructor(private marketIndexService: MarketIndexService) {}
 
   ngOnInit(): void {
-    this.indices$ = this.marketIndexService
+    this.fetchAllMajorIndices$ = this.marketIndexService
       .fetchAllMajorIndices()
       .subscribe((data) => {
         this.indices = data;
@@ -50,6 +54,6 @@ export class IndexPreviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.indices$) this.indices$.unsubscribe();
+    if (this.fetchAllMajorIndices$) this.fetchAllMajorIndices$.unsubscribe();
   }
 }

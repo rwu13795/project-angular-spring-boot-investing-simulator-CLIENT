@@ -12,12 +12,18 @@
         <div>{{ index.price }}</div>
       </div>
       <div [ngClass]="index.change >= 0 ? 'positive' : 'negative'" class="row">
-        <div>{{ index.change >= 0 && "+" }}{{ toFixed_2(index.change) }}</div>
         <div>
-          ({{ index.changesPercentage >= 0 && "+"
-          }}{{ toFixed_2(index.changesPercentage) }}%)
+          <span *ngIf="index.change >= 0">+</span>{{ toFixed_2(index.change) }}
+        </div>
+        <div>
+          (<span *ngIf="index.changesPercentage >= 0">+</span
+          >{{ toFixed_2(index.changesPercentage) }}%)
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="loading" *ngIf="indices.length === 0">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </main>

@@ -27,3 +27,15 @@
   );
   margin-bottom: 1px;
 }
+
+.gradient-middle {
+  min-height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    var(--main-500) 45%,
+    var(--main-500) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  margin-bottom: 1px;
+}

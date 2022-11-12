@@ -23,6 +23,7 @@ import {
   ApexLegend,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
+import { AppState } from "src/app/ngrx-store/app.reducer";
 import { ChartData, CandleData } from "../../stock-models";
 import {
   setCurrentChangeInPrice,
@@ -87,7 +88,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private stockService: StockService,
     private stockChartService: StockChartService,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {

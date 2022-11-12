@@ -1,0 +1,57 @@
+<main *ngIf="previewList">
+  <div class="list-container">
+    <div class="list">
+      <div class="header" (click)="onSelectOption(ListTypes.actives)">
+        Most Searched
+        <img src="../../../assets/images/read_more.svg" class="read-more" />
+      </div>
+      <div *ngFor="let entry of previewList.actives">
+        <app-preview-list-small-entry
+          [entry]="entry"
+        ></app-preview-list-small-entry>
+      </div>
+    </div>
+    <div class="list">
+      <div class="header" (click)="onSelectOption(ListTypes.gainers)">
+        Top Performing
+        <img src="../../../assets/images/read_more.svg" class="read-more" />
+      </div>
+      <div *ngFor="let entry of previewList.gainers">
+        <app-preview-list-small-entry
+          [entry]="entry"
+        ></app-preview-list-small-entry>
+      </div>
+    </div>
+    <div class="list">
+      <div class="header" (click)="onSelectOption(ListTypes.losers)">
+        Worst Performing
+        <img src="../../../assets/images/read_more.svg" class="read-more" />
+      </div>
+      <div *ngFor="let entry of previewList.losers">
+        <app-preview-list-small-entry
+          [entry]="entry"
+        ></app-preview-list-small-entry>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main *ngIf="symbol && peerList">
+  <div class="list-peer-container">
+    <div class="header-no-pointer">People Also Watch</div>
+    <div class="title">People Also Watch</div>
+    <app-gradient-break
+      class="break"
+      [marginBottom]="10"
+      [height]="8"
+      [width]="'100%'"
+    ></app-gradient-break>
+    <div class="list-peer">
+      <div *ngFor="let entry of peerList">
+        <app-preview-list-small-entry
+          [entry]="entry"
+        ></app-preview-list-small-entry>
+      </div>
+    </div>
+  </div>
+</main>

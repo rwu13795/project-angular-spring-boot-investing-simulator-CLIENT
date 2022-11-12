@@ -1,14 +1,19 @@
 <main>
   <div class="menu-wrapper" *ngIf="symbol !== ''">
-    <a class="menu-link" [routerLink]="['financial-summary', symbol]"
-      >Financial Summary</a
-    >
-    <a class="menu-link" [routerLink]="['financial-statements', symbol]"
-      >Financial Statements</a
-    >
-    <a div class="menu-link" [routerLink]="['chart', symbol]">Charts</a>
-    <a class="menu-link" [routerLink]="['company-profile', symbol]"
-      >Company Profile</a
-    >
+    <div class="menu-link" [routerLink]="['financial-summary', symbol]">
+      Financial Summary
+    </div>
+    <div class="menu-link" [routerLink]="['financial-statements', symbol]">
+      Financial Statements
+    </div>
+    <div div class="menu-link" [routerLink]="['chart', symbol]">Charts</div>
+    <div class="menu-link" [routerLink]="['company-profile', symbol]">
+      Company Profile
+    </div>
   </div>
+  <app-gradient-break
+    [height]="8"
+    [marginBottom]="30"
+    [type]="2"
+  ></app-gradient-break>
 </main>

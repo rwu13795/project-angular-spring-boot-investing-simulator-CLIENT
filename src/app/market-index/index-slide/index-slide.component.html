@@ -9,7 +9,7 @@
       <div
         class="index-wrapper"
         *ngFor="let index of indices"
-        [ngClass]="{ active: index.symbol === targetSymbol }"
+        [ngClass]="{ active: index.symbol === targetIndexSymbol }"
         (click)="onSelectIndex(index.symbol, index.name)"
       >
         <div class="name">{{ index.name }}</div>
@@ -23,11 +23,12 @@
             class="column-wrapper"
           >
             <div>
-              {{ index.change >= 0 && "+" }}{{ toFixed_2(index.change) }}
+              <span *ngIf="index.change >= 0">+</span
+              >{{ toFixed_2(index.change) }}
             </div>
             <div>
-              ({{ index.change >= 0 && "+"
-              }}{{ toFixed_2(index.changesPercentage) }}%)
+              (<span *ngIf="index.changesPercentage >= 0">+</span
+              >{{ toFixed_2(index.changesPercentage) }}%)
             </div>
           </div>
         </div>

@@ -1,24 +1,9 @@
+<app-navigation-bar class="nav-bar"></app-navigation-bar>
+
 <main>
-  <div class="nav-bar">
-    <app-navigation-bar></app-navigation-bar>
-  </div>
   <div class="main-content">
     <router-outlet></router-outlet>
   </div>
-
-  <!-- <div class="digits-wrapper">
-    <div *ngFor="let digit of newDigitsString; index as i">
-      <app-digit-cylinder
-        [currentDigit]="digit"
-        [previousDigit]="digitsString[i]"
-      ></app-digit-cylinder>
-    </div>
-  </div>
-
-  <button (click)="changeDigit(123.4343)">123.4343</button>
-  <button (click)="changeDigit(125.6)">125.60</button>
-  <button (click)="changeDigit(125.9)">125.90</button>
-  <button (click)="changeDigit(9464)">9464</button>
-  <button (click)="changeDigit(55.37)">55.37</button>
-  <button (click)="changeDigit(-11.9)">-11.9</button> -->
 </main>
+
+<app-footer></app-footer>

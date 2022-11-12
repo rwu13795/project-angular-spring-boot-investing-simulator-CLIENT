@@ -22,9 +22,12 @@ import { LayoutModule } from "@angular/cdk/layout";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { UserModule } from "./user/user.module";
 import { UserEffects } from "./user/user-state/user.effects";
+import { PreviewListModule } from "./preview-list/preview-list.module";
+import { NewsModule } from "./news/news.module";
+import { FooterComponent } from "./footer/footer.component";
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,6 +37,8 @@ import { UserEffects } from "./user/user-state/user.effects";
     NavigationModule,
     LayoutModule,
     SharedModule,
+    NewsModule,
+    PreviewListModule,
     MarketIndexModule,
     StockModule,
     UserModule,

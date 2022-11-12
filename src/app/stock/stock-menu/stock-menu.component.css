@@ -4,9 +4,6 @@
   justify-content: center;
 }
 
-main {
-}
-
 .menu-wrapper {
   height: 60px;
   display: flex;
@@ -14,12 +11,14 @@ main {
   justify-content: center;
   align-items: center;
   gap: 20px;
+  font-size: 26px;
 }
 
 .menu-link {
   padding: 6px 12px;
   text-align: center;
   transition: all 0.5s;
+  cursor: pointer;
 }
 .menu-link:hover {
   background-color: aquamarine;

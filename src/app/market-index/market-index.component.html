@@ -1,50 +1,90 @@
 <main>
-  <div *ngIf="targetIndex">
-    <div>{{ targetIndex.name }}</div>
-    <div>{{ targetIndex._symbol }}</div>
-    <div>{{ targetIndex.price }}</div>
-    <div>{{ targetIndex.change }}</div>
-    <div>{{ targetIndex.changesPercentage }}%</div>
+  <div *ngIf="targetIndex" class="index-wrapper">
+    <div class="name-symbol">
+      {{ targetIndex.name }} -
+      <div class="symbol">{{ targetIndex._symbol }}</div>
+    </div>
+
+    <!-- <div class="price-wrapper">
+      <div class="price">{{ targetIndex.price.toLocaleString() }}</div>
+      <div
+        class="changes"
+        [ngClass]="targetIndex.change >= 0 ? 'positive' : 'negative'"
+      >
+        <div>
+          <span *ngIf="targetIndex.change >= 0">+</span
+          >{{ toFixed_2(targetIndex.change) }}
+        </div>
+        <div>
+          (<span *ngIf="targetIndex.change >= 0">+</span
+          >{{ toFixed_2(targetIndex.changesPercentage) }}%)
+        </div>
+      </div>
+    </div> -->
+    <app-index-point></app-index-point>
   </div>
 
-  <div class="button_group">
-    <button (click)="onSelectDayRange('1D')">1D</button>
-    <button (click)="onSelectDayRange('5D')">5D</button>
-    <button (click)="onSelectDayRange('1M')">1M</button>
-    <button (click)="onSelectDayRange('3M')">3M</button>
-    <button (click)="onSelectDayRange('6M')">6M</button>
-    <button (click)="onSelectDayRange('1Y')">1Y</button>
-    <button (click)="onSelectDayRange('5Y')">5Y</button>
+  <div class="buttons-group">
+    <app-custom-button
+      *ngFor="let option of dayOptions"
+      (onClick)="onSelectTimeRange($event)"
+      [callbackArg]="option"
+      [text]="option"
+      [width]="isLargeScreen ? 44 : 34"
+      [height]="isLargeScreen ? 28 : 22"
+      [fontSize]="isLargeScreen ? 14 : 12"
+      [isActive]="dayOption === option"
+    >
+    </app-custom-button>
   </div>
   <app-index-chart [symbol]="symbol" [dayOption]="dayOption"></app-index-chart>
 
-  <div *ngIf="targetIndex">
-    <h3>Summary</h3>
-    <div>
-      <span>Open</span><span>{{ targetIndex.open }}</span>
+  <div class="title" style="font-size: 30px">Summary</div>
+  <app-gradient-break [height]="6" [marginBottom]="16"></app-gradient-break>
+
+  <div *ngIf="targetIndex" class="summary-wrapper">
+    <div class="summary-row">
+      <span class="key">Open</span>
+      <span claas="value">{{ toFixed_2(targetIndex.open) }}</span>
     </div>
-    <div>
-      <span>Prev Close</span><span>{{ targetIndex.previousClose }}</span>
+    <div class="summary-row">
+      <span class="key">Prev Close</span>
+      <span claas="value">{{ toFixed_2(targetIndex.previousClose) }}</span>
     </div>
-    <div>
-      <span>Day High</span><span>{{ targetIndex.dayHigh }}</span>
+    <div class="summary-row">
+      <span class="key">Day High</span>
+      <span claas="value">{{ toFixed_2(targetIndex.dayHigh) }}</span>
     </div>
-    <div>
-      <span>Day Low</span><span>{{ targetIndex.dayLow }}</span>
+    <div class="summary-row">
+      <span class="key">Day Low</span>
+      <span claas="value">{{ toFixed_2(targetIndex.dayLow) }}</span>
     </div>
-    <div>
-      <span>52 Week High</span><span>{{ targetIndex.yearHigh }}</span>
+    <div class="summary-row">
+      <span class="key">52 Week High</span>
+      <span claas="value">{{ toFixed_2(targetIndex.yearHigh) }}</span>
     </div>
-    <div>
-      <span>52 Week low</span><span>{{ targetIndex.yearLow }}</span>
+    <div class="summary-row">
+      <span class="key">52 Week low</span>
+      <span claas="value">{{ toFixed_2(targetIndex.yearLow) }}</span>
     </div>
-    <div>
-      <span>Volume</span><span>{{ targetIndex.volume }}</span>
+    <div class="summary-row">
+      <span class="key">Volume</span>
+      <span claas="value">{{
+        targetIndex.volume <= 0 ? "-" : targetIndex.volume.toLocaleString()
+      }}</span>
     </div>
-    <div>
-      <span>Avg Volume</span><span>{{ targetIndex.avgVolume }}</span>
+    <div class="summary-row">
+      <span class="key">Avg Volume</span>
+      <span claas="value">{{
+        targetIndex.avgVolume <= 0
+          ? "-"
+          : targetIndex.avgVolume.toLocaleString()
+      }}</span>
     </div>
   </div>
 
-  <app-index-preview [showSlideOnly]="true"></app-index-preview>
+  <app-index-preview
+    [showSlideOnly]="true"
+    [targetIndexSymbol]="symbol"
+  ></app-index-preview>
 </main>

@@ -1,10 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
 import produce from "immer";
-import { ListTypes } from "../../shared/preview-list/preview-list-models";
+import { ListTypes } from "src/app/preview-list/preview-list-models";
 
 import {
   Response_companyProfile,
-  Response_priceChangePercentage,
+  Response_allChangePercentage,
 } from "../stock-models";
 
 import * as actions from "./stock.actions";
@@ -19,7 +19,7 @@ export interface StockState {
   previousChangePercentage: number;
   currentTimeRange: string;
   companyProfile: Response_companyProfile | null;
-  allChangePercentage: Response_priceChangePercentage | null;
+  allChangePercentage: Response_allChangePercentage | null;
   stockListOption: ListTypes;
 }
 
@@ -56,7 +56,7 @@ export const stockReducer = createReducer(
     })
   ),
 
-  on(actions.setPriceChangePercentage, (state, { changePercentage }) =>
+  on(actions.setAllChangePercentage, (state, { changePercentage }) =>
     produce(state, (draft) => {
       draft.allChangePercentage = changePercentage;
       draft.currentChangePercentage = changePercentage["1D"];

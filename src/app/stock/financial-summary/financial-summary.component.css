@@ -13,6 +13,7 @@ main {
 }
 
 .container-left {
+  /* width: 100%; */
   width: 75%;
   display: flex;
   flex-flow: column nowrap;
@@ -40,9 +41,9 @@ main {
 }
 
 .summary {
-  margin: 40px auto;
-  max-height: 310px;
-  width: 90%;
+  margin: 30px 0;
+  max-height: 320px;
+  width: 98%;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
@@ -51,8 +52,13 @@ main {
 .cell {
   height: 50px;
   width: 33.33%;
-  border-bottom: blue solid 1px;
-  border-right: blue solid 1px;
+  border-bottom: var(--main-600) solid 2px;
+  border-right: var(--main-600) solid 2px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
 }
 .cell:nth-child(13),
 .cell:nth-child(14),
@@ -61,6 +67,16 @@ main {
 .cell:nth-child(17),
 .cell:nth-child(18) {
   border-right: none;
+}
+.cell span {
+  padding: 0 16px;
+}
+.cell span:first-child {
+  color: rgb(82, 82, 82);
+}
+.cell span:last-child {
+  font-weight: bold;
+  text-align: right;
 }
 
 .chart-group {
@@ -85,7 +101,7 @@ main {
     width: 90%;
   }
   .summary {
-    max-height: 460px;
+    max-height: 490px;
   }
   .cell {
     width: 50%;

@@ -3,6 +3,7 @@ main {
 }
 
 .wrapper {
+  position: relative;
   width: 100%;
   padding: 6px 0px;
   display: grid;
@@ -10,6 +11,7 @@ main {
   grid-gap: 16px;
   font-size: 16px;
   cursor: pointer;
+  overflow: hidden;
 }
 .symbol {
   font-weight: bold;
@@ -40,25 +42,31 @@ main {
   align-items: center;
 }
 
-.wrapper::before {
-  content: "";
+.highlight {
   position: absolute;
-  margin-top: 22px;
-  width: 100%;
-  height: 6px;
+  min-width: 100%;
+  min-height: 6px;
   background: linear-gradient(
       to right,
       var(--main-400) 0%,
       rgba(0, 0, 0, 0) 100%
     )
     no-repeat;
-  z-index: 0;
   left: -101%;
+  top: 70%;
   transition: all 0.3s;
 }
-.wrapper:hover::before {
+
+.wrapper:hover .highlight {
   transform: translateX(101%);
   transition: all 0.3s;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1350px) {
+  .wrapper {
+    grid-template-columns: 54px 84px 54px;
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -73,9 +81,9 @@ main {
 
 @media screen and (max-width: 930px) {
   .wrapper {
-    grid-template-columns: min(64px, 8vw) min(94px, 12vw);
+    grid-template-columns: min(64px, 8vw) min(94px, 15vw);
     grid-gap: 12px;
-    font-size: min(16px, 2.5vw);
+    font-size: min(14px, 2.8vw);
   }
   .price {
     display: none;

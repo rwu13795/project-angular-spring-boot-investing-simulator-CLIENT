@@ -109,7 +109,7 @@ export interface Response_companyProfile {
   isFund: boolean;
 }
 
-export interface Response_priceChangePercentage {
+export interface Response_allChangePercentage {
   // symbol: string;
   "1D": number;
   "5D": number;
@@ -141,3 +141,10 @@ export type CustomTimeRange =
   | "30min"
   | "1hour"
   | "4hour";
+
+export enum StockMenu {
+  summary = "summary",
+  statement = "statement",
+  chart = "chart",
+  profile = "profile",
+}

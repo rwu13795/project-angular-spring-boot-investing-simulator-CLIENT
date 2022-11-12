@@ -10,29 +10,31 @@ import {
   Subscription,
   take,
 } from "rxjs";
+import { AppState } from "src/app/ngrx-store/app.reducer";
+import { StockChartService } from "../stock-chart/stock-chart.service";
 import { setCurrentSymbol } from "../stock-state/stock.actions";
 import { selectCompanyProfile } from "../stock-state/stock.selectors";
 import { StockService } from "../stock.service";
 
 interface FinancialSummary {
   symbol: string;
-  price: number;
-  beta: number;
-  volumeAvg: number;
-  marketCap: number;
-  outstandingShares: number;
-  open: number;
-  previousClose: number;
-  dayLow: number;
-  dayHigh: number;
+  price: string;
+  beta: string;
+  volumeAvg: string;
+  marketCap: string;
+  outstandingShares: string;
+  open: string;
+  previousClose: string;
+  dayLow: string;
+  dayHigh: string;
   range: string;
-  EPS: number;
-  ROE: number;
-  ROA: number;
-  operatingMargin: number;
-  debtEquity: number;
-  pe: number;
-  pb: number;
+  EPS: string;
+  ROE: string;
+  ROA: string;
+  operatingMargin: string;
+  debtEquity: string;
+  pe: string;
+  pb: string;
 }
 
 @Component({
@@ -51,8 +53,9 @@ export class FinancialSummaryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private stockService: StockService,
-    private store: Store,
-    private breakpointObserver: BreakpointObserver
+    private store: Store<AppState>,
+    private breakpointObserver: BreakpointObserver,
+    private stockChartService: StockChartService
   ) {}
 
   ngOnInit(): void {
@@ -97,23 +100,33 @@ export class FinancialSummaryComponent implements OnInit {
                 // use [realTimePrice], and [financialRatio] to destructure
                 this.financialSummary = {
                   symbol: realTimePrice.symbol,
-                  price: realTimePrice.price,
-                  beta: profile.beta,
-                  volumeAvg: realTimePrice.avgVolume,
-                  marketCap: realTimePrice.marketCap,
-                  outstandingShares: realTimePrice.sharesOutstanding,
-                  open: realTimePrice.open,
-                  previousClose: realTimePrice.previousClose,
-                  dayLow: realTimePrice.dayLow,
-                  dayHigh: realTimePrice.dayHigh,
+                  price: realTimePrice.price.toFixed(2),
+                  beta: profile.beta.toFixed(2),
+                  volumeAvg: this.stockChartService.toSignificantDigit(
+                    realTimePrice.avgVolume
+                  ),
+                  marketCap: this.stockChartService.toSignificantDigit(
+                    realTimePrice.marketCap
+                  ),
+                  outstandingShares: this.stockChartService.toSignificantDigit(
+                    realTimePrice.sharesOutstanding
+                  ),
+                  open: realTimePrice.open.toFixed(2),
+                  previousClose: realTimePrice.previousClose.toFixed(2),
+                  dayLow: realTimePrice.dayLow.toFixed(2),
+                  dayHigh: realTimePrice.dayHigh.toFixed(2),
                   range: profile.range,
-                  EPS: realTimePrice.eps,
-                  ROE: financialRatio.returnOnEquityTTM,
-                  ROA: financialRatio.returnOnAssetsTTM,
-                  operatingMargin: financialRatio.operatingProfitMarginTTM,
-                  debtEquity: financialRatio.debtEquityRatioTTM,
-                  pe: financialRatio.peRatioTTM,
-                  pb: financialRatio.priceToBookRatioTTM,
+                  EPS: realTimePrice.eps.toFixed(2),
+                  ROE: (100 * financialRatio.returnOnEquityTTM).toFixed(2),
+                  ROA: (100 * financialRatio.returnOnAssetsTTM).toFixed(2),
+                  operatingMargin: (
+                    100 * financialRatio.operatingProfitMarginTTM
+                  ).toFixed(2),
+                  debtEquity: (100 * financialRatio.debtEquityRatioTTM).toFixed(
+                    2
+                  ),
+                  pe: financialRatio.peRatioTTM.toFixed(2),
+                  pb: financialRatio.priceToBookRatioTTM.toFixed(2),
                 };
               })
             )

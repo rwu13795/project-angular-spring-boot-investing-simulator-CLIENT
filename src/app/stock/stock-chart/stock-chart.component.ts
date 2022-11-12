@@ -1,10 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
-import {
-  setCurrentSymbol,
-  setCurrentTimeRange,
-} from "../stock-state/stock.actions";
+import { AppState } from "src/app/ngrx-store/app.reducer";
+import { setCurrentTimeRange } from "../stock-state/stock.actions";
 
 @Component({
   selector: "app-stock-chart",
@@ -15,7 +13,7 @@ export class StockChartComponent implements OnInit {
   public option: string = "1D";
   public symbol: string = "";
 
-  constructor(private route: ActivatedRoute, private store: Store) {}
+  constructor(private route: ActivatedRoute, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {

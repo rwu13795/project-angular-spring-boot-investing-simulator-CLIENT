@@ -16,11 +16,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.breakpointObserver
       .observe(["(min-width: 1200px)"])
       .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.isLargeScreen = true;
-        } else {
-          this.isLargeScreen = false;
-        }
+        if (state.matches) this.isLargeScreen = true;
+        else this.isLargeScreen = false;
       });
   }
 

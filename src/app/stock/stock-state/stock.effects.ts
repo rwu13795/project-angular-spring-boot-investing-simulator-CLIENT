@@ -9,7 +9,7 @@ import { map, catchError, switchMap, of, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
   Response_companyProfile,
-  Response_priceChangePercentage,
+  Response_allChangePercentage,
 } from "../stock-models";
 
 import * as actions from "./stock.actions";
@@ -48,22 +48,22 @@ export class StockEffects {
     )
   );
 
-  public fetchPriceChangePercentage = createEffect(() =>
+  public fetchAllChangePercentage = createEffect(() =>
     this.actions$.pipe(
-      ofType(actions.fetchPriceChangePercentage),
+      ofType(actions.fetchAllChangePercentage),
       switchMap(({ symbol }) => {
         const params = new HttpParams({
           fromObject: { symbol },
         });
 
         return this.http
-          .get<Response_priceChangePercentage[]>(
+          .get<Response_allChangePercentage[]>(
             `${this.SERVER_URL}/stock/price/price-change`,
             { params }
           )
           .pipe(
             map((data) => {
-              return actions.setPriceChangePercentage({
+              return actions.setAllChangePercentage({
                 changePercentage: data[0],
               });
             })

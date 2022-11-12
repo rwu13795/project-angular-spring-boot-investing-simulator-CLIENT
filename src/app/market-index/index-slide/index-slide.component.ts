@@ -20,15 +20,19 @@ export class IndexSlideComponent implements OnInit, OnChanges {
   @ViewChild("slideRef") slideRef?: ElementRef<HTMLDivElement>;
   @Input() indices: RealTimeIndex[] = [];
   @Input() isPreview: boolean = true;
-
-  public targetSymbol: string = "^DJI";
+  @Input() targetIndexSymbol: string = "^DJI";
 
   constructor(
     private marketIndexService: MarketIndexService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.marketIndexService.targetIndexSymbol.subscribe((symbol) => {
+    //   console.log("new symbol-------", symbol);
+    //   this.targetSymbol = symbol;
+    // });
+  }
   ngOnChanges(changes: SimpleChanges): void {}
 
   scrollHorizontally(direction: string) {
@@ -49,7 +53,7 @@ export class IndexSlideComponent implements OnInit, OnChanges {
   }
 
   onSelectIndex(symbol: string, name: string) {
-    this.targetSymbol = symbol;
+    this.targetIndexSymbol = symbol;
     this.marketIndexService.targetIndexSymbol.emit(symbol);
     this.marketIndexService.targetIndexName.emit(name);
 

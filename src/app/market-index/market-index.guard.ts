@@ -6,8 +6,11 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from "@angular/router";
+import { Store } from "@ngrx/store";
 import { map, Observable, take, tap } from "rxjs";
+import { AppState } from "../ngrx-store/app.reducer";
 import { Response_realTimePrice } from "../stock/stock-models";
+import { fetchAllChangePercentage } from "../stock/stock-state/stock.actions";
 import { StockService } from "../stock/stock.service";
 import { RealTimeIndex } from "./market-index-models";
 import { MarketIndexService } from "./market-index.service";
@@ -16,7 +19,8 @@ import { MarketIndexService } from "./market-index.service";
 export class MarketIndexGuard implements CanActivate {
   constructor(
     private marketIndexService: MarketIndexService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   canActivate(
@@ -44,6 +48,7 @@ export class MarketIndexGuard implements CanActivate {
           // if user enter any index directly, there won't any result for sure
           return this.router.createUrlTree([`/market-index`]);
         }
+        this.store.dispatch(fetchAllChangePercentage({ symbol: _symbol }));
         return true;
       })
     );

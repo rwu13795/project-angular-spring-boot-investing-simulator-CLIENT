@@ -13,7 +13,7 @@ import { Response_quoteShort } from "./stock-models";
 import {
   clearStockState,
   setCurrentSymbol,
-  fetchPriceChangePercentage,
+  fetchAllChangePercentage,
   fetchCompanyProfile,
 } from "./stock-state/stock.actions";
 import {
@@ -21,13 +21,14 @@ import {
   selectCompanyProfile,
 } from "./stock-state/stock.selectors";
 import { StockService } from "./stock.service";
+import { AppState } from "../ngrx-store/app.reducer";
 
 @Injectable({ providedIn: "root" })
 export class StockGuard implements CanActivate {
   constructor(
     private stockService: StockService,
     private router: Router,
-    private store: Store
+    private store: Store<AppState>
   ) {}
 
   canActivate(
@@ -67,7 +68,7 @@ export class StockGuard implements CanActivate {
         // If the symbol exists, then set the symbol in store
         this.store.dispatch(setCurrentSymbol({ symbol }));
         // get the price change percentage
-        this.store.dispatch(fetchPriceChangePercentage({ symbol }));
+        this.store.dispatch(fetchAllChangePercentage({ symbol }));
         // fetch the company profile only if it is not in the store
         this.store
           .select(selectCompanyProfile)

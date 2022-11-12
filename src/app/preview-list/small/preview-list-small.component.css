@@ -6,7 +6,18 @@ main {
   max-width: 300px;
 }
 
+.list-container {
+  max-width: 300px;
+}
+.list-peer-container {
+  max-width: 300px;
+}
+
 .list {
+  margin-bottom: 34px;
+}
+
+.list-peer {
   margin-bottom: 34px;
 }
 
@@ -38,9 +49,19 @@ main {
   font-weight: bold;
   margin-bottom: 16px;
 }
+.break {
+  display: none;
+}
+.title {
+  display: none;
+}
 
 @media screen and (max-width: 1200px) {
   main {
+    width: 100%;
+    max-width: 100%;
+  }
+  .list-container {
     width: 100%;
     max-width: 100%;
     display: grid;
@@ -49,12 +70,35 @@ main {
     margin-bottom: 50px;
   }
   .list {
-    padding: 0 20px;
+    padding: 0 8px 0 18px;
     border-right: solid 2px var(--main-600);
     margin-bottom: 0;
   }
   .list:last-child {
     border-right: none;
+  }
+  .list-peer-container {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  .list-peer {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    max-height: 360px;
+  }
+  .header-no-pointer {
+    display: none;
+  }
+  .break {
+    display: block;
+  }
+  .title {
+    display: block;
   }
 }
 

@@ -2,11 +2,12 @@
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
 .indices-slide {
-  width: 90%;
+  width: 92%;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;

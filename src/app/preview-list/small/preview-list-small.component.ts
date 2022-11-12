@@ -10,6 +10,7 @@ import {
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { observable, Subscription } from "rxjs";
+import { AppState } from "src/app/ngrx-store/app.reducer";
 import { Response_realTimePrice } from "src/app/stock/stock-models";
 import { setStockListOption } from "src/app/stock/stock-state/stock.actions";
 import { ListTypes, StockPerformanceLists } from "../preview-list-models";
@@ -29,7 +30,7 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private previewListService: PreviewListService,
-    private store: Store,
+    private store: Store<AppState>,
     private router: Router
   ) {}
 

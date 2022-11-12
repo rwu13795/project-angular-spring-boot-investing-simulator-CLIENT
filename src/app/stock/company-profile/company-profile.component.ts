@@ -2,6 +2,7 @@ import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
+import { AppState } from "src/app/ngrx-store/app.reducer";
 import { selectCompanyProfile } from "../stock-state/stock.selectors";
 
 @Component({
@@ -15,7 +16,7 @@ export class CompanyProfileComponent implements OnInit {
   public isLargeScreen?: boolean;
 
   constructor(
-    private store: Store,
+    private store: Store<AppState>,
     private route: ActivatedRoute,
     private breakpointObserver: BreakpointObserver
   ) {}

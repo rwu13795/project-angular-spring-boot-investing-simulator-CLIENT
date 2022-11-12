@@ -1,8 +1,9 @@
 import { createAction, props } from "@ngrx/store";
-import { ListTypes } from "../../shared/preview-list/preview-list-models";
+import { ListTypes } from "src/app/preview-list/preview-list-models";
+
 import {
   Response_companyProfile,
-  Response_priceChangePercentage,
+  Response_allChangePercentage,
 } from "../stock-models";
 
 export const setCurrentSymbol = createAction(
@@ -20,14 +21,14 @@ export const setCompanyProfile = createAction(
   props<{ profile: Response_companyProfile }>()
 );
 
-export const fetchPriceChangePercentage = createAction(
-  "[Stock] Fetch Price Change Percentage",
+export const fetchAllChangePercentage = createAction(
+  "[Stock] Fetch All Change Percentage",
   props<{ symbol: string }>()
 );
 
-export const setPriceChangePercentage = createAction(
-  "[Stock] Set Price Change Percentage",
-  props<{ changePercentage: Response_priceChangePercentage }>()
+export const setAllChangePercentage = createAction(
+  "[Stock] Set All Change Percentage",
+  props<{ changePercentage: Response_allChangePercentage }>()
 );
 
 export const setCurrentPrice = createAction(

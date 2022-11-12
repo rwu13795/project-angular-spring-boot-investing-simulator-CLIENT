@@ -1,0 +1,62 @@
+.wrapper {
+  /* 
+when the parent element has "position: relative", the children with
+"position: absolute" will anchor on the parent, NOT the window
+
+I stack the "front" and "shadow" inside this wrapper to create the shadow effect
+while hovering
+
+Also I can change the width, height and etc using the "inputs" 
+*/
+  position: relative;
+  cursor: pointer;
+  min-width: 20px; /* default size */
+  min-height: 20px; /* default size */
+  color: transparent;
+  border: solid 2px transparent;
+}
+
+.front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  color: black;
+  border-radius: 4px;
+  border: solid 2px var(--main-700);
+  background-color: var(--main-100);
+  transition: all 0.3s;
+  cursor: pointer;
+  min-width: 100%; /* the children should just use the parent wrapper's size */
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shadow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  border-radius: 4px;
+  border: solid 2px var(--main-900);
+  color: var(--main-900);
+  background-color: var(--main-900);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.wrapper:hover .front {
+  transform: translateX(-4px) translateY(-4px);
+  transition: all 0.3s;
+}
+.wrapper:active .front {
+  background-color: var(--main-600);
+  transform: translateX(0px) translateY(0px);
+  transition: all 0.1s;
+}
+
+.active {
+  background-color: var(--main-600);
+}
