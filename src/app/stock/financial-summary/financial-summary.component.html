@@ -1,98 +1,90 @@
 <main>
-  <div class="container-left">
-    <div class="summary">
-      <div class="cell">
-        <span>Symbol</span>
-        <span>{{ financialSummary?.symbol }}</span>
-      </div>
-      <div class="cell">
-        <span>Price</span>
-        <span>{{ financialSummary?.price }}</span>
-      </div>
-      <div class="cell">
-        <span>Beta</span>
-        <span>{{ financialSummary?.beta }}</span>
-      </div>
-      <div class="cell">
-        <span>Volume Avg</span>
-        <span>{{ financialSummary?.volumeAvg }}</span>
-      </div>
-      <div class="cell">
-        <span>Market Cap</span>
-        <span>{{ financialSummary?.marketCap }}</span>
-      </div>
-      <div class="cell">
-        <span>Outstanding Shares</span>
-        <span>{{ financialSummary?.outstandingShares }}</span>
-      </div>
-      <div class="cell">
-        <span>Open</span>
-        <span>{{ financialSummary?.open }}</span>
-      </div>
-      <div class="cell">
-        <span>Previous Close</span>
-        <span>{{ financialSummary?.previousClose }}</span>
-      </div>
-      <div class="cell">
-        <span>Day Low</span>
-        <span>{{ financialSummary?.dayLow }}</span>
-      </div>
-      <div class="cell">
-        <span>Day High</span>
-        <span>{{ financialSummary?.dayHigh }}</span>
-      </div>
-      <div class="cell">
-        <span>52 Week Range</span>
-        <span>{{ financialSummary?.range }}</span>
-      </div>
-      <div class="cell">
-        <span>EPS</span>
-        <span>{{ financialSummary?.EPS }}</span>
-      </div>
-      <div class="cell">
-        <span>ROE</span>
-        <span>{{ financialSummary?.ROE }}%</span>
-      </div>
-      <div class="cell">
-        <span>ROA</span>
-        <span>{{ financialSummary?.ROA }}%</span>
-      </div>
-      <div class="cell">
-        <span>Operating Margin</span>
-        <span>{{ financialSummary?.operatingMargin }}%</span>
-      </div>
-      <div class="cell">
-        <span>Debt / Equity </span>
-        <span>{{ financialSummary?.debtEquity }}%</span>
-      </div>
-      <div class="cell">
-        <span>P/E</span>
-        <span>{{ financialSummary?.pe }}</span>
-      </div>
-      <div class="cell">
-        <span>P/B</span>
-        <span>{{ financialSummary?.pb }}</span>
-      </div>
+  <div class="summary">
+    <div class="cell">
+      <span>Symbol</span>
+      <span>{{ financialSummary?.symbol }}</span>
     </div>
-
-    <div class="chart-group">
-      <div class="chart-wrapper">
-        <app-area-chart [symbol]="symbol"></app-area-chart>
-      </div>
-      <div class="chart-wrapper">
-        <app-revenue-chart [symbol]="symbol"></app-revenue-chart>
-      </div>
+    <div class="cell">
+      <span>Price</span>
+      <span>{{ financialSummary?.price }}</span>
     </div>
-
-    <div class="preview-list" *ngIf="isLargeScreen === false">
-      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    <div class="cell">
+      <span>Beta</span>
+      <span>{{ financialSummary?.beta }}</span>
     </div>
-    <app-news [symbol]="symbol"></app-news>
-  </div>
-
-  <div class="container-right" *ngIf="isLargeScreen === true">
-    <div class="preview-list-large-screen">
-      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    <div class="cell">
+      <span>Volume Avg</span>
+      <span>{{ financialSummary?.volumeAvg }}</span>
+    </div>
+    <div class="cell">
+      <span>Market Cap</span>
+      <span>{{ financialSummary?.marketCap }}</span>
+    </div>
+    <div class="cell">
+      <span>Outstanding Shares</span>
+      <span>{{ financialSummary?.outstandingShares }}</span>
+    </div>
+    <div class="cell">
+      <span>Open</span>
+      <span>{{ financialSummary?.open }}</span>
+    </div>
+    <div class="cell">
+      <span>Previous Close</span>
+      <span>{{ financialSummary?.previousClose }}</span>
+    </div>
+    <div class="cell">
+      <span>Day Low</span>
+      <span>{{ financialSummary?.dayLow }}</span>
+    </div>
+    <div class="cell">
+      <span>Day High</span>
+      <span>{{ financialSummary?.dayHigh }}</span>
+    </div>
+    <div class="cell">
+      <span>52 Week Range</span>
+      <span>{{ financialSummary?.range }}</span>
+    </div>
+    <div class="cell">
+      <span>EPS</span>
+      <span>{{ financialSummary?.EPS }}</span>
+    </div>
+    <div class="cell">
+      <span>ROE</span>
+      <span>{{ financialSummary?.ROE }}%</span>
+    </div>
+    <div class="cell">
+      <span>ROA</span>
+      <span>{{ financialSummary?.ROA }}%</span>
+    </div>
+    <div class="cell">
+      <span>Operating Margin</span>
+      <span>{{ financialSummary?.operatingMargin }}%</span>
+    </div>
+    <div class="cell">
+      <span>Debt / Equity </span>
+      <span>{{ financialSummary?.debtEquity }}%</span>
+    </div>
+    <div class="cell">
+      <span>P/E</span>
+      <span>{{ financialSummary?.pe }}</span>
+    </div>
+    <div class="cell">
+      <span>P/B</span>
+      <span>{{ financialSummary?.pb }}</span>
     </div>
   </div>
+
+  <div class="chart-group">
+    <div class="chart-wrapper">
+      <app-area-chart [symbol]="symbol"></app-area-chart>
+    </div>
+    <div class="chart-wrapper">
+      <app-revenue-chart [symbol]="symbol"></app-revenue-chart>
+    </div>
+  </div>
+
+  <div class="preview-list" *ngIf="isLargeScreen === false">
+    <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+  </div>
+  <app-news [symbol]="symbol"></app-news>
 </main>

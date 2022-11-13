@@ -1,35 +1,43 @@
 <main>
-  <div class="container-left">
-    <div class="menu-wrapper">
-      <div (click)="onSelectStatement('income-statement')">
-        Income Statement
-      </div>
-      <div>|</div>
-      <div (click)="onSelectStatement('balance-sheet-statement')">
-        Balance Sheet
-      </div>
-      <div>|</div>
-      <div (click)="onSelectStatement('cash-flow-statement')">Cash Flow</div>
+  <div class="menu-wrapper">
+    <div
+      class="menu"
+      [ngClass]="{ active: type === FinancialStatement.IS }"
+      (click)="onSelectStatement(FinancialStatement.IS)"
+    >
+      Income Statement
     </div>
-    <app-income-statement
-      [symbol]="symbol"
-      *ngIf="type === 'income-statement'"
-    ></app-income-statement>
-    <app-balance-sheet
-      [symbol]="symbol"
-      *ngIf="type === 'balance-sheet-statement'"
-    ></app-balance-sheet>
-    <app-cash-flow
-      [symbol]="symbol"
-      *ngIf="type === 'cash-flow-statement'"
-    ></app-cash-flow>
-
-    <div class="preview-list" *ngIf="isLargeScreen === false">
-      <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
+    <div>|</div>
+    <div
+      class="menu"
+      [ngClass]="{ active: type === FinancialStatement.BS }"
+      (click)="onSelectStatement(FinancialStatement.BS)"
+    >
+      Balance Sheet
+    </div>
+    <div>|</div>
+    <div
+      class="menu"
+      [ngClass]="{ active: type === FinancialStatement.CF }"
+      (click)="onSelectStatement(FinancialStatement.CF)"
+    >
+      Cash Flow
     </div>
   </div>
+  <app-income-statement
+    [symbol]="symbol"
+    *ngIf="type === FinancialStatement.IS"
+  ></app-income-statement>
+  <app-balance-sheet
+    [symbol]="symbol"
+    *ngIf="type === FinancialStatement.BS"
+  ></app-balance-sheet>
+  <app-cash-flow
+    [symbol]="symbol"
+    *ngIf="type === FinancialStatement.CF"
+  ></app-cash-flow>
 
-  <div class="container-right" *ngIf="isLargeScreen === true">
+  <div class="preview-list" *ngIf="isLargeScreen === false">
     <app-preview-list-small [symbol]="symbol"></app-preview-list-small>
   </div>
 </main>

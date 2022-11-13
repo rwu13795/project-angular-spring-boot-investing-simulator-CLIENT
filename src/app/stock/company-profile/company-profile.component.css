@@ -1,45 +1,55 @@
 :host {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  margin-top: 30px;
 }
 
 main {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.container-left {
-  width: 75%;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  border-right: solid red 2px;
 }
 
-.container-right {
-  height: 100%;
-  width: 22%;
+.title {
+  width: 100%;
+  text-align: left;
 }
 
 .preview-list {
   display: none;
 }
 
+.profile {
+  width: 90%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 18px;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.row-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+}
+.column-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+}
+.column-wrapper span {
+  font-weight: bold;
+}
+
 @media screen and (max-width: 1200px) {
-  .container-left {
-    border-right: none;
-    width: 94%;
-  }
-
-  .container-right {
-    display: none;
-  }
-
   .preview-list {
     width: 100%;
     display: flex;

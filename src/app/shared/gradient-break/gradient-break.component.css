@@ -1,3 +1,7 @@
+:host {
+  width: 100%;
+}
+
 .gradient-break-100 {
   min-height: 1px;
   background: linear-gradient(

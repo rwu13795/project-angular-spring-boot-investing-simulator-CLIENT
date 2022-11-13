@@ -18,8 +18,6 @@ main {
 
 .content-container {
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -29,7 +27,7 @@ main {
 
 .container-left {
   width: 75%;
-  height: 2000px;
+  min-height: 70vh;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
@@ -37,16 +35,32 @@ main {
   border-right: solid 2px var(--main-600);
   padding-right: 16px;
 }
+.container-left-chart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
 .container-right {
-  position: relative;
-  height: 100vh;
   width: 22%;
-  min-width: 22%;
 }
 
 .preview-list-large-screen {
   position: fixed;
   top: 330px;
   width: 22%;
+}
+
+@media screen and (max-width: 1200px) {
+  .container-left {
+    width: 100%;
+    border: none;
+    padding-right: 0;
+  }
+  .container-right {
+    width: 0%;
+  }
+  .preview-list-large-screen {
+    display: none;
+  }
 }

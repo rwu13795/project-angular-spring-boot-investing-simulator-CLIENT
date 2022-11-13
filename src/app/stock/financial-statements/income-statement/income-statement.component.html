@@ -1,7 +1,7 @@
 <main>
-  <h3>Income Statement</h3>
   <div>Currency is in USD</div>
-  <div class="table-wrapper">
+  <div>All numbers are in thousands except *</div>
+  <div class="table-wrapper" id="custom_scroll_x">
     <table *ngIf="incomeStatements.length > 0">
       <thead>
         <tr>
@@ -31,7 +31,7 @@
           </td>
         </tr>
         <tr>
-          <th class="table-head">
+          <th class="table-head indent">
             Selling, General and Administrative Expenses
           </th>
           <td *ngFor="let elem of incomeStatements">
@@ -39,13 +39,13 @@
           </td>
         </tr>
         <tr>
-          <th class="table-head">Research and Development Expenses</th>
+          <th class="table-head indent">Research and Development Expenses</th>
           <td *ngFor="let elem of incomeStatements">
             {{ elem.researchAndDevelopmentExpenses }}
           </td>
         </tr>
         <tr>
-          <th class="table-head">Other Expenses</th>
+          <th class="table-head indent">Other Expenses</th>
           <td *ngFor="let elem of incomeStatements">
             {{ elem.otherExpenses }}
           </td>
@@ -85,11 +85,11 @@
           <td *ngFor="let elem of incomeStatements">{{ elem.netIncome }}</td>
         </tr>
         <tr>
-          <th class="table-head">Earnings Per Share Basic</th>
+          <th class="table-head">Earnings Per Share Basic *</th>
           <td *ngFor="let elem of incomeStatements">{{ elem.eps }}</td>
         </tr>
         <tr>
-          <th class="table-head">Earnings Per Share Diluted</th>
+          <th class="table-head">Earnings Per Share Diluted *</th>
           <td *ngFor="let elem of incomeStatements">{{ elem.epsdiluted }}</td>
         </tr>
         <tr>
@@ -107,17 +107,17 @@
           </td>
         </tr>
         <tr>
-          <th class="table-head">Gross Margin</th>
+          <th class="table-head">Gross Margin *</th>
           <td *ngFor="let elem of incomeStatements">
             {{ elem.grossProfitRatio }}
           </td>
         </tr>
         <tr>
-          <th class="table-head">EBIT Margin</th>
+          <th class="table-head">EBIT Margin *</th>
           <td *ngFor="let elem of incomeStatements">{{ elem.ebitdaratio }}</td>
         </tr>
         <tr>
-          <th class="table-head">Profit Margin</th>
+          <th class="table-head">Profit Margin *</th>
           <td *ngFor="let elem of incomeStatements">
             {{ elem.netIncomeRatio }}
           </td>
@@ -127,7 +127,7 @@
           <td *ngFor="let elem of incomeStatements">{{ elem.ebitda }}</td>
         </tr>
         <tr>
-          <th class="table-head">Earnings Before Tax Margin</th>
+          <th class="table-head">Earnings Before Tax Margin *</th>
           <td *ngFor="let elem of incomeStatements">
             {{ elem.incomeBeforeTaxRatio }}
           </td>

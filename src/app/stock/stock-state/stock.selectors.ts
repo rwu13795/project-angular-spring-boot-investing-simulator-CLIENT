@@ -57,3 +57,10 @@ export const selectStockListOption = createSelector(
     return state.stockListOption;
   }
 );
+
+export const selectStockActiveMenu = createSelector(
+  selectStockState,
+  (state) => {
+    return state.stockActiveMenu;
+  }
+);

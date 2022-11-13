@@ -20,8 +20,8 @@ import { MarketIndexService } from "./market-index.service";
 export class MarketIndexComponent implements OnInit, OnDestroy {
   private fetchTargetIndex$?: Subscription;
   public symbol: string = "^DJI";
-  public dayOption: string = "1D";
   public targetIndex: RealTimeIndex | null = null;
+  public dayOption: string = "1D";
   public dayOptions = ["1D", "5D", "1M", "3M", "6M", "1Y", "5Y"];
   public isLargeScreen: boolean = true;
 

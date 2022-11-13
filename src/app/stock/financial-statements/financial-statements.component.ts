@@ -2,9 +2,15 @@ import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
+import { AppState } from "src/app/ngrx-store/app.reducer";
+import { StockMenu } from "../stock-models";
+import { setStockActiveMenu } from "../stock-state/stock.actions";
 
 import { StockService } from "../stock.service";
-import { FinancialStatementType } from "./financial-statements.models";
+import {
+  FinancialStatement,
+  FinancialStatementType,
+} from "./financial-statements.models";
 
 @Component({
   selector: "app-financial-statements",
@@ -13,12 +19,13 @@ import { FinancialStatementType } from "./financial-statements.models";
 })
 export class FinancialStatementsComponent implements OnInit {
   public symbol: string = "";
-  public type: FinancialStatementType = "income-statement";
+  public type: FinancialStatement = FinancialStatement.IS;
   public isLargeScreen?: boolean;
 
   constructor(
     private route: ActivatedRoute,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
@@ -29,16 +36,19 @@ export class FinancialStatementsComponent implements OnInit {
     this.breakpointObserver
       .observe(["(min-width: 1200px)"])
       .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.isLargeScreen = true;
-        } else {
-          this.isLargeScreen = false;
-        }
+        if (state.matches) this.isLargeScreen = true;
+        else this.isLargeScreen = false;
       });
+
+    this.store.dispatch(setStockActiveMenu({ menu: StockMenu.statement }));
   }
 
-  onSelectStatement(type: FinancialStatementType) {
+  onSelectStatement(type: FinancialStatement) {
     this.type = type;
+  }
+
+  get FinancialStatement() {
+    return FinancialStatement;
   }
 
   ngOnDestroy(): void {}

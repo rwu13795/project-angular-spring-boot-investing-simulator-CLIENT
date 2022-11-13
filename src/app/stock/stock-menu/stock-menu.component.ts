@@ -1,10 +1,19 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 
 import { AppState } from "src/app/ngrx-store/app.reducer";
-import { selectCurrentSymbol } from "../stock-state/stock.selectors";
+import {
+  selectCurrentSymbol,
+  selectStockActiveMenu,
+} from "../stock-state/stock.selectors";
+import { StockMenu } from "../stock-models";
 
 @Component({
   selector: "app-stock-menu",
@@ -12,8 +21,13 @@ import { selectCurrentSymbol } from "../stock-state/stock.selectors";
   styleUrls: ["./stock-menu.component.css"],
 })
 export class StockMenuComponent implements OnInit, OnDestroy {
+  @ViewChild("containerRef") containerRef?: ElementRef<HTMLDivElement>;
+  @ViewChild("borderRef") borderRef?: ElementRef<HTMLDivElement>;
+
   private symbol$?: Subscription;
+
   public symbol: string = "";
+  public activeMenu$ = this.store.select(selectStockActiveMenu);
 
   constructor(private store: Store<AppState>) {}
 
@@ -25,5 +39,30 @@ export class StockMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.symbol$) this.symbol$.unsubscribe();
+  }
+
+  transformOut() {
+    const container = this.containerRef?.nativeElement;
+
+    if (container) {
+      // menu.style.transform = "translateX(2000px)";
+      container.style.height = "0px";
+      container.style.opacity = "0";
+    }
+  }
+
+  transformIn() {
+    const container = this.containerRef?.nativeElement;
+
+    if (container) {
+      // container.style.transform = "translateX(0)";
+
+      container.style.height = " 110px";
+      container.style.opacity = "1";
+    }
+  }
+
+  get StockMenu() {
+    return StockMenu;
   }
 }

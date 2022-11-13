@@ -10,8 +10,9 @@ main {
   justify-content: center;
 }
 
-.button_groups {
+.buttons-group {
   display: flex;
   flex-flow: row nowrap;
-  float: right;
+  gap: 6px;
+  margin-bottom: 14px;
 }

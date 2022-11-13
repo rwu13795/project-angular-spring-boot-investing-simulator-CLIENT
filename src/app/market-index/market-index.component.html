@@ -5,22 +5,6 @@
       <div class="symbol">{{ targetIndex._symbol }}</div>
     </div>
 
-    <!-- <div class="price-wrapper">
-      <div class="price">{{ targetIndex.price.toLocaleString() }}</div>
-      <div
-        class="changes"
-        [ngClass]="targetIndex.change >= 0 ? 'positive' : 'negative'"
-      >
-        <div>
-          <span *ngIf="targetIndex.change >= 0">+</span
-          >{{ toFixed_2(targetIndex.change) }}
-        </div>
-        <div>
-          (<span *ngIf="targetIndex.change >= 0">+</span
-          >{{ toFixed_2(targetIndex.changesPercentage) }}%)
-        </div>
-      </div>
-    </div> -->
     <app-index-point></app-index-point>
   </div>
 

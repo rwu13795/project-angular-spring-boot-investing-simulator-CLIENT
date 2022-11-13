@@ -1,9 +1,15 @@
 :host {
   width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 96%;
 }
 
 .table-wrapper {
-  max-width: 96%;
+  max-width: 100%;
   overflow-x: auto;
 }
 
@@ -13,7 +19,7 @@
   z-index: 2;
   position: sticky;
   left: 0;
-  background-color: azure;
+  background-color: var(--main-100);
 }
 
 .table-head:first-child {
@@ -21,6 +27,28 @@
   border-top-left-radius: 7px;
 }
 
+thead tr th:nth-child(even) {
+  background-color: var(--color-light-grey);
+}
+tbody tr td:nth-child(even) {
+  background-color: var(--color-light-grey);
+}
+
+tr {
+  height: 40px;
+}
+th,
+td {
+  padding: 0 10px;
+}
+td {
+  text-align: center;
+}
+
 tbody tr:hover td {
-  background-color: aqua;
+  background-color: var(--main-200);
+}
+
+.indent {
+  padding-left: 30px;
 }

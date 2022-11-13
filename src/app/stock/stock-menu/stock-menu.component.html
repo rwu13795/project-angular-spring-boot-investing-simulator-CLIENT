@@ -1,19 +1,38 @@
 <main>
-  <div class="menu-wrapper" *ngIf="symbol !== ''">
-    <div class="menu-link" [routerLink]="['financial-summary', symbol]">
-      Financial Summary
+  <div class="menu-container" #containerRef>
+    <div class="menu-wrapper" *ngIf="symbol !== ''" #menuRef>
+      <div
+        class="menu-link"
+        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.summary }"
+        [routerLink]="['financial-summary', symbol]"
+      >
+        Financial Summary
+      </div>
+      <div
+        class="menu-link"
+        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.statement }"
+        [routerLink]="['financial-statements', symbol]"
+      >
+        Financial Statements
+      </div>
+      <div
+        div
+        class="menu-link"
+        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.chart }"
+        [routerLink]="['chart', symbol]"
+      >
+        Charts
+      </div>
+      <div
+        class="menu-link"
+        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.profile }"
+        [routerLink]="['company-profile', symbol]"
+      >
+        Company Profile
+      </div>
     </div>
-    <div class="menu-link" [routerLink]="['financial-statements', symbol]">
-      Financial Statements
-    </div>
-    <div div class="menu-link" [routerLink]="['chart', symbol]">Charts</div>
-    <div class="menu-link" [routerLink]="['company-profile', symbol]">
-      Company Profile
-    </div>
+    <div class="border-bot"></div>
   </div>
-  <app-gradient-break
-    [height]="8"
-    [marginBottom]="30"
-    [type]="2"
-  ></app-gradient-break>
+  <button (click)="transformOut()">Out</button>
+  <button (click)="transformIn()">In</button>
 </main>

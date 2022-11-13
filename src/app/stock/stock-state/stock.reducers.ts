@@ -5,6 +5,7 @@ import { ListTypes } from "src/app/preview-list/preview-list-models";
 import {
   Response_companyProfile,
   Response_allChangePercentage,
+  StockMenu,
 } from "../stock-models";
 
 import * as actions from "./stock.actions";
@@ -21,6 +22,7 @@ export interface StockState {
   companyProfile: Response_companyProfile | null;
   allChangePercentage: Response_allChangePercentage | null;
   stockListOption: ListTypes;
+  stockActiveMenu: StockMenu;
 }
 
 const initialState: StockState = {
@@ -35,6 +37,7 @@ const initialState: StockState = {
   companyProfile: null,
   allChangePercentage: null,
   stockListOption: ListTypes.actives,
+  stockActiveMenu: StockMenu.summary,
 };
 
 export const stockReducer = createReducer(
@@ -128,6 +131,12 @@ export const stockReducer = createReducer(
         draft.previousChangeInPrice = 0;
         draft.previousChangePercentage = 0;
       }
+    })
+  ),
+
+  on(actions.setStockActiveMenu, (state, { menu }) =>
+    produce(state, (draft) => {
+      draft.stockActiveMenu = menu;
     })
   )
 );

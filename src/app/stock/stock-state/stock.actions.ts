@@ -4,6 +4,7 @@ import { ListTypes } from "src/app/preview-list/preview-list-models";
 import {
   Response_companyProfile,
   Response_allChangePercentage,
+  StockMenu,
 } from "../stock-models";
 
 export const setCurrentSymbol = createAction(
@@ -56,4 +57,9 @@ export const setCurrentTimeRange = createAction(
 export const setStockListOption = createAction(
   "[Stock] Set Stock List Option",
   props<{ listType: ListTypes }>()
+);
+
+export const setStockActiveMenu = createAction(
+  "[Stock] Set Stock Active Menu",
+  props<{ menu: StockMenu }>()
 );

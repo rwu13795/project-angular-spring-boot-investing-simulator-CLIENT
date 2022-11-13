@@ -111,7 +111,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.data = data;
         this.realTimePrice = data.candleLine[data.candleLine.length - 1].y;
-        this.today = data.candles[0].x.toLocaleDateString();
+        this.today = data.candles[0].x.toDateString();
 
         console.log("-------this.today ", this.today);
 

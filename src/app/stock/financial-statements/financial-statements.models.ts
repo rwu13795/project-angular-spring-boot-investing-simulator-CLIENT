@@ -3,6 +3,12 @@ export type FinancialStatementType =
   | "balance-sheet-statement"
   | "cash-flow-statement";
 
+export enum FinancialStatement {
+  IS = "IS",
+  BS = "BS",
+  CF = "CF",
+}
+
 export interface Response_incomeStatement {
   date: string;
   symbol: string;

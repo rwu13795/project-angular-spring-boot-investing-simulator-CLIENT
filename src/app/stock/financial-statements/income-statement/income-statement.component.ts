@@ -26,7 +26,27 @@ export class IncomeStatementComponent implements OnInit, OnDestroy {
         this.incomeStatements = data;
         for (let elem of this.incomeStatements) {
           for (let [k, v] of Object.entries(elem)) {
-            elem[k] = v.toLocaleString();
+            switch (k) {
+              case "eps":
+              case "epsdiluted":
+              case "grossProfitRatio":
+              case "incomeBeforeTaxRatio":
+              case "ebitdaratio":
+              case "netIncomeRatio": {
+                elem[k] = parseFloat((+v).toFixed(3));
+                break;
+              }
+              case "calendarYear": {
+                break;
+              }
+              default: {
+                if (v === 0) {
+                  elem[k] = "-";
+                } else {
+                  elem[k] = (+v / 1000).toLocaleString();
+                }
+              }
+            }
           }
         }
       });

@@ -1,39 +1,13 @@
 :host {
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
 
 main {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.container-left {
-  /* width: 100%; */
-  width: 75%;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  border-right: solid 2px var(--main-600);
-  padding-right: 16px;
-}
-
-.container-right {
-  height: 100%;
-  width: 22%;
-}
-
-.preview-list-large-screen {
-  position: sticky;
-  height: 90vh;
-  top: 180px;
-  width: 96%;
-  overflow: auto;
 }
 
 .preview-list {
@@ -121,15 +95,6 @@ main {
 }
 
 @media screen and (max-width: 1200px) {
-  .container-left {
-    border-right: none;
-    width: 94%;
-  }
-
-  .container-right {
-    display: none;
-  }
-
   .preview-list {
     width: 100%;
     display: flex;

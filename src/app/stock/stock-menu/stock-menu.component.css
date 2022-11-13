@@ -1,30 +1,62 @@
 :host {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.menu-container {
+  height: 110px;
+  overflow: hidden;
+  transition: all 1s;
 }
 
 .menu-wrapper {
-  height: 60px;
+  /* height: 50px; */
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  font-size: 26px;
+  transition: all 1s;
 }
 
 .menu-link {
+  font-size: 26px;
+  height: 40px;
   padding: 6px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   transition: all 0.5s;
   cursor: pointer;
 }
 .menu-link:hover {
-  background-color: aquamarine;
+  background-color: var(--main-200);
   transition: all 0.5s;
 }
 
 .active {
-  background-color: aquamarine;
+  background: linear-gradient(
+    to top,
+    var(--main-500) 0%,
+    var(--main-200) 35%,
+    var(--main-100) 100%
+  );
+}
+
+.border-bot {
+  min-height: 4px;
+  width: 100%;
+  border-top: solid 4px var(--main-500);
+  border-bottom: solid 4px var(--main-500);
+  margin-bottom: 20px;
+  background-color: var(--main-200);
+}
+
+@media screen and (max-width: 1200px) {
+  .menu-link {
+    font-size: min(20px, 4vw);
+  }
 }

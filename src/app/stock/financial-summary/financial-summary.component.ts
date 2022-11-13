@@ -12,7 +12,11 @@ import {
 } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { StockChartService } from "../stock-chart/stock-chart.service";
-import { setCurrentSymbol } from "../stock-state/stock.actions";
+import { StockMenu } from "../stock-models";
+import {
+  setCurrentSymbol,
+  setStockActiveMenu,
+} from "../stock-state/stock.actions";
 import { selectCompanyProfile } from "../stock-state/stock.selectors";
 import { StockService } from "../stock.service";
 
@@ -73,6 +77,8 @@ export class FinancialSummaryComponent implements OnInit {
           this.isLargeScreen = false;
         }
       });
+
+    this.store.dispatch(setStockActiveMenu({ menu: StockMenu.summary }));
 
     // when the component is mounted, the profile might not be fetched yet,
     // so when I select the profile the first time, it might be null.

@@ -26,7 +26,12 @@ export class CashFlowComponent implements OnInit, OnDestroy {
         this.cashFlow = data;
         for (let elem of this.cashFlow) {
           for (let [k, v] of Object.entries(elem)) {
-            elem[k] = v.toLocaleString();
+            if (k === "calendarYear") continue;
+            if (v === 0) {
+              elem[k] = "-";
+            } else {
+              elem[k] = (+v / 1000).toLocaleString();
+            }
           }
         }
       });
