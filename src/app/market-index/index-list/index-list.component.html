@@ -13,11 +13,12 @@
       </div>
       <div [ngClass]="index.change >= 0 ? 'positive' : 'negative'" class="row">
         <div>
-          <span *ngIf="index.change >= 0">+</span>{{ toFixed_2(index.change) }}
+          <span *ngIf="index.change >= 0">+</span
+          >{{ toFixedLocale(index.change) }}
         </div>
         <div>
           (<span *ngIf="index.changesPercentage >= 0">+</span
-          >{{ toFixed_2(index.changesPercentage) }}%)
+          >{{ toFixedLocale(index.changesPercentage) }}%)
         </div>
       </div>
     </div>

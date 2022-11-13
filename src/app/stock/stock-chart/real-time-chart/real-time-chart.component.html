@@ -1,8 +1,5 @@
 <main>
-  <h2 *ngIf="isLoading">Loading...............</h2>
-  <h3 *ngIf="errorMessage">{{ errorMessage }}</h3>
-
-  <div>{{ today }}</div>
+  <div class="date">{{ today }}</div>
   <div class="chart-box">
     <div id="chart-candlestick" *ngIf="chartCandleOptions">
       <apx-chart
@@ -19,5 +16,8 @@
       ></apx-chart>
     </div>
   </div>
-  <button (click)="getRealTimePrice()">add new bar</button>
+
+  <div *ngIf="loading" class="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
 </main>

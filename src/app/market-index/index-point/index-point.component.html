@@ -1,33 +1,44 @@
 <main>
   <div class="digits-wrapper">
-    Point:
-
     <div *ngFor="let digit of point; index as i">
       <app-digit-cylinder
         [currentDigit]="digit"
         [previousDigit]="previousPoint[i]"
+        [fontSize]="isLargeScreen ? 36 : 28"
+        [bold]="true"
       ></app-digit-cylinder>
     </div>
   </div>
-  <div class="digits-wrapper">
-    Changes:
+  <div
+    class="digits-wrapper"
+    [ngClass]="changeNumber >= 0 ? 'positive' : 'negative'"
+  >
+    <span class="mark">{{ changeNumber >= 0 ? "+" : "-" }}</span>
     <div *ngFor="let digit of changeInPoint; index as i">
       <app-digit-cylinder
         [currentDigit]="digit"
         [previousDigit]="previousChangeInPoint[i]"
         [timeRange]="timeRange | async"
+        [fontSize]="isLargeScreen ? 24 : 18"
+        [bold]="true"
       ></app-digit-cylinder>
     </div>
   </div>
 
-  <div class="digits-wrapper">
+  <div
+    class="digits-wrapper"
+    [ngClass]="changeNumber >= 0 ? 'positive' : 'negative'"
+  >
+    <span class="mark">({{ changeNumber >= 0 ? "+" : "-" }}</span>
     <div *ngFor="let digit of changePercentage; index as i">
       <app-digit-cylinder
         [currentDigit]="digit"
         [previousDigit]="previousChangePercentage[i]"
         [timeRange]="timeRange | async"
+        [fontSize]="isLargeScreen ? 24 : 18"
+        [bold]="true"
       ></app-digit-cylinder>
     </div>
-    %
+    <span class="mark">%)</span>
   </div>
 </main>

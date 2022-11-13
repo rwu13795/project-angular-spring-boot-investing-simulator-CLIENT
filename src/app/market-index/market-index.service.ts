@@ -130,4 +130,11 @@ export class MarketIndexService {
     }
     return "";
   }
+
+  public toFixedLocale(number: number, min: number = 2, max: number = 2) {
+    return number.toLocaleString(undefined, {
+      minimumFractionDigits: min,
+      maximumFractionDigits: max,
+    });
+  }
 }

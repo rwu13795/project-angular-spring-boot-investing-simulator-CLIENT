@@ -4,6 +4,7 @@
 
 main {
   max-width: 300px;
+  position: relative;
 }
 
 .list-container {
@@ -54,6 +55,12 @@ main {
 }
 .title {
   display: none;
+}
+
+.loading {
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 40px);
 }
 
 @media screen and (max-width: 1200px) {

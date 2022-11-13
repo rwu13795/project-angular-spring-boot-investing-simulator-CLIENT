@@ -1,4 +1,8 @@
 <main>
   <h1>Nothing to see here, get lost!</h1>
   <a [routerLink]="'/'">Back to home page</a>
+
+  <div *ngIf="symbol">
+    Could not find any data for this symbol: "{{ symbol }}"
+  </div>
 </main>

@@ -25,8 +25,10 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
   @Input() symbol?: string;
   private previewList$?: Subscription;
   private peerList$?: Subscription;
+
   public previewList?: StockPerformanceLists;
   public peerList?: Response_realTimePrice[];
+  public loading: boolean = true;
 
   constructor(
     private previewListService: PreviewListService,
@@ -40,18 +42,7 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
     if (this.symbol && this.symbol !== "all") {
       this.fetchPeerStockList(this.symbol);
     } else {
-      this.previewList = this.previewListService.getPreviewList();
-      if (!this.previewList) {
-        this.previewList$ = this.previewListService
-          .fetchStockPerformanceList()
-          .subscribe({
-            complete: () => {
-              this.previewList = this.previewListService.getPreviewList();
-            },
-          });
-      } else {
-        console.log("found saved lists");
-      }
+      this.fetchPreviewList();
     }
   }
 
@@ -69,14 +60,32 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
     if (this.peerList$) this.peerList$.unsubscribe();
   }
 
+  private fetchPreviewList() {
+    this.previewList = this.previewListService.getPreviewList();
+    if (this.previewList) {
+      this.loading = false;
+      return;
+    }
+    this.previewList$ = this.previewListService
+      .fetchStockPerformanceList()
+      .subscribe({
+        complete: () => {
+          this.previewList = this.previewListService.getPreviewList();
+          this.loading = false;
+        },
+      });
+  }
   private fetchPeerStockList(symbol: string) {
     this.peerList = this.previewListService.getPeerStockList(symbol);
     if (this.peerList.length > 0) {
-      console.log("saved list found");
+      this.loading = false;
       return;
     }
     this.peerList$ = this.previewListService
       .fetchPeerStockList(symbol)
-      .subscribe((data) => (this.peerList = data));
+      .subscribe((data) => {
+        this.peerList = data;
+        this.loading = false;
+      });
   }
 }

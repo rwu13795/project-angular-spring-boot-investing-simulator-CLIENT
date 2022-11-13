@@ -1,38 +1,42 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { Observable, Subscription } from "rxjs";
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { Store } from "@ngrx/store";
 
-import { ActivatedRoute, Params } from "@angular/router";
 import { AppState } from "../ngrx-store/app.reducer";
-import {
-  selectCurrentSymbol,
-  selectStockActiveMenu,
-} from "./stock-state/stock.selectors";
+import { selectStockActiveMenu } from "./stock-state/stock.selectors";
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { StockMenu } from "./stock-models";
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from "@angular/animations";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-stock",
   templateUrl: "./stock.component.html",
   styleUrls: ["./stock.component.css"],
 })
-export class StockComponent implements OnInit, OnDestroy {
+export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
+  private activeMenu$?: Subscription;
+
   public isLargeScreen: boolean = true;
-  public activeMenu$ = this.store.select(selectStockActiveMenu);
+  public activeMenu: StockMenu | null = null;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    this.activeMenu$ = this.store
+      .select(selectStockActiveMenu)
+      .subscribe((data) => {
+        this.activeMenu = data;
+      });
+
     // use Angular material CDK to observe the current window width
     this.breakpointObserver
       .observe(["(min-width: 1200px)"])
@@ -42,9 +46,28 @@ export class StockComponent implements OnInit, OnDestroy {
       });
   }
 
+  // ---- (1) ---- //
+  ngAfterContentChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+
   get StockMenu() {
     return StockMenu;
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.activeMenu$) this.activeMenu$.unsubscribe();
+  }
 }
+
+/*
+
+---- (1) ---- 
+I need to update the container's class according to the active menu,
+and since the activeMenu is fetched asynchronously, it's value will be
+changed after the the view is checked
+ERROR Error: NG0100: "Expression has changed after it was checked" 
+the solution to this is add the following code
+
+
+*/

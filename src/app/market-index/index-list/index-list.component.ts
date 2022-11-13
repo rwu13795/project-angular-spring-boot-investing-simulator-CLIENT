@@ -30,7 +30,7 @@ export class IndexListComponent implements OnInit, OnChanges {
     this.marketIndexService.targetIndexName.emit(name);
   }
 
-  toFixed_2(number: number) {
-    return number.toFixed(2);
+  toFixedLocale(number: number, min: number = 2, max: number = 2) {
+    return this.marketIndexService.toFixedLocale(number, min, max);
   }
 }

@@ -30,6 +30,11 @@ const routes: Routes = [
     loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
   },
 
+  {
+    path: "no-result/stock/:symbol",
+    component: Page404Component,
+  },
+
   { path: "**", component: Page404Component },
 ];
 

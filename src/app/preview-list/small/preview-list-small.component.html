@@ -34,6 +34,9 @@
       </div>
     </div>
   </div>
+  <div *ngIf="loading" class="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
 </main>
 
 <main *ngIf="symbol && peerList">
@@ -53,5 +56,8 @@
         ></app-preview-list-small-entry>
       </div>
     </div>
+  </div>
+  <div *ngIf="loading" class="loading">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </main>

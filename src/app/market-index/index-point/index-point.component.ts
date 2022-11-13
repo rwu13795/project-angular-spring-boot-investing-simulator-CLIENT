@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
@@ -27,6 +27,8 @@ export class IndexPointComponent implements OnInit, OnDestroy {
   private changePercentage$?: Subscription;
   private previousChangePercentage$?: Subscription;
 
+  @Input() isLargeScreen: boolean = true;
+
   public point: string[] = ["0"];
   public previousPoint: string[] = ["0"];
   public changeInPoint: string[] = ["0"];
@@ -34,6 +36,7 @@ export class IndexPointComponent implements OnInit, OnDestroy {
   public changePercentage: string[] = ["0"];
   public previousChangePercentage: string[] = ["0"];
   public timeRange = this.store.select(selectTimeRange);
+  public changeNumber: number = 0;
 
   constructor(private store: Store<AppState>) {}
 
@@ -51,6 +54,7 @@ export class IndexPointComponent implements OnInit, OnDestroy {
       .select(selectChangeInPrice)
       .subscribe((data) => {
         this.changeInPoint = this.toStringArray(data);
+        this.changeNumber = data;
       });
     this.previousChangeInPoint$ = this.store
       .select(selectPreviousChangeInPrice)
@@ -61,12 +65,12 @@ export class IndexPointComponent implements OnInit, OnDestroy {
     this.changePercentage$ = this.store
       .select(selectChangePercentage)
       .subscribe((data) => {
-        this.changePercentage = this.toStringArray(data);
+        this.changePercentage = this.toStringArray(data, 2, 3);
       });
     this.previousChangePercentage$ = this.store
       .select(selectPreviousChangePercentage)
       .subscribe((data) => {
-        this.previousChangePercentage = this.toStringArray(data);
+        this.previousChangePercentage = this.toStringArray(data, 2, 3);
       });
   }
 
@@ -80,7 +84,16 @@ export class IndexPointComponent implements OnInit, OnDestroy {
       this.previousChangePercentage$.unsubscribe();
   }
 
-  private toStringArray(data: number): string[] {
-    return [...data.toFixed(2).toString()];
+  private toStringArray(
+    data: number,
+    min: number = 2,
+    max: number = 2
+  ): string[] {
+    return [
+      ...data.toLocaleString(undefined, {
+        minimumFractionDigits: min,
+        maximumFractionDigits: max,
+      }),
+    ];
   }
 }

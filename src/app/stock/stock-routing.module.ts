@@ -4,7 +4,6 @@ import { HomeComponent } from "../home/home.component";
 import { CompanyProfileComponent } from "./company-profile/company-profile.component";
 import { FinancialStatementsComponent } from "./financial-statements/financial-statements.component";
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
-import { Stock404Component } from "./stock-404/stock-404.component";
 import { StockChartComponent } from "./stock-chart/stock-chart.component";
 import { StockComponent } from "./stock.component";
 import { StockGuard } from "./stock.guard";
@@ -42,12 +41,6 @@ const routes: Routes = [
         path: "company-profile/:symbol",
         component: CompanyProfileComponent,
         canActivate: [StockGuard],
-      },
-
-      { path: "no-result", redirectTo: "" },
-      {
-        path: "no-result/:symbol",
-        component: Stock404Component,
       },
     ],
   },

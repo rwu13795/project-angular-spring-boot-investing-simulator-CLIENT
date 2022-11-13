@@ -1,17 +1,17 @@
-<main>
-  <div class="digit_cylinder_container" *ngIf="showCylinder">
+<div class="container" #containerRef>
+  <div class="digit-cylinder-container" *ngIf="showCylinder">
     <div #cylinder>
-      <div class="digit_box">9</div>
-      <div class="digit_box">8</div>
-      <div class="digit_box">7</div>
-      <div class="digit_box">6</div>
-      <div class="digit_box">5</div>
-      <div class="digit_box">4</div>
-      <div class="digit_box">3</div>
-      <div class="digit_box">2</div>
-      <div class="digit_box">1</div>
-      <div class="digit_box">0</div>
+      <div class="digit-box">9</div>
+      <div class="digit-box">8</div>
+      <div class="digit-box">7</div>
+      <div class="digit-box">6</div>
+      <div class="digit-box">5</div>
+      <div class="digit-box">4</div>
+      <div class="digit-box">3</div>
+      <div class="digit-box">2</div>
+      <div class="digit-box">1</div>
+      <div class="digit-box">0</div>
     </div>
   </div>
-  <div *ngIf="!showCylinder">{{ currentDigit }}</div>
-</main>
+  <div *ngIf="!showCylinder" class="decimal-point">{{ currentDigit }}</div>
+</div>

@@ -62,7 +62,7 @@ export class StockGuard implements CanActivate {
       map<Response_quoteShort[], boolean | UrlTree>((data) => {
         if (data.length === 0) {
           console.log("no-result");
-          return this.router.createUrlTree([`/stock/no-result/${symbol}`]);
+          return this.router.createUrlTree([`/no-result/stock/${symbol}`]);
         }
 
         // If the symbol exists, then set the symbol in store

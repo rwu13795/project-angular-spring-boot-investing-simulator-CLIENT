@@ -8,17 +8,14 @@
   <div class="content-container">
     <div
       [ngClass]="
-        (activeMenu$ | async) === StockMenu.chart
+        activeMenu === StockMenu.chart
           ? 'container-left-chart'
           : 'container-left'
       "
     >
       <router-outlet></router-outlet>
     </div>
-    <div
-      class="container-right"
-      *ngIf="(activeMenu$ | async) !== StockMenu.chart"
-    >
+    <div class="container-right" *ngIf="activeMenu !== StockMenu.chart">
       <div class="preview-list-large-screen" *ngIf="isLargeScreen">
         <app-preview-list-small [symbol]="'AAPL'"></app-preview-list-small>
       </div>

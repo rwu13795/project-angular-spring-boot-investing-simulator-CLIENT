@@ -4,8 +4,9 @@
       {{ targetIndex.name }} -
       <div class="symbol">{{ targetIndex._symbol }}</div>
     </div>
-
-    <app-index-point></app-index-point>
+    <div class="point">
+      <app-index-point [isLargeScreen]="isLargeScreen"></app-index-point>
+    </div>
   </div>
 
   <div class="buttons-group">
@@ -29,27 +30,27 @@
   <div *ngIf="targetIndex" class="summary-wrapper">
     <div class="summary-row">
       <span class="key">Open</span>
-      <span claas="value">{{ toFixed_2(targetIndex.open) }}</span>
+      <span claas="value">{{ toFixedLocale(targetIndex.open) }}</span>
     </div>
     <div class="summary-row">
       <span class="key">Prev Close</span>
-      <span claas="value">{{ toFixed_2(targetIndex.previousClose) }}</span>
+      <span claas="value">{{ toFixedLocale(targetIndex.previousClose) }}</span>
     </div>
     <div class="summary-row">
       <span class="key">Day High</span>
-      <span claas="value">{{ toFixed_2(targetIndex.dayHigh) }}</span>
+      <span claas="value">{{ toFixedLocale(targetIndex.dayHigh) }}</span>
     </div>
     <div class="summary-row">
       <span class="key">Day Low</span>
-      <span claas="value">{{ toFixed_2(targetIndex.dayLow) }}</span>
+      <span claas="value">{{ toFixedLocale(targetIndex.dayLow) }}</span>
     </div>
     <div class="summary-row">
       <span class="key">52 Week High</span>
-      <span claas="value">{{ toFixed_2(targetIndex.yearHigh) }}</span>
+      <span claas="value">{{ toFixedLocale(targetIndex.yearHigh) }}</span>
     </div>
     <div class="summary-row">
       <span class="key">52 Week low</span>
-      <span claas="value">{{ toFixed_2(targetIndex.yearLow) }}</span>
+      <span claas="value">{{ toFixedLocale(targetIndex.yearLow) }}</span>
     </div>
     <div class="summary-row">
       <span class="key">Volume</span>

@@ -20,6 +20,10 @@ import {
 export class DigitCylinderComponent
   implements OnInit, OnChanges, AfterViewInit
 {
+  @ViewChild("containerRef") containerRef?: ElementRef<HTMLDivElement>;
+
+  @Input() bold: boolean = false;
+  @Input() fontSize: number = 32;
   @Input() currentDigit: string = "0";
   @Input() previousDigit: string = "0";
   @Input() timeRange: string | null = "1D";
@@ -48,6 +52,7 @@ export class DigitCylinderComponent
   }
 
   ngAfterViewInit(): void {
+    this.setSize();
     this.translateCylinder(+this.previousDigit);
   }
 
@@ -70,6 +75,14 @@ export class DigitCylinderComponent
           distance * +this.currentDigit
         }px)`;
       }, 200);
+    }
+  }
+
+  private setSize() {
+    const container = this.containerRef?.nativeElement;
+    if (container) {
+      container.style.fontSize = `${this.fontSize}px`;
+      if (this.bold) container.style.fontWeight = "bold";
     }
   }
 }

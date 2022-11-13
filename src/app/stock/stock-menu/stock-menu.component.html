@@ -3,14 +3,14 @@
     <div class="menu-wrapper" *ngIf="symbol !== ''" #menuRef>
       <div
         class="menu-link"
-        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.summary }"
+        [ngClass]="{ active: activeMenu === StockMenu.summary }"
         [routerLink]="['financial-summary', symbol]"
       >
         Financial Summary
       </div>
       <div
         class="menu-link"
-        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.statement }"
+        [ngClass]="{ active: activeMenu === StockMenu.statement }"
         [routerLink]="['financial-statements', symbol]"
       >
         Financial Statements
@@ -18,14 +18,14 @@
       <div
         div
         class="menu-link"
-        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.chart }"
+        [ngClass]="{ active: activeMenu === StockMenu.chart }"
         [routerLink]="['chart', symbol]"
       >
         Charts
       </div>
       <div
         class="menu-link"
-        [ngClass]="{ active: (activeMenu$ | async) === StockMenu.profile }"
+        [ngClass]="{ active: activeMenu === StockMenu.profile }"
         [routerLink]="['company-profile', symbol]"
       >
         Company Profile
@@ -33,6 +33,21 @@
     </div>
     <div class="border-bot"></div>
   </div>
-  <button (click)="transformOut()">Out</button>
-  <button (click)="transformIn()">In</button>
+
+  <app-custom-button
+    *ngIf="showButton"
+    [ngClass]="isHidden ? 'button-show ' : 'button-show hidden'"
+    (onClick)="showMenu()"
+    [text]="'Show Menu'"
+    [width]="100"
+    [height]="30"
+  ></app-custom-button>
+
+  <button
+    *ngIf="showButton"
+    [ngClass]="isHidden ? 'button-hide hidden' : 'button-hide'"
+    (click)="hideMenu()"
+  >
+    Hide Menu
+  </button>
 </main>

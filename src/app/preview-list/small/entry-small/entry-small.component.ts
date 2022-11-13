@@ -14,7 +14,10 @@ export class PreviewSmallEntryComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toFixed_2(number: number) {
-    return number.toFixed(2);
+  toFixedLocale(number: number, min: number = 2, max: number = 2) {
+    return number.toLocaleString(undefined, {
+      minimumFractionDigits: min,
+      maximumFractionDigits: max,
+    });
   }
 }

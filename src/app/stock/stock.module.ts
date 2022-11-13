@@ -10,7 +10,6 @@ import { CompanyProfileComponent } from "./company-profile/company-profile.compo
 import { FinancialStatementsModule } from "./financial-statements/financial-statements.module";
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
 
-import { Stock404Component } from "./stock-404/stock-404.component";
 import { AreaChartComponent } from "./stock-chart/area-chart/area-chart.component";
 import { HistoricalChartComponent } from "./stock-chart/historical-chart/historical-chart.component";
 import { MixedChartComponent } from "./stock-chart/mixed-chart/mixed-chart.component";
@@ -34,7 +33,6 @@ import { StockComponent } from "./stock.component";
     StockComponent,
     FinancialSummaryComponent,
     CompanyProfileComponent,
-    Stock404Component,
     StockPriceComponent,
   ],
   imports: [

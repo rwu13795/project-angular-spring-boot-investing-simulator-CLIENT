@@ -57,8 +57,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
 
   public chartCandleOptions?: Partial<ChartOptions>;
   public chartBarOptions?: Partial<ChartOptions>;
-  public isLoading: boolean = true;
-  public errorMessage?: string;
+  public loading: boolean = true;
   public today: string = "";
 
   private data$?: Subscription;
@@ -105,18 +104,15 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       .fetchHistoryPrice("1D", this.symbol)
       .subscribe((data) => {
         if (data.candles.length === 0) {
-          this.errorMessage = `Could not find any result for the symbol: ${this.symbol}`;
-          this.isLoading = false;
+          this.loading = false;
           return;
         }
         this.data = data;
         this.realTimePrice = data.candleLine[data.candleLine.length - 1].y;
         this.today = data.candles[0].x.toDateString();
 
-        console.log("-------this.today ", this.today);
-
         this.setCandleOptions();
-        this.isLoading = false;
+        this.loading = false;
       });
   }
 

@@ -1,9 +1,5 @@
-<div class="wrapper" #wrapperRef>
-  <div
-    (click)="onClickButton($event)"
-    class="front"
-    [ngClass]="{ active: isActive }"
-  >
+<div class="wrapper" #wrapperRef (click)="onClickButton($event)">
+  <div class="front" [ngClass]="{ active: isActive }">
     {{ text }}
   </div>
   <div class="shadow">

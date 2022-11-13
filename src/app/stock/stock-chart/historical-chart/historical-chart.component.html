@@ -1,5 +1,4 @@
 <main>
-  <h2 *ngIf="!chartCandleOptions">Loading...............</h2>
   <div class="chart-box" *ngIf="chartCandleOptions">
     <div id="chart-candlestick">
       <apx-chart
@@ -15,5 +14,9 @@
         [autoUpdateSeries]="true"
       ></apx-chart>
     </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </main>

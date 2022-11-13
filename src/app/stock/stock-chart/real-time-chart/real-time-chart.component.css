@@ -1,14 +1,15 @@
 main {
+  position: relative;
 }
 
 .chart-box {
   height: auto;
-  max-width: 98%;
+  width: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  box-shadow: 10px 10px 10px blue;
+  box-shadow: 0px 0px 20px var(--main-200);
 }
 #chart-candlestick {
   min-width: 96%;
@@ -20,4 +21,17 @@ main {
   display: flex;
   flex-flow: row nowrap;
   float: right;
+}
+
+.date {
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  font-size: 24px;
+}
+
+.loading {
+  position: absolute;
+  top: 100px;
+  left: calc(50% - 40px);
 }

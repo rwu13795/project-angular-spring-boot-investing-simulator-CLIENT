@@ -24,11 +24,11 @@
           >
             <div>
               <span *ngIf="index.change >= 0">+</span
-              >{{ toFixed_2(index.change) }}
+              >{{ toFixedLocale(index.change) }}
             </div>
             <div>
               (<span *ngIf="index.changesPercentage >= 0">+</span
-              >{{ toFixed_2(index.changesPercentage) }}%)
+              >{{ toFixedLocale(index.changesPercentage) }}%)
             </div>
           </div>
         </div>

@@ -47,7 +47,9 @@ export type ChartOptions = {
 export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @ViewChild("chartBar") chartBar!: ChartComponent;
+
   public chartCandleOptions?: Partial<ChartOptions>;
+  public loading: boolean = true;
 
   @Input() option: string = "5D";
   @Input() symbol: string = "";
@@ -70,12 +72,13 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // this.option = changes["option"].currentValue;
+    this.loading = true;
     const storedData = this.stockService.getStoredChartDate(this.option);
     if (storedData) {
       console.log("storedData---- found");
       this.data = storedData;
       this.setChartCandleOptions();
+      this.loading = false;
       return;
     }
 
@@ -84,6 +87,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe((data) => {
         this.data = data;
         this.setChartCandleOptions();
+        this.loading = false;
       });
   }
 

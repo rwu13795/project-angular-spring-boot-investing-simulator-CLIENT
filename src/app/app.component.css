@@ -10,6 +10,8 @@
 main {
   width: 94%;
   height: 100%;
+  /* Have to set the padding right to offset the width of the scroll bar */
+  padding-right: 10px;
 }
 
 .nav-bar {
@@ -30,6 +32,6 @@ main {
 
 @media screen and (max-width: 765px) {
   main {
-    width: 98%;
+    width: 96%;
   }
 }

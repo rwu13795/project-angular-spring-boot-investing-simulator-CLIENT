@@ -12,8 +12,8 @@
       }"
     >
       <span *ngIf="entry.changesPercentage > 0">+</span
-      >{{ toFixed_2(entry.changesPercentage) }}%
+      >{{ toFixedLocale(entry.changesPercentage) }}%
     </div>
-    <div class="price">${{ toFixed_2(entry.price) }}</div>
+    <div class="price">${{ toFixedLocale(entry.price) }}</div>
   </div>
 </main>

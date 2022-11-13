@@ -25,9 +25,12 @@ export class StockMenuComponent implements OnInit, OnDestroy {
   @ViewChild("borderRef") borderRef?: ElementRef<HTMLDivElement>;
 
   private symbol$?: Subscription;
+  private activeMenu$?: Subscription;
 
   public symbol: string = "";
-  public activeMenu$ = this.store.select(selectStockActiveMenu);
+  public activeMenu: StockMenu = StockMenu.summary;
+  public showButton: boolean = false;
+  public isHidden: boolean = false;
 
   constructor(private store: Store<AppState>) {}
 
@@ -35,30 +38,36 @@ export class StockMenuComponent implements OnInit, OnDestroy {
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
       .subscribe((data) => (this.symbol = data));
+
+    this.activeMenu$ = this.store
+      .select(selectStockActiveMenu)
+      .subscribe((data) => {
+        this.activeMenu = data;
+        this.showButton = this.activeMenu === StockMenu.chart;
+      });
   }
 
   ngOnDestroy(): void {
     if (this.symbol$) this.symbol$.unsubscribe();
+    if (this.activeMenu$) this.activeMenu$.unsubscribe();
   }
 
-  transformOut() {
+  hideMenu() {
     const container = this.containerRef?.nativeElement;
-
     if (container) {
-      // menu.style.transform = "translateX(2000px)";
       container.style.height = "0px";
       container.style.opacity = "0";
+      this.isHidden = true;
     }
   }
 
-  transformIn() {
+  showMenu() {
     const container = this.containerRef?.nativeElement;
-
     if (container) {
-      // container.style.transform = "translateX(0)";
-
-      container.style.height = " 110px";
+      container.style.height = " 100px";
       container.style.opacity = "1";
+      this.isHidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
 
