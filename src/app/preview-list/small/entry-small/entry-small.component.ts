@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Response_realTimePrice } from "src/app/stock/stock-models";
 import { Response_stockList } from "../../preview-list-models";
 import { entryAnimation } from "./entry-small.animation";
@@ -9,7 +9,7 @@ import { entryAnimation } from "./entry-small.animation";
   styleUrls: ["./entry-small.component.css"],
   animations: [entryAnimation],
 })
-export class PreviewSmallEntryComponent implements OnInit {
+export class PreviewSmallEntryComponent implements OnInit, OnDestroy {
   @Input() entry?: Response_realTimePrice | Response_stockList;
 
   ngOnInit(): void {}
@@ -19,5 +19,13 @@ export class PreviewSmallEntryComponent implements OnInit {
       minimumFractionDigits: min,
       maximumFractionDigits: max,
     });
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  ngOnDestroy(): void {
+    this.scrollToTop();
   }
 }

@@ -51,11 +51,13 @@ export const stockReducer = createReducer(
 
   on(actions.setCompanyProfile, (state, { profile }) =>
     produce(state, (draft) => {
-      draft.companyProfile = profile;
-      draft.currentPrice = profile.price;
-      draft.previousPrice = profile.price;
-      draft.currentChangeInPrice = profile.changes;
-      draft.previousChangeInPrice = profile.changes;
+      if (profile) {
+        draft.companyProfile = profile;
+        draft.currentPrice = profile.price;
+        draft.previousPrice = profile.price;
+        draft.currentChangeInPrice = profile.changes;
+        draft.previousChangeInPrice = profile.changes;
+      }
     })
   ),
 

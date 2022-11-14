@@ -1,0 +1,63 @@
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.logo-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+thead tr {
+  background-color: var(--color-light-grey);
+  border: 2px solid var(--color-light-grey);
+}
+
+thead tr th {
+  min-width: 140px;
+  height: 46px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+thead tr th:hover {
+  color: var(--main-600);
+  transition: all 0.3s;
+}
+
+tbody tr {
+  border: 2px solid var(--color-light-grey);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+tbody tr:hover {
+  background-color: var(--main-200);
+  transition: all 0.3s;
+}
+
+tbody tr td {
+  height: 60px;
+}
+td {
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  thead tr th {
+    min-width: max(50px, 15vw);
+  }
+}

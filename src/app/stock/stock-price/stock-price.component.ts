@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Observable, Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
@@ -16,6 +16,7 @@ import {
   selectTimeRange,
 } from "../stock-state/stock.selectors";
 import { Response_companyProfile } from "../stock-models";
+import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 
 @Component({
   selector: "app-stock-price",
@@ -41,8 +42,13 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   public changePercentage: string[] = ["0"];
   public previousChangePercentage: string[] = ["0"];
   public timeRange = this.store.select(selectTimeRange);
+  public changeNumber: number = 0;
+  public isLargeScreen: boolean = true;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private breakpointObserver: BreakpointObserver
+  ) {}
 
   ngOnInit(): void {
     this.symbol$ = this.store
@@ -51,7 +57,9 @@ export class StockPriceComponent implements OnInit, OnDestroy {
 
     this.profile$ = this.store
       .select(selectCompanyProfile)
-      .subscribe((data) => (this.profile = data));
+      .subscribe((data) => {
+        this.profile = data;
+      });
 
     this.price$ = this.store.select(selectCurrentPrice).subscribe((data) => {
       this.price = this.toStringArray(data);
@@ -66,6 +74,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
       .select(selectChangeInPrice)
       .subscribe((data) => {
         this.changeInPrice = this.toStringArray(data);
+        this.changeNumber = data;
       });
     this.previousChangeInPrice$ = this.store
       .select(selectPreviousChangeInPrice)
@@ -83,6 +92,15 @@ export class StockPriceComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.previousChangePercentage = this.toStringArray(data);
       });
+
+    this.breakpointObserver
+      .observe(["(min-width: 765px)"])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) this.isLargeScreen = true;
+        else this.isLargeScreen = false;
+
+        console.log("isLargeScreen", this.isLargeScreen);
+      });
   }
 
   ngOnDestroy(): void {
@@ -98,6 +116,11 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   }
 
   private toStringArray(data: number): string[] {
-    return [...data.toFixed(2).toString()];
+    return [
+      ...data.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+    ];
   }
 }

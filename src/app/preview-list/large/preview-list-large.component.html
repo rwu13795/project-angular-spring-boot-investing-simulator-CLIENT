@@ -1,28 +1,38 @@
 <main>
-  <h1>List</h1>
   <div class="list-menu">
-    <h3
+    <div
       (click)="onSelectOption(ListTypes.actives)"
-      [ngClass]="{ highlight: listType === ListTypes.actives }"
+      class="menu"
+      [ngClass]="{ acitve: listType === ListTypes.actives }"
     >
       Most Searched
-    </h3>
-    <h3
+    </div>
+    <div
       (click)="onSelectOption(ListTypes.gainers)"
-      [ngClass]="{ highlight: listType === ListTypes.gainers }"
+      class="menu"
+      [ngClass]="{ acitve: listType === ListTypes.gainers }"
     >
       Top Performing
-    </h3>
-    <h3
+    </div>
+    <div
       (click)="onSelectOption(ListTypes.losers)"
-      [ngClass]="{ highlight: listType === ListTypes.losers }"
+      class="menu"
+      [ngClass]="{ acitve: listType === ListTypes.losers }"
     >
       Worst Performing
-    </h3>
+    </div>
   </div>
+
+  <app-gradient-break
+    [type]="2"
+    [height]="8"
+    [marginBottom]="20"
+  ></app-gradient-break>
+
   <div
     *ngIf="listType === ListTypes.actives && lists.actives"
     class="list-wrapper"
+    id="custom-scroll-x"
   >
     <app-preview-list-large-entry
       [list]="lists.actives"
@@ -31,6 +41,7 @@
   <div
     *ngIf="listType === ListTypes.gainers && lists.gainers"
     class="list-wrapper"
+    id="custom-scroll-x"
   >
     <app-preview-list-large-entry
       [list]="lists.gainers"
@@ -39,6 +50,7 @@
   <div
     *ngIf="listType === ListTypes.losers && lists.losers"
     class="list-wrapper"
+    id="custom-scroll-x"
   >
     <app-preview-list-large-entry
       [list]="lists.losers"

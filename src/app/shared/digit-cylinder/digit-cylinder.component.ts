@@ -49,6 +49,7 @@ export class DigitCylinderComponent
     if (this.timeRange !== "1D") {
       this.translateCylinder(0);
     }
+    this.setSize();
   }
 
   ngAfterViewInit(): void {

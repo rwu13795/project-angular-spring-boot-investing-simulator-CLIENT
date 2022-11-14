@@ -13,7 +13,7 @@
     class="digits-wrapper"
     [ngClass]="changeNumber >= 0 ? 'positive' : 'negative'"
   >
-    <span class="mark">{{ changeNumber >= 0 ? "+" : "-" }}</span>
+    <span class="mark">{{ changeNumber >= 0 ? "+" : "" }}</span>
     <div *ngFor="let digit of changeInPoint; index as i">
       <app-digit-cylinder
         [currentDigit]="digit"
@@ -29,7 +29,7 @@
     class="digits-wrapper"
     [ngClass]="changeNumber >= 0 ? 'positive' : 'negative'"
   >
-    <span class="mark">({{ changeNumber >= 0 ? "+" : "-" }}</span>
+    <span class="mark">({{ changeNumber >= 0 ? "+" : "" }}</span>
     <div *ngFor="let digit of changePercentage; index as i">
       <app-digit-cylinder
         [currentDigit]="digit"

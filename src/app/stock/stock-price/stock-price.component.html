@@ -1,40 +1,81 @@
 <main>
-  <div class="price-wrapper" *ngIf="profile">
-    <div>
-      <img [src]="profile.image" class="logo" />
+  <div class="content-container">
+    <div class="logo-wrapper" *ngIf="profile">
+      <div>
+        <img [src]="profile.image" class="logo" />
+      </div>
+      <div class="name-symbol">
+        {{ profile.companyName }}
+        <span class="symbol">{{ profile.symbol }} </span>
+      </div>
     </div>
-    <div>{{ profile.companyName }} ({{ profile.symbol }})</div>
-    <div class="digits-wrapper">
-      Price:
+    <div class="row-wrapper">
+      <div class="price-wrapper" *ngIf="profile">
+        <span class="mark">$</span>
+        <div class="digits-wrapper">
+          <div *ngFor="let digit of price; index as i">
+            <app-digit-cylinder
+              [currentDigit]="digit"
+              [previousDigit]="previousPrice[i]"
+              [fontSize]="isLargeScreen ? 36 : 28"
+            ></app-digit-cylinder>
+          </div>
+        </div>
 
-      <div *ngFor="let digit of price; index as i">
-        <app-digit-cylinder
-          [currentDigit]="digit"
-          [previousDigit]="previousPrice[i]"
-        ></app-digit-cylinder>
-      </div>
-    </div>
-    <div class="digits-wrapper">
-      Changes:
-      <div *ngFor="let digit of changeInPrice; index as i">
-        <app-digit-cylinder
-          [currentDigit]="digit"
-          [previousDigit]="previousChangeInPrice[i]"
-          [timeRange]="timeRange | async"
-        ></app-digit-cylinder>
-      </div>
-    </div>
+        <div
+          class="digits-wrapper"
+          [ngClass]="changeNumber >= 0 ? 'positive' : 'negative'"
+        >
+          <span class="mark">{{ changeNumber >= 0 ? "+" : "" }}</span>
+          <div *ngFor="let digit of changeInPrice; index as i">
+            <app-digit-cylinder
+              [currentDigit]="digit"
+              [previousDigit]="previousChangeInPrice[i]"
+              [timeRange]="timeRange | async"
+              [fontSize]="isLargeScreen ? 24 : 18"
+            ></app-digit-cylinder>
+          </div>
+        </div>
 
-    <div class="digits-wrapper">
-      <div *ngFor="let digit of changePercentage; index as i">
-        <app-digit-cylinder
-          [currentDigit]="digit"
-          [previousDigit]="previousChangePercentage[i]"
-          [timeRange]="timeRange | async"
-        ></app-digit-cylinder>
+        <div
+          class="digits-wrapper"
+          [ngClass]="changeNumber >= 0 ? 'positive' : 'negative'"
+        >
+          <span class="mark">({{ changeNumber >= 0 ? "+" : "" }}</span>
+          <div *ngFor="let digit of changePercentage; index as i">
+            <app-digit-cylinder
+              [currentDigit]="digit"
+              [previousDigit]="previousChangePercentage[i]"
+              [timeRange]="timeRange | async"
+              [fontSize]="isLargeScreen ? 24 : 18"
+            ></app-digit-cylinder>
+          </div>
+          <span class="mark">%)</span>
+        </div>
       </div>
-      %
+      <div class="buttons-group" *ngIf="profile">
+        <div class="button-wrapper">
+          <app-custom-button
+            [fontSize]="20"
+            [bold]="true"
+            [color]="'orange'"
+            [width]="100"
+            [height]="30"
+            [text]="'Trade'"
+          ></app-custom-button>
+        </div>
+
+        <mat-icon class="star" matTooltip="Remove from Watch List"
+          >star</mat-icon
+        >
+        <!-- <mat-icon class="star" matTooltip="Add to Watch List">
+          star_outline
+        </mat-icon> -->
+      </div>
     </div>
   </div>
-  <div *ngIf="!profile" class="loading"><h3>Loading</h3></div>
+
+  <div class="loading" *ngIf="!profile">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
 </main>

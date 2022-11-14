@@ -3,7 +3,7 @@
     <div class="list">
       <div class="header" (click)="onSelectOption(ListTypes.actives)">
         Most Searched
-        <img src="../../../assets/images/read_more.svg" class="read-more" />
+        <mat-icon>read_more</mat-icon>
       </div>
       <div *ngFor="let entry of previewList.actives">
         <app-preview-list-small-entry
@@ -14,7 +14,7 @@
     <div class="list">
       <div class="header" (click)="onSelectOption(ListTypes.gainers)">
         Top Performing
-        <img src="../../../assets/images/read_more.svg" class="read-more" />
+        <mat-icon>read_more</mat-icon>
       </div>
       <div *ngFor="let entry of previewList.gainers">
         <app-preview-list-small-entry
@@ -25,7 +25,7 @@
     <div class="list">
       <div class="header" (click)="onSelectOption(ListTypes.losers)">
         Worst Performing
-        <img src="../../../assets/images/read_more.svg" class="read-more" />
+        <mat-icon>read_more</mat-icon>
       </div>
       <div *ngFor="let entry of previewList.losers">
         <app-preview-list-small-entry

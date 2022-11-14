@@ -22,6 +22,7 @@ export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
   private activeMenu$?: Subscription;
 
   public isLargeScreen: boolean = true;
+  public isSmallScreen: boolean = false;
   public activeMenu: StockMenu | null = null;
 
   constructor(
@@ -44,6 +45,15 @@ export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
         if (state.matches) this.isLargeScreen = true;
         else this.isLargeScreen = false;
       });
+
+    this.breakpointObserver
+      .observe(["(max-width: 765px)"])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) this.isSmallScreen = true;
+        else this.isSmallScreen = false;
+      });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   // ---- (1) ---- //

@@ -20,7 +20,7 @@ Also I can change the width, height and etc using the "inputs"
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 9;
+  z-index: 5;
   color: black;
   border-radius: 4px;
   border: solid 2px var(--main-700);
@@ -32,6 +32,19 @@ Also I can change the width, height and etc using the "inputs"
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.red {
+  border: solid 2px var(--color-negative-2);
+  background-color: var(--color-negative-1);
+}
+.green {
+  border: solid 2px var(--color-positive-2);
+  background-color: var(--color-positive-1);
+}
+.orange {
+  border: solid 2px var(--color-orange);
+  background-color: var(--color-orange-light);
 }
 
 .shadow {
@@ -55,6 +68,15 @@ Also I can change the width, height and etc using the "inputs"
   background-color: var(--main-600);
   transform: translateX(0px) translateY(0px);
   transition: all 0.1s;
+}
+.wrapper:active .front.red {
+  background-color: var(--color-negative-1);
+}
+.wrapper:active .front.green {
+  background-color: var(--color-positive-1);
+}
+.wrapper:active .front.orange {
+  background-color: var(--color-orange);
 }
 
 .active {

@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { environment } from "src/environments/environment";
 
 import {
   ListTypes,
@@ -16,6 +17,7 @@ export class PreviewLargeEntryComponent implements OnInit, OnDestroy {
   @Input() list: Response_stockList[] | null = null;
   @Input() listType: ListTypes = ListTypes.actives;
   private ascDesc = this.initialAscDesc();
+  public LOGO_URL = environment.LOGO_URL;
 
   constructor(private previewListService: PreviewListService) {}
 
@@ -35,7 +37,16 @@ export class PreviewLargeEntryComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  toFixedLocale(number: number) {
+    return number.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
 
   private initialAscDesc() {
     return {

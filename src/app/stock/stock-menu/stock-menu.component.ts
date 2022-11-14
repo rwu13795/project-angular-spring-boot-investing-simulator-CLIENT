@@ -4,8 +4,9 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  Input,
 } from "@angular/core";
-import { Subscription } from "rxjs";
+import { Subscription, take } from "rxjs";
 import { Store } from "@ngrx/store";
 
 import { AppState } from "src/app/ngrx-store/app.reducer";
@@ -14,6 +15,7 @@ import {
   selectStockActiveMenu,
 } from "../stock-state/stock.selectors";
 import { StockMenu } from "../stock-models";
+import { StockService } from "../stock.service";
 
 @Component({
   selector: "app-stock-menu",
@@ -26,30 +28,45 @@ export class StockMenuComponent implements OnInit, OnDestroy {
 
   private symbol$?: Subscription;
   private activeMenu$?: Subscription;
+  private updateTimer?: any;
 
+  @Input() isSmallScreen: boolean = false;
   public symbol: string = "";
   public activeMenu: StockMenu = StockMenu.summary;
   public showButton: boolean = false;
   public isHidden: boolean = false;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private stockService: StockService
+  ) {}
 
   ngOnInit(): void {
-    this.symbol$ = this.store
-      .select(selectCurrentSymbol)
-      .subscribe((data) => (this.symbol = data));
-
-    this.activeMenu$ = this.store
-      .select(selectStockActiveMenu)
-      .subscribe((data) => {
-        this.activeMenu = data;
-        this.showButton = this.activeMenu === StockMenu.chart;
-      });
-  }
-
-  ngOnDestroy(): void {
-    if (this.symbol$) this.symbol$.unsubscribe();
-    if (this.activeMenu$) this.activeMenu$.unsubscribe();
+    this.symbol$ = this.store.select(selectCurrentSymbol).subscribe((data) => {
+      this.symbol = data;
+      // after getting the symbol from store
+      this.activeMenu$ = this.store
+        .select(selectStockActiveMenu)
+        .subscribe((data) => {
+          this.activeMenu = data;
+          this.showButton = this.activeMenu === StockMenu.chart;
+          // fetch the latest price in every 30s if the current menu is not "chart"
+          if (
+            this.activeMenu !== StockMenu.chart &&
+            this.stockService.isMarketOpened()
+          ) {
+            clearInterval(this.updateTimer);
+            this.updateTimer = setInterval(() => {
+              this.stockService
+                .getRealTimePrice(this.symbol)
+                .pipe(take(1))
+                .subscribe();
+            }, 1000 * 30);
+          } else {
+            console.log("market close || not in chart");
+          }
+        });
+    });
   }
 
   hideMenu() {
@@ -73,5 +90,11 @@ export class StockMenuComponent implements OnInit, OnDestroy {
 
   get StockMenu() {
     return StockMenu;
+  }
+
+  ngOnDestroy(): void {
+    if (this.symbol$) this.symbol$.unsubscribe();
+    if (this.activeMenu$) this.activeMenu$.unsubscribe();
+    if (this.updateTimer) clearInterval(this.updateTimer);
   }
 }

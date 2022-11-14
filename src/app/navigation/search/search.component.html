@@ -1,24 +1,51 @@
 <main>
   <div class="search-wrapper">
-    <label>Search</label>
-    <input (keyup)="onInputChange($event)" [value]="inputValue" />
-    <button type="button" (click)="onSearchStockByName()">Send</button>
+    <select
+      #option
+      (change)="onSelectExchange(option.value)"
+      (click)="clearResult()"
+    >
+      <option value="NASDAQ">NASDAQ</option>
+      <option value="NYSE">NYSE</option>
+    </select>
 
-    <div class="results-wrapper" *ngIf="searchResult.length > 0">
-      <div class="result" *ngFor="let stock of searchResult" (click)="clear()">
-        <div>Symbol: {{ stock.symbol }}</div>
-        <div>Name: {{ stock.name }}</div>
-        <a [routerLink]="['stock', 'financial-summary', stock.symbol]"
-          >To the financial-summary</a
+    <input
+      (keyup)="onInputChange($event)"
+      [value]="inputValue"
+      placeholder="Symbol or Name..."
+    />
+    <mat-icon class="search" (click)="onSearchStockByName()"> search </mat-icon>
+
+    <div class="result-anchor">
+      <div
+        class="result-list"
+        *ngIf="searchResult.length > 0"
+        id="custom-scroll-y-thin"
+      >
+        <div
+          class="result"
+          *ngFor="let stock of searchResult"
+          (click)="clearResult()"
+          [routerLink]="['stock', 'financial-summary', stock.symbol]"
         >
-        <hr />
+          <img
+            class="logo"
+            [src]="LOGO_URL + stock.symbol + '.png'"
+            alt="Logo"
+          />
+          <div class="symbol-name">
+            <div class="symbol">{{ stock.symbol }}</div>
+            <div>{{ stock.name }}</div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="result-list"
+        *ngIf="searchResult.length === 0 && inputValue !== ''"
+      >
+        No result
       </div>
     </div>
-    <div
-      class="results-wrapper"
-      *ngIf="searchResult.length === 0 && inputValue !== ''"
-    >
-      No result
-    </div>
   </div>
+  <div class="backdrop" *ngIf="inputValue !== ''" (click)="clearResult()"></div>
 </main>

@@ -2,6 +2,7 @@
   <div
     [routerLink]="['/stock', 'financial-summary', entry.symbol]"
     class="wrapper"
+    (click)="scrollToTop()"
   >
     <div class="highlight"></div>
     <div class="symbol">{{ entry.symbol }}</div>

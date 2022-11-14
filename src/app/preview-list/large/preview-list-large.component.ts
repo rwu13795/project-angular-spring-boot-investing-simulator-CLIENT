@@ -48,8 +48,6 @@ export class PreviewListLargeComponent implements OnInit, OnDestroy {
             this.lists = this.previewListService.getStockList();
           },
         });
-    } else {
-      console.log("found saved lists");
     }
   }
 
@@ -62,6 +60,7 @@ export class PreviewListLargeComponent implements OnInit, OnDestroy {
   }
 
   onSelectOption(listType: ListTypes) {
+    this.listType = listType;
     this.lists = this.previewListService.getStockList();
     this.store.dispatch(setStockListOption({ listType }));
   }

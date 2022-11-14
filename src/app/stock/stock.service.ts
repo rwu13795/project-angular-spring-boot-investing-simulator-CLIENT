@@ -1,8 +1,10 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { from, Observable, Subject, throwError } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import { AppState } from "../ngrx-store/app.reducer";
 import { Response_incomeStatement } from "./financial-statements/financial-statements.models";
 import {
   ChartData,
@@ -14,6 +16,11 @@ import {
   Response_financialRatio,
   CustomTimeRange,
 } from "./stock-models";
+import {
+  setCurrentPrice,
+  setCurrentChangeInPrice,
+  setCurrentChangePercentage,
+} from "./stock-state/stock.actions";
 
 @Injectable({ providedIn: "root" })
 export class StockService {
@@ -30,7 +37,7 @@ export class StockService {
     ["5Y"]: null,
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   public fetchHistoryPrice(
     option: string,
@@ -64,10 +71,24 @@ export class StockService {
       fromObject: { symbol },
     });
 
-    return this.http.get<Response_realTimePrice[]>(
-      `${this.SERVER_URL}/stock/price/real-time-quote`,
-      { params }
-    );
+    return this.http
+      .get<Response_realTimePrice[]>(
+        `${this.SERVER_URL}/stock/price/real-time-quote`,
+        { params }
+      )
+      .pipe(
+        tap(([data]) => {
+          const { price, changesPercentage, change } = data;
+          // set the latest price in the store, for the stock-price component
+          this.store.dispatch(setCurrentPrice({ currentPrice: price }));
+          this.store.dispatch(
+            setCurrentChangeInPrice({ changeInPrice: change })
+          );
+          this.store.dispatch(
+            setCurrentChangePercentage({ changePercentage: changesPercentage })
+          );
+        })
+      );
   }
 
   public getQuoteShort(symbol: string) {

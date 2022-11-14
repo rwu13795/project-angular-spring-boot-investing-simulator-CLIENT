@@ -1,25 +1,130 @@
 main {
   min-width: 200px;
-  height: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-wrapper {
   position: relative;
   min-width: 200px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
-.results-wrapper {
+select {
+  outline: none;
+  height: 30px;
+  width: 96px;
+  border-radius: 4px;
+  border: solid 2px var(--main-600);
+  margin-right: 4px;
+  font-size: 16px;
+}
+select:focus {
+  border: solid 2px var(--main-800);
+}
+select option {
+  background-color: var(--main-200);
+}
+
+input {
+  margin-right: 4px;
+  outline: none;
+  height: 24px;
+  width: 200px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: solid 2px var(--main-600);
+}
+input:focus {
+  border: solid 2px var(--main-800);
+}
+.search {
+  height: 26px;
+  border-radius: 4px;
+  border: solid 2px var(--main-600);
+  cursor: pointer;
+  transition: 0.3s all;
+}
+.search:hover {
+  color: var(--main-600);
+  background-color: var(--main-200);
+  transition: 0.3s all;
+}
+
+.result-anchor {
   position: relative;
+  width: 0;
+  height: 0;
+  top: 20px;
+  right: calc(50% + 250px);
+}
+.result-list {
+  position: absolute;
+  height: auto;
+  max-height: 500px;
+  width: 500px;
+  padding: 8px 14px;
   top: 0;
   left: 0;
-  z-index: 9;
-  max-height: 500px;
+  z-index: 10;
   overflow-y: auto;
-  border: blue 2px solid;
-  background-color: azure;
+  border-radius: 4px;
+  border: var(--main-600) 2px solid;
+  background-color: white;
+}
+.result {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 20px;
+  cursor: pointer;
+  transition: 0.3s all;
+  border-bottom: 2px solid var(--main-600);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+.result:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
-.result {
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.symbol-name {
+  width: 100%;
+  height: auto;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding: 0 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: 0.3s all;
+}
+.symbol-name:hover {
+  background-color: var(--main-200);
+  transition: 0.3s all;
+}
+.symbol {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.backdrop {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 100%;
+  background-color: transparent;
 }

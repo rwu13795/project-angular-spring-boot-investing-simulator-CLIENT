@@ -2,16 +2,21 @@
   <table>
     <thead>
       <tr>
+        <th></th>
         <th (click)="onSort(SortBy.symbol)">
-          Symbol <mat-icon>sort</mat-icon>
+          <div class="header">Symbol <mat-icon>sort</mat-icon></div>
         </th>
-        <th (click)="onSort(SortBy.name)">Name <mat-icon>sort</mat-icon></th>
-        <th (click)="onSort(SortBy.price)">Price <mat-icon>sort</mat-icon></th>
+        <th (click)="onSort(SortBy.name)">
+          <div class="header">Name <mat-icon>sort</mat-icon></div>
+        </th>
+        <th (click)="onSort(SortBy.price)">
+          <div class="header">Price <mat-icon>sort</mat-icon></div>
+        </th>
         <th (click)="onSort(SortBy.changeInPrice)">
-          Change <mat-icon>sort</mat-icon>
+          <div class="header">Change <mat-icon>sort</mat-icon></div>
         </th>
         <th (click)="onSort(SortBy.changePercentage)">
-          Change(%) <mat-icon>sort</mat-icon>
+          <div class="header">Change(%) <mat-icon>sort</mat-icon></div>
         </th>
       </tr>
     </thead>
@@ -20,11 +25,16 @@
         *ngFor="let entry of list"
         [routerLink]="['/stock', 'financial-summary', entry.symbol]"
       >
+        <td>
+          <div class="logo-box">
+            <img class="logo" [src]="LOGO_URL + entry.symbol + '.png'" />
+          </div>
+        </td>
         <td>{{ entry.symbol }}</td>
         <td>{{ entry.name }}</td>
-        <td>${{ entry.price }}</td>
-        <td>{{ entry.change }}</td>
-        <td>{{ entry.changesPercentage }}%</td>
+        <td>${{ toFixedLocale(entry.price) }}</td>
+        <td>{{ toFixedLocale(entry.change) }}</td>
+        <td>{{ toFixedLocale(entry.changesPercentage) }}%</td>
       </tr>
     </tbody>
   </table>

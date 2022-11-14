@@ -18,7 +18,10 @@ import {
 })
 export class CustomButtonComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild("wrapperRef") wrapperRef?: ElementRef<HTMLDivElement>;
+  @ViewChild("frontRef") frontRef?: ElementRef<HTMLDivElement>;
 
+  @Input() color: "blue" | "orange" | "red" | "green" = "blue";
+  @Input() bold: boolean = false;
   @Input() isActive: boolean = false;
   @Input() fontSize: number = 12;
   @Input() marginTop: number = 0;
@@ -46,12 +49,28 @@ export class CustomButtonComponent implements OnInit, OnChanges, AfterViewInit {
 
   private updateSize() {
     const wrapper = this.wrapperRef?.nativeElement;
-    if (wrapper) {
+    const front = this.frontRef?.nativeElement;
+    if (wrapper && front) {
+      if (this.bold) wrapper.style.fontWeight = "bold";
       wrapper.style.fontSize = `${this.fontSize}px`;
       wrapper.style.width = `${this.width}px`;
       wrapper.style.height = `${this.height}px`;
       wrapper.style.marginTop = `${this.marginTop}px`;
       wrapper.style.marginBottom = `${this.marginBottom}px`;
+
+      switch (this.color) {
+        case "blue":
+          break;
+        case "orange":
+          front.classList.add("orange");
+          break;
+        case "red":
+          front.classList.add("red");
+          break;
+        case "green":
+          front.classList.add("green");
+          break;
+      }
     }
   }
 }

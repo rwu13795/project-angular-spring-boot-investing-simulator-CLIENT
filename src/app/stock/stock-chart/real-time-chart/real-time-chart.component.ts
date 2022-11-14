@@ -125,16 +125,17 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
     this.realTimePrice$ = this.stockService
       .getRealTimePrice(this.symbol)
       .subscribe(([data]) => {
-        const { timestamp, volume, price, changesPercentage, change } = data;
+        const { timestamp, volume, price } = data;
         const timestampMS = timestamp * 1000;
         console.log("price-------------", price);
 
         // for the stock-price component
-        this.store.dispatch(setCurrentPrice({ currentPrice: price }));
-        this.store.dispatch(setCurrentChangeInPrice({ changeInPrice: change }));
-        this.store.dispatch(
-          setCurrentChangePercentage({ changePercentage: changesPercentage })
-        );
+        // moved to stock-service
+        // this.store.dispatch(setCurrentPrice({ currentPrice: price }));
+        // this.store.dispatch(setCurrentChangeInPrice({ changeInPrice: change }));
+        // this.store.dispatch(
+        //   setCurrentChangePercentage({ changePercentage: changesPercentage })
+        // );
 
         this.realTimePrice = price;
         this.dataUpdated = true;

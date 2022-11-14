@@ -1,9 +1,12 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
 import { RouterModule } from "@angular/router";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { NewsModule } from "../news/news.module";
 import { PreviewListModule } from "../preview-list/preview-list.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { SharedModule } from "../shared/shared.module";
 import { CompanyProfileComponent } from "./company-profile/company-profile.component";
@@ -37,7 +40,9 @@ import { StockComponent } from "./stock.component";
   ],
   imports: [
     RouterModule,
+    MatIconModule,
     NgApexchartsModule,
+    MatTooltipModule,
     CommonModule,
     StockRoutingModule,
     SharedModule,

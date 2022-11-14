@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
 import { RouterModule } from "@angular/router";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { SharedModule } from "../shared/shared.module";
@@ -20,7 +21,13 @@ import { MarketIndexComponent } from "./market-index.component";
     IndexPointComponent,
     MarketIndexComponent,
   ],
-  imports: [CommonModule, RouterModule, NgApexchartsModule, SharedModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgApexchartsModule,
+    SharedModule,
+    MatIconModule,
+  ],
   exports: [
     IndexPreviewComponent,
     IndexChartComponent,
