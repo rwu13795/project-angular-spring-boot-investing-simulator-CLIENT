@@ -20,6 +20,7 @@ export class CustomButtonComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild("wrapperRef") wrapperRef?: ElementRef<HTMLDivElement>;
   @ViewChild("frontRef") frontRef?: ElementRef<HTMLDivElement>;
 
+  @Input() type: "button" | "submit" = "button";
   @Input() color: "blue" | "orange" | "red" | "green" = "blue";
   @Input() bold: boolean = false;
   @Input() isActive: boolean = false;
@@ -30,6 +31,7 @@ export class CustomButtonComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() height: number = 20;
   @Input() callbackArg: any;
   @Input() text: string = "";
+  @Input() disabled: boolean = false;
 
   @Output() onClick = new EventEmitter<any>();
 

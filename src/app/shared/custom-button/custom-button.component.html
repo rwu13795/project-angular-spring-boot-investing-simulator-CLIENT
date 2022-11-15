@@ -1,6 +1,13 @@
 <div class="wrapper" (click)="onClickButton($event)" #wrapperRef>
-  <div class="front" [ngClass]="{ active: isActive }" #frontRef>
-    {{ text }}
-  </div>
+  <button
+    class="front"
+    [ngClass]="{ active: isActive, disabled: disabled }"
+    #frontRef
+    [type]="type"
+    [disabled]="disabled"
+  >
+    <span *ngIf="!disabled">{{ text }}</span>
+    <app-loading-spinner size="sm" *ngIf="disabled"></app-loading-spinner>
+  </button>
   <div class="shadow"></div>
 </div>

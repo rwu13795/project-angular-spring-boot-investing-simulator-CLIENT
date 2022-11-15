@@ -30,17 +30,26 @@
   cursor: pointer;
 }
 .menu:hover {
-  background-color: var(--main-300);
+  background-color: var(--main-200);
   transition: all 0.5s;
 }
 
 .acitve {
   background: linear-gradient(
     to top,
-    var(--main-500) 0%,
+    var(--main-600) 0%,
     var(--main-300) 35%,
     var(--main-100) 100%
   );
+}
+
+.border-bot {
+  min-height: 4px;
+  width: 100%;
+  border-top: solid 4px var(--main-600);
+  border-bottom: solid 4px var(--main-600);
+  margin-bottom: 20px;
+  background-color: var(--main-200);
 }
 
 @media screen and (max-width: 1200px) {

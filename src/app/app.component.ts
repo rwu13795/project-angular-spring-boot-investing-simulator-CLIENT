@@ -1,22 +1,17 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { AppState } from "./ngrx-store/app.reducer";
+import { getUserInfo } from "./user/user-state/user.actions";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
-  title = "client";
-
-  digitsString: string[] = ["9", "9", "9", ".", "9", "9"];
-  newDigitsString: string[] = ["9", "9", "9", ".", "9", "9"];
-
-  changeDigit(num: number) {
-    this.digitsString = this.newDigitsString;
-    this.newDigitsString = [...num.toFixed(2).toString()];
-
-    console.log("old", this.digitsString);
-    console.log("new", this.newDigitsString);
+export class AppComponent implements OnInit {
+  constructor(private store: Store<AppState>) {}
+  ngOnInit(): void {
+    this.store.dispatch(getUserInfo());
   }
 }

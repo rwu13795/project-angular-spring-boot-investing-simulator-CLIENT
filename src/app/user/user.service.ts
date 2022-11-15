@@ -1,14 +1,22 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
+import { map, catchError, of } from "rxjs";
 import { environment } from "src/environments/environment";
-import { InputField, InputFieldNames } from "./user-models";
+import { InputField, InputFieldNames, Response_checkAuth } from "./user-models";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
   private SERVER_URL = environment.SERVER_URL;
 
   constructor(private http: HttpClient) {}
+
+  public checkAuth() {
+    return this.http.get<Response_checkAuth>(
+      `${this.SERVER_URL}/auth/check-auth`,
+      { withCredentials: true }
+    );
+  }
 
   public setInputErrorMessage(
     field: string,
@@ -50,12 +58,5 @@ export class UserService {
     } else {
       inputError[field] = "";
     }
-  }
-
-  public signIn(email: string, password: string) {
-    return this.http.post<any>(`${this.SERVER_URL}/auth/sign-in`, {
-      email,
-      password,
-    });
   }
 }

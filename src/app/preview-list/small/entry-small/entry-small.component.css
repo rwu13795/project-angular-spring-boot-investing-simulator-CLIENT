@@ -69,16 +69,6 @@ main {
   }
 }
 
-@media screen and (max-width: 1200px) {
-  .wrapper::before {
-    display: none;
-  }
-  .wrapper:hover {
-    color: var(--main-400);
-    transition: all 0.3s;
-  }
-}
-
 @media screen and (max-width: 930px) {
   .wrapper {
     grid-template-columns: min(64px, 8vw) min(94px, 15vw);

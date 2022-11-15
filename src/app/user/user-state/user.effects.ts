@@ -11,12 +11,12 @@ import * as actions from "./user.actions";
 export class UserEffects {
   private SERVER_URL = environment.SERVER_URL;
 
-  public checkUserAuth = createEffect(() =>
+  public getUserInfo = createEffect(() =>
     this.actions$.pipe(
-      ofType(actions.checkAuth),
+      ofType(actions.getUserInfo),
       switchMap(() => {
         return this.http
-          .get<UserAccount>(`${this.SERVER_URL}/auth/check-auth`, {
+          .get<UserAccount>(`${this.SERVER_URL}/auth/get-user-info`, {
             withCredentials: true,
           })
           .pipe(

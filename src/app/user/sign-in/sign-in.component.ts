@@ -6,6 +6,7 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { Validators, FormBuilder } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
@@ -19,9 +20,8 @@ import {
   Response_authError,
 } from "../user-models";
 import {
-  checkAuth,
   clearAuthError,
-  fetchPortfolio,
+  setLoadingStatus_user,
   signIn,
 } from "../user-state/user.actions";
 import {
@@ -64,9 +64,10 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
 
   private authError$?: Subscription;
   private hasAuth$?: Subscription;
+  private loadingStatus$?: Subscription;
   public hasAuth: boolean = false;
   public account = this.store.select(selectUserAccount);
-  public loadingStatus = this.store.select(selectLoadingStatus_user);
+  public loadingStatus: LoadingStatus_user = LoadingStatus_user.idle;
   public authErrors: AuthErrorInField = {
     [InputFieldNames.email]: null,
     [InputFieldNames.password]: null,
@@ -76,7 +77,8 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -88,8 +90,11 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
       console.log("select hasAuth", hasAuth);
       this.hasAuth = hasAuth;
       if (!hasAuth) return;
-      this.store.dispatch(fetchPortfolio());
+      this.router.navigate(["/"]);
     });
+    this.loadingStatus$ = this.store
+      .select(selectLoadingStatus_user)
+      .subscribe((status) => (this.loadingStatus = status));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -104,17 +109,15 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
     return LoadingStatus_user;
   }
 
-  checkAuth() {
-    console.log("checking auth");
-    this.store.dispatch(checkAuth());
-  }
-
   onSubmit() {
     const { email, password } = this.signInForm.value;
 
     const hasError = this.onSubmitErrorCheck();
     if (hasError || !email || !password) return;
 
+    this.store.dispatch(
+      setLoadingStatus_user({ status: LoadingStatus_user.loading_auth })
+    );
     this.store.dispatch(signIn({ email, password }));
   }
 
@@ -157,15 +160,9 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     if (this.authError$) this.authError$.unsubscribe();
     if (this.hasAuth$) this.hasAuth$.unsubscribe();
+    if (this.loadingStatus$) this.loadingStatus$.unsubscribe();
+    setLoadingStatus_user({ status: LoadingStatus_user.idle });
   }
-
-  // custom validator
-  //   forbiddenNames(control: FormControl): { [s: string]: boolean } | null {
-  //     if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
-  //       return { nameIsForbidden: true };
-  //     }
-  //     return null;
-  //   }
 }
 
 /*
@@ -183,3 +180,11 @@ means that the field won't check the validity. I need to manually mark
 all the fields as "touched" and check the validity
 
 */
+
+// custom validator
+//   forbiddenNames(control: FormControl): { [s: string]: boolean } | null {
+//     if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+//       return { nameIsForbidden: true };
+//     }
+//     return null;
+//   }

@@ -5,7 +5,14 @@
       [value]="inputValue"
       placeholder="Symbol or Name..."
     />
-    <mat-icon class="search" (click)="onSearchStockByName()"> search </mat-icon>
+    <div class="search">
+      <div class="loading" *ngIf="loading">
+        <app-loading-spinner [size]="'sm'"></app-loading-spinner>
+      </div>
+      <mat-icon *ngIf="!loading" (click)="onSearchStockByName()">
+        search
+      </mat-icon>
+    </div>
 
     <div class="result-anchor">
       <div
@@ -36,11 +43,6 @@
       >
         <div class="no-result">
           Could not find any result associated with: "{{ inputValue }}"
-        </div>
-      </div>
-      <div class="result-list" *ngIf="loading">
-        <div class="loading">
-          <app-loading-spinner [size]="'sm'"></app-loading-spinner>
         </div>
       </div>
     </div>

@@ -8,7 +8,11 @@ import { PreviewListLargeComponent } from "./preview-list/large/preview-list-lar
 import { Page404Component } from "./shared/page-404/page-404.component";
 
 const routes: Routes = [
-  { path: "", pathMatch: "full", component: HomeComponent },
+  {
+    path: "",
+    pathMatch: "full",
+    component: HomeComponent,
+  },
 
   {
     path: "stock",

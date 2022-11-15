@@ -46,9 +46,8 @@ export class StockGuard implements CanActivate {
       .select(selectCurrentSymbol)
       .pipe(
         take(1),
-        tap((previousSymbol) => {
+        map((previousSymbol) => {
           if (previousSymbol !== symbol) {
-            console.log("clearing stock state", previousSymbol, symbol);
             this.store.dispatch(clearStockState());
           }
         })
@@ -61,11 +60,8 @@ export class StockGuard implements CanActivate {
       take(1),
       map<Response_quoteShort[], boolean | UrlTree>((data) => {
         if (data.length === 0) {
-          console.log("no-result");
           return this.router.createUrlTree([`/no-result/stock/${symbol}`]);
         }
-
-        console.log("stock guard----------");
 
         // If the symbol exists, then set the symbol in store
         this.store.dispatch(setCurrentSymbol({ symbol }));
@@ -74,7 +70,7 @@ export class StockGuard implements CanActivate {
           .select(selectCompanyProfile)
           .pipe(
             take(1),
-            tap((profile) => {
+            map((profile) => {
               // fetch the company profile only if it is not in the store,
 
               // Also, only fetch the "fetchAllChangePercentage" once, since the
@@ -90,7 +86,7 @@ export class StockGuard implements CanActivate {
               }
             })
           )
-          .subscribe();
+          .subscribe(); // for the selector
         return true;
       })
     );

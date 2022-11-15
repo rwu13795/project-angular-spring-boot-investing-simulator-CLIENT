@@ -1,7 +1,7 @@
 import { createAction, props } from "@ngrx/store";
-import { AuthError, UserAccount } from "../user-models";
+import { AuthError, LoadingStatus_user, UserAccount } from "../user-models";
 
-export const checkAuth = createAction("[User] Check Authentication");
+export const getUserInfo = createAction("[User] Check User Authentication");
 
 export const setAuth = createAction(
   "[User] Set Authentication",
@@ -35,4 +35,9 @@ export const fetchPortfolio = createAction("[User] Fetch Portfolio");
 export const setPortfolio = createAction(
   "[User] Sst Portfolio",
   props<{ portfolio: string }>()
+);
+
+export const setLoadingStatus_user = createAction(
+  "[User] Sst Loading Status User",
+  props<{ status: LoadingStatus_user }>()
 );

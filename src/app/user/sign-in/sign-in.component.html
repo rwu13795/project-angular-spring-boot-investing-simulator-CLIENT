@@ -1,4 +1,11 @@
 <main>
+  <div class="title">USER SIGN IN</div>
+  <app-gradient-break
+    [height]="8"
+    [type]="2"
+    [marginBottom]="30"
+  ></app-gradient-break>
+
   <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
     <div class="input-container">
       <div class="form-group input-wrapper">
@@ -64,13 +71,42 @@
       </div>
     </div>
 
-    <button type="submit">Sign In</button>
+    <div class="buttons-group">
+      <div class="reset-link">Forgot password?</div>
+      <app-custom-button
+        style="margin-right: 4px"
+        [height]="30"
+        [width]="140"
+        [fontSize]="18"
+        [bold]="true"
+        type="submit"
+        text="SIGN IN"
+        [disabled]="loadingStatus === LoadingStatus_user.loading_auth"
+      ></app-custom-button>
+    </div>
   </form>
 
-  <button><div [routerLink]="['/user/sign-up']">To Sign Up</div></button>
+  <app-gradient-break
+    [height]="8"
+    [type]="2"
+    [marginBottom]="30"
+  ></app-gradient-break>
 
-  <div>Loading status: {{ loadingStatus | async }}</div>
+  <div class="to-sign-up">
+    <span>New user?</span>
+    <app-custom-button
+      [routerLink]="['/user/sign-up']"
+      [height]="30"
+      [width]="240"
+      [fontSize]="18"
+      [bold]="true"
+      type="submit"
+      text="CREATE NEW ACCOUNT"
+    ></app-custom-button>
+  </div>
+
+  <div>Loading status: {{ loadingStatus }}</div>
   <div>User is authenticate: {{ hasAuth }}</div>
-  <div><button (click)="checkAuth()">check auth</button></div>
+
   <div>portfolio: {{ portfolio | async }}</div>
 </main>

@@ -1,11 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import produce from "immer";
-import {
-  AuthError,
-  LoadingStatus_user,
-  Response_authError,
-  UserAccount,
-} from "../user-models";
+import { AuthError, LoadingStatus_user, UserAccount } from "../user-models";
 
 import * as actions from "./user.actions";
 
@@ -32,6 +27,7 @@ export const userReducer = createReducer(
     produce(state, (draft) => {
       if (!hasAuth) draft.loadingStatus = LoadingStatus_user.failed_auth;
       draft.hasAuth = hasAuth;
+      draft.loadingStatus = LoadingStatus_user.idle;
     })
   ),
 
@@ -39,7 +35,7 @@ export const userReducer = createReducer(
     produce(state, (draft) => {
       draft.account = account;
       draft.hasAuth = true;
-      draft.loadingStatus = LoadingStatus_user.succeeded_auth;
+      draft.loadingStatus = LoadingStatus_user.idle;
     })
   ),
 
@@ -58,6 +54,12 @@ export const userReducer = createReducer(
   on(actions.setPortfolio, (state, { portfolio }) =>
     produce(state, (draft) => {
       draft.portfolio = portfolio;
+    })
+  ),
+
+  on(actions.setLoadingStatus_user, (state, { status }) =>
+    produce(state, (draft) => {
+      draft.loadingStatus = status;
     })
   )
 );

@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { Subscription } from "rxjs";
 import { environment } from "src/environments/environment";
 
@@ -14,6 +20,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   private searchResult$?: Subscription;
   private inputTimer?: any;
 
+  @ViewChild("listRef") listRef?: ElementRef<HTMLDivElement>;
   public inputValue: string = "";
   public searchResult: Response_searchByName[] = [];
   public LOGO_URL = environment.LOGO_URL;
