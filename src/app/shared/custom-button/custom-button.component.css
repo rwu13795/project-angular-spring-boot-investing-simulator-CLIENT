@@ -23,7 +23,7 @@ Also I can change the width, height and etc using the "inputs"
   z-index: 5;
   color: black;
   border-radius: 4px;
-  border: solid 2px var(--main-700);
+  border: solid 2px var(--main-600);
   background-color: var(--main-100);
   transition: all 0.3s;
   cursor: pointer;
@@ -65,7 +65,7 @@ Also I can change the width, height and etc using the "inputs"
   transition: all 0.3s;
 }
 .wrapper:active .front {
-  background-color: var(--main-600);
+  background-color: var(--main-500);
   transform: translateX(0px) translateY(0px);
   transition: all 0.1s;
 }

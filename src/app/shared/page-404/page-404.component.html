@@ -1,8 +1,16 @@
 <main>
-  <h1>Nothing to see here, get lost!</h1>
-  <a [routerLink]="'/'">Back to home page</a>
-
-  <div *ngIf="symbol">
-    Could not find any data for this symbol: "{{ symbol }}"
+  <div *ngIf="!symbol" class="text">Nothing to see here, get lost!</div>
+  <div *ngIf="symbol" class="text">
+    Could not find any result for the symbol: "{{ symbol }}"
   </div>
+
+  <img class="get-lost" src="../../../assets/images/nothing.webp" />
+
+  <app-custom-button
+    [routerLink]="['/']"
+    [width]="240"
+    [height]="34"
+    [fontSize]="20"
+    [text]="'Back to Home Page'"
+  ></app-custom-button>
 </main>

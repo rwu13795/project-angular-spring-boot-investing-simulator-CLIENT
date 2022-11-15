@@ -16,24 +16,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   public inputValue: string = "";
   public searchResult: Response_searchByName[] = [];
-  public selectedExchange: string = "NASDAQ";
   public LOGO_URL = environment.LOGO_URL;
+  public loading: boolean = false;
 
   constructor(private searchService: SearchService) {}
 
   ngOnInit(): void {}
-
-  onSearchStockByName() {
-    this.searchResult$ = this.searchService
-      .searchStockByName(this.inputValue, this.selectedExchange)
-      .subscribe((data) => {
-        this.searchResult = data;
-      });
-  }
-
-  onSelectExchange(value: string) {
-    this.selectedExchange = value;
-  }
 
   onInputChange(event: KeyboardEvent) {
     let value = (event.target as HTMLInputElement).value;
@@ -47,13 +35,19 @@ export class SearchComponent implements OnInit, OnDestroy {
       if (value.toLowerCase() === "google") {
         value = "goog";
       }
-      this.searchResult$ = this.searchService
-        .searchStockByName(value, this.selectedExchange)
-        .subscribe((data) => {
-          this.searchResult = data;
-        });
+      this.onSearchStockByName(value);
       this.inputValue = value;
     }, 800);
+  }
+
+  onSearchStockByName(value: string = this.inputValue) {
+    this.loading = true;
+    this.searchResult$ = this.searchService
+      .searchStockByName(value)
+      .subscribe((data) => {
+        this.searchResult = data;
+        this.loading = false;
+      });
   }
 
   clearResult() {

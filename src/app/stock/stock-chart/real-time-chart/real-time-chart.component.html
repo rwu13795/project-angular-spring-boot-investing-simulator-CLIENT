@@ -1,5 +1,8 @@
 <main>
-  <div class="date">{{ today }}</div>
+  <div class="date">
+    {{ today }}
+    <span *ngIf="isMarketOpen && today" class="real-time-tag">Real-Time</span>
+  </div>
   <div class="chart-box">
     <div id="chart-candlestick" *ngIf="chartCandleOptions">
       <apx-chart

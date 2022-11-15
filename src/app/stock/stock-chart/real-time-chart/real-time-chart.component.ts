@@ -55,11 +55,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild("chartCandle") chartCandle!: ChartComponent;
   @Input() symbol: string = "";
 
-  public chartCandleOptions?: Partial<ChartOptions>;
-  public chartBarOptions?: Partial<ChartOptions>;
-  public loading: boolean = true;
-  public today: string = "";
-
   private data$?: Subscription;
   private data: ChartData = {
     volumes: [],
@@ -74,7 +69,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   private firstRealTime: boolean = true;
   private currentMinVolume = 0;
 
-  private updateTimer?: any;
+  private updateTimer$?: any;
   private newDataAdded: boolean = false;
   private dataUpdated: boolean = false;
   private lastXaxis: number[] = [];
@@ -83,6 +78,13 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   private zoomedLowBound: number = Infinity;
   private isZoomed: boolean = false;
   private scrolledDelayTimer?: any;
+  private timeout$: any;
+
+  public chartCandleOptions?: Partial<ChartOptions>;
+  public chartBarOptions?: Partial<ChartOptions>;
+  public loading: boolean = true;
+  public today: string = "";
+  public isMarketOpen: boolean = false;
 
   constructor(
     private stockService: StockService,
@@ -117,7 +119,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getRealTimePrice() {
-    if (new Date().getUTCHours() - 4 >= 16) return;
+    // if (new Date().getUTCHours() - 4 >= 17) return;
 
     const lastDataPoint = this.data.candles[this.data.candles.length - 1];
     const secondLastDataPoint = this.data.candles[this.data.candles.length - 2];
@@ -204,7 +206,8 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     if (this.data$) this.data$.unsubscribe();
     if (this.realTimePrice$) this.realTimePrice$.unsubscribe();
-    if (this.updateTimer) clearInterval(this.updateTimer);
+    if (this.updateTimer$) clearInterval(this.updateTimer$);
+    if (this.timeout$) clearTimeout(this.timeout$);
   }
 
   /** *************************
@@ -479,17 +482,24 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private setUpdateTimer(): void {
-    if (!this.stockService.isMarketOpened()) return;
+    const isOpen = this.stockService.isMarketOpen();
+    this.isMarketOpen = isOpen;
+    if (!isOpen) return;
 
-    this.updateTimer = setInterval(() => {
-      if (
-        this.updateTimer &&
-        this.realTimePrice$ &&
-        !this.stockService.isMarketOpened()
-      ) {
-        clearInterval(this.updateTimer);
+    this.updateTimer$ = setInterval(() => {
+      const isOpen = this.stockService.isMarketOpen();
+      this.isMarketOpen = isOpen;
+      if (this.updateTimer$ && this.realTimePrice$ && !isOpen) {
+        clearInterval(this.updateTimer$);
         this.realTimePrice$.unsubscribe();
+
         console.log("---------- 4PM market closed! ----------");
+        // after the market is closed, there will be some data points are delayed
+        // fetch the datapoints one more time 30 second after the market is closed
+        this.timeout$ = setTimeout(() => {
+          this.getHistoricalData();
+        }, 30000);
+
         return;
       }
       this.getRealTimePrice();

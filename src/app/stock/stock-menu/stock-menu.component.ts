@@ -44,28 +44,33 @@ export class StockMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.symbol$ = this.store.select(selectCurrentSymbol).subscribe((data) => {
       this.symbol = data;
-      // after getting the symbol from store
-      this.activeMenu$ = this.store
-        .select(selectStockActiveMenu)
-        .subscribe((data) => {
-          this.activeMenu = data;
-          this.showButton = this.activeMenu === StockMenu.chart;
-          // fetch the latest price in every 30s if the current menu is not "chart"
-          if (
-            this.activeMenu !== StockMenu.chart &&
-            this.stockService.isMarketOpened()
-          ) {
-            clearInterval(this.updateTimer);
-            this.updateTimer = setInterval(() => {
-              this.stockService
-                .getRealTimePrice(this.symbol)
-                .pipe(take(1))
-                .subscribe();
-            }, 1000 * 30);
-          } else {
-            console.log("market close || not in chart");
-          }
-        });
+
+      if (data && data !== "") {
+        // after getting the symbol from store
+        this.activeMenu$ = this.store
+          .select(selectStockActiveMenu)
+          .subscribe((data) => {
+            this.activeMenu = data;
+            this.showButton = this.activeMenu === StockMenu.chart;
+
+            // update the price whenever the menu is changed
+            this.updatePrice();
+            // fetch the latest price in every 20s if the current menu is not "chart"
+            if (
+              this.activeMenu !== StockMenu.chart &&
+              this.stockService.isMarketOpen()
+            ) {
+              clearInterval(this.updateTimer);
+              this.updateTimer = setInterval(() => {
+                this.updatePrice();
+              }, 1000 * 20);
+            }
+
+            if (this.activeMenu === StockMenu.chart) {
+              clearInterval(this.updateTimer);
+            }
+          });
+      }
     });
   }
 
@@ -90,6 +95,10 @@ export class StockMenuComponent implements OnInit, OnDestroy {
 
   get StockMenu() {
     return StockMenu;
+  }
+
+  private updatePrice() {
+    this.stockService.getRealTimePrice(this.symbol).pipe(take(1)).subscribe();
   }
 
   ngOnDestroy(): void {

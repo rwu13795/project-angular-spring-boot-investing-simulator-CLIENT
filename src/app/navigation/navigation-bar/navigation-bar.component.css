@@ -83,8 +83,33 @@ main {
   transition: 0.4s all;
 }
 
+.button-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 765px) {
   .logo-wrapper {
-    padding-left: 10px;
+    padding-left: 10%;
+  }
+  .name-wrapper {
+    width: 100px;
+  }
+  .name {
+    font-size: 18px;
+  }
+  .border-wrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  main {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .name-wrapper {
+    display: none;
   }
 }

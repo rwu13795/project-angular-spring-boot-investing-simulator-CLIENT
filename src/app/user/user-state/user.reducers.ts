@@ -20,7 +20,7 @@ export interface UserState {
 const initialState: UserState = {
   loadingStatus: LoadingStatus_user.loading_auth,
   hasAuth: false,
-  account: { id: -1, email: "", fund: 0 },
+  account: { id: -1, email: "", fund: 0, joinedAt: "" },
   authError: null,
   portfolio: "",
 };

@@ -26,7 +26,7 @@ main {
   justify-content: flex-start;
   align-items: center;
   gap: 26px;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
 }
 .logo {
@@ -36,11 +36,20 @@ main {
 }
 
 .name-symbol {
+  width: 100%;
   height: auto;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  line-height: 34px;
 }
 
 .symbol {
-  margin-left: 6px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 22px;
   color: var(--color-dark-grey);
 }
 
@@ -130,5 +139,11 @@ main {
   }
   .price-wrapper .digits-wrapper:nth-child(2) {
     margin-right: 10px;
+  }
+  .name-symbol {
+    line-height: 26px;
+  }
+  .symbol {
+    font-size: min(20px, 4vw);
   }
 }

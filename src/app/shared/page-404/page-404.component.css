@@ -1,0 +1,22 @@
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.text {
+  line-height: 40px;
+  max-width: 500px;
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.get-lost {
+  max-height: 500px;
+  border-radius: 6px;
+  border: 4px solid var(--main-600);
+  object-fit: contain;
+}

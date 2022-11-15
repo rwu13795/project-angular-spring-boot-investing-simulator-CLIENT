@@ -11,5 +11,16 @@
     </div>
   </div>
   <app-search></app-search>
-  <div>Auth</div>
+  <div class="button-wrapper">
+    <!-- <div style="margin-top: 4px">
+      <app-custom-button
+        [width]="isSmallScreen ? 60 : 100"
+        [height]="isSmallScreen ? 28 : 32"
+        text="SIGN IN"
+        [fontSize]="isSmallScreen ? 12 : 18"
+        [bold]="true"
+      ></app-custom-button>
+    </div> -->
+    <app-account-menu></app-account-menu>
+  </div>
 </main>

@@ -1,0 +1,56 @@
+.acct-menu-button {
+  height: 36px;
+  width: 130px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  border: solid 2px var(--main-600);
+  background-color: var(--main-100);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.acct-menu-button:hover {
+  background-color: var(--main-500);
+  transition: all 0.3s;
+}
+.acct-menu-container {
+  border-radius: 4px;
+  padding: 0 4px;
+  border: solid 2px var(--main-600);
+}
+.acct-menu-item {
+  min-height: 40px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+.acct-menu-item:hover {
+  background-color: var(--main-200);
+}
+.acct-menu-item:last-child:hover {
+  background-color: var(--color-negative-1);
+}
+.break-line {
+  background-color: var(--main-600);
+  min-height: 0px;
+  height: 0px;
+}
+
+@media screen and (max-width: 600px) {
+  .acct-menu-button {
+    height: 32px;
+    width: 90px;
+    font-size: 12px;
+  }
+  .acct-menu-item {
+    min-height: 30px;
+    font-size: 14px;
+  }
+  .break-line {
+    min-height: 0px;
+  }
+}

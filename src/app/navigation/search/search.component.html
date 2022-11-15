@@ -1,14 +1,5 @@
 <main>
   <div class="search-wrapper">
-    <select
-      #option
-      (change)="onSelectExchange(option.value)"
-      (click)="clearResult()"
-    >
-      <option value="NASDAQ">NASDAQ</option>
-      <option value="NYSE">NYSE</option>
-    </select>
-
     <input
       (keyup)="onInputChange($event)"
       [value]="inputValue"
@@ -43,9 +34,20 @@
         class="result-list"
         *ngIf="searchResult.length === 0 && inputValue !== ''"
       >
-        No result
+        <div class="no-result">
+          Could not find any result associated with: "{{ inputValue }}"
+        </div>
+      </div>
+      <div class="result-list" *ngIf="loading">
+        <div class="loading">
+          <app-loading-spinner [size]="'sm'"></app-loading-spinner>
+        </div>
       </div>
     </div>
   </div>
-  <div class="backdrop" *ngIf="inputValue !== ''" (click)="clearResult()"></div>
+  <div
+    class="backdrop"
+    *ngIf="inputValue !== '' || searchResult.length > 0"
+    (click)="clearResult()"
+  ></div>
 </main>

@@ -134,17 +134,26 @@ export class StockService {
     return this.storedChartData[option];
   }
 
-  public isMarketOpened(): boolean {
+  public isMarketOpen(): boolean {
     const UTCHours = new Date().getUTCHours();
     const UTCMinutes = new Date().getUTCMinutes();
     const UTCday = new Date().getUTCDay();
 
     if (UTCday === 6 || UTCday === 0) return false;
 
-    if (UTCHours < 13 || UTCHours >= 20) {
+    // ----------- for daylight saving ----------- //
+    /*
+        if (UTCHours < 13 || UTCHours >= 20) {
+          return false;
+        }
+        if (UTCHours >= 13 && UTCHours < 14 && UTCMinutes < 30) {
+          return false;
+        }
+    */
+    if (UTCHours < 14 || UTCHours >= 21) {
       return false;
     }
-    if (UTCHours >= 13 && UTCHours < 14 && UTCMinutes < 30) {
+    if (UTCHours >= 14 && UTCHours < 15 && UTCMinutes < 30) {
       return false;
     }
     return true;
@@ -262,7 +271,7 @@ export class StockService {
         // If the day is NOT a week day, and the time is between 12:00AM and 9:30AM,
         // then I need to fetch the data of yesterday. Otherwise, the api will
         // return data of last 2 days, since there is NO data for the current day yet
-        if (!this.isMarketOpened() && UTCday !== 6 && UTCday !== 0) {
+        if (!this.isMarketOpen() && UTCday !== 6 && UTCday !== 0) {
           const UTCHours = new Date().getUTCHours();
           const UTCMinutes = new Date().getUTCMinutes();
           if (

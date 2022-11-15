@@ -10,6 +10,7 @@ export interface UserAccount {
   id: number;
   email: string;
   fund: number;
+  joinedAt: string;
 }
 
 export interface AuthError {

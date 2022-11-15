@@ -10,11 +10,10 @@ export class SearchService {
 
   constructor(private http: HttpClient) {}
 
-  public searchStockByName(inputValue: string, exchange: string) {
+  public searchStockByName(inputValue: string) {
     const params = new HttpParams({
       fromObject: {
         query: inputValue,
-        exchange,
       },
     });
 

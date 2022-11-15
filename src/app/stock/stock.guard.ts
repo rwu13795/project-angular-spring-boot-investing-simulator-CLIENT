@@ -65,17 +65,27 @@ export class StockGuard implements CanActivate {
           return this.router.createUrlTree([`/no-result/stock/${symbol}`]);
         }
 
+        console.log("stock guard----------");
+
         // If the symbol exists, then set the symbol in store
         this.store.dispatch(setCurrentSymbol({ symbol }));
-        // get the price change percentage
-        this.store.dispatch(fetchAllChangePercentage({ symbol }));
-        // fetch the company profile only if it is not in the store
+
         this.store
           .select(selectCompanyProfile)
           .pipe(
             take(1),
             tap((profile) => {
+              // fetch the company profile only if it is not in the store,
+
+              // Also, only fetch the "fetchAllChangePercentage" once, since the
+              // data is delayed and only used for the historical chart
+              // If I keep fetching it in the guard, it will change the current latest
+              // price and changes when user navigate between the stock menu
+
+              // the latest price and changes will be fetched in the stock-menu
+              // in every 20 second if the current component is not stock-chart
               if (!profile) {
+                this.store.dispatch(fetchAllChangePercentage({ symbol }));
                 this.store.dispatch(fetchCompanyProfile({ symbol }));
               }
             })
