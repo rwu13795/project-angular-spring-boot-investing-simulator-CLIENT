@@ -88,3 +88,7 @@ Also I can change the width, height and etc using the "inputs"
 .active {
   background-color: var(--main-600);
 }
+
+.text {
+  animation: fadeIn 1s;
+}

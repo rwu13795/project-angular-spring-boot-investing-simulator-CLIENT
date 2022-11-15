@@ -42,13 +42,8 @@ export class UserEffects {
         return this.http
           .post<UserAccount>(
             `${this.SERVER_URL}/auth/sign-in`,
-            {
-              email,
-              password,
-            },
-            {
-              withCredentials: true,
-            }
+            { email, password },
+            { withCredentials: true }
           )
           .pipe(
             map((data) => {
@@ -58,6 +53,51 @@ export class UserEffects {
               console.log(errorRes);
               // need to wrap error-handling action inside the of() to return
               // an observable
+              return of(actions.setAuthError({ authError: errorRes.error }));
+            })
+          );
+      })
+    )
+  );
+
+  public userSignUp = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.signUp),
+      switchMap(({ email, password, confirmPassword }) => {
+        return this.http
+          .post<UserAccount>(
+            `${this.SERVER_URL}/auth/sign-up`,
+            { email, password, confirmPassword },
+            { withCredentials: true }
+          )
+          .pipe(
+            map((data) => {
+              return actions.setUserAccount({ account: data });
+            }),
+            catchError((errorRes: Response_authError) => {
+              console.log(errorRes);
+              return of(actions.setAuthError({ authError: errorRes.error }));
+            })
+          );
+      })
+    )
+  );
+
+  public userSignOut = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.signOut),
+      switchMap(() => {
+        return this.http
+          .get<{ text: string }>(`${this.SERVER_URL}/auth/sign-out`, {
+            withCredentials: true,
+          })
+          .pipe(
+            map(({ text }) => {
+              console.log(text);
+              return actions.removeUserAuth();
+            }),
+            catchError((errorRes: Response_authError) => {
+              console.log(errorRes);
               return of(actions.setAuthError({ authError: errorRes.error }));
             })
           );

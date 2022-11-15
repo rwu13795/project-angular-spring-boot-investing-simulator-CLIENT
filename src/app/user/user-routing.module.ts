@@ -15,7 +15,11 @@ const routes: Routes = [
     children: [
       { path: "", component: SignInComponent, canActivate: [UserGuard] },
       { path: "sign-in", component: SignInComponent, canActivate: [UserGuard] },
-      { path: "sign-up", component: SignUpComponent, canActivate: [UserGuard] },
+      {
+        path: "sign-up",
+        component: SignUpComponent,
+        // ,canActivate: [UserGuard]
+      },
       {
         path: "portfolio",
         component: PortfolioComponent,

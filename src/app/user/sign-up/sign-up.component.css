@@ -1,0 +1,35 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  max-width: 800px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.background {
+  margin-top: 40px;
+  max-width: 500px;
+  object-fit: contain;
+}
+
+.buttons-group {
+  width: 400px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.to-sign-in {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 24px;
+}

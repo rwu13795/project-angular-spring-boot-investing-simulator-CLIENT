@@ -94,15 +94,6 @@ main {
   animation: fadeIn 1s;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @media screen and (max-width: 765px) {
   .logo-wrapper {
     padding-left: 10%;

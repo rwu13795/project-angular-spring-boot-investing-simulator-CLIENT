@@ -41,6 +41,10 @@ export const userReducer = createReducer(
 
   on(actions.setAuthError, (state, { authError }) =>
     produce(state, (draft) => {
+      if (authError) {
+        // to prolong the loading button animation, to prevent some ugly flashing
+        draft.loadingStatus = LoadingStatus_user.failed_auth;
+      }
       draft.authError = authError;
     })
   ),
@@ -60,6 +64,14 @@ export const userReducer = createReducer(
   on(actions.setLoadingStatus_user, (state, { status }) =>
     produce(state, (draft) => {
       draft.loadingStatus = status;
+    })
+  ),
+
+  on(actions.removeUserAuth, (state) =>
+    produce(state, (draft) => {
+      draft.account = { id: -1, email: "", fund: 0, joinedAt: "" };
+      draft.hasAuth = false;
+      draft.loadingStatus = LoadingStatus_user.idle;
     })
   )
 );

@@ -100,13 +100,11 @@
       [width]="240"
       [fontSize]="18"
       [bold]="true"
-      type="submit"
+      type="button"
       text="CREATE NEW ACCOUNT"
+      [disabled]="loadingStatus === LoadingStatus_user.loading_auth"
     ></app-custom-button>
   </div>
 
-  <div>Loading status: {{ loadingStatus }}</div>
-  <div>User is authenticate: {{ hasAuth }}</div>
-
-  <div>portfolio: {{ portfolio | async }}</div>
+  <img class="background" src="../../../assets/images/background_2.webp" />
 </main>

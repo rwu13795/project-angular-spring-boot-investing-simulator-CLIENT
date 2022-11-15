@@ -6,6 +6,10 @@ export interface InputFieldTouched {
   [field: string]: boolean;
 }
 
+export interface AuthErrorInField {
+  [field: string]: AuthError | null;
+}
+
 export interface UserAccount {
   id: number;
   email: string;

@@ -13,6 +13,7 @@ import { AppState } from "src/app/ngrx-store/app.reducer";
 
 import {
   AuthError,
+  AuthErrorInField,
   InputField,
   InputFieldNames,
   InputFieldTouched,
@@ -33,16 +34,12 @@ import {
 } from "../user-state/user.selectors";
 import { UserService } from "../user.service";
 
-interface AuthErrorInField {
-  [field: string]: AuthError | null;
-}
-
 @Component({
   selector: "app-user-sign-in",
   templateUrl: "./sign-in.component.html",
-  styleUrls: ["./sign-in.component.css"],
+  styleUrls: ["./sign-in.component.css", "../user.common.css"],
 })
-export class SignInComponent implements OnInit, OnDestroy, OnChanges {
+export class SignInComponent implements OnInit, OnDestroy {
   public inputError: InputField = {
     [InputFieldNames.email]: "",
     [InputFieldNames.password]: "",
@@ -66,13 +63,11 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
   private hasAuth$?: Subscription;
   private loadingStatus$?: Subscription;
   public hasAuth: boolean = false;
-  public account = this.store.select(selectUserAccount);
   public loadingStatus: LoadingStatus_user = LoadingStatus_user.idle;
   public authErrors: AuthErrorInField = {
     [InputFieldNames.email]: null,
     [InputFieldNames.password]: null,
   };
-  public portfolio = this.store.select(selectPortfolio);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -90,15 +85,11 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
       console.log("select hasAuth", hasAuth);
       this.hasAuth = hasAuth;
       if (!hasAuth) return;
-      this.router.navigate(["/"]);
+      this.router.navigate(["/user/portfolio"]);
     });
     this.loadingStatus$ = this.store
       .select(selectLoadingStatus_user)
       .subscribe((status) => (this.loadingStatus = status));
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
 
   get InputFieldNames() {
@@ -161,7 +152,9 @@ export class SignInComponent implements OnInit, OnDestroy, OnChanges {
     if (this.authError$) this.authError$.unsubscribe();
     if (this.hasAuth$) this.hasAuth$.unsubscribe();
     if (this.loadingStatus$) this.loadingStatus$.unsubscribe();
-    setLoadingStatus_user({ status: LoadingStatus_user.idle });
+    this.store.dispatch(
+      setLoadingStatus_user({ status: LoadingStatus_user.idle })
+    );
   }
 }
 
