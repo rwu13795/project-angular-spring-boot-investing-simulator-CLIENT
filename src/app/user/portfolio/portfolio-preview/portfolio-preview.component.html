@@ -1,16 +1,62 @@
 <main>
   <div class="title">Portfolio</div>
   <app-gradient-break [height]="8" [marginBottom]="16"></app-gradient-break>
-  <div>
-    <div>
-      <app-custom-button><div>Sign In</div></app-custom-button> to manage your
-      Portfolio
-    </div>
-    <div></div>
-    <div>
-      New user?
-      <app-custom-button><div>Create An Account</div></app-custom-button> and
-      start investing!
+
+  <div class="content-wrapper">
+    <div class="content">
+      <div
+        class="no-auth"
+        *ngIf="
+          (loadingStatus$ | async) !== LoadingStatus.loading_auth &&
+          !(hasAuth$ | async)
+        "
+      >
+        <div class="sign-in">
+          <app-custom-button
+            text="Sign In"
+            [height]="28"
+            [width]="80"
+            [fontSize]="16"
+            (click)="openSignInModal()"
+          ></app-custom-button>
+          to manage your portfolio
+        </div>
+
+        <div class="sign-up">
+          New user?
+          <app-custom-button
+            [routerLink]="['/user/sign-up']"
+            text="Create An Account"
+            [height]="28"
+            [width]="180"
+            [fontSize]="16"
+          ></app-custom-button>
+          and start investing!
+        </div>
+      </div>
+
+      <div
+        class="preview"
+        *ngIf="
+          (loadingStatus$ | async) !== LoadingStatus.loading_auth &&
+          (hasAuth$ | async)
+        "
+      >
+        <div>Available fund --------</div>
+        <div>unrealized gain/loss --------</div>
+        <div>realized gain/loss --------</div>
+        <app-custom-button
+          [routerLink]="['/user/portfolio']"
+          text="Detail"
+          [height]="28"
+          [width]="80"
+          [fontSize]="16"
+        ></app-custom-button>
+      </div>
+
+      <app-loading-spinner
+        *ngIf="(loadingStatus$ | async) === LoadingStatus.loading_auth"
+      ></app-loading-spinner>
     </div>
   </div>
 </main>

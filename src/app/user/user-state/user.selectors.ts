@@ -25,3 +25,10 @@ export const selectAuthError = createSelector(selectUserState, (state) => {
 export const selectPortfolio = createSelector(selectUserState, (state) => {
   return state.portfolio;
 });
+
+export const selectSignInModalOpen = createSelector(
+  selectUserState,
+  (state) => {
+    return state.isSignInModalOpen;
+  }
+);

@@ -1,0 +1,6 @@
+<main *ngIf="isOpen$ | async">
+  <div class="backdrop" (click)="closeModal()"></div>
+  <div class="content-wrapper">
+    <app-user-sign-in [showImage]="false"></app-user-sign-in>
+  </div>
+</main>

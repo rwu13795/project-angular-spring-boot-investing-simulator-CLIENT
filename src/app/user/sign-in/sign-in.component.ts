@@ -1,5 +1,6 @@
 import {
   Component,
+  Input,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -24,6 +25,7 @@ import {
   clearAuthError,
   setLoadingStatus_user,
   signIn,
+  toggleSignInModal,
 } from "../user-state/user.actions";
 import {
   selectAuthError,
@@ -62,6 +64,8 @@ export class SignInComponent implements OnInit, OnDestroy {
   private authError$?: Subscription;
   private hasAuth$?: Subscription;
   private loadingStatus$?: Subscription;
+
+  @Input() showImage: boolean = true;
   public hasAuth: boolean = false;
   public loadingStatus: LoadingStatus_user = LoadingStatus_user.idle;
   public authErrors: AuthErrorInField = {
@@ -82,10 +86,10 @@ export class SignInComponent implements OnInit, OnDestroy {
       this.authErrors[data.field] = data;
     });
     this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
-      console.log("select hasAuth", hasAuth);
       this.hasAuth = hasAuth;
       if (!hasAuth) return;
       this.router.navigate(["/user/portfolio"]);
+      this.closeSignInModal();
     });
     this.loadingStatus$ = this.store
       .select(selectLoadingStatus_user)
@@ -130,6 +134,10 @@ export class SignInComponent implements OnInit, OnDestroy {
     if (!control) return;
     this.inputTouched[field] = true;
     this.userService.setInputErrorMessage(field, this.inputError, control);
+  }
+
+  closeSignInModal() {
+    this.store.dispatch(toggleSignInModal({ open: false }));
   }
 
   private onSubmitErrorCheck() {

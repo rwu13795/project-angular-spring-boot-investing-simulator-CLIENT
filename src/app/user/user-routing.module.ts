@@ -7,6 +7,7 @@ import { SignUpComponent } from "./sign-up/sign-up.component";
 import { UserGuard } from "./guards/user.guard";
 import { AuthGuard } from "./guards/auth.guard";
 import { PortfolioComponent } from "./portfolio/portfolio.component";
+import { UserProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -18,11 +19,16 @@ const routes: Routes = [
       {
         path: "sign-up",
         component: SignUpComponent,
-        // ,canActivate: [UserGuard]
+        canActivate: [UserGuard],
       },
       {
         path: "portfolio",
         component: PortfolioComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "profile",
+        component: UserProfileComponent,
         canActivate: [AuthGuard],
       },
     ],

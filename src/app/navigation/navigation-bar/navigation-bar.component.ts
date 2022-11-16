@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { LoadingStatus_user } from "src/app/user/user-models";
+import { toggleSignInModal } from "src/app/user/user-state/user.actions";
 import {
   selectHasAuth,
   selectLoadingStatus_user,
@@ -31,6 +32,10 @@ export class NavigationBarComponent implements OnInit {
         if (state.matches) this.isSmallScreen = true;
         else this.isSmallScreen = false;
       });
+  }
+
+  openModal() {
+    this.store.dispatch(toggleSignInModal({ open: true }));
   }
 
   get LoadingStatus() {

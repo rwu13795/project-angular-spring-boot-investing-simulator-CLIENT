@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import {
   Validators,
   FormBuilder,
@@ -21,6 +27,7 @@ import {
   signIn,
   clearAuthError,
   signUp,
+  toggleSignInModal,
 } from "../user-state/user.actions";
 import {
   selectAuthError,
@@ -86,7 +93,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
       this.authErrors[data.field] = data;
     });
     this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
-      console.log("------------sign up success------------");
       this.hasAuth = hasAuth;
       if (!hasAuth) return;
       this.router.navigate(["/user/portfolio"]);
@@ -111,7 +117,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
     const hasError = this.onSubmitErrorCheck();
 
-    console.log("hasError", hasError);
     if (hasError || !email || !password || !confirm_password) return;
 
     this.store.dispatch(

@@ -3,7 +3,7 @@
 </button>
 <mat-menu #menu="matMenu" class="acct-menu-container" xPosition="before">
   <div class="acct-menu-item" [routerLink]="['/user/portfolio']">Portfolio</div>
-  <div class="acct-menu-item">Profile</div>
+  <div class="acct-menu-item" [routerLink]="['/user/profile']">Profile</div>
   <div class="acct-menu-item break-line"></div>
   <div class="acct-menu-item" (click)="signOut()">Sign Out</div>
 </mat-menu>

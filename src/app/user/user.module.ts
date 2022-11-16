@@ -10,6 +10,8 @@ import { SignInComponent } from "./sign-in/sign-in.component";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { PortfolioPreviewComponent } from "./portfolio/portfolio-preview/portfolio-preview.component";
 import { PortfolioComponent } from "./portfolio/portfolio.component";
+import { SignInModalComponent } from "./sign-in/sign-in-modal/sign-in-modal.component";
+import { UserProfileComponent } from "./profile/profile.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { PortfolioComponent } from "./portfolio/portfolio.component";
     SignUpComponent,
     PortfolioPreviewComponent,
     PortfolioComponent,
+    SignInModalComponent,
+    UserProfileComponent,
   ],
   imports: [
     RouterModule,
@@ -32,6 +36,8 @@ import { PortfolioComponent } from "./portfolio/portfolio.component";
     SignUpComponent,
     PortfolioPreviewComponent,
     PortfolioComponent,
+    SignInModalComponent,
+    UserProfileComponent,
   ],
 })
 export class UserModule {}

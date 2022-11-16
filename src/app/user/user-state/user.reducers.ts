@@ -10,6 +10,7 @@ export interface UserState {
   account: UserAccount;
   authError: AuthError | null;
   portfolio: string;
+  isSignInModalOpen: boolean;
 }
 
 const initialState: UserState = {
@@ -18,6 +19,7 @@ const initialState: UserState = {
   account: { id: -1, email: "", fund: 0, joinedAt: "" },
   authError: null,
   portfolio: "",
+  isSignInModalOpen: false,
 };
 
 export const userReducer = createReducer(
@@ -72,6 +74,12 @@ export const userReducer = createReducer(
       draft.account = { id: -1, email: "", fund: 0, joinedAt: "" };
       draft.hasAuth = false;
       draft.loadingStatus = LoadingStatus_user.idle;
+    })
+  ),
+
+  on(actions.toggleSignInModal, (state, { open }) =>
+    produce(state, (draft) => {
+      draft.isSignInModalOpen = open;
     })
   )
 );

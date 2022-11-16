@@ -103,8 +103,13 @@
       type="button"
       text="CREATE NEW ACCOUNT"
       [disabled]="loadingStatus === LoadingStatus_user.loading_auth"
+      (click)="closeSignInModal()"
     ></app-custom-button>
   </div>
 
-  <img class="background" src="../../../assets/images/background_2.webp" />
+  <img
+    *ngIf="showImage"
+    class="background"
+    src="../../../assets/images/background_2.webp"
+  />
 </main>

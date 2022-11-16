@@ -45,3 +45,8 @@ export const setLoadingStatus_user = createAction(
   "[User] Set Loading Status User",
   props<{ status: LoadingStatus_user }>()
 );
+
+export const toggleSignInModal = createAction(
+  "[User] Toggle Sign In Modal",
+  props<{ open: boolean }>()
+);
