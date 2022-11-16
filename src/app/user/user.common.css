@@ -102,3 +102,9 @@ form {
 .auth-error-span-box {
   background-color: #dda3a6 !important;
 }
+
+@media screen and (max-width: 765px) {
+  .input-container {
+    width: min(90vw, 400px);
+  }
+}

@@ -41,8 +41,27 @@ main {
 .to-sign-up {
   width: 400px;
   display: flex;
+  flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
   gap: 6px;
   font-size: 24px;
+}
+
+@media screen and (max-width: 765px) {
+  .background {
+    margin-top: 30px;
+    max-width: min(90vw, 400px);
+  }
+  .buttons-group {
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 14px;
+    width: min(90vw, 400px);
+  }
+  .to-sign-up {
+    width: min(90vw, 400px);
+    flex-flow: row wrap;
+    font-size: 20px;
+  }
 }
