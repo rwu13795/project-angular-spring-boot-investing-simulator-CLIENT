@@ -18,7 +18,6 @@ import {
   ApexXAxis,
   ApexTooltip,
   ApexMarkers,
-  ApexAnnotations,
   ApexStroke,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";

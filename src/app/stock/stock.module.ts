@@ -24,6 +24,8 @@ import { StockPriceComponent } from "./stock-price/stock-price.component";
 import { StockRoutingModule } from "./stock-routing.module";
 import { StockComponent } from "./stock.component";
 import { AssetDetailComponent } from "./asset-detail/asset-detail.component";
+import { OverallChartComponent } from "./stock-chart/overall-chart/overall-chart.component";
+import { ColumnChartComponent } from "./stock-chart/column-chart/column-chart.component";
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AssetDetailComponent } from "./asset-detail/asset-detail.component";
     RevenueChartComponent,
     AreaChartComponent,
     StockChartComponent,
+    OverallChartComponent,
+    ColumnChartComponent,
     StockMenuComponent,
     StockComponent,
     FinancialSummaryComponent,

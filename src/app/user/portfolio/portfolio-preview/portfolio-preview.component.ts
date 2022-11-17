@@ -32,6 +32,10 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
   public loadingStatus$ = this.store.select(selectLoadingStatus_user);
   public hasAuth: boolean = false;
   public portfolio: Response_Portfolio | null = null;
+  public realized: number = 0;
+  public unrealized: number = 0;
+  public isPositiveRealized = true;
+  public isPositiveUnrealized = true;
 
   constructor(private store: Store<AppState>) {}
 
@@ -50,6 +54,14 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
       .select(selectPortfolio)
       .subscribe((portfolio) => {
         this.portfolio = portfolio;
+        this.realized =
+          portfolio.account.totalRealizedGainLoss +
+          portfolio.account.totalRealizedGainLoss_shortSelling;
+        this.unrealized =
+          portfolio.account.totalUnrealizedGainLoss +
+          portfolio.account.totalUnrealizedGainLoss_shortSelling;
+        this.isPositiveRealized = this.realized >= 0;
+        this.isPositiveUnrealized = this.unrealized >= 0;
       });
   }
 
@@ -59,6 +71,14 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
 
   get LoadingStatus() {
     return LoadingStatus_user;
+  }
+
+  toFixedLocale(number: number) {
+    const temp = number >= 0 ? number : number * -1;
+    return temp.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }
 
   ngOnDestroy(): void {

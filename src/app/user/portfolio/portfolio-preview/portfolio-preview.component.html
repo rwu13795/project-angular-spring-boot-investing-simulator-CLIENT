@@ -40,30 +40,47 @@
           (loadingStatus$ | async) !== LoadingStatus.loading_auth && hasAuth
         "
       >
-        <div *ngIf="portfolio">
-          <div>Available fund {{ portfolio.account.fund }}</div>
-          <div>
-            unrealized gain/loss {{ portfolio.account.totalUnrealizedGainLoss }}
+        <div *ngIf="portfolio" class="preview-content">
+          <div class="row-wrapper">
+            <div>
+              Available Fund
+              <span class="number"
+                >${{ toFixedLocale(portfolio.account.fund) }}</span
+              >
+            </div>
+            <app-custom-button
+              [routerLink]="['/user/portfolio']"
+              text="Detail"
+              [height]="28"
+              [width]="80"
+              [fontSize]="16"
+            ></app-custom-button>
           </div>
-          <div>
-            unrealized gain/loss short selling
-            {{ portfolio.account.totalUnrealizedGainLoss_shortSelling }}
-          </div>
-          <div>
-            realized gain/loss {{ portfolio.account.totalRealizedGainLoss }}
-          </div>
-          <div>
-            realized gain/loss _shortSelling
-            {{ portfolio.account.totalRealizedGainLoss_shortSelling }}
+          <div class="row-wrapper">
+            <div>
+              Overall <strong>Realized </strong>
+              <span [ngClass]="isPositiveRealized ? 'positive' : 'negative'"
+                >{{ isPositiveRealized ? "Gain " : "Loss " }}
+                <span class="number"
+                  >{{ isPositiveRealized ? "+" : "-" }}${{
+                    toFixedLocale(realized)
+                  }}</span
+                ></span
+              >
+            </div>
+            <div>
+              Overall <strong>Unrealized </strong>
+              <span [ngClass]="isPositiveUnrealized ? 'positive' : 'negative'"
+                >{{ isPositiveUnrealized ? "Gain " : "Loss " }}
+                <span class="number"
+                  >{{ isPositiveUnrealized ? "+" : "-" }}${{
+                    toFixedLocale(unrealized)
+                  }}</span
+                ></span
+              >
+            </div>
           </div>
         </div>
-        <app-custom-button
-          [routerLink]="['/user/portfolio']"
-          text="Detail"
-          [height]="28"
-          [width]="80"
-          [fontSize]="16"
-        ></app-custom-button>
       </div>
       <app-loading-spinner *ngIf="!portfolio"></app-loading-spinner>
 

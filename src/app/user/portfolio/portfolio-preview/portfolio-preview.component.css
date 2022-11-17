@@ -10,7 +10,7 @@
 }
 .content {
   background-color: var(--main-100);
-  width: 90%;
+  width: 94%;
   min-height: 80px;
   border-radius: 6px;
   border: 2px solid var(--main-600);
@@ -49,6 +49,43 @@
   width: 49%;
 }
 
+.preview {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-content {
+  width: 94%;
+  padding: 20px 0px;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+.row-wrapper {
+  width: 100%;
+  padding: 0px 10px;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.positive {
+  color: var(--color-positive-2);
+}
+.negative {
+  color: var(--color-negative-2);
+}
+.number {
+  font-size: 26px;
+}
+
 @media screen and (max-width: 535px) {
   .no-auth {
     width: 100%;
@@ -68,5 +105,11 @@
   .sign-up {
     width: 86%;
     padding: 20px 4px;
+  }
+  .preview-content {
+    font-size: min(18px, 4.5vw);
+  }
+  .number {
+    font-size: min(22px, 5vw);
   }
 }
