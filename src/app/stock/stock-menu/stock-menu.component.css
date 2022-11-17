@@ -5,13 +5,13 @@
 
 .menu-container {
   position: relative;
-  height: 65px;
+  min-height: 65px;
   overflow: hidden;
   transition: all 1s;
 }
 
 .menu-wrapper {
-  /* height: 50px; */
+  min-height: 48px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -19,10 +19,13 @@
   gap: 20px;
   transition: all 1s;
 }
+.menu-wrapper-placeholder {
+  min-height: 48px;
+}
 
 .menu-link {
   font-size: 18px;
-  height: 30px;
+  min-height: 36px;
   padding: 6px 12px;
   display: flex;
   justify-content: center;

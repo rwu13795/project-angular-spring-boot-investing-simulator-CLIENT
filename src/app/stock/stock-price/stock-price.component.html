@@ -67,12 +67,19 @@
           ></app-custom-button>
         </div>
 
-        <mat-icon class="star" matTooltip="Remove from Watch List"
+        <mat-icon
+          class="star"
+          matTooltip="Remove from Watch List"
+          *ngIf="(hasAuth$ | async) && isWatched"
           >star</mat-icon
         >
-        <!-- <mat-icon class="star" matTooltip="Add to Watch List">
+        <mat-icon
+          class="star"
+          matTooltip="Add to Watch List"
+          *ngIf="(hasAuth$ | async) && !isWatched"
+        >
           star_outline
-        </mat-icon> -->
+        </mat-icon>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
       <div
         class="menu-link"
         [ngClass]="{ active: activeMenu === StockMenu.asset }"
-        *ngIf="hasAuth$ | async"
+        *ngIf="(hasAuth$ | async) && hasAsset"
         [routerLink]="['asset-detail', symbol]"
       >
         Asset Detail
@@ -40,6 +40,7 @@
         Company Profile
       </div>
     </div>
+    <div class="menu-wrapper-placeholder" *ngIf="symbol === ''"></div>
     <div class="border-bot"></div>
   </div>
 

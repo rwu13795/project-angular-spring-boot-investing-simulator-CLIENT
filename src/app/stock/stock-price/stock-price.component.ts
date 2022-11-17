@@ -17,6 +17,10 @@ import {
 } from "../stock-state/stock.selectors";
 import { Response_companyProfile } from "../stock-models";
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
+import {
+  selectHasAuth,
+  selectWatchlist,
+} from "src/app/user/user-state/user.selectors";
 
 @Component({
   selector: "app-stock-price",
@@ -32,7 +36,9 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   private previousChangeInPrice$?: Subscription;
   private changePercentage$?: Subscription;
   private previousChangePercentage$?: Subscription;
+  private watchlist$?: Subscription;
 
+  public hasAuth$ = this.store.select(selectHasAuth);
   public symbol: string = "";
   public profile: Response_companyProfile | null = null;
   public price: string[] = ["0"];
@@ -44,6 +50,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   public timeRange = this.store.select(selectTimeRange);
   public changeNumber: number = 0;
   public isLargeScreen: boolean = true;
+  public isWatched: boolean = false;
 
   constructor(
     private store: Store<AppState>,
@@ -53,7 +60,15 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
-      .subscribe((data) => (this.symbol = data));
+      .subscribe((symbol) => {
+        this.symbol = symbol;
+
+        this.watchlist$ = this.store
+          .select(selectWatchlist)
+          .subscribe((list) => {
+            this.isWatched = !!list[symbol];
+          });
+      });
 
     this.profile$ = this.store
       .select(selectCompanyProfile)
@@ -113,6 +128,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     if (this.previousChangeInPrice$) this.previousChangeInPrice$.unsubscribe();
     if (this.previousChangePercentage$)
       this.previousChangePercentage$.unsubscribe();
+    if (this.watchlist$) this.watchlist$.unsubscribe();
   }
 
   private toStringArray(data: number): string[] {

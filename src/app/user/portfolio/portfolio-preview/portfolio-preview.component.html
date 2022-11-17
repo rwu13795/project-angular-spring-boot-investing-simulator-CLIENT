@@ -7,7 +7,8 @@
       <div
         class="no-auth"
         *ngIf="
-          (loadingStatus$ | async) !== LoadingStatus.loading_auth && !hasAuth
+          (loadingStatus$ | async) !== LoadingStatus.loading_auth &&
+          !(hasAuth$ | async)
         "
       >
         <div class="sign-in">
@@ -37,7 +38,8 @@
       <div
         class="preview"
         *ngIf="
-          (loadingStatus$ | async) !== LoadingStatus.loading_auth && hasAuth
+          (loadingStatus$ | async) !== LoadingStatus.loading_auth &&
+          (hasAuth$ | async)
         "
       >
         <div *ngIf="portfolio" class="preview-content">

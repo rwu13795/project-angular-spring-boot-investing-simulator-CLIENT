@@ -79,6 +79,7 @@ export interface Response_Portfolio {
   assets: {
     [symbol: string]: Response_PortfolioAsset;
   };
+  watchlist: { [symbol: string]: string };
 }
 
 export interface Response_transactions {

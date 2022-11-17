@@ -32,3 +32,11 @@ export const selectSignInModalOpen = createSelector(
     return state.isSignInModalOpen;
   }
 );
+
+export const selectWatchlist = createSelector(selectPortfolio, (portfolio) => {
+  return portfolio.watchlist;
+});
+
+export const selectAssets = createSelector(selectPortfolio, (portfolio) => {
+  return portfolio.assets;
+});

@@ -105,5 +105,6 @@ function initializePortfolio(): Response_Portfolio {
     },
     symbols: [],
     assets: {},
+    watchlist: {},
   };
 }

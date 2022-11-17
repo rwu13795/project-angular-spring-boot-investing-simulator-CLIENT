@@ -26,30 +26,19 @@ import {
   styleUrls: ["./portfolio-preview.component.css"],
 })
 export class PortfolioPreviewComponent implements OnInit, OnDestroy {
-  private hasAuth$?: Subscription;
   private portfolio$?: Subscription;
 
   public loadingStatus$ = this.store.select(selectLoadingStatus_user);
-  public hasAuth: boolean = false;
   public portfolio: Response_Portfolio | null = null;
   public realized: number = 0;
   public unrealized: number = 0;
   public isPositiveRealized = true;
   public isPositiveUnrealized = true;
+  public hasAuth$ = this.store.select(selectHasAuth);
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
-      this.hasAuth = hasAuth;
-      if (this.hasAuth) {
-        this.store.dispatch(
-          setLoadingStatus_user({ status: LoadingStatus_user.failed_portfolio })
-        );
-        this.store.dispatch(fetchPortfolio());
-      }
-    });
-
     this.portfolio$ = this.store
       .select(selectPortfolio)
       .subscribe((portfolio) => {
@@ -82,6 +71,6 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.hasAuth$) this.hasAuth$.unsubscribe();
+    if (this.portfolio$) this.portfolio$.unsubscribe();
   }
 }

@@ -87,6 +87,10 @@ export class AreaChartComponent implements OnInit, OnDestroy, OnChanges {
       markers: {
         size: 0,
       },
+      stroke: {
+        curve: "smooth",
+        width: 2,
+      },
       yaxis: {
         labels: {
           show: true,
