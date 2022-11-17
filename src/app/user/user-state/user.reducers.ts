@@ -1,6 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import produce from "immer";
-import { AuthError, LoadingStatus_user, UserAccount } from "../user-models";
+import {
+  AuthError,
+  LoadingStatus_user,
+  Response_Portfolio,
+  UserAccount,
+} from "../user-models";
 
 import * as actions from "./user.actions";
 
@@ -9,7 +14,7 @@ export interface UserState {
   hasAuth: boolean;
   account: UserAccount;
   authError: AuthError | null;
-  portfolio: string;
+  portfolio: Response_Portfolio;
   isSignInModalOpen: boolean;
 }
 
@@ -18,7 +23,7 @@ const initialState: UserState = {
   hasAuth: false,
   account: { id: -1, email: "", fund: 0, joinedAt: "" },
   authError: null,
-  portfolio: "",
+  portfolio: initializePortfolio(),
   isSignInModalOpen: false,
 };
 
@@ -60,6 +65,7 @@ export const userReducer = createReducer(
   on(actions.setPortfolio, (state, { portfolio }) =>
     produce(state, (draft) => {
       draft.portfolio = portfolio;
+      draft.loadingStatus = LoadingStatus_user.idle;
     })
   ),
 
@@ -83,3 +89,21 @@ export const userReducer = createReducer(
     })
   )
 );
+
+function initializePortfolio(): Response_Portfolio {
+  return {
+    account: {
+      id: -1,
+      email: "",
+      fund: 0,
+      joinedAt: 0,
+      shortSellingDeposit: 0,
+      totalRealizedGainLoss: 0,
+      totalRealizedGainLoss_shortSelling: 0,
+      totalUnrealizedGainLoss: 0,
+      totalUnrealizedGainLoss_shortSelling: 0,
+    },
+    symbols: [],
+    assets: {},
+  };
+}

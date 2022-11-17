@@ -3,6 +3,15 @@
     <div class="menu-wrapper" *ngIf="symbol !== ''" #menuRef>
       <div
         class="menu-link"
+        [ngClass]="{ active: activeMenu === StockMenu.asset }"
+        *ngIf="hasAuth$ | async"
+        [routerLink]="['asset-detail', symbol]"
+      >
+        Asset Detail
+      </div>
+
+      <div
+        class="menu-link"
         [ngClass]="{ active: activeMenu === StockMenu.summary }"
         [routerLink]="['financial-summary', symbol]"
       >
@@ -34,7 +43,8 @@
     <div class="border-bot"></div>
   </div>
 
-  <div class="button-show-anchor">
+  <!-- --------------- keep for reference --------------- -->
+  <!-- <div class="button-show-anchor">
     <app-custom-button
       *ngIf="showButton"
       [ngClass]="isHidden ? 'button-show ' : 'button-show hidden'"
@@ -54,5 +64,5 @@
     >
       Hide Menu
     </button>
-  </div>
+  </div> -->
 </main>

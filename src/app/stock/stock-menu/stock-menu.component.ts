@@ -16,6 +16,7 @@ import {
 } from "../stock-state/stock.selectors";
 import { StockMenu } from "../stock-models";
 import { StockService } from "../stock.service";
+import { selectHasAuth } from "src/app/user/user-state/user.selectors";
 
 @Component({
   selector: "app-stock-menu",
@@ -23,14 +24,14 @@ import { StockService } from "../stock.service";
   styleUrls: ["./stock-menu.component.css"],
 })
 export class StockMenuComponent implements OnInit, OnDestroy {
-  @ViewChild("containerRef") containerRef?: ElementRef<HTMLDivElement>;
-  @ViewChild("borderRef") borderRef?: ElementRef<HTMLDivElement>;
+  // @ViewChild("containerRef") containerRef?: ElementRef<HTMLDivElement>;
 
   private symbol$?: Subscription;
   private activeMenu$?: Subscription;
   private updateTimer?: any;
 
   @Input() isSmallScreen: boolean = false;
+  public hasAuth$ = this.store.select(selectHasAuth);
   public symbol: string = "";
   public activeMenu: StockMenu = StockMenu.summary;
   public showButton: boolean = false;
@@ -74,25 +75,6 @@ export class StockMenuComponent implements OnInit, OnDestroy {
     });
   }
 
-  hideMenu() {
-    const container = this.containerRef?.nativeElement;
-    if (container) {
-      container.style.height = "0px";
-      container.style.opacity = "0";
-      this.isHidden = true;
-    }
-  }
-
-  showMenu() {
-    const container = this.containerRef?.nativeElement;
-    if (container) {
-      container.style.height = " 100px";
-      container.style.opacity = "1";
-      this.isHidden = false;
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }
-
   get StockMenu() {
     return StockMenu;
   }
@@ -106,4 +88,23 @@ export class StockMenuComponent implements OnInit, OnDestroy {
     if (this.activeMenu$) this.activeMenu$.unsubscribe();
     if (this.updateTimer) clearInterval(this.updateTimer);
   }
+
+  // hideMenu() {
+  //   const container = this.containerRef?.nativeElement;
+  //   if (container) {
+  //     container.style.height = "0px";
+  //     container.style.opacity = "0";
+  //     this.isHidden = true;
+  //   }
+  // }
+
+  // showMenu() {
+  //   const container = this.containerRef?.nativeElement;
+  //   if (container) {
+  //     container.style.height = " 100px";
+  //     container.style.opacity = "1";
+  //     this.isHidden = false;
+  //     window.scrollTo({ top: 0, behavior: "smooth" });
+  //   }
+  // }
 }

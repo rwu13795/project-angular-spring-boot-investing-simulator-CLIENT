@@ -4,7 +4,11 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap } from "rxjs";
 
 import { environment } from "src/environments/environment";
-import { Response_authError, UserAccount } from "../user-models";
+import {
+  Response_authError,
+  Response_Portfolio,
+  UserAccount,
+} from "../user-models";
 import * as actions from "./user.actions";
 
 @Injectable()
@@ -110,12 +114,12 @@ export class UserEffects {
       ofType(actions.fetchPortfolio),
       switchMap(() => {
         return this.http
-          .get<{ res: string }>(`${this.SERVER_URL}/portfolio/get-portfolio`, {
+          .get<Response_Portfolio>(`${this.SERVER_URL}/portfolio/`, {
             withCredentials: true,
           })
           .pipe(
             map((data) => {
-              return actions.setPortfolio({ portfolio: data.res });
+              return actions.setPortfolio({ portfolio: data });
             }),
             catchError((error) => {
               console.log(error);

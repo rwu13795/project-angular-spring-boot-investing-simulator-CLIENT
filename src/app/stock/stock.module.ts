@@ -23,6 +23,7 @@ import { StockMenuComponent } from "./stock-menu/stock-menu.component";
 import { StockPriceComponent } from "./stock-price/stock-price.component";
 import { StockRoutingModule } from "./stock-routing.module";
 import { StockComponent } from "./stock.component";
+import { AssetDetailComponent } from "./asset-detail/asset-detail.component";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { StockComponent } from "./stock.component";
     StockComponent,
     FinancialSummaryComponent,
     CompanyProfileComponent,
+    AssetDetailComponent,
     StockPriceComponent,
   ],
   imports: [

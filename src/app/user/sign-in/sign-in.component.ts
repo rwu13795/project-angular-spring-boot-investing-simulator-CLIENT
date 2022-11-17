@@ -66,6 +66,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   private loadingStatus$?: Subscription;
 
   @Input() showImage: boolean = true;
+  @Input() isInModal: boolean = false;
   public hasAuth: boolean = false;
   public loadingStatus: LoadingStatus_user = LoadingStatus_user.idle;
   public authErrors: AuthErrorInField = {
@@ -88,7 +89,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
       this.hasAuth = hasAuth;
       if (!hasAuth) return;
-      this.router.navigate(["/user/portfolio"]);
+      if (!this.isInModal) this.router.navigate(["/user/portfolio"]);
       this.closeSignInModal();
     });
     this.loadingStatus$ = this.store

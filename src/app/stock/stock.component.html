@@ -1,21 +1,24 @@
 <main>
+  <app-stock-menu [isSmallScreen]="isSmallScreen"></app-stock-menu>
+
   <div class="price-container">
     <app-stock-price></app-stock-price>
   </div>
 
-  <app-stock-menu [isSmallScreen]="isSmallScreen"></app-stock-menu>
-
   <div class="content-container">
     <div
       [ngClass]="
-        activeMenu === StockMenu.chart
+        activeMenu === StockMenu.chart || activeMenu === StockMenu.asset
           ? 'container-left-chart'
           : 'container-left'
       "
     >
       <router-outlet></router-outlet>
     </div>
-    <div class="container-right" *ngIf="activeMenu !== StockMenu.chart">
+    <div
+      class="container-right"
+      *ngIf="activeMenu !== StockMenu.chart && activeMenu !== StockMenu.asset"
+    >
       <div class="preview-list-large-screen" *ngIf="isLargeScreen">
         <app-preview-list-small [symbol]="'AAPL'"></app-preview-list-small>
       </div>

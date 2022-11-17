@@ -147,4 +147,5 @@ export enum StockMenu {
   statement = "statement",
   chart = "chart",
   profile = "profile",
+  asset = "asset",
 }

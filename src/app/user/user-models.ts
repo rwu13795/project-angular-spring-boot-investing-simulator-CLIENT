@@ -43,4 +43,57 @@ export enum LoadingStatus_user {
   succeeded_auth = "succeeded_auth",
   loading_auth = "loading_auth",
   failed_auth = "failed_auth",
+  succeeded_portfolio = "succeeded_portfolio",
+  loading_portfolio = "loading_portfolio",
+  failed_portfolio = "failed_portfolio",
+}
+
+export interface Response_PortfolioAccount {
+  id: number;
+  email: string;
+  fund: number;
+  joinedAt: number;
+  shortSellingDeposit: number;
+  totalRealizedGainLoss: number;
+  totalRealizedGainLoss_shortSelling: number;
+  totalUnrealizedGainLoss: number;
+  totalUnrealizedGainLoss_shortSelling: number;
+}
+export interface Response_PortfolioAsset {
+  userId: number;
+  symbol: string;
+  exchange: string;
+  avgCost: number;
+  shares: number;
+  avgBorrowed: number;
+  sharesBorrowed: number;
+  realizedGainLoss: number;
+  realizedGainLossShortSelling: number;
+  unrealizedGainLoss: number;
+  unrealizedGainLossBorrowed: number;
+  currentPrice: number;
+}
+export interface Response_Portfolio {
+  account: Response_PortfolioAccount;
+  symbols: string[];
+  assets: {
+    [symbol: string]: Response_PortfolioAsset;
+  };
+}
+
+export interface Response_transactions {
+  id: number;
+  userId: number;
+  symbol: string;
+  pricePerShare: number;
+  shares: number;
+  realizedGainLoss: number;
+  assetTotalRealizedGainLoss: number;
+  timestamp: number;
+  buy?: boolean;
+  shortSell?: boolean;
+}
+
+export interface Response_transactionsCount {
+  count: number;
 }

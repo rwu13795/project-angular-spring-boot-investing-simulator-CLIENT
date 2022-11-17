@@ -1,5 +1,10 @@
 import { createAction, props } from "@ngrx/store";
-import { AuthError, LoadingStatus_user, UserAccount } from "../user-models";
+import {
+  AuthError,
+  LoadingStatus_user,
+  Response_Portfolio,
+  UserAccount,
+} from "../user-models";
 
 export const getUserInfo = createAction("[User] Check User Authentication");
 
@@ -34,13 +39,6 @@ export const removeUserAuth = createAction("[User] Remove User Auth ");
 
 export const clearAuthError = createAction("[User] Clear Auth Error");
 
-export const fetchPortfolio = createAction("[User] Fetch Portfolio");
-
-export const setPortfolio = createAction(
-  "[User] Set Portfolio",
-  props<{ portfolio: string }>()
-);
-
 export const setLoadingStatus_user = createAction(
   "[User] Set Loading Status User",
   props<{ status: LoadingStatus_user }>()
@@ -49,4 +47,11 @@ export const setLoadingStatus_user = createAction(
 export const toggleSignInModal = createAction(
   "[User] Toggle Sign In Modal",
   props<{ open: boolean }>()
+);
+
+export const fetchPortfolio = createAction("[User] Fetch Portfolio");
+
+export const setPortfolio = createAction(
+  "[User] Set Portfolio",
+  props<{ portfolio: Response_Portfolio }>()
 );

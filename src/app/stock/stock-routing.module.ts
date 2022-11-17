@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "../home/home.component";
+import { AssetDetailComponent } from "./asset-detail/asset-detail.component";
 import { CompanyProfileComponent } from "./company-profile/company-profile.component";
 import { FinancialStatementsComponent } from "./financial-statements/financial-statements.component";
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
@@ -16,6 +17,12 @@ const routes: Routes = [
       { path: "", component: HomeComponent },
 
       { path: "financial-summary", redirectTo: "" },
+
+      {
+        path: "asset-detail/:symbol",
+        component: AssetDetailComponent,
+        canActivate: [StockGuard],
+      },
       {
         path: "financial-summary/:symbol",
         component: FinancialSummaryComponent,

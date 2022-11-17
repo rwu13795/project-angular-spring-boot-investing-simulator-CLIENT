@@ -7,8 +7,7 @@
       <div
         class="no-auth"
         *ngIf="
-          (loadingStatus$ | async) !== LoadingStatus.loading_auth &&
-          !(hasAuth$ | async)
+          (loadingStatus$ | async) !== LoadingStatus.loading_auth && !hasAuth
         "
       >
         <div class="sign-in">
@@ -38,13 +37,26 @@
       <div
         class="preview"
         *ngIf="
-          (loadingStatus$ | async) !== LoadingStatus.loading_auth &&
-          (hasAuth$ | async)
+          (loadingStatus$ | async) !== LoadingStatus.loading_auth && hasAuth
         "
       >
-        <div>Available fund --------</div>
-        <div>unrealized gain/loss --------</div>
-        <div>realized gain/loss --------</div>
+        <div *ngIf="portfolio">
+          <div>Available fund {{ portfolio.account.fund }}</div>
+          <div>
+            unrealized gain/loss {{ portfolio.account.totalUnrealizedGainLoss }}
+          </div>
+          <div>
+            unrealized gain/loss short selling
+            {{ portfolio.account.totalUnrealizedGainLoss_shortSelling }}
+          </div>
+          <div>
+            realized gain/loss {{ portfolio.account.totalRealizedGainLoss }}
+          </div>
+          <div>
+            realized gain/loss _shortSelling
+            {{ portfolio.account.totalRealizedGainLoss_shortSelling }}
+          </div>
+        </div>
         <app-custom-button
           [routerLink]="['/user/portfolio']"
           text="Detail"
@@ -53,6 +65,7 @@
           [fontSize]="16"
         ></app-custom-button>
       </div>
+      <app-loading-spinner *ngIf="!portfolio"></app-loading-spinner>
 
       <app-loading-spinner
         *ngIf="(loadingStatus$ | async) === LoadingStatus.loading_auth"

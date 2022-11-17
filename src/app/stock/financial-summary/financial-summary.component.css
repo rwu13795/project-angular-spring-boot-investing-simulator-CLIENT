@@ -79,6 +79,10 @@ main {
   }
   .cell {
     width: 50%;
+    font-size: min(16px, 3vw);
+  }
+  .cell span {
+    padding: 0 6px;
   }
 
   .cell:nth-child(10),

@@ -5,7 +5,7 @@
 
 .menu-container {
   position: relative;
-  height: 100px;
+  height: 65px;
   overflow: hidden;
   transition: all 1s;
 }
@@ -21,8 +21,8 @@
 }
 
 .menu-link {
-  font-size: 26px;
-  height: 40px;
+  font-size: 18px;
+  height: 30px;
   padding: 6px 12px;
   display: flex;
   justify-content: center;
@@ -32,6 +32,7 @@
   border-top-right-radius: 6px;
   transition: all 0.5s;
   cursor: pointer;
+  animation: fadeIn 0.5s;
 }
 .menu-link:hover {
   background-color: var(--main-200);
@@ -62,9 +63,12 @@
   space! And If I use the "absolute postion" without using an anchor, then the 
   positon will be changed when the menu is hidden/expanded
 */
-.button-show-anchor {
+
+/* the menu UI was changed, keep this hide/show button as reference */
+
+/* .button-show-anchor {
   top: 10px;
-  left: calc(100% - 110px); /* 104px is the button width */
+  left: calc(100% - 110px); 
   position: relative;
   width: 0;
   height: 0;
@@ -102,9 +106,8 @@
 
 .hidden {
   opacity: 0;
-  /* visibility: hidden; */
   transition: all 0.3s;
-}
+} */
 
 @media screen and (max-width: 1200px) {
   .menu-wrapper {
@@ -123,14 +126,14 @@
     font-size: min(16px, 4vw);
     padding: 4px 6px;
   }
-  .button-hide-anchor {
+  /* .button-hide-anchor {
     top: -42px;
-  }
+  } */
 }
 
-@media screen and (max-width: 430px) {
+/* @media screen and (max-width: 430px) {
   .button-show-anchor {
     top: -30px;
     z-index: 100;
   }
-}
+} */
