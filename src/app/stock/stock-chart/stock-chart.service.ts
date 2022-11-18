@@ -69,7 +69,7 @@ export class StockChartService {
 
     // for the candle bar
     const styles =
-      "padding: 4px 12px; display: flex; flex-flow: row nowrap; justify-content: space-between;";
+      "padding: 4px 12px; display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px;";
     if (chartType === "candles") {
       if (data.y[0] === -1) return "<span></span>";
       return `<div style="padding: 0px;"> 
@@ -81,16 +81,16 @@ export class StockChartService {
             }
           </div>
           <div style="${styles}">
-            <b>Open</b>: ${this.toLocalString(data.y[0])} 
+            <b>Open:</b><span>${this.toLocalString(data.y[0])}</span> 
           </div> 
           <div style="${styles}">
-            <b>High</b>: ${this.toLocalString(data.y[1])} 
+            <b>High:</b><span>${this.toLocalString(data.y[1])}</span> 
           </div> 
           <div style="${styles}">
-            <b>Low</b>: ${this.toLocalString(data.y[2])} 
+            <b>Low:</b><span>${this.toLocalString(data.y[2])}</span> 
           </div> 
           <div style="${styles}">
-            <b>Close</b>: ${this.toLocalString(data.y[3])} 
+            <b>Close:</b><span>${this.toLocalString(data.y[3])}</span> 
           </div> 
         </div>`;
     } else {
@@ -104,16 +104,16 @@ export class StockChartService {
             }
           </div>
           <div style="${styles}"">
-            <b>Open</b>: ${this.toLocalString(data.meta[0])} 
+            <b>Open:</b><span>${this.toLocalString(data.meta[0])}</span> 
           </div> 
           <div style="${styles}"">
-            <b>High</b>: ${this.toLocalString(data.meta[1])} 
+            <b>High:</b><span>${this.toLocalString(data.meta[1])}</span> 
           </div> 
           <div style="${styles}"">
-            <b>Low</b>: ${this.toLocalString(data.meta[2])} 
+            <b>Low:</b><span>${this.toLocalString(data.meta[2])}</span> 
           </div> 
           <div style="${styles}"">
-            <b>Close</b>: ${this.toLocalString(data.meta[3])} 
+            <b>Close:</b><span>${this.toLocalString(data.meta[3])}</span> 
           </div> 
         </div>`;
     }

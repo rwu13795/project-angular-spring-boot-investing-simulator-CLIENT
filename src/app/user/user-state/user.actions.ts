@@ -3,7 +3,7 @@ import {
   AuthError,
   LoadingStatus_user,
   Response_Portfolio,
-  UserAccount,
+  UserInfo,
 } from "../user-models";
 
 export const getUserInfo = createAction("[User] Check User Authentication");
@@ -25,9 +25,9 @@ export const signUp = createAction(
 
 export const signOut = createAction("[User] User Sign Out");
 
-export const setUserAccount = createAction(
+export const setUserInfo = createAction(
   "[User] Set User Account",
-  props<{ account: UserAccount }>()
+  props<{ info: UserInfo }>()
 );
 
 export const setAuthError = createAction(

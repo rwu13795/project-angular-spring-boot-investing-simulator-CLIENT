@@ -19,6 +19,7 @@ import {
   selectLoadingStatus_user,
   selectPortfolio,
 } from "../../user-state/user.selectors";
+import { UserService } from "../../user.service";
 
 @Component({
   selector: "app-user-portfolio-preview",
@@ -36,12 +37,16 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
   public isPositiveUnrealized = true;
   public hasAuth$ = this.store.select(selectHasAuth);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.portfolio$ = this.store
       .select(selectPortfolio)
       .subscribe((portfolio) => {
+        if (!portfolio) return;
         this.portfolio = portfolio;
         this.realized =
           portfolio.account.totalRealizedGainLoss +
@@ -63,11 +68,7 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
   }
 
   toFixedLocale(number: number) {
-    const temp = number >= 0 ? number : number * -1;
-    return temp.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    return this.userService.toFixedLocale(number, true);
   }
 
   ngOnDestroy(): void {

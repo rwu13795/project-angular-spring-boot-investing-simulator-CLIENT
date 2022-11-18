@@ -10,7 +10,7 @@ export interface AuthErrorInField {
   [field: string]: AuthError | null;
 }
 
-export interface UserAccount {
+export interface UserInfo {
   id: number;
   email: string;
   fund: number;
@@ -73,13 +73,17 @@ export interface Response_PortfolioAsset {
   unrealizedGainLossBorrowed: number;
   currentPrice: number;
 }
+export interface PortfolioAssetList {
+  [symbol: string]: Response_PortfolioAsset;
+}
+export interface PortfolioWatchlist {
+  [symbol: string]: string;
+}
 export interface Response_Portfolio {
   account: Response_PortfolioAccount;
   symbols: string[];
-  assets: {
-    [symbol: string]: Response_PortfolioAsset;
-  };
-  watchlist: { [symbol: string]: string };
+  assets: PortfolioAssetList;
+  watchlist: PortfolioWatchlist;
 }
 
 export interface Response_transactions {

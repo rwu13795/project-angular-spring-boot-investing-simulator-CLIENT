@@ -4,7 +4,7 @@ import {
   AuthError,
   LoadingStatus_user,
   Response_Portfolio,
-  UserAccount,
+  UserInfo,
 } from "../user-models";
 
 import * as actions from "./user.actions";
@@ -12,16 +12,16 @@ import * as actions from "./user.actions";
 export interface UserState {
   loadingStatus: LoadingStatus_user;
   hasAuth: boolean;
-  account: UserAccount;
+  userInfo: UserInfo;
   authError: AuthError | null;
-  portfolio: Response_Portfolio;
+  portfolio: Response_Portfolio | null;
   isSignInModalOpen: boolean;
 }
 
 const initialState: UserState = {
   loadingStatus: LoadingStatus_user.loading_auth,
   hasAuth: false,
-  account: { id: -1, email: "", fund: 0, joinedAt: "" },
+  userInfo: { id: -1, email: "", fund: 0, joinedAt: "" },
   authError: null,
   portfolio: initializePortfolio(),
   isSignInModalOpen: false,
@@ -38,9 +38,9 @@ export const userReducer = createReducer(
     })
   ),
 
-  on(actions.setUserAccount, (state, { account }) =>
+  on(actions.setUserInfo, (state, { info }) =>
     produce(state, (draft) => {
-      draft.account = account;
+      draft.userInfo = info;
       draft.hasAuth = true;
       draft.loadingStatus = LoadingStatus_user.idle;
     })
@@ -77,7 +77,7 @@ export const userReducer = createReducer(
 
   on(actions.removeUserAuth, (state) =>
     produce(state, (draft) => {
-      draft.account = { id: -1, email: "", fund: 0, joinedAt: "" };
+      draft.userInfo = { id: -1, email: "", fund: 0, joinedAt: "" };
       draft.hasAuth = false;
       draft.loadingStatus = LoadingStatus_user.idle;
     })

@@ -79,7 +79,8 @@ export class StockService {
       .pipe(
         tap(([data]) => {
           const { price, changesPercentage, change } = data;
-          // set the latest price in the store, for the stock-price component
+          // set the latest price in the store, let the stock-price component
+          // to update the price digit cylinder
           this.store.dispatch(setCurrentPrice({ currentPrice: price }));
           this.store.dispatch(
             setCurrentChangeInPrice({ changeInPrice: change })
@@ -91,6 +92,10 @@ export class StockService {
       );
   }
 
+  /* NOTE
+   There might be a limit on the number of symbols while using 
+   symbolString "AAPL,GOOG,MSTF,..." to batch fetch in the FMP-api
+*/
   public getQuoteShort(symbol: string) {
     const params = new HttpParams({
       fromObject: { symbol },

@@ -7,7 +7,7 @@ import { environment } from "src/environments/environment";
 import {
   Response_authError,
   Response_Portfolio,
-  UserAccount,
+  UserInfo,
 } from "../user-models";
 import * as actions from "./user.actions";
 
@@ -20,12 +20,12 @@ export class UserEffects {
       ofType(actions.getUserInfo),
       switchMap(() => {
         return this.http
-          .get<UserAccount>(`${this.SERVER_URL}/auth/get-user-info`, {
+          .get<UserInfo>(`${this.SERVER_URL}/auth/get-user-info`, {
             withCredentials: true,
           })
           .pipe(
             map((data) => {
-              return actions.setUserAccount({ account: data });
+              return actions.setUserInfo({ info: data });
             }),
             // set hasAuth to false whenever there is a error response
             catchError((error) => {
@@ -44,14 +44,14 @@ export class UserEffects {
       ofType(actions.signIn),
       switchMap(({ email, password }) => {
         return this.http
-          .post<UserAccount>(
+          .post<UserInfo>(
             `${this.SERVER_URL}/auth/sign-in`,
             { email, password },
             { withCredentials: true }
           )
           .pipe(
             map((data) => {
-              return actions.setUserAccount({ account: data });
+              return actions.setUserInfo({ info: data });
             }),
             catchError((errorRes: Response_authError) => {
               console.log(errorRes);
@@ -69,14 +69,14 @@ export class UserEffects {
       ofType(actions.signUp),
       switchMap(({ email, password, confirmPassword }) => {
         return this.http
-          .post<UserAccount>(
+          .post<UserInfo>(
             `${this.SERVER_URL}/auth/sign-up`,
             { email, password, confirmPassword },
             { withCredentials: true }
           )
           .pipe(
             map((data) => {
-              return actions.setUserAccount({ account: data });
+              return actions.setUserInfo({ info: data });
             }),
             catchError((errorRes: Response_authError) => {
               console.log(errorRes);

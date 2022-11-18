@@ -19,6 +19,7 @@ import { Response_companyProfile } from "../stock-models";
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import {
   selectHasAuth,
+  selectPortfolio,
   selectWatchlist,
 } from "src/app/user/user-state/user.selectors";
 
@@ -36,7 +37,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   private previousChangeInPrice$?: Subscription;
   private changePercentage$?: Subscription;
   private previousChangePercentage$?: Subscription;
-  private watchlist$?: Subscription;
+  private portfolio$?: Subscription;
 
   public hasAuth$ = this.store.select(selectHasAuth);
   public symbol: string = "";
@@ -51,6 +52,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   public changeNumber: number = 0;
   public isLargeScreen: boolean = true;
   public isWatched: boolean = false;
+  public showStar: boolean = true;
 
   constructor(
     private store: Store<AppState>,
@@ -63,10 +65,12 @@ export class StockPriceComponent implements OnInit, OnDestroy {
       .subscribe((symbol) => {
         this.symbol = symbol;
 
-        this.watchlist$ = this.store
-          .select(selectWatchlist)
-          .subscribe((list) => {
-            this.isWatched = !!list[symbol];
+        this.portfolio$ = this.store
+          .select(selectPortfolio)
+          .subscribe((portfolio) => {
+            if (!portfolio) return;
+            this.isWatched = !!portfolio.watchlist[symbol];
+            this.showStar = !portfolio.assets[symbol];
           });
       });
 
@@ -128,7 +132,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     if (this.previousChangeInPrice$) this.previousChangeInPrice$.unsubscribe();
     if (this.previousChangePercentage$)
       this.previousChangePercentage$.unsubscribe();
-    if (this.watchlist$) this.watchlist$.unsubscribe();
+    if (this.portfolio$) this.portfolio$.unsubscribe();
   }
 
   private toStringArray(data: number): string[] {

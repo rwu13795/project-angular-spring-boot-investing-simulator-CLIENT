@@ -7,8 +7,8 @@ export const selectHasAuth = createSelector(selectUserState, (state) => {
   return state.hasAuth;
 });
 
-export const selectUserAccount = createSelector(selectUserState, (state) => {
-  return state.account;
+export const selectUserInfo = createSelector(selectUserState, (state) => {
+  return state.userInfo;
 });
 
 export const selectLoadingStatus_user = createSelector(
@@ -34,9 +34,11 @@ export const selectSignInModalOpen = createSelector(
 );
 
 export const selectWatchlist = createSelector(selectPortfolio, (portfolio) => {
+  if (!portfolio) return null;
   return portfolio.watchlist;
 });
 
 export const selectAssets = createSelector(selectPortfolio, (portfolio) => {
+  if (!portfolio) return null;
   return portfolio.assets;
 });

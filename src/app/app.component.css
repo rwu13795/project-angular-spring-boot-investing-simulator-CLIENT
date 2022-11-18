@@ -11,7 +11,7 @@ main {
   width: 94%;
   height: 100%;
   /* Have to set the padding right to offset the width of the scroll bar */
-  padding-right: 10px;
+  padding-right: 8px;
 }
 
 .nav-bar {

@@ -31,8 +31,6 @@ import {
   selectAuthError,
   selectHasAuth,
   selectLoadingStatus_user,
-  selectPortfolio,
-  selectUserAccount,
 } from "../user-state/user.selectors";
 import { UserService } from "../user.service";
 

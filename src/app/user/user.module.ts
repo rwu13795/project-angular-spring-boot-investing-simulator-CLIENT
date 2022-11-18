@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AuthRoutingModule } from "./user-routing.module";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 import { SharedModule } from "../shared/shared.module";
 import { UserComponent } from "./user.component";
@@ -12,6 +13,8 @@ import { PortfolioPreviewComponent } from "./portfolio/portfolio-preview/portfol
 import { PortfolioComponent } from "./portfolio/portfolio.component";
 import { SignInModalComponent } from "./sign-in/sign-in-modal/sign-in-modal.component";
 import { UserProfileComponent } from "./profile/profile.component";
+import { MatIconModule } from "@angular/material/icon";
+import { AssetListComponent } from "./portfolio/asset-list/asset-list.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +23,7 @@ import { UserProfileComponent } from "./profile/profile.component";
     SignUpComponent,
     PortfolioPreviewComponent,
     PortfolioComponent,
+    AssetListComponent,
     SignInModalComponent,
     UserProfileComponent,
   ],
@@ -27,6 +31,8 @@ import { UserProfileComponent } from "./profile/profile.component";
     RouterModule,
     CommonModule,
     ReactiveFormsModule,
+    MatIconModule,
+    MatPaginatorModule,
     AuthRoutingModule,
     SharedModule,
   ],

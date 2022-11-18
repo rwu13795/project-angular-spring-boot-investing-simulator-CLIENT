@@ -81,8 +81,7 @@ export class StockMenuComponent implements OnInit, OnDestroy {
             });
 
           this.assets$ = this.store.select(selectAssets).subscribe((assets) => {
-            this.hasAsset = !!assets[symbol];
-            console.log("this.hasAsset", this.hasAsset, symbol);
+            if (assets) this.hasAsset = !!assets[symbol];
           });
         }
       });

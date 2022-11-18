@@ -3,7 +3,13 @@ import { Injectable } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 import { map, catchError, of } from "rxjs";
 import { environment } from "src/environments/environment";
-import { InputField, InputFieldNames, Response_checkAuth } from "./user-models";
+import {
+  InputField,
+  InputFieldNames,
+  Response_checkAuth,
+  Response_transactions,
+  Response_transactionsCount,
+} from "./user-models";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
@@ -16,6 +22,46 @@ export class UserService {
       `${this.SERVER_URL}/auth/check-auth`,
       { withCredentials: true }
     );
+  }
+
+  public getAssetTransactions(
+    symbol: string,
+    pageNum: number,
+    type: "holding" | "short-selling"
+  ) {
+    const params = new HttpParams({
+      fromObject: { symbol, pageNum, type },
+    });
+    return this.http.get<Response_transactions>(
+      `${this.SERVER_URL}/portfolio/transactions/by-page`,
+      { withCredentials: true, params }
+    );
+  }
+
+  public getAssetTransactionsCount(
+    symbol: string,
+    type: "holding" | "short-selling"
+  ) {
+    const params = new HttpParams({
+      fromObject: { symbol, type },
+    });
+    return this.http.get<Response_transactionsCount>(
+      `${this.SERVER_URL}/portfolio/transactions/count`,
+      { withCredentials: true, params }
+    );
+  }
+
+  public toFixedLocale(
+    number: number,
+    showZero: boolean = false,
+    decimal: number = 2
+  ) {
+    if (number === 0) return showZero ? 0 : "-";
+    const temp = number >= 0 ? number : number * -1;
+    return temp.toLocaleString(undefined, {
+      minimumFractionDigits: decimal,
+      maximumFractionDigits: decimal,
+    });
   }
 
   public setInputErrorMessage(
