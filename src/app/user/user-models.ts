@@ -86,7 +86,7 @@ export interface Response_Portfolio {
   watchlist: PortfolioWatchlist;
 }
 
-export interface Response_transactions {
+export interface Response_transaction {
   id: number;
   userId: number;
   symbol: string;
@@ -99,6 +99,6 @@ export interface Response_transactions {
   shortSell?: boolean;
 }
 
-export interface Response_transactionsCount {
+export interface Response_transactionCount {
   count: number;
 }

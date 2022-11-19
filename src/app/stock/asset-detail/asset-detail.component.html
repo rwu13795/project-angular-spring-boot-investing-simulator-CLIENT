@@ -1,10 +1,20 @@
-<h1>Asset detail</h1>
+<main>
+  <div class="charts-wrapper">
+    <app-overall-chart></app-overall-chart>
+    <app-column-chart></app-column-chart>
+  </div>
 
-<div>Holding</div>
-<div>Short Sale</div>
+  <div class="tables-wrapper">
+    <div class="table">
+      <div class="table-title">Positions</div>
+      <app-asset-table [asset]="asset"></app-asset-table>
+    </div>
 
-<div>Transactions</div>
-<div>Buy/Sell</div>
-<div>Sell Short/Buy to Cover</div>
-<app-overall-chart></app-overall-chart>
-<app-column-chart></app-column-chart>
+    <div class="table" id="custom-scroll-x-thin">
+      <app-transactions
+        [transactions]="transactions"
+        (selectedTpye)="changeTransactionType($event)"
+      ></app-transactions>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,26 @@
+.asset-table {
+  width: 100%;
+  text-align: center;
+  background-color: var(--color-light-grey);
+}
+.asset-table thead th {
+  padding: 4px 6px;
+}
+
+.asset-table tbody td {
+  padding: 10px 6px;
+  background-color: white;
+}
+
+.positive {
+  color: var(--color-positive-2);
+}
+.negative {
+  color: var(--color-negative-2);
+}
+
+@media screen and (max-width: 765px) {
+  .detail-table {
+    font-size: min(12px, 3vw);
+  }
+}

@@ -1,0 +1,41 @@
+:host {
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.charts-wrapper {
+  min-width: 40%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.tables-wrapper {
+  min-width: 58%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.table {
+  width: calc(100% - 24px);
+  padding: 20px 12px;
+  border-radius: 6px;
+  border: solid 2px var(--main-600);
+}
+.table-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

@@ -42,3 +42,10 @@ export const selectAssets = createSelector(selectPortfolio, (portfolio) => {
   if (!portfolio) return null;
   return portfolio.assets;
 });
+
+export const selectTargetAsset = (symbol: string) => {
+  return createSelector(selectAssets, (assets) => {
+    if (!assets) return null;
+    return assets[symbol];
+  });
+};

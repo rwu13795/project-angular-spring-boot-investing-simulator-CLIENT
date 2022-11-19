@@ -27,7 +27,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
       if (hasAuth) {
         this.store.dispatch(
-          setLoadingStatus_user({ status: LoadingStatus_user.failed_portfolio })
+          setLoadingStatus_user({
+            status: LoadingStatus_user.loading_portfolio,
+          })
         );
         this.store.dispatch(fetchPortfolio());
       }

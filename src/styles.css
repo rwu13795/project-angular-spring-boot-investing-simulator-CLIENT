@@ -91,6 +91,7 @@ input {
 
 #custom-scroll-y-thin::-webkit-scrollbar {
   width: 6px !important;
+  height: 8px !important;
 }
 #custom-scroll-y-thin::-webkit-scrollbar-track {
   box-shadow: inset 0 0 2px var(--main-800);

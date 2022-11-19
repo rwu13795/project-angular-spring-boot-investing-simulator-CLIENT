@@ -7,6 +7,7 @@ import { DigitCylinderComponent } from "./digit-cylinder/digit-cylinder.componen
 import { GradientBreakComponent } from "./gradient-break/gradient-break.component";
 import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
 import { CustomButtonComponent } from "./custom-button/custom-button.component";
+import { AssetTableComponent } from "./asset-table/asset-table.component";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CustomButtonComponent } from "./custom-button/custom-button.component";
     GradientBreakComponent,
     LoadingSpinnerComponent,
     CustomButtonComponent,
+    AssetTableComponent,
   ],
   imports: [CommonModule, RouterModule],
   exports: [
@@ -25,6 +27,7 @@ import { CustomButtonComponent } from "./custom-button/custom-button.component";
     GradientBreakComponent,
     LoadingSpinnerComponent,
     CustomButtonComponent,
+    AssetTableComponent,
   ],
 })
 export class SharedModule {}

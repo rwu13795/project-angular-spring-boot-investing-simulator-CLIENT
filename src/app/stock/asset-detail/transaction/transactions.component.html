@@ -1,0 +1,69 @@
+<main>
+  <div>
+    <div class="title-wrapper">
+      <div class="table-title">Transactions</div>
+      <select (change)="onSelect($event)">
+        <option value="1">Buy | Sell</option>
+        <option value="2">Sell Short | Buy To Cover</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-wrapper" id="custom-scroll-y-thin">
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Realized G/L</th>
+          <th>Overall Realized</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transactions">
+          <td>{{ getType(t.buy, t.shortSell) }}</td>
+          <td>{{ t.shares }}</td>
+          <td>{{ toFixed(t.pricePerShare) }}</td>
+          <td
+            [ngClass]="{
+              positive: t.realizedGainLoss > 0,
+              '': t.realizedGainLoss === 0,
+              negative: t.realizedGainLoss < 0
+            }"
+          >
+            <span *ngIf="t.realizedGainLoss > 0">+</span>
+            <span *ngIf="t.realizedGainLoss < 0">-</span
+            >{{ toFixed(t.realizedGainLoss) }}
+          </td>
+          <td
+            [ngClass]="{
+              positive: t.assetTotalRealizedGainLoss > 0,
+              '': t.assetTotalRealizedGainLoss === 0,
+              negative: t.assetTotalRealizedGainLoss < 0
+            }"
+          >
+            <span *ngIf="t.assetTotalRealizedGainLoss > 0">+</span>
+            <span *ngIf="t.assetTotalRealizedGainLoss < 0">-</span
+            >{{ toFixed(t.assetTotalRealizedGainLoss) }}
+          </td>
+          <td>{{ toDate(t.timestamp)[0] }}</td>
+          <td>{{ toDate(t.timestamp)[1] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <mat-paginator
+      [length]="24"
+      [pageSize]="20"
+      [hidePageSize]="true"
+      [pageIndex]="0"
+      [disabled]="false"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</main>

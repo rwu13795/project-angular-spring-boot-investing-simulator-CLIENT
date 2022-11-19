@@ -80,7 +80,7 @@
   color: var(--main-700);
 }
 
-.detail-table {
+/* .detail-table {
   width: 100%;
   text-align: center;
   background-color: var(--color-light-grey);
@@ -92,11 +92,7 @@
 .detail-table tbody td {
   padding: 10px 6px;
   background-color: white;
-}
-
-.negative {
-  color: var(--color-negative-2);
-}
+} */
 
 .positive {
   color: var(--color-positive-2);
@@ -154,7 +150,7 @@
   .no-result {
     font-size: 16px;
   }
-  .detail-table {
+  /* .detail-table {
     font-size: min(12px, 3vw);
-  }
+  } */
 }

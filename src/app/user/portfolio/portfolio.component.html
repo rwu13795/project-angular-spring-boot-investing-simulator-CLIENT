@@ -105,7 +105,7 @@
       </div>
       <app-loading-spinner *ngIf="!account"></app-loading-spinner>
     </div>
-    <div class="content-wrapper">
+    <div class="content-wrapper" #scrollRef>
       <div class="column-grid" *ngIf="account">
         <div>
           Unrealized

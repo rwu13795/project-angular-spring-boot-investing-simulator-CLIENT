@@ -46,11 +46,7 @@ export class WatchListComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.loading = true;
     console.log(this.watchlist);
-    if (this.watchlist.length === 0) {
-      if (!this.initialChange) this.loading = false;
-      this.initialChange = false;
-      return;
-    }
+
     this.pageIndex = 0;
     this.totalCount = this.watchlist.length;
     this.fetchListInfo(0);

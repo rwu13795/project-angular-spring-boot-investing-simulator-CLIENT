@@ -26,6 +26,8 @@ import { StockComponent } from "./stock.component";
 import { AssetDetailComponent } from "./asset-detail/asset-detail.component";
 import { OverallChartComponent } from "./stock-chart/overall-chart/overall-chart.component";
 import { ColumnChartComponent } from "./stock-chart/column-chart/column-chart.component";
+import { TransactionsComponent } from "./asset-detail/transaction/transactions.component";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { ColumnChartComponent } from "./stock-chart/column-chart/column-chart.co
     FinancialSummaryComponent,
     CompanyProfileComponent,
     AssetDetailComponent,
+    TransactionsComponent,
     StockPriceComponent,
   ],
   imports: [
@@ -49,6 +52,7 @@ import { ColumnChartComponent } from "./stock-chart/column-chart/column-chart.co
     MatIconModule,
     NgApexchartsModule,
     MatTooltipModule,
+    MatPaginatorModule,
     CommonModule,
     StockRoutingModule,
     SharedModule,

@@ -8,8 +8,8 @@ import {
   InputField,
   InputFieldNames,
   Response_checkAuth,
-  Response_transactions,
-  Response_transactionsCount,
+  Response_transaction,
+  Response_transactionCount,
 } from "./user-models";
 
 @Injectable({ providedIn: "root" })
@@ -28,25 +28,22 @@ export class UserService {
   public getAssetTransactions(
     symbol: string,
     pageNum: number,
-    type: "holding" | "short-selling"
+    type: "long" | "short"
   ) {
     const params = new HttpParams({
       fromObject: { symbol, pageNum, type },
     });
-    return this.http.get<Response_transactions>(
+    return this.http.get<Response_transaction[]>(
       `${this.SERVER_URL}/portfolio/transaction/by-page`,
       { withCredentials: true, params }
     );
   }
 
-  public getAssetTransactionsCount(
-    symbol: string,
-    type: "holding" | "short-selling"
-  ) {
+  public getAssetTransactionsCount(symbol: string, type: "long" | "short") {
     const params = new HttpParams({
       fromObject: { symbol, type },
     });
-    return this.http.get<Response_transactionsCount>(
+    return this.http.get<Response_transactionCount>(
       `${this.SERVER_URL}/portfolio/transaction/count`,
       { withCredentials: true, params }
     );

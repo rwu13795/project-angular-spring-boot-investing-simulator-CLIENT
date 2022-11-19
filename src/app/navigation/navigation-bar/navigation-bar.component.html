@@ -13,7 +13,10 @@
   <app-search></app-search>
   <div class="button-wrapper">
     <app-custom-button
-      *ngIf="!(hasAuth$ | async)"
+      *ngIf="
+        !(hasAuth$ | async) &&
+        (loadingStatus$ | async) !== LoadingStatus.loading_auth
+      "
       [width]="isSmallScreen ? 60 : 100"
       [height]="isSmallScreen ? 28 : 32"
       text="SIGN IN"

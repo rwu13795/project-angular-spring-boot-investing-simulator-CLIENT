@@ -86,6 +86,7 @@ export class OverallChartComponent implements OnInit, OnDestroy, OnChanges {
       ],
       chart: {
         type: "area",
+        width: 400,
         height: 350,
         fontFamily: '"Quantico", sans-serif',
         toolbar: { show: false, tools: { zoom: false } },

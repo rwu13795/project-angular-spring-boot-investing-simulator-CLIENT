@@ -27,6 +27,8 @@ import { UserService } from "../user.service";
   styleUrls: ["./portfolio.component.css"],
 })
 export class PortfolioComponent implements OnInit, OnDestroy {
+  @ViewChild("scrollRef") scrollRef?: ElementRef<HTMLDivElement>;
+
   private portfolio$?: Subscription;
   private hasAuth$?: Subscription;
 
@@ -68,6 +70,8 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   onSelectMenu(menu: number) {
     this.isOnAssets = menu === 1;
+    const ref = this.scrollRef?.nativeElement;
+    if (ref) ref.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
   ngOnDestroy(): void {

@@ -35,7 +35,6 @@ import { FooterComponent } from "./footer/footer.component";
     HttpClientModule,
     NgApexchartsModule,
     NavigationModule,
-
     LayoutModule,
     SharedModule,
     NewsModule,

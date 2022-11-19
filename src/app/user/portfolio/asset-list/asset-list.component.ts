@@ -9,10 +9,13 @@ import {
   ElementRef,
 } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
+import { Store } from "@ngrx/store";
+import { AppState } from "src/app/ngrx-store/app.reducer";
 
 import { StockService } from "src/app/stock/stock.service";
 import { environment } from "src/environments/environment";
-import { PortfolioAssetList } from "../../user-models";
+import { LoadingStatus_user, PortfolioAssetList } from "../../user-models";
+import { selectLoadingStatus_user } from "../../user-state/user.selectors";
 import { UserService } from "../../user.service";
 
 @Component({
@@ -23,11 +26,11 @@ import { UserService } from "../../user.service";
 export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("scrollRef") scrollRef?: ElementRef<HTMLElement>;
   private inputTimer$: any;
-  private initialChange: boolean = true;
 
   @Input() assets: PortfolioAssetList = {};
   @Input() symbols: string[] = [];
 
+  public loadingStore$ = this.store.select(selectLoadingStatus_user);
   public LOGO_URL = environment.LOGO_URL;
   public pageSize: number = 10;
   public selected: string[] = [];
@@ -36,18 +39,15 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
   public loading: boolean = true;
   public filter: string = "";
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.assets, this.symbols.length);
     this.loading = true;
-    if (!this.assets || this.symbols.length === 0) {
-      if (!this.initialChange) this.loading = false;
-      this.initialChange = false;
-      return;
-    }
     this.totalCount = this.symbols.length;
     this.getFirstTen();
   }
@@ -86,11 +86,16 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
     return this.userService.toFixedLocale(number, false, decimal);
   }
 
+  get LoadingStatus() {
+    return LoadingStatus_user;
+  }
+
   ngOnDestroy(): void {
     clearTimeout(this.inputTimer$);
   }
 
   private filterAsset(value: string) {
+    if (!this.symbols) return [];
     const selected: string[] = [];
     this.symbols.forEach((symbol) => {
       if (symbol.includes(value)) selected.push(symbol);

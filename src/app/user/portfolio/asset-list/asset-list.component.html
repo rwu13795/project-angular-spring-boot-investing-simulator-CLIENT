@@ -35,114 +35,7 @@
         <div class="price">${{ assets[symbol].currentPrice }}</div>
       </div>
 
-      <table class="detail-table">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Avg Price</th>
-            <th>Basis</th>
-            <th>Market Value</th>
-            <th>Unrealized G/L</th>
-            <th>Realized G/L</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Holding</td>
-            <td>{{ toFixed(assets[symbol].shares, 0) }}</td>
-            <td>
-              {{
-                toFixed(assets[symbol].shares > 0 ? assets[symbol].avgCost : 0)
-              }}
-            </td>
-            <td>
-              {{ toFixed(assets[symbol].shares * assets[symbol].avgCost) }}
-            </td>
-            <td>
-              {{ toFixed(assets[symbol].shares * assets[symbol].currentPrice) }}
-            </td>
-            <td
-              [ngClass]="{
-                positive: assets[symbol].unrealizedGainLoss > 0,
-                '': assets[symbol].unrealizedGainLoss === 0,
-                negative: assets[symbol].unrealizedGainLoss < 0
-              }"
-            >
-              <span *ngIf="assets[symbol].unrealizedGainLoss > 0">+</span>
-              <span *ngIf="assets[symbol].unrealizedGainLoss < 0">-</span
-              >{{ toFixed(assets[symbol].unrealizedGainLoss) }}
-            </td>
-            <td
-              [ngClass]="{
-                positive: assets[symbol].realizedGainLoss > 0,
-                '': assets[symbol].realizedGainLoss === 0,
-                negative: assets[symbol].realizedGainLoss < 0
-              }"
-            >
-              <span *ngIf="assets[symbol].realizedGainLoss > 0">+</span>
-              <span *ngIf="assets[symbol].realizedGainLoss < 0">-</span
-              >{{ toFixed(assets[symbol].realizedGainLoss) }}
-            </td>
-          </tr>
-
-          <tr>
-            <td>Short Selling</td>
-            <td>{{ toFixed(assets[symbol].sharesBorrowed, 0) }}</td>
-            <td>
-              {{
-                toFixed(
-                  assets[symbol].sharesBorrowed > 0
-                    ? assets[symbol].avgBorrowed
-                    : 0
-                )
-              }}
-            </td>
-            <td>
-              {{
-                toFixed(
-                  assets[symbol].sharesBorrowed * assets[symbol].avgBorrowed
-                )
-              }}
-            </td>
-            <td>
-              {{
-                toFixed(
-                  assets[symbol].sharesBorrowed * assets[symbol].currentPrice
-                )
-              }}
-            </td>
-            <td
-              [ngClass]="{
-                positive: assets[symbol].unrealizedGainLossBorrowed > 0,
-                '': assets[symbol].unrealizedGainLossBorrowed === 0,
-                negative: assets[symbol].unrealizedGainLossBorrowed < 0
-              }"
-            >
-              <span *ngIf="assets[symbol].unrealizedGainLossBorrowed > 0"
-                >+</span
-              >
-              <span *ngIf="assets[symbol].unrealizedGainLossBorrowed < 0"
-                >-</span
-              >{{ toFixed(assets[symbol].unrealizedGainLossBorrowed) }}
-            </td>
-            <td
-              [ngClass]="{
-                positive: assets[symbol].realizedGainLossShortSelling > 0,
-                '': assets[symbol].realizedGainLossShortSelling === 0,
-                negative: assets[symbol].realizedGainLossShortSelling < 0
-              }"
-            >
-              <span *ngIf="assets[symbol].realizedGainLossShortSelling > 0"
-                >+</span
-              >
-              <span *ngIf="assets[symbol].realizedGainLossShortSelling < 0"
-                >-</span
-              >{{ toFixed(assets[symbol].realizedGainLossShortSelling) }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <app-asset-table [asset]="assets[symbol]"></app-asset-table>
     </div>
     <mat-paginator
       (page)="handlePageEvent($event)"
@@ -157,7 +50,14 @@
     </mat-paginator>
   </div>
 
-  <div class="no-result" *ngIf="selected.length === 0 && !loading">
+  <div
+    class="no-result"
+    *ngIf="
+      selected.length === 0 &&
+      !loading &&
+      (loadingStore$ | async) !== LoadingStatus.loading_portfolio
+    "
+  >
     You do not have any asset {{ filter === "" ? "..." : "with a symbol: "
     }}{{ filter }}
   </div>
