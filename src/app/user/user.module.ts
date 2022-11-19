@@ -15,6 +15,7 @@ import { SignInModalComponent } from "./sign-in/sign-in-modal/sign-in-modal.comp
 import { UserProfileComponent } from "./profile/profile.component";
 import { MatIconModule } from "@angular/material/icon";
 import { AssetListComponent } from "./portfolio/asset-list/asset-list.component";
+import { WatchListComponent } from "./portfolio/watch-list/watch-list.component";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AssetListComponent } from "./portfolio/asset-list/asset-list.component"
     PortfolioPreviewComponent,
     PortfolioComponent,
     AssetListComponent,
+    WatchListComponent,
     SignInModalComponent,
     UserProfileComponent,
   ],

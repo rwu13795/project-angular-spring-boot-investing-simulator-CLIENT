@@ -55,3 +55,20 @@ export const setPortfolio = createAction(
   "[User] Set Portfolio",
   props<{ portfolio: Response_Portfolio }>()
 );
+
+export const addToWatchlist = createAction(
+  "[User] Add To Watchlist",
+  props<{ symbol: string; exchange: string }>()
+);
+export const removeFromWatchlist = createAction(
+  "[User] Remove From Watchlist",
+  props<{ symbol: string }>()
+);
+export const updateWatchlist = createAction(
+  "[User] Update Watchlist",
+  props<{ symbol: string; isAdded: boolean }>()
+);
+export const updateWatchlist_batch = createAction(
+  "[User] Update Watchlist Batch",
+  props<{ symbols: string[] }>()
+);

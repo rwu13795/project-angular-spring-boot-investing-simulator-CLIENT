@@ -76,10 +76,10 @@ Also I can change the width, height and etc using the "inputs"
   transition: all 0.1s;
 }
 .wrapper:active .front.red {
-  background-color: var(--color-negative-1);
+  background-color: var(--color-negative-2);
 }
 .wrapper:active .front.green {
-  background-color: var(--color-positive-1);
+  background-color: var(--color-positive-2);
 }
 .wrapper:active .front.orange {
   background-color: var(--color-orange);

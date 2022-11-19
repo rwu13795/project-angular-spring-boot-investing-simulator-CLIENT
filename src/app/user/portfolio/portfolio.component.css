@@ -59,7 +59,13 @@ main {
   grid-template-columns: 170px 1fr;
 }
 
+.side-menu-wrapper {
+  height: 100%;
+}
+
 .side-menu {
+  position: sticky;
+  top: 100px;
   min-width: 160px;
   padding-right: 10px;
   padding-top: 10px;
@@ -92,4 +98,26 @@ main {
 .active {
   background-color: var(--main-500);
   transition: all 1s;
+}
+
+@media screen and (max-width: 1000px) {
+  .assets-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+  .menu-item {
+    font-size: min(20px, 5vw);
+  }
+  .side-menu {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+  }
 }

@@ -8,7 +8,6 @@
         #scrollRef
       />
       <mat-paginator
-        #paginator
         (page)="handlePageEvent($event)"
         [length]="totalCount"
         [pageSize]="pageSize"
@@ -16,12 +15,14 @@
         [pageIndex]="pageIndex"
         [disabled]="false"
         aria-label="Select page"
+        *ngIf="totalCount > 10"
       >
       </mat-paginator>
     </div>
 
     <div
       class="asset"
+      id="custom-scroll-x-thin"
       *ngFor="let symbol of selected"
       [routerLink]="['/stock', 'asset-detail', symbol]"
     >
@@ -143,11 +144,7 @@
         </tbody>
       </table>
     </div>
-    <div class="no-result" *ngIf="selected.length === 0">
-      No Result Found...
-    </div>
     <mat-paginator
-      #paginator
       (page)="handlePageEvent($event)"
       [length]="totalCount"
       [pageSize]="pageSize"
@@ -155,10 +152,16 @@
       [pageIndex]="pageIndex"
       [disabled]="false"
       aria-label="Select page"
+      *ngIf="totalCount > 10"
     >
     </mat-paginator>
   </div>
-  <div class="loading" *ngIf="!assets || symbols.length === 0">
+
+  <div class="no-result" *ngIf="selected.length === 0 && !loading">
+    You do not have any asset {{ filter === "" ? "..." : "with a symbol: "
+    }}{{ filter }}
+  </div>
+  <div class="loading" *ngIf="loading">
     <app-loading-spinner></app-loading-spinner>
   </div>
 </div>

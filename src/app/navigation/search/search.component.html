@@ -39,7 +39,7 @@
       </div>
       <div
         class="result-list"
-        *ngIf="searchResult.length === 0 && inputValue !== ''"
+        *ngIf="searchResult.length === 0 && inputValue !== '' && !loading"
       >
         <div class="no-result">
           Could not find any result associated with: "{{ inputValue }}"

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 import { map, catchError, of } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Response_realTimePrice } from "../stock/stock-models";
 import {
   InputField,
   InputFieldNames,
@@ -33,7 +34,7 @@ export class UserService {
       fromObject: { symbol, pageNum, type },
     });
     return this.http.get<Response_transactions>(
-      `${this.SERVER_URL}/portfolio/transactions/by-page`,
+      `${this.SERVER_URL}/portfolio/transaction/by-page`,
       { withCredentials: true, params }
     );
   }
@@ -46,8 +47,26 @@ export class UserService {
       fromObject: { symbol, type },
     });
     return this.http.get<Response_transactionsCount>(
-      `${this.SERVER_URL}/portfolio/transactions/count`,
+      `${this.SERVER_URL}/portfolio/transaction/count`,
       { withCredentials: true, params }
+    );
+  }
+
+  public getWatchlistByPage_withPrice(pageNum: number) {
+    const params = new HttpParams({
+      fromObject: { pageNum },
+    });
+    return this.http.get<Response_realTimePrice[]>(
+      `${this.SERVER_URL}/portfolio/watchlist/by-page-with-price`,
+      { withCredentials: true, params }
+    );
+  }
+
+  public removeFromWatchlist_batch(symbols: string[]) {
+    return this.http.post(
+      `${this.SERVER_URL}/portfolio/watchlist/batch`,
+      { symbols },
+      { withCredentials: true }
     );
   }
 

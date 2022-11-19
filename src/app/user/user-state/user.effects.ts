@@ -130,5 +130,44 @@ export class UserEffects {
     )
   );
 
+  public addToWatchlist = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.addToWatchlist),
+      switchMap(({ symbol, exchange }) => {
+        // NOTE
+        // in "POST" method, the 2nd option is the body, and the 3rd option is the
+        // other options such as "withCredentials: true". DO NOT mess up the order!
+        return this.http
+          .post(
+            `${this.SERVER_URL}/portfolio/watchlist`,
+            { symbol, exchange },
+            { withCredentials: true }
+          )
+          .pipe(
+            map(() => {
+              return actions.updateWatchlist({ symbol, isAdded: true });
+            })
+          );
+      })
+    )
+  );
+
+  public removeFromWatchlist = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.removeFromWatchlist),
+      switchMap(({ symbol }) => {
+        return this.http
+          .delete(`${this.SERVER_URL}/portfolio/watchlist?symbol=${symbol}`, {
+            withCredentials: true,
+          })
+          .pipe(
+            map(() => {
+              return actions.updateWatchlist({ symbol, isAdded: false });
+            })
+          );
+      })
+    )
+  );
+
   constructor(private actions$: Actions, private http: HttpClient) {}
 }

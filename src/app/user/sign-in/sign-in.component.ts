@@ -162,6 +162,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       setLoadingStatus_user({ status: LoadingStatus_user.idle })
     );
+    this.store.dispatch(clearAuthError());
   }
 }
 

@@ -7,6 +7,7 @@ import {
   ViewChild,
   ElementRef,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
@@ -17,7 +18,7 @@ import {
   Response_PortfolioAccount,
   Response_PortfolioAsset,
 } from "../user-models";
-import { selectPortfolio } from "../user-state/user.selectors";
+import { selectHasAuth, selectPortfolio } from "../user-state/user.selectors";
 import { UserService } from "../user.service";
 
 @Component({
@@ -27,15 +28,17 @@ import { UserService } from "../user.service";
 })
 export class PortfolioComponent implements OnInit, OnDestroy {
   private portfolio$?: Subscription;
+  private hasAuth$?: Subscription;
 
   public portfolio: Response_Portfolio | null = null;
   public account: Response_PortfolioAccount | null = null;
   public assets: PortfolioAssetList = {};
   public symbols: string[] = [];
-  public watchlist: PortfolioWatchlist = {};
+  public watchlist: string[] = [];
   public isOnAssets: boolean = true;
 
   constructor(
+    private router: Router,
     private store: Store<AppState>,
     private userService: UserService
   ) {}
@@ -43,18 +46,24 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
+    this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
+      if (!hasAuth) {
+        this.router.navigate(["/"]);
+      }
+    });
+
     this.store.select(selectPortfolio).subscribe((portfolio) => {
       if (!portfolio) return;
       this.portfolio = portfolio;
       this.account = this.portfolio.account;
       this.assets = this.portfolio.assets;
       this.symbols = this.portfolio.symbols;
-      this.watchlist = this.portfolio.watchlist;
+      this.watchlist = Object.keys(this.portfolio.watchlist);
     });
   }
 
-  toFixedLocale(number: number) {
-    return this.userService.toFixedLocale(number);
+  toFixedLocale(number: number, showZero: boolean = false) {
+    return this.userService.toFixedLocale(number, showZero);
   }
 
   onSelectMenu(menu: number) {
@@ -63,5 +72,6 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.portfolio$) this.portfolio$.unsubscribe();
+    if (this.hasAuth$) this.hasAuth$.unsubscribe();
   }
 }

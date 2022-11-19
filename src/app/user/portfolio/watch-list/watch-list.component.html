@@ -1,0 +1,78 @@
+<div class="list-wrapper">
+  <mat-paginator
+    #paginator
+    (page)="handlePageEvent($event)"
+    [length]="totalCount"
+    [pageSize]="pageSize"
+    [hidePageSize]="true"
+    [pageIndex]="pageIndex"
+    [disabled]="false"
+    aria-label="Select page"
+  ></mat-paginator>
+
+  <div *ngFor="let item of watchlistData" class="item-wrapper">
+    <a
+      class="link-wrapper"
+      [routerLink]="['/stock', 'financial-summary', item.symbol]"
+    >
+      <div class="symbol-wrapper">
+        <img class="logo" [src]="LOGO_URL + item.symbol + '.png'" alt="Logo" />
+        <span class="symbol">{{ item.symbol }} </span>
+        <span class="name">{{ item.name }}</span>
+      </div>
+      <div class="price-wrapper">
+        <span class="price">${{ toFixed(item.price) }}</span>
+        <span
+          class="changes"
+          [ngClass]="item.change >= 0 ? 'positive' : 'negative'"
+        >
+          {{ item.change >= 0 ? "+" : "-" }}{{ toFixed(item.change) }}</span
+        >
+        <span
+          class="changes"
+          [ngClass]="item.changesPercentage >= 0 ? 'positive' : 'negative'"
+        >
+          ({{ item.changesPercentage >= 0 ? "+" : "-"
+          }}{{ toFixed(item.changesPercentage) }}%)</span
+        >
+      </div>
+    </a>
+    <mat-icon
+      class="icon"
+      (click)="selectToRemove(item.symbol)"
+      [ngClass]="{ delete: toBeDeleted[item.symbol] }"
+      >highlight_off</mat-icon
+    >
+  </div>
+
+  <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+  <mat-paginator
+    #paginator
+    (page)="handlePageEvent($event)"
+    [length]="totalCount"
+    [pageSize]="pageSize"
+    [hidePageSize]="true"
+    [pageIndex]="pageIndex"
+    [disabled]="false"
+    aria-label="Select page"
+    *ngIf="totalCount > 10"
+  ></mat-paginator>
+
+  <div class="no-result" *ngIf="!loading && totalCount === 0">
+    Your watchlist is empty...
+  </div>
+
+  <div class="delete-item" *ngIf="!isDeleteEmpty">
+    Remove all selected stocks?
+    <app-custom-button
+      text="DELETE"
+      color="red"
+      [height]="26"
+      [bold]="true"
+      [fontSize]="16"
+      [width]="70"
+      (click)="removeFromList()"
+    ></app-custom-button>
+  </div>
+</div>

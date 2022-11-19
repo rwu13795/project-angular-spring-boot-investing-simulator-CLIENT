@@ -48,6 +48,13 @@ td {
   text-align: center;
 }
 
+.positive {
+  color: var(--color-positive-2);
+}
+.negative {
+  color: var(--color-negative-2);
+}
+
 .header {
   width: 100%;
   display: flex;

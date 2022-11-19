@@ -23,6 +23,7 @@ import { UserService } from "../../user.service";
 export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("scrollRef") scrollRef?: ElementRef<HTMLElement>;
   private inputTimer$: any;
+  private initialChange: boolean = true;
 
   @Input() assets: PortfolioAssetList = {};
   @Input() symbols: string[] = [];
@@ -32,19 +33,40 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
   public selected: string[] = [];
   public pageIndex: number = 0; // page num
   public totalCount: number = 0;
+  public loading: boolean = true;
+  public filter: string = "";
 
-  constructor(
-    private stockService: StockService,
-    private userService: UserService
-  ) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.assets, this.symbols);
-    if (!this.assets || this.symbols.length === 0) return;
+    console.log(this.assets, this.symbols.length);
+    this.loading = true;
+    if (!this.assets || this.symbols.length === 0) {
+      if (!this.initialChange) this.loading = false;
+      this.initialChange = false;
+      return;
+    }
     this.totalCount = this.symbols.length;
     this.getFirstTen();
+  }
+
+  onInputChange(event: KeyboardEvent) {
+    const value = (event.target as HTMLInputElement).value.toUpperCase();
+    clearTimeout(this.inputTimer$);
+    this.pageIndex = 0;
+
+    if (!value || value === "") {
+      this.totalCount = this.symbols.length;
+      this.getFirstTen();
+      return;
+    }
+    this.inputTimer$ = setTimeout(() => {
+      this.filter = value;
+      this.selected = this.filterAsset(value);
+      this.totalCount = this.selected.length;
+    }, 500);
   }
 
   // ----- (1) ----- //
@@ -60,21 +82,6 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  onInputChange(event: KeyboardEvent) {
-    const value = (event.target as HTMLInputElement).value.toUpperCase();
-    clearTimeout(this.inputTimer$);
-
-    if (!value || value === "") {
-      this.totalCount = this.symbols.length;
-      this.getFirstTen();
-      return;
-    }
-    this.inputTimer$ = setTimeout(() => {
-      this.selected = this.filterAsset(value);
-      this.totalCount = this.selected.length;
-    }, 500);
-  }
-
   toFixed(number: number, decimal: number = 2) {
     return this.userService.toFixedLocale(number, false, decimal);
   }
@@ -88,6 +95,7 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
     this.symbols.forEach((symbol) => {
       if (symbol.includes(value)) selected.push(symbol);
     });
+    this.loading = false;
     return selected;
   }
 
@@ -97,6 +105,7 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
     } else {
       this.selected = this.symbols;
     }
+    this.loading = false;
   }
 }
 

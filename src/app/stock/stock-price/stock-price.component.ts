@@ -22,6 +22,10 @@ import {
   selectPortfolio,
   selectWatchlist,
 } from "src/app/user/user-state/user.selectors";
+import {
+  addToWatchlist,
+  removeFromWatchlist,
+} from "src/app/user/user-state/user.actions";
 
 @Component({
   selector: "app-stock-price",
@@ -120,6 +124,21 @@ export class StockPriceComponent implements OnInit, OnDestroy {
 
         console.log("isLargeScreen", this.isLargeScreen);
       });
+  }
+
+  updateWatchlist(isAdded: boolean) {
+    if (!this.symbol || !this.profile) return;
+
+    if (isAdded) {
+      this.store.dispatch(
+        addToWatchlist({
+          symbol: this.symbol,
+          exchange: this.profile.exchangeShortName,
+        })
+      );
+    } else {
+      this.store.dispatch(removeFromWatchlist({ symbol: this.symbol }));
+    }
   }
 
   ngOnDestroy(): void {

@@ -71,12 +71,14 @@
           class="star"
           matTooltip="Remove from Watch List"
           *ngIf="(hasAuth$ | async) && isWatched && showStar"
+          (click)="updateWatchlist(false)"
           >star</mat-icon
         >
         <mat-icon
           class="star"
           matTooltip="Add to Watch List"
           *ngIf="(hasAuth$ | async) && !isWatched && showStar"
+          (click)="updateWatchlist(true)"
         >
           star_outline
         </mat-icon>

@@ -80,12 +80,33 @@ export const userReducer = createReducer(
       draft.userInfo = { id: -1, email: "", fund: 0, joinedAt: "" };
       draft.hasAuth = false;
       draft.loadingStatus = LoadingStatus_user.idle;
+      draft.portfolio = initializePortfolio();
     })
   ),
 
   on(actions.toggleSignInModal, (state, { open }) =>
     produce(state, (draft) => {
       draft.isSignInModalOpen = open;
+    })
+  ),
+
+  on(actions.updateWatchlist, (state, { symbol, isAdded }) =>
+    produce(state, (draft) => {
+      if (!draft.portfolio) return;
+      if (isAdded) {
+        draft.portfolio.watchlist[symbol] = symbol;
+      } else {
+        delete draft.portfolio.watchlist[symbol];
+      }
+    })
+  ),
+
+  on(actions.updateWatchlist_batch, (state, { symbols }) =>
+    produce(state, (draft) => {
+      if (!draft.portfolio) return;
+      for (let s of symbols) {
+        delete draft.portfolio.watchlist[s];
+      }
     })
   )
 );

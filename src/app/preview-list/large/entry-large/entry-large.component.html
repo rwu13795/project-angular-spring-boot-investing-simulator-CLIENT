@@ -37,8 +37,16 @@
         <td>{{ entry.symbol }}</td>
         <td>{{ entry.name }}</td>
         <td>${{ toFixedLocale(entry.price) }}</td>
-        <td>{{ toFixedLocale(entry.change) }}</td>
-        <td>{{ toFixedLocale(entry.changesPercentage) }}%</td>
+        <td
+          [ngClass]="{ positive: entry.change > 0, negative: entry.change < 0 }"
+        >
+          {{ toFixedLocale(entry.change) }}
+        </td>
+        <td
+          [ngClass]="{ positive: entry.change > 0, negative: entry.change < 0 }"
+        >
+          {{ toFixedLocale(entry.changesPercentage) }}%
+        </td>
       </tr>
     </tbody>
   </table>
