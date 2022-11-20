@@ -26,7 +26,7 @@
         <tr *ngFor="let t of transactions">
           <td>{{ getType(t.buy, t.shortSell) }}</td>
           <td>{{ t.shares }}</td>
-          <td>{{ toFixed(t.pricePerShare) }}</td>
+          <td>{{ toFixed(t.pricePerShare, false) }}</td>
           <td
             [ngClass]="{
               positive: t.realizedGainLoss > 0,
@@ -34,20 +34,19 @@
               negative: t.realizedGainLoss < 0
             }"
           >
-            <span *ngIf="t.realizedGainLoss > 0">+</span>
-            <span *ngIf="t.realizedGainLoss < 0">-</span
-            >{{ toFixed(t.realizedGainLoss) }}
+            {{ toFixed(t.realizedGainLoss) }}
           </td>
+
+          <td *ngIf="t.buy || t.shortSell">-</td>
           <td
+            *ngIf="!t.buy && !t.shortSell"
             [ngClass]="{
               positive: t.assetTotalRealizedGainLoss > 0,
               '': t.assetTotalRealizedGainLoss === 0,
               negative: t.assetTotalRealizedGainLoss < 0
             }"
           >
-            <span *ngIf="t.assetTotalRealizedGainLoss > 0">+</span>
-            <span *ngIf="t.assetTotalRealizedGainLoss < 0">-</span
-            >{{ toFixed(t.assetTotalRealizedGainLoss) }}
+            {{ toFixed(t.assetTotalRealizedGainLoss) }}
           </td>
           <td>{{ toDate(t.timestamp)[0] }}</td>
           <td>{{ toDate(t.timestamp)[1] }}</td>
@@ -57,12 +56,13 @@
   </div>
   <div class="pagination">
     <mat-paginator
-      [length]="24"
-      [pageSize]="20"
+      [length]="totalCount"
+      [pageSize]="pageSize"
       [hidePageSize]="true"
-      [pageIndex]="0"
+      [pageIndex]="pageIndex"
       [disabled]="false"
       aria-label="Select page"
+      (page)="handlePageEvent($event)"
     >
     </mat-paginator>
   </div>

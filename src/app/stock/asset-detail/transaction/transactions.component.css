@@ -51,3 +51,9 @@ table tbody td {
 .negative {
   color: var(--color-negative-2);
 }
+
+@media screen and (max-width: 1000px) {
+  .table-title {
+    font-size: min(22px, 5.5vw);
+  }
+}

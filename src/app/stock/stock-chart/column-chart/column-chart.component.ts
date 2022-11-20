@@ -1,4 +1,10 @@
-import { Component, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -10,6 +16,8 @@ import {
   ApexTitleSubtitle,
   ApexTooltip,
 } from "ng-apexcharts";
+import { ColumnChart } from "../../stock-models";
+import { StockChartService } from "../stock-chart.service";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -27,26 +35,70 @@ export type ChartOptions = {
   templateUrl: "./column-chart.component.html",
   styleUrls: ["./column-chart.component.css"],
 })
-export class ColumnChartComponent {
+export class ColumnChartComponent implements OnChanges {
   @ViewChild("column_chart") chart?: ChartComponent;
-  public chartOptions: ChartOptions;
+  @Input() positionType: number = 1;
+  @Input() transactionType: string = "";
+  @Input() chartDataBuy: ColumnChart[] = [];
+  @Input() chartDataSell: ColumnChart[] = [];
+  @Input() isLargeScreen: boolean = true;
 
-  constructor() {
+  public chartOptions?: ChartOptions;
+  public loading: boolean = true;
+
+  constructor(private stockChartService: StockChartService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.transactionType === "") return;
+    this.loading = true;
+    if (this.transactionType === "buy") {
+      this.setChartOptions(this.chartDataBuy);
+    } else {
+      this.setChartOptions(this.chartDataSell);
+    }
+    this.loading = false;
+  }
+
+  private setChartOptions(chartData: ColumnChart[]) {
+    // real the documentation https://apexcharts.com/docs/series/
+    // I am pssing a string containing the data info in the "x"
+    // and the bar value to "y". The "x" value will be in the formatter
+    // "w.globals.labels"
+    if (chartData.length > 0 && chartData.length < 6) {
+      // add some placehold data points, the column bar will be
+      // too wide if the data points are too few
+      let temp: ColumnChart[] = [];
+      for (let i = 0; i < 6 - chartData.length; i++) {
+        temp.push({ x: "", y: 0 });
+      }
+      chartData.unshift(...temp);
+    }
+    let title = "";
+    if (this.transactionType === "buy") {
+      if (this.positionType === 1) {
+        title = "Buy";
+      } else {
+        title = "Sell Short";
+      }
+    } else {
+      if (this.positionType === 1) {
+        title = "Sell";
+      } else {
+        title = "Buy To Cover";
+      }
+    }
+
     this.chartOptions = {
       series: [
         {
-          name: "Realized",
-          data: [
-            1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09,
-            0.34, 3.88, 13.07, 5.8, 2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8,
-            -27.03, -54.4, -47.2, -43.3, -18.6, -48.6, -41.1, -39.6, -37.6,
-            -29.4, -21.4, -2.4,
-          ],
+          name: "Column Chart",
+          data: chartData,
         },
       ],
       chart: {
         type: "bar",
-        height: 350,
+        width: "100%",
+        height: this.isLargeScreen ? 350 : 300,
         fontFamily: '"Quantico", sans-serif',
         toolbar: { show: false, tools: { zoom: false } },
       },
@@ -57,12 +109,12 @@ export class ColumnChartComponent {
               {
                 from: -Infinity,
                 to: 0,
-                color: "#F15B46",
+                color: "#e74c3c",
               },
               {
                 from: 0,
                 to: Infinity,
-                color: "#3ffe19",
+                color: this.transactionType === "buy" ? "#1093df" : "#2ecc71",
               },
             ],
           },
@@ -70,25 +122,19 @@ export class ColumnChartComponent {
         },
       },
       title: {
-        text: "Sell",
+        text: title,
         align: "left",
         style: {
-          fontSize: "16px",
+          fontSize: this.isLargeScreen ? "26px" : "20px",
         },
       },
       tooltip: {
         enabled: true,
         custom: ({ series, seriesIndex, dataPointIndex, w }) => {
-          let data = series[seriesIndex][dataPointIndex];
-          console.log("data", data);
-          return `<div style="padding: 0px;"> 
-            <div style="background-color: #c5f8ff; padding: 6px 12px; text-align: center;">
-              ---Date---
-            </div>
-            <div >
-              Realized: <b>${data}</b>  
-            </div> 
-          </div>`;
+          let value = series[seriesIndex][dataPointIndex];
+          let label = w.globals.labels[dataPointIndex];
+
+          return this.stockChartService.setCustomTooltip_column(value, label);
         },
       },
       dataLabels: {
@@ -97,50 +143,13 @@ export class ColumnChartComponent {
       yaxis: {
         labels: {
           formatter: function (y) {
-            return y.toFixed(0) + "%";
+            return y.toLocaleString(undefined, { maximumFractionDigits: 0 });
           },
         },
       },
       xaxis: {
         type: "category",
-        // categories: [
-        //   "2011-01-01",
-        //   "2011-02-01",
-        //   "2011-03-01",
-        //   "2011-04-01",
-        //   "2011-05-01",
-        //   "2011-06-01",
-        //   "2011-07-01",
-        //   "2011-08-01",
-        //   "2011-09-01",
-        //   "2011-10-01",
-        //   "2011-11-01",
-        //   "2011-12-01",
-        //   "2012-01-01",
-        //   "2012-02-01",
-        //   "2012-03-01",
-        //   "2012-04-01",
-        //   "2012-05-01",
-        //   "2012-06-01",
-        //   "2012-07-01",
-        //   "2012-08-01",
-        //   "2012-09-01",
-        //   "2012-10-01",
-        //   "2012-11-01",
-        //   "2012-12-01",
-        //   "2013-01-01",
-        //   "2013-02-01",
-        //   "2013-03-01",
-        //   "2013-04-01",
-        //   "2013-05-01",
-        //   "2013-06-01",
-        //   "2013-07-01",
-        //   "2013-08-01",
-        //   "2013-09-01",
-        // ],
-        // labels: {
-        //   rotate: -90,
-        // },
+        labels: { show: false },
       },
     };
   }

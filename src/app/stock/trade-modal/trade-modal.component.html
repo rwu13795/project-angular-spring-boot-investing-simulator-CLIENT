@@ -1,0 +1,92 @@
+<main *ngIf="isOpen">
+  <div class="backdrop" (click)="closeModal()"></div>
+  <div class="content-wrapper" id="custom-scroll-y-thin">
+    <div class="close-icon-div">
+      <mat-icon class="close-icon" (click)="closeModal()">close</mat-icon>
+    </div>
+    <div class="header">Trade Ticket</div>
+    <app-gradient-break
+      [type]="2"
+      [height]="6"
+      [marginBottom]="20"
+    ></app-gradient-break>
+    <div class="symbol-price-wrapper" *ngIf="quote">
+      <img [src]="LOGO_URL + quote.symbol + '.png'" alt="Logo" />
+      <span class="symbol">{{ quote.symbol }}</span>
+      <div class="price-wrapper">
+        <span class="price">${{ toFixed(quote.price) }}</span>
+        <span
+          class="changes"
+          [ngClass]="quote.change >= 0 ? 'positive' : 'negative'"
+          >{{ toFixed(quote.change, true) }}</span
+        >
+        <span
+          class="changes"
+          [ngClass]="quote.change >= 0 ? 'positive' : 'negative'"
+          >({{ toFixed(quote.changesPercentage, true) }}%)</span
+        >
+      </div>
+    </div>
+    <div class="refresh">
+      Real Time Quote as of date date date
+      <span><mat-icon matTooltip="Refresh">refresh</mat-icon></span>
+    </div>
+
+    <div class="fund" *ngIf="account">
+      <span>Available Fund</span>
+      <span>${{ toFixed(account.fund) }}</span>
+    </div>
+
+    <div class="buttons-group">
+      <div>Buy</div>
+      <div>Sell</div>
+      <div>Buy to Cover</div>
+      <div>Sell Short</div>
+    </div>
+
+    <div class="numbers" *ngIf="quote">
+      <div class="limit-wrapper">
+        <div class="input">
+          <label>Price Limit</label>
+          <div class="sign-anchor">
+            <input
+              type="number"
+              min="0"
+              [value]="priceLimit"
+              [step]="0.01"
+              (input)="onPriceLimitChange($event)"
+            />
+            <mat-icon class="sign">attach_money</mat-icon>
+          </div>
+        </div>
+        <div>limit error</div>
+      </div>
+
+      <div class="cost-wrapper">
+        <div class="input">
+          <label>Quantity</label
+          ><input
+            type="number"
+            min="0"
+            [value]="quantity"
+            (input)="onQtyChange($event)"
+          />
+        </div>
+        <div class="per-share">@ ${{ toFixed(quote.price, false) }}</div>
+        <div class="total">${{ toFixed(quantity * quote.price) }}</div>
+      </div>
+    </div>
+
+    <div class="confirm">
+      <app-custom-button
+        text="Confirm"
+        [width]="164"
+        [height]="30"
+        color="orange"
+        [fontSize]="18"
+        [bold]="true"
+        [disabled]="false"
+      ></app-custom-button>
+    </div>
+  </div>
+</main>

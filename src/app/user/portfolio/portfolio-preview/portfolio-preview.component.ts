@@ -67,8 +67,12 @@ export class PortfolioPreviewComponent implements OnInit, OnDestroy {
     return LoadingStatus_user;
   }
 
-  toFixedLocale(number: number) {
-    return this.userService.toFixedLocale(number, true);
+  toFixedLocale(number: number, addSymbol: boolean = false) {
+    return this.userService.toFixedLocale({
+      number: number >= 0 ? number : number * -1,
+      showZero: true,
+      addSymbol,
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,5 @@
+import { Response_transaction } from "../user/user-models";
+
 export interface Response_historyPrice {
   date: string;
   open: number;
@@ -5,34 +7,6 @@ export interface Response_historyPrice {
   high: number;
   close: number;
   volume: number;
-}
-
-// export interface Response_historyPriceFull {
-//   // for the daily price api "/historical-price-full"
-//   historical: Response_historyPrice[];
-// }
-
-export interface CandleData {
-  x: Date; // timestamp
-  y: number[]; // [open, high, low, close, real-time-timestamp]
-}
-export interface VolumeData {
-  x: Date; // timestamp
-  y: number;
-}
-export interface CandleLineData {
-  x: Date; // timestamp
-  y: number;
-  meta: number[];
-}
-
-export interface ChartData {
-  volumes: VolumeData[];
-  candles: CandleData[];
-  candleLine: CandleLineData[];
-  highBound: number;
-  lowBound: number;
-  currentTotalVolume: number;
 }
 
 export interface Response_realTimePrice {
@@ -148,4 +122,38 @@ export enum StockMenu {
   chart = "chart",
   profile = "profile",
   asset = "asset",
+}
+
+// ---------------- charts ---------------- //
+export interface CandleData {
+  x: Date; // timestamp
+  y: number[]; // [open, high, low, close, real-time-timestamp]
+}
+export interface VolumeData {
+  x: Date; // timestamp
+  y: number;
+}
+export interface CandleLineData {
+  x: Date; // timestamp
+  y: number;
+  meta: number[];
+}
+export interface ColumnChart {
+  x: string;
+  y: number;
+}
+export interface TransactionsData {
+  transactions: Response_transaction[];
+  overallChart: VolumeData[];
+  buyChart: ColumnChart[];
+  sellChart: ColumnChart[];
+}
+
+export interface ChartData {
+  volumes: VolumeData[];
+  candles: CandleData[];
+  candleLine: CandleLineData[];
+  highBound: number;
+  lowBound: number;
+  currentTotalVolume: number;
 }

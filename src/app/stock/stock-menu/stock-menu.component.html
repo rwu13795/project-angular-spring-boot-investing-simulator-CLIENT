@@ -4,7 +4,7 @@
       <div
         class="menu-link"
         [ngClass]="{ active: activeMenu === StockMenu.asset }"
-        *ngIf="(hasAuth$ | async) && hasAsset"
+        *ngIf="hasAuth && hasAsset"
         [routerLink]="['asset-detail', symbol]"
       >
         Asset Detail

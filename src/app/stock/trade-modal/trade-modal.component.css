@@ -1,0 +1,332 @@
+main {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s;
+  z-index: 20;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 25;
+}
+
+.content-wrapper {
+  background-color: white;
+  border-radius: 8px;
+  border: 6px solid var(--main-600);
+  width: min(650px, 90%);
+  min-height: 600px;
+  max-height: 90%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 30;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.close-icon-div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+  padding-right: 6px;
+}
+.close-icon {
+  width: 100%;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s all;
+  cursor: pointer;
+}
+.close-icon:hover {
+  background-color: var(--color-negative-1);
+  transition: 0.4s all;
+}
+.close-icon:active {
+  background-color: var(--color-negative-2);
+  transition: 0.2s all;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.symbol-price-wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  margin-bottom: 20px;
+}
+.symbol-price-wrapper img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.symbol {
+  font-size: 32px;
+  font-weight: bold;
+}
+.price-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  font-size: 26px;
+}
+.price {
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--main-800);
+}
+
+.refresh {
+  width: 90%;
+  margin-bottom: 40px;
+  padding-bottom: 2px;
+  border-bottom: solid 3px var(--main-600);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-dark-grey);
+}
+.refresh span {
+  transition: 0.3s all;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.refresh span:hover {
+  transition: 0.3s all;
+  color: var(--main-500);
+}
+
+.buttons-group {
+  width: 90%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.buttons-group div {
+  width: 100px;
+  height: 50px;
+  padding: 10px 6px;
+  border-radius: 4px;
+  font-size: 20px;
+  border: solid 2px var(--main-600);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s all;
+  cursor: pointer;
+}
+.buttons-group div:hover {
+  transition: 0.3s all;
+  background-color: var(--main-200);
+}
+.buttons-group div:active {
+  transition: 0.2s all;
+  background-color: var(--main-600);
+}
+.active-button {
+  background-color: var(--main-500);
+}
+
+.numbers {
+  width: 90%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 20px;
+}
+.limit-wrapper {
+  width: 49%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.cost-wrapper {
+  width: 49%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 10px;
+}
+.per-share {
+  font-size: 24px;
+}
+.total {
+  min-width: 168px;
+  padding-top: 10px;
+  border-top: black 4px solid;
+  font-size: 24px;
+  text-align: right;
+}
+
+.input {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.input label {
+  color: var(--color-dark-grey);
+  font-size: 18px;
+}
+.input input {
+  border-radius: 4px;
+  font-size: 20px;
+  border: solid 2px var(--main-600);
+  width: 160px;
+  text-align: right;
+}
+.sign-anchor {
+  position: relative;
+  width: 168px;
+}
+.sign {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  color: var(--color-dark-grey);
+}
+
+.fund {
+  width: 90%;
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: solid 3px var(--main-600);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  gap: 20px;
+}
+.fund span:first-child {
+  color: var(--color-dark-grey);
+}
+.fund span:last-child {
+  font-size: 28px;
+  font-weight: bold;
+}
+.confirm {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.positive {
+  color: var(--color-positive-2);
+}
+.negative {
+  color: var(--color-negative-2);
+}
+
+@media screen and (max-width: 600px) {
+  .symbol-price-wrapper {
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .symbol {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .price-wrapper {
+    font-size: 22px;
+    flex-flow: row wrap;
+    gap: 8px;
+  }
+  .price {
+    font-size: 26px;
+  }
+
+  .buttons-group div {
+    width: 80px;
+    height: 40px;
+    font-size: min(16px, 3.5vw);
+  }
+
+  .numbers {
+    width: 90%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .limit-wrapper {
+    width: 80%;
+  }
+  .cost-wrapper {
+    width: 80%;
+  }
+  .per-share {
+    font-size: 22px;
+  }
+  .total {
+    font-size: 22px;
+  }
+
+  .input label {
+    font-size: 16px;
+  }
+
+  .fund {
+    font-size: 20px;
+    flex-flow: row wrap;
+  }
+
+  .fund span:last-child {
+    font-size: 24px;
+  }
+
+  .confirm {
+    width: calc(90% - 6px);
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+  }
+}

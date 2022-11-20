@@ -21,7 +21,7 @@ export class AssetTableComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {}
 
-  toFixed(number: number, decimal: number = 2) {
-    return this.userService.toFixedLocale(number, false, decimal);
+  toFixed(number: number, addSymbol: boolean = true, decimal: number = 2) {
+    return this.userService.toFixedLocale({ number, decimal, addSymbol });
   }
 }

@@ -1,5 +1,6 @@
-<div id="overall-chart" *ngIf="chartOptions">
+<div id="overall-chart">
   <apx-chart
+    *ngIf="chartOptions && !loading"
     [series]="chartOptions.series"
     [chart]="chartOptions.chart"
     [xaxis]="chartOptions.xaxis"
@@ -11,4 +12,13 @@
     [title]="chartOptions.title"
     #overall_chart
   ></apx-chart>
+
+  <div *ngIf="loading" class="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <img
+    *ngIf="loading"
+    class="chart-placeholder"
+    src="../../../assets/images/chart-loading.png"
+  />
 </div>

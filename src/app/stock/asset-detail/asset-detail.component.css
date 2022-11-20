@@ -5,6 +5,15 @@
 main {
   width: 100%;
   display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.content-wrapper {
+  width: 100%;
+  display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
@@ -17,6 +26,10 @@ main {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+}
+.chart {
+  max-width: auto;
+  height: 350px;
 }
 
 .tables-wrapper {
@@ -33,9 +46,48 @@ main {
   padding: 20px 12px;
   border-radius: 6px;
   border: solid 2px var(--main-600);
+  overflow-x: auto;
 }
 .table-title {
   font-size: 26px;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.button-wrapper {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .content-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .charts-wrapper {
+    width: 98%;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .chart {
+    max-width: min(400px, 94vw);
+    height: 300px;
+  }
+
+  .tables-wrapper {
+    width: 98%;
+  }
+  .table {
+    width: 90%;
+  }
+  .table-title {
+    font-size: min(22px, 5.5vw);
+  }
 }

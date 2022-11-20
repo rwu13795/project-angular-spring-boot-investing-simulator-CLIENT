@@ -13,15 +13,15 @@
   <tbody *ngIf="asset">
     <tr>
       <td>Long</td>
-      <td>{{ toFixed(asset.shares, 0) }}</td>
+      <td>{{ toFixed(asset.shares, false, 0) }}</td>
       <td>
-        {{ toFixed(asset.shares > 0 ? asset.avgCost : 0) }}
+        {{ toFixed(asset.shares > 0 ? asset.avgCost : 0, false) }}
       </td>
       <td>
-        {{ toFixed(asset.shares * asset.avgCost) }}
+        {{ toFixed(asset.shares * asset.avgCost, false) }}
       </td>
       <td>
-        {{ toFixed(asset.shares * asset.currentPrice) }}
+        {{ toFixed(asset.shares * asset.currentPrice, false) }}
       </td>
       <td
         [ngClass]="{
@@ -30,9 +30,7 @@
           negative: asset.unrealizedGainLoss < 0
         }"
       >
-        <span *ngIf="asset.unrealizedGainLoss > 0">+</span>
-        <span *ngIf="asset.unrealizedGainLoss < 0">-</span
-        >{{ toFixed(asset.unrealizedGainLoss) }}
+        {{ toFixed(asset.unrealizedGainLoss) }}
       </td>
       <td
         [ngClass]="{
@@ -41,15 +39,13 @@
           negative: asset.realizedGainLoss < 0
         }"
       >
-        <span *ngIf="asset.realizedGainLoss > 0">+</span>
-        <span *ngIf="asset.realizedGainLoss < 0">-</span
-        >{{ toFixed(asset.realizedGainLoss) }}
+        {{ toFixed(asset.realizedGainLoss) }}
       </td>
     </tr>
 
     <tr>
       <td>Short</td>
-      <td>{{ toFixed(asset.sharesBorrowed, 0) }}</td>
+      <td>{{ toFixed(asset.sharesBorrowed, false, 0) }}</td>
       <td>
         {{ toFixed(asset.sharesBorrowed > 0 ? asset.avgBorrowed : 0) }}
       </td>
@@ -66,9 +62,7 @@
           negative: asset.unrealizedGainLossBorrowed < 0
         }"
       >
-        <span *ngIf="asset.unrealizedGainLossBorrowed > 0">+</span>
-        <span *ngIf="asset.unrealizedGainLossBorrowed < 0">-</span
-        >{{ toFixed(asset.unrealizedGainLossBorrowed) }}
+        {{ toFixed(asset.unrealizedGainLossBorrowed) }}
       </td>
       <td
         [ngClass]="{
@@ -77,9 +71,7 @@
           negative: asset.realizedGainLossShortSelling < 0
         }"
       >
-        <span *ngIf="asset.realizedGainLossShortSelling > 0">+</span>
-        <span *ngIf="asset.realizedGainLossShortSelling < 0">-</span
-        >{{ toFixed(asset.realizedGainLossShortSelling) }}
+        {{ toFixed(asset.realizedGainLossShortSelling) }}
       </td>
     </tr>
   </tbody>

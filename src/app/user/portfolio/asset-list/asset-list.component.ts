@@ -83,7 +83,7 @@ export class AssetListComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   toFixed(number: number, decimal: number = 2) {
-    return this.userService.toFixedLocale(number, false, decimal);
+    return this.userService.toFixedLocale({ number, showZero: false, decimal });
   }
 
   get LoadingStatus() {

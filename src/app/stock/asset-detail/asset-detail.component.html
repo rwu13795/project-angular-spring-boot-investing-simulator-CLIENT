@@ -1,20 +1,50 @@
 <main>
-  <div class="charts-wrapper">
-    <app-overall-chart></app-overall-chart>
-    <app-column-chart></app-column-chart>
+  <div class="content-wrapper">
+    <div class="charts-wrapper" *ngIf="transactionData">
+      <app-overall-chart
+        [chartData]="transactionData.overallChart"
+        [isLargeScreen]="isLargeScreen"
+        class="chart"
+      ></app-overall-chart>
+      <app-column-chart
+        [chartDataBuy]="transactionData.buyChart"
+        [positionType]="positionType"
+        transactionType="buy"
+        [isLargeScreen]="isLargeScreen"
+        class="chart"
+      ></app-column-chart>
+      <app-column-chart
+        [chartDataSell]="transactionData.sellChart"
+        [positionType]="positionType"
+        transactionType="sell"
+        [isLargeScreen]="isLargeScreen"
+        class="chart"
+      ></app-column-chart>
+    </div>
+
+    <div class="tables-wrapper" *ngIf="transactionData">
+      <div class="table" id="custom-scroll-x-thin">
+        <div class="table-title" #scrollRef>Positions</div>
+        <app-asset-table [asset]="asset"></app-asset-table>
+      </div>
+
+      <div class="table" id="custom-scroll-x-thin">
+        <app-transactions
+          [transactions]="transactionData.transactions"
+          [totalCount]="totalCount"
+          (selectedTpye)="changeTransactionType($event)"
+          (currentPage)="changePage($event)"
+        ></app-transactions>
+      </div>
+    </div>
   </div>
-
-  <div class="tables-wrapper">
-    <div class="table">
-      <div class="table-title">Positions</div>
-      <app-asset-table [asset]="asset"></app-asset-table>
-    </div>
-
-    <div class="table" id="custom-scroll-x-thin">
-      <app-transactions
-        [transactions]="transactions"
-        (selectedTpye)="changeTransactionType($event)"
-      ></app-transactions>
-    </div>
+  <div class="button-wrapper">
+    <app-custom-button
+      [width]="160"
+      [height]="30"
+      [fontSize]="20"
+      text="To Portfolio"
+      (click)="toPortfolio()"
+    ></app-custom-button>
   </div>
 </main>

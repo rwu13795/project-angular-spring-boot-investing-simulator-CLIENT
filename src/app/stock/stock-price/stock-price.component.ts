@@ -26,6 +26,7 @@ import {
   addToWatchlist,
   removeFromWatchlist,
 } from "src/app/user/user-state/user.actions";
+import { toggleTradeModal } from "../stock-state/stock.actions";
 
 @Component({
   selector: "app-stock-price",
@@ -139,6 +140,10 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     } else {
       this.store.dispatch(removeFromWatchlist({ symbol: this.symbol }));
     }
+  }
+
+  openTradeModal() {
+    this.store.dispatch(toggleTradeModal({ open: true }));
   }
 
   ngOnDestroy(): void {

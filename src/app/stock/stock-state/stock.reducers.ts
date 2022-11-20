@@ -23,6 +23,7 @@ export interface StockState {
   allChangePercentage: Response_allChangePercentage | null;
   stockListOption: ListTypes;
   stockActiveMenu: StockMenu;
+  openTradeModal: boolean;
 }
 
 const initialState: StockState = {
@@ -38,6 +39,7 @@ const initialState: StockState = {
   allChangePercentage: null,
   stockListOption: ListTypes.actives,
   stockActiveMenu: StockMenu.summary,
+  openTradeModal: false,
 };
 
 export const stockReducer = createReducer(
@@ -139,6 +141,12 @@ export const stockReducer = createReducer(
   on(actions.setStockActiveMenu, (state, { menu }) =>
     produce(state, (draft) => {
       draft.stockActiveMenu = menu;
+    })
+  ),
+
+  on(actions.toggleTradeModal, (state, { open }) =>
+    produce(state, (draft) => {
+      draft.openTradeModal = open;
     })
   )
 );

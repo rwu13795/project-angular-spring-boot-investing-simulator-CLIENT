@@ -6,6 +6,7 @@ import { CompanyProfileComponent } from "./company-profile/company-profile.compo
 import { FinancialStatementsComponent } from "./financial-statements/financial-statements.component";
 import { FinancialSummaryComponent } from "./financial-summary/financial-summary.component";
 import { StockChartComponent } from "./stock-chart/stock-chart.component";
+import { StockRedirectComponent } from "./stock-redirect/stock-redirect.component";
 import { StockComponent } from "./stock.component";
 import { StockGuard } from "./stock.guard";
 
@@ -14,15 +15,16 @@ const routes: Routes = [
     path: "",
     component: StockComponent,
     children: [
-      { path: "", component: HomeComponent },
+      { path: "", component: StockRedirectComponent },
 
-      { path: "financial-summary", redirectTo: "" },
-
+      { path: "asset-detail", redirectTo: "" },
       {
         path: "asset-detail/:symbol",
         component: AssetDetailComponent,
         canActivate: [StockGuard],
       },
+
+      { path: "financial-summary", redirectTo: "" },
       {
         path: "financial-summary/:symbol",
         component: FinancialSummaryComponent,

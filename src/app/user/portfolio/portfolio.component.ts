@@ -64,8 +64,18 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     });
   }
 
-  toFixedLocale(number: number, showZero: boolean = false) {
-    return this.userService.toFixedLocale(number, showZero);
+  toFixedLocale(
+    number: number,
+    addSymbol: boolean = false,
+    showZero: boolean = false,
+    addDollarSign: boolean = false
+  ) {
+    return this.userService.toFixedLocale({
+      number,
+      addSymbol,
+      showZero,
+      addDollarSign,
+    });
   }
 
   onSelectMenu(menu: number) {

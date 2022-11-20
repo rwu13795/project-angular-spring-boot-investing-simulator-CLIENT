@@ -67,17 +67,38 @@ export class UserService {
     );
   }
 
-  public toFixedLocale(
-    number: number,
-    showZero: boolean = false,
-    decimal: number = 2
-  ) {
+  public toFixedLocale({
+    number,
+    showZero = false,
+    decimal = 2,
+    addSymbol = false,
+    addDollarSign = false,
+  }: {
+    number: number;
+    showZero?: boolean;
+    decimal?: number;
+    addSymbol?: boolean;
+    addDollarSign?: boolean;
+  }) {
     if (number === 0) return showZero ? 0 : "-";
-    const temp = number >= 0 ? number : number * -1;
-    return temp.toLocaleString(undefined, {
+
+    if (!addSymbol) {
+      return number.toLocaleString(undefined, {
+        minimumFractionDigits: decimal,
+        maximumFractionDigits: decimal,
+      });
+    }
+    const tempNum = number >= 0 ? number : number * -1;
+    let numString = tempNum.toLocaleString(undefined, {
       minimumFractionDigits: decimal,
       maximumFractionDigits: decimal,
     });
+    if (addDollarSign) numString = "$" + numString;
+
+    if (number > 0) numString = "+" + numString;
+    if (number < 0) numString = "-" + numString;
+
+    return numString;
   }
 
   public setInputErrorMessage(

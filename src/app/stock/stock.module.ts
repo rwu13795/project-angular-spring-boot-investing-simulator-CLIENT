@@ -28,6 +28,8 @@ import { OverallChartComponent } from "./stock-chart/overall-chart/overall-chart
 import { ColumnChartComponent } from "./stock-chart/column-chart/column-chart.component";
 import { TransactionsComponent } from "./asset-detail/transaction/transactions.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { TradeModalComponent } from "./trade-modal/trade-modal.component";
+import { StockRedirectComponent } from "./stock-redirect/stock-redirect.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     AssetDetailComponent,
     TransactionsComponent,
     StockPriceComponent,
+    TradeModalComponent,
+    StockRedirectComponent,
   ],
   imports: [
     RouterModule,

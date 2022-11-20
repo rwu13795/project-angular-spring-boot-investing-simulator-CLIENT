@@ -21,6 +21,7 @@ import {
   selectHasAuth,
   selectWatchlist,
 } from "src/app/user/user-state/user.selectors";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-stock-menu",
@@ -33,10 +34,11 @@ export class StockMenuComponent implements OnInit, OnDestroy {
   private symbol$?: Subscription;
   private assets$?: Subscription;
   private activeMenu$?: Subscription;
+  private hasAuth$?: Subscription;
   private updateTimer?: any;
 
   @Input() isSmallScreen: boolean = false;
-  public hasAuth$ = this.store.select(selectHasAuth);
+  public hasAuth: boolean = false;
   public symbol: string = "";
   public activeMenu: StockMenu = StockMenu.summary;
   public showButton: boolean = false;
@@ -45,10 +47,19 @@ export class StockMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<AppState>,
+    private route: Router,
     private stockService: StockService
   ) {}
 
   ngOnInit(): void {
+    this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
+      this.hasAuth = hasAuth;
+      console.log("hasAuth", hasAuth, "this.activeMenu", this.activeMenu);
+      if (this.activeMenu === StockMenu.asset && !this.hasAuth) {
+        this.route.navigate(["/user/sign-in"]);
+      }
+    });
+
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
       .subscribe((symbol) => {
@@ -62,6 +73,9 @@ export class StockMenuComponent implements OnInit, OnDestroy {
               this.activeMenu = menu;
               this.showButton = this.activeMenu === StockMenu.chart;
 
+              if (this.activeMenu === StockMenu.asset && !this.hasAuth) {
+                this.route.navigate(["/user/sign-in"]);
+              }
               // update the price whenever the menu is changed
               this.updatePrice();
               // fetch the latest price in every 20s if the current menu is not "chart"
@@ -100,6 +114,7 @@ export class StockMenuComponent implements OnInit, OnDestroy {
     if (this.activeMenu$) this.activeMenu$.unsubscribe();
     if (this.updateTimer) clearInterval(this.updateTimer);
     if (this.assets$) this.assets$.unsubscribe();
+    if (this.hasAuth$) this.hasAuth$.unsubscribe();
   }
 }
 

@@ -63,3 +63,8 @@ export const setStockActiveMenu = createAction(
   "[Stock] Set Stock Active Menu",
   props<{ menu: StockMenu }>()
 );
+
+export const toggleTradeModal = createAction(
+  "[Stock] Toggle Trade Modal",
+  props<{ open: boolean }>()
+);

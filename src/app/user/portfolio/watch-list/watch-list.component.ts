@@ -63,8 +63,12 @@ export class WatchListComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  toFixed(number: number, decimal: number = 2) {
-    return this.userService.toFixedLocale(number, true, decimal);
+  toFixed(number: number, addSymbol: boolean = true) {
+    return this.userService.toFixedLocale({
+      number,
+      showZero: true,
+      addSymbol,
+    });
   }
 
   selectToRemove(symbol: string) {

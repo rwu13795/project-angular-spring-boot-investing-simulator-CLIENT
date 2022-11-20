@@ -18,7 +18,14 @@
         </div>
         <div>Available Fund</div>
         <div class="number">
-          ${{ toFixedLocale(account.fund - account.shortSellingDeposit, true) }}
+          ${{
+            toFixedLocale(
+              account.fund - account.shortSellingDeposit,
+              false,
+              false,
+              true
+            )
+          }}
         </div>
       </div>
       <app-loading-spinner *ngIf="!account"></app-loading-spinner>
@@ -37,9 +44,7 @@
             negative: account.totalRealizedGainLoss < 0
           }"
         >
-          <span *ngIf="account.totalRealizedGainLoss > 0">+</span
-          ><span *ngIf="account.totalRealizedGainLoss < 0">-</span
-          >{{ toFixedLocale(account.totalRealizedGainLoss) }}
+          {{ toFixedLocale(account.totalRealizedGainLoss, true) }}
         </div>
         <div>
           Realized Short Selling
@@ -55,9 +60,7 @@
             negative: account.totalRealizedGainLoss_shortSelling < 0
           }"
         >
-          <span *ngIf="account.totalRealizedGainLoss_shortSelling > 0">+</span
-          ><span *ngIf="account.totalRealizedGainLoss_shortSelling < 0">-</span
-          >{{ toFixedLocale(account.totalRealizedGainLoss_shortSelling) }}
+          {{ toFixedLocale(account.totalRealizedGainLoss_shortSelling, true) }}
         </div>
         <div>
           Total Realized
@@ -86,18 +89,12 @@
               0
           }"
         >
-          <span
-            *ngIf="
-              account.totalRealizedGainLoss +
-                account.totalRealizedGainLoss_shortSelling <
-              0
-            "
-            >-</span
-          >
-          ${{
+          {{
             toFixedLocale(
               account.totalRealizedGainLoss +
                 account.totalRealizedGainLoss_shortSelling,
+              true,
+              false,
               true
             )
           }}
@@ -119,9 +116,7 @@
             negative: account.totalUnrealizedGainLoss < 0
           }"
         >
-          <span *ngIf="account.totalUnrealizedGainLoss > 0">+</span>
-          <span *ngIf="account.totalUnrealizedGainLoss < 0">-</span
-          >{{ toFixedLocale(account.totalUnrealizedGainLoss) }}
+          {{ toFixedLocale(account.totalUnrealizedGainLoss, true) }}
         </div>
         <div>
           Unrealized Short Selling
@@ -137,11 +132,9 @@
             negative: account.totalUnrealizedGainLoss_shortSelling < 0
           }"
         >
-          <span *ngIf="account.totalUnrealizedGainLoss_shortSelling > 0"
-            >+</span
-          >
-          <span *ngIf="account.totalUnrealizedGainLoss_shortSelling < 0">-</span
-          >{{ toFixedLocale(account.totalUnrealizedGainLoss_shortSelling) }}
+          {{
+            toFixedLocale(account.totalUnrealizedGainLoss_shortSelling, true)
+          }}
         </div>
         <div>
           Total Unrealized
@@ -170,17 +163,12 @@
               0
           }"
         >
-          <span
-            *ngIf="
-              account.totalUnrealizedGainLoss +
-                account.totalUnrealizedGainLoss_shortSelling <
-              0
-            "
-            >-</span
-          >${{
+          {{
             toFixedLocale(
               account.totalUnrealizedGainLoss +
                 account.totalUnrealizedGainLoss_shortSelling,
+              true,
+              false,
               true
             )
           }}

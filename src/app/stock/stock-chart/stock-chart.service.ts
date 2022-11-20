@@ -73,7 +73,7 @@ export class StockChartService {
     if (chartType === "candles") {
       if (data.y[0] === -1) return "<span></span>";
       return `<div style="padding: 0px;"> 
-          <div style="background-color: #c5f8ff; padding: 6px 12px; text-align: center;">
+          <div style="background-color: #e7e7e7; padding: 6px 12px; text-align: center;">
             ${
               isRealTime
                 ? new Date(data.y[4]).toLocaleTimeString()
@@ -96,7 +96,7 @@ export class StockChartService {
     } else {
       if (data.y === -1) return "<span></span>";
       return `<div style="padding: 0px;"> 
-          <div style="background-color: #c5f8ff; padding: 6px 12px; text-align: center;">
+          <div style="background-color: #e7e7e7; padding: 6px 12px; text-align: center;">
             ${
               isRealTime
                 ? new Date(data.meta[4]).toLocaleTimeString()
@@ -117,5 +117,60 @@ export class StockChartService {
           </div> 
         </div>`;
     }
+  }
+
+  public setCustomTooltip_overall(value: number, date: string) {
+    const dateString = new Date(date).toLocaleString();
+    const negative = "color: #e74c3c;";
+    const positive = "color: #2ecc71;";
+    const aboveZero = value >= 0;
+
+    return `
+    <div style="padding: 0px;"> 
+      <div style="background-color: #e7e7e7; padding: 6px 12px; text-align: center;">
+        ${dateString}
+      </div>
+      <div style="padding: 6px 12px; text-align: center;">
+        Overall: <span style="${aboveZero ? positive : negative}">${
+      aboveZero ? "+" : "-"
+    }$${this.toLocalString(value)}</span>  
+      </div> 
+    </div>`;
+  }
+
+  public setCustomTooltip_column(value: number, label: string) {
+    if (label === "noData") return "";
+
+    let [shares, pricePerShare, timestamp, transactionType] = label.split("-");
+
+    const dateString = new Date(+timestamp).toLocaleString();
+    const negative = "color: #e74c3c;";
+    const positive = "color: #2ecc71;";
+    const aboveZero = value >= 0;
+    const isRealized =
+      transactionType !== "Buy" && transactionType !== "Sell short";
+
+    return `
+    <div style="padding: 0px;"> 
+      <div style="background-color: #e7e7e7; padding: 6px 12px; text-align: center;">
+        ${dateString}
+      </div>
+      ${
+        isRealized
+          ? `
+        <div style="padding: 6px 12px; text-align: center;">
+           Realized: <span style="${aboveZero ? positive : negative}">${
+              aboveZero ? "+" : "-"
+            }$${this.toLocalString(value)}</span>  
+        </div>`
+          : ""
+      }
+      <div style="padding: 6px 12px; text-align: center;">
+        ${transactionType} ${shares} shares @ $${this.toLocalString(
+      +pricePerShare
+    )}
+      </div>
+
+    </div>`;
   }
 }

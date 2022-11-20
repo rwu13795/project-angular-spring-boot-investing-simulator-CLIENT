@@ -64,3 +64,10 @@ export const selectStockActiveMenu = createSelector(
     return state.stockActiveMenu;
   }
 );
+
+export const selectOpenTradeModal = createSelector(
+  selectStockState,
+  (state) => {
+    return state.openTradeModal;
+  }
+);
