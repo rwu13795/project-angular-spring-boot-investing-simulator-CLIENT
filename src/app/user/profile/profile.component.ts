@@ -8,7 +8,7 @@ import {
 import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { Subscription } from "rxjs";
+import { Subscription, take } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import {
   AuthErrorInField,
@@ -16,16 +16,19 @@ import {
   InputFieldNames,
   InputFieldTouched,
   LoadingStatus_user,
+  UserInfo,
 } from "../user-models";
 import {
   setLoadingStatus_user,
   signUp,
   clearAuthError,
+  changePassword,
 } from "../user-state/user.actions";
 import {
   selectAuthError,
   selectHasAuth,
   selectLoadingStatus_user,
+  selectUserInfo,
 } from "../user-state/user.selectors";
 import { UserService } from "../user.service";
 
@@ -50,7 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     [InputFieldNames.new_password]: false,
     [InputFieldNames.confirm_password]: false,
   };
-  public signUpForm = this.formBuilder.group({
+  public changePasswordForm = this.formBuilder.group({
     password: [
       "",
       [Validators.required, Validators.minLength(8), Validators.maxLength(20)],
@@ -66,10 +69,11 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   });
   public loadingStatus: LoadingStatus_user = LoadingStatus_user.idle;
   public authErrors: AuthErrorInField = {
-    [InputFieldNames.email]: null,
     [InputFieldNames.password]: null,
+    [InputFieldNames.new_password]: null,
     [InputFieldNames.confirm_password]: null,
   };
+  public userInfo: UserInfo | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -88,7 +92,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
     this.loadingStatus$ = this.store
       .select(selectLoadingStatus_user)
-      .subscribe((status) => (this.loadingStatus = status));
+      .subscribe((status) => {
+        this.loadingStatus = status;
+        if (this.loadingStatus === LoadingStatus_user.succeeded_auth) {
+          this.changePasswordForm.reset();
+          this.changePasswordForm.disable();
+        }
+      });
+
+    this.store
+      .select(selectUserInfo)
+      .pipe(take(1))
+      .subscribe((info) => {
+        this.userInfo = info;
+      });
   }
 
   get InputFieldNames() {
@@ -100,26 +117,37 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const { password, new_password, confirm_password } = this.signUpForm.value;
+    const { password, new_password, confirm_password } =
+      this.changePasswordForm.value;
     // compare password and confirm_password manually
     this.notMatched = this.passwordsNotMatched(new_password, confirm_password);
 
     const hasError = this.onSubmitErrorCheck();
 
-    if (hasError || !new_password || !password || !confirm_password) return;
+    if (
+      hasError ||
+      !password ||
+      !new_password ||
+      !confirm_password ||
+      !this.userInfo
+    )
+      return;
 
-    // this.store.dispatch(
-    //   setLoadingStatus_user({ status: LoadingStatus_user.loading_auth })
-    // );
-    // this.store.dispatch(
-    //   signUp({ email, password, confirmPassword: confirm_password })
-    // );
-
-    console.log(new_password, password, confirm_password);
+    this.store.dispatch(
+      setLoadingStatus_user({ status: LoadingStatus_user.loading_auth })
+    );
+    this.store.dispatch(
+      changePassword({
+        email: this.userInfo.email,
+        password,
+        new_password,
+        confirm_password,
+      })
+    );
   }
 
   onInput(field: string) {
-    const control = this.signUpForm.get(field);
+    const control = this.changePasswordForm.get(field);
     if (!control) return;
 
     this.userService.setInputErrorMessage(field, this.inputError, control);
@@ -128,7 +156,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onBlur(field: string) {
-    const control = this.signUpForm.get(field);
+    const control = this.changePasswordForm.get(field);
     if (!control) return;
     this.inputTouched[field] = true;
     this.userService.setInputErrorMessage(field, this.inputError, control);
@@ -137,7 +165,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   private onSubmitErrorCheck() {
     let hasError: boolean = false;
     for (let key of Object.keys(this.inputError)) {
-      const control = this.signUpForm.get(key);
+      const control = this.changePasswordForm.get(key);
       if (!control) return;
       this.setPasswordFieldsInvalid(key, control);
 
@@ -176,5 +204,13 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.authError$) this.authError$.unsubscribe();
+    if (this.hasAuth$) this.hasAuth$.unsubscribe();
+    if (this.loadingStatus$) this.loadingStatus$.unsubscribe();
+    this.store.dispatch(
+      setLoadingStatus_user({ status: LoadingStatus_user.idle })
+    );
+    this.store.dispatch(clearAuthError());
+  }
 }

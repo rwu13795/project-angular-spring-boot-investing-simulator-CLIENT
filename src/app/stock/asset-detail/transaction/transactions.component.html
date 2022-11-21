@@ -2,7 +2,7 @@
   <div>
     <div class="title-wrapper">
       <div class="table-title">Transactions</div>
-      <select (change)="onSelect($event)">
+      <select (change)="onSelect($event)" [value]="transactionType">
         <option value="1">Buy | Sell</option>
         <option value="2">Sell Short | Buy To Cover</option>
       </select>

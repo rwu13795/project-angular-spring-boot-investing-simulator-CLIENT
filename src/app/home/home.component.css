@@ -33,11 +33,11 @@ main {
 
 .preview-list-large-screen {
   position: sticky;
-  height: 94vh;
+  height: 90vh;
   top: 100px;
   width: 96%;
   padding-right: 20px;
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 @media screen and (max-width: 1200px) {

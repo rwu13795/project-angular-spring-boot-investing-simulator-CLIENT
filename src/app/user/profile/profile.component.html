@@ -1,24 +1,36 @@
 <main>
   <div class="title">Profile</div>
-  <app-gradient-break
-    [height]="8"
-    [type]="2"
-    [marginBottom]="30"
-  ></app-gradient-break>
-
-  <div class="user-info">
-    <div><span>User ID:</span><span>123</span></div>
-    <div><span>Email:</span><span>asdas@email.com</span></div>
+  <div class="break-wrapper">
+    <app-gradient-break
+      [height]="8"
+      [type]="2"
+      [marginBottom]="30"
+    ></app-gradient-break>
   </div>
 
-  <div class="title">Change Password</div>
-  <app-gradient-break
-    [height]="8"
-    [type]="2"
-    [marginBottom]="30"
-  ></app-gradient-break>
+  <div class="user-info" *ngIf="userInfo">
+    <div class="info-row">
+      <div>User ID:</div>
+      <div>{{ userInfo.id }}</div>
+    </div>
+    <div class="info-row">
+      <div>Email:</div>
+      <div>{{ userInfo.email }}</div>
+    </div>
+  </div>
+  <div class="break-wrapper">
+    <app-gradient-break
+      [height]="8"
+      [type]="2"
+      [marginBottom]="30"
+    ></app-gradient-break>
+  </div>
 
-  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <div class="subtitle">
+    <div>Change Password</div>
+  </div>
+
+  <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()">
     <div class="input-container">
       <div class="form-group input-wrapper">
         <input
@@ -115,7 +127,7 @@
       </div>
     </div>
 
-    <div class="buttons-group">
+    <div class="button-wrapper">
       <app-custom-button
         style="margin-right: 4px"
         [height]="30"
@@ -128,6 +140,13 @@
       ></app-custom-button>
     </div>
   </form>
+
+  <div
+    class="success-message"
+    *ngIf="loadingStatus === LoadingStatus_user.succeeded_auth"
+  >
+    Your password has been updated successfully!
+  </div>
 
   <img class="background" src="../../../assets/images/background_2.webp" />
 </main>

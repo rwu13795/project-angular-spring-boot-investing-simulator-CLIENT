@@ -39,6 +39,7 @@ export class StockService {
     ["1Y"]: null,
     ["5Y"]: null,
   };
+  public newOrderFilled = new Subject<"long" | "short">();
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
@@ -140,6 +141,19 @@ export class StockService {
 
   public getStoredChartDate(option: string) {
     return this.storedChartData[option];
+  }
+
+  // By subscribing to "newOrderFilled", the transactions component wiil update
+  // its transaction list whenever the trade-modal call the method below
+  public newOrderFilled_emitter(orderType: OrderType) {
+    let transactionTpye = 1;
+    if (
+      orderType === OrderType.BUY_TO_COVER ||
+      orderType === OrderType.SELL_SHORT
+    ) {
+      transactionTpye = 2;
+    }
+    this.newOrderFilled.next(transactionTpye === 1 ? "long" : "short");
   }
 
   public isMarketOpen(): boolean {

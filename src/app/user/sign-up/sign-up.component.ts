@@ -122,9 +122,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       setLoadingStatus_user({ status: LoadingStatus_user.loading_auth })
     );
-    this.store.dispatch(
-      signUp({ email, password, confirmPassword: confirm_password })
-    );
+    this.store.dispatch(signUp({ email, password, confirm_password }));
   }
 
   onInput(field: string) {

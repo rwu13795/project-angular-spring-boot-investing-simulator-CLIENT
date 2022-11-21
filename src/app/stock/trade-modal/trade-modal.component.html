@@ -1,6 +1,10 @@
 <main *ngIf="isOpen">
   <div class="backdrop" (click)="closeModal()"></div>
-  <div class="content-wrapper" id="custom-scroll-y-thin" *ngIf="!filledOrder">
+  <div
+    class="content-wrapper"
+    id="custom-scroll-y-thin"
+    *ngIf="!filledOrder && isMarketOpen"
+  >
     <div class="close-icon-div">
       <mat-icon class="close-icon" (click)="closeModal()">close</mat-icon>
     </div>
@@ -10,25 +14,25 @@
       [height]="6"
       [marginBottom]="20"
     ></app-gradient-break>
-    <div class="symbol-price-wrapper" *ngIf="quote">
-      <img [src]="LOGO_URL + quote.symbol + '.png'" alt="Logo" />
-      <span class="symbol">{{ quote.symbol }}</span>
+    <div class="symbol-price-wrapper" *ngIf="priceData">
+      <img [src]="LOGO_URL + symbol + '.png'" alt="Logo" />
+      <span class="symbol">{{ symbol }}</span>
       <div class="price-wrapper">
-        <span class="price">${{ toFixed(quote.price) }}</span>
+        <span class="price">${{ toFixed(priceData.price) }}</span>
         <span
           class="changes"
-          [ngClass]="quote.change >= 0 ? 'positive' : 'negative'"
-          >{{ toFixed(quote.change, true) }}</span
+          [ngClass]="priceData.change >= 0 ? 'positive' : 'negative'"
+          >{{ toFixed(priceData.change, true) }}</span
         >
         <span
           class="changes"
-          [ngClass]="quote.change >= 0 ? 'positive' : 'negative'"
-          >({{ toFixed(quote.changesPercentage, true) }}%)</span
+          [ngClass]="priceData.change >= 0 ? 'positive' : 'negative'"
+          >({{ toFixed(priceData.changePercentage, true) }}%)</span
         >
       </div>
     </div>
     <div class="refresh">
-      Real Time Quote as of date date date
+      Real Time Quote as of {{ currentTime }}
       <span #refreshRef
         ><mat-icon matTooltip="Refresh" (click)="onRefresh()"
           >refresh</mat-icon
@@ -94,7 +98,7 @@
       </div>
     </div>
 
-    <div class="numbers" *ngIf="quote">
+    <div class="numbers" *ngIf="priceData">
       <div class="limit-wrapper">
         <div class="input">
           <label>Price Limit</label>
@@ -123,8 +127,8 @@
           />
         </div>
         <div class="error">{{ errors[ErrorField.QUANTITY] }}</div>
-        <div class="per-share">@ ${{ toFixed(quote.price, false) }}</div>
-        <div class="total">${{ toFixed(quantity * quote.price) }}</div>
+        <div class="per-share">@ ${{ toFixed(priceData.price, false) }}</div>
+        <div class="total">${{ toFixed(quantity * priceData.price) }}</div>
       </div>
     </div>
 
@@ -148,7 +152,7 @@
   </div>
 
   <div class="order-filled" *ngIf="filledOrder">
-    <div class="order-text">Your order is successfully filled!</div>
+    <div class="order-text">Your order is filled successfully!</div>
     <table>
       <thead>
         <tr>
@@ -197,7 +201,7 @@
         (click)="closeModal()"
       ></app-custom-button>
       <app-custom-button
-        text="Go to Portfolio"
+        text="Go To Portfolio"
         [width]="130"
         [fontSize]="14"
         [height]="30"
@@ -209,5 +213,20 @@
 
   <div class="loading-order" *ngIf="loadingOrder">
     <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div class="order-filled" *ngIf="!isMarketOpen">
+    <div class="market-closed-title">Market is closed ...</div>
+    <div class="market-closed-hour">
+      <div>Market Trading Hours</div>
+      <div>Weekdays 9:30AM - 4:00PM Eastern Time</div>
+    </div>
+    <app-custom-button
+      text="OK"
+      [width]="60"
+      [fontSize]="14"
+      [height]="30"
+      (click)="closeModal()"
+    ></app-custom-button>
   </div>
 </main>

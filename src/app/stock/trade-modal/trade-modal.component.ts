@@ -25,6 +25,7 @@ import { environment } from "src/environments/environment";
 import { OrderType, Response_realTimePrice } from "../stock-models";
 import { toggleTradeModal } from "../stock-state/stock.actions";
 import {
+  selectCurrentPriceData,
   selectCurrentSymbol,
   selectOpenTradeModal,
 } from "../stock-state/stock.selectors";
@@ -48,6 +49,7 @@ export class TradeModalComponent implements OnInit, OnDestroy {
   private isOpen$?: Subscription;
   private account$?: Subscription;
   private asset$?: Subscription;
+  private priceData$?: Subscription;
   private refreshTimer: any;
   private animationTimer: any;
 
@@ -58,12 +60,18 @@ export class TradeModalComponent implements OnInit, OnDestroy {
   public exchange: string = "";
   public account: Response_PortfolioAccount | null = null;
   public asset: Response_PortfolioAsset | null = null;
-  public quote: Response_realTimePrice | null = null;
+  public priceData: {
+    price: number;
+    change: number;
+    changePercentage: number;
+  } | null = null;
   public priceLimit: number = 0;
   public quantity: number = 0;
   public orderType?: OrderType;
   public filledOrder: Response_transaction | null = null;
   public loadingOrder: boolean = false;
+  public currentTime: string = new Date().toLocaleString();
+  public isMarketOpen: boolean = false;
 
   constructor(
     private store: Store<AppState>,
@@ -77,18 +85,28 @@ export class TradeModalComponent implements OnInit, OnDestroy {
       .select(selectOpenTradeModal)
       .subscribe((isOpen) => {
         this.isOpen = isOpen;
+        this.isMarketOpen = this.stockService.isMarketOpen();
 
         if (isOpen) {
           this.symbol$ = this.store
             .select(selectCurrentSymbol)
             .subscribe((symbol) => {
+              this.refreshQuote(symbol);
               this.symbol = symbol;
-              this.getQuote(symbol);
+
               this.asset$ = this.store
                 .select(selectTargetAsset(symbol))
                 .subscribe((asset) => {
                   this.asset = asset;
                 });
+            });
+
+          this.priceData$ = this.store
+            .select(selectCurrentPriceData)
+            .subscribe((data) => {
+              this.currentTime = new Date().toLocaleString();
+              this.priceData = data;
+              this.priceLimit = data.price;
             });
 
           this.account$ = this.store
@@ -114,7 +132,10 @@ export class TradeModalComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.store.dispatch(toggleTradeModal({ open: false }));
-    this.filledOrder = null;
+    // since the modal is always mounted as long as the stock component is mounted
+    // I need to unsubscribe the subscription when the modal is closed,
+    // otherwise, it will keep updating the data when it is closed.
+    this.resetForm();
   }
 
   onPriceLimitChange(event: any) {
@@ -142,7 +163,7 @@ export class TradeModalComponent implements OnInit, OnDestroy {
       }, 2000);
 
       this.refreshTimer = setTimeout(() => {
-        this.getQuote(this.symbol);
+        this.refreshQuote(this.symbol);
       }, 200);
     }
   }
@@ -183,7 +204,13 @@ export class TradeModalComponent implements OnInit, OnDestroy {
         .subscribe({
           complete: () => {
             this.loadingOrder = false;
+            // update the portfolio
             this.store.dispatch(fetchPortfolio());
+            // emit the "newOrderFilled" event to let asset-detail update
+            // transaction list
+            if (this.orderType) {
+              this.stockService.newOrderFilled_emitter(this.orderType);
+            }
           },
           error: (e: any) => {
             const { field, message } = e.error;
@@ -196,7 +223,6 @@ export class TradeModalComponent implements OnInit, OnDestroy {
 
   toPortfolio() {
     this.router.navigate(["/user/portfolio"]);
-    this.filledOrder = null;
   }
 
   getType(buy?: boolean, shortSell?: boolean) {
@@ -212,22 +238,35 @@ export class TradeModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.symbol$) this.symbol$.unsubscribe();
     if (this.isOpen$) this.isOpen$.unsubscribe();
-    if (this.account$) this.account$.unsubscribe();
-    if (this.asset$) this.asset$.unsubscribe();
-    if (this.refreshTimer) clearTimeout(this.refreshTimer);
-    if (this.animationTimer) clearTimeout(this.animationTimer);
+    this.resetForm();
+    this.store.dispatch(toggleTradeModal({ open: false }));
   }
 
-  private getQuote(symbol: string) {
+  // since the "getRealTimePrice" will also update the current price data
+  // in the store I should use the selector to get the current price so that
+  // the price will be automatically be updated in every 20 second (from the
+  // stock-menu component's subscription)
+  private refreshQuote(symbol: string) {
     this.stockService
       .getRealTimePrice(symbol)
       .pipe(take(1))
       .subscribe(([data]) => {
-        if (data) this.quote = data;
-        this.priceLimit = data.price;
         this.exchange = data.exchange;
+        this.currentTime = new Date().toLocaleString();
       });
+  }
+
+  private resetForm() {
+    if (this.symbol$) this.symbol$.unsubscribe();
+    if (this.account$) this.account$.unsubscribe();
+    if (this.asset$) this.asset$.unsubscribe();
+    if (this.priceData$) this.priceData$.unsubscribe();
+    if (this.refreshTimer) clearTimeout(this.refreshTimer);
+    if (this.animationTimer) clearTimeout(this.animationTimer);
+    this.priceLimit = 0;
+    this.quantity = 0;
+    this.orderType = undefined;
+    this.filledOrder = null;
   }
 }

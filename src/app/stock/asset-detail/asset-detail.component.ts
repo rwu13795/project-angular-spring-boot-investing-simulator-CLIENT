@@ -18,6 +18,7 @@ import { selectTargetAsset } from "src/app/user/user-state/user.selectors";
 import { UserService } from "src/app/user/user.service";
 import { StockMenu, TransactionsData } from "../stock-models";
 import { setStockActiveMenu } from "../stock-state/stock.actions";
+import { StockService } from "../stock.service";
 
 @Component({
   selector: "app-asset-detail",
@@ -40,7 +41,8 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store<AppState>,
     private userService: UserService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private stockService: StockService
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +67,6 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
   }
 
   changeTransactionType(type: number) {
-    console.log(type);
     this.positionType = type;
     if (type === 1) {
       this.fetchTransactions(this.symbol, 1, "long");

@@ -5,6 +5,7 @@ import { catchError, map, of, switchMap } from "rxjs";
 
 import { environment } from "src/environments/environment";
 import {
+  LoadingStatus_user,
   Response_authError,
   Response_Portfolio,
   UserInfo,
@@ -67,11 +68,11 @@ export class UserEffects {
   public userSignUp = createEffect(() =>
     this.actions$.pipe(
       ofType(actions.signUp),
-      switchMap(({ email, password, confirmPassword }) => {
+      switchMap(({ email, password, confirm_password }) => {
         return this.http
           .post<UserInfo>(
             `${this.SERVER_URL}/auth/sign-up`,
-            { email, password, confirmPassword },
+            { email, password, confirm_password },
             { withCredentials: true }
           )
           .pipe(
@@ -99,6 +100,29 @@ export class UserEffects {
             map(({ text }) => {
               console.log(text);
               return actions.removeUserAuth();
+            }),
+            catchError((errorRes: Response_authError) => {
+              console.log(errorRes);
+              return of(actions.setAuthError({ authError: errorRes.error }));
+            })
+          );
+      })
+    )
+  );
+
+  public changePassword = createEffect(() =>
+    this.actions$.pipe(
+      ofType(actions.changePassword),
+      switchMap((body) => {
+        return this.http
+          .put(`${this.SERVER_URL}/auth/change-password`, body, {
+            withCredentials: true,
+          })
+          .pipe(
+            map(() => {
+              return actions.setLoadingStatus_user({
+                status: LoadingStatus_user.succeeded_auth,
+              });
             }),
             catchError((errorRes: Response_authError) => {
               console.log(errorRes);

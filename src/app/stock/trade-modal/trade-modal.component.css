@@ -340,6 +340,21 @@ table tbody td {
   z-index: 40;
 }
 
+.market-closed-title {
+  font-size: 40px;
+  font-weight: bold;
+  color: var(--color-negative-2);
+}
+.market-closed-hour {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  gap: 20px;
+  text-align: center;
+}
+
 @media screen and (max-width: 600px) {
   .symbol-price-wrapper {
     flex-flow: row wrap;
@@ -409,5 +424,12 @@ table tbody td {
     display: flex;
     justify-content: center;
     margin-top: 60px;
+  }
+
+  .market-closed-title {
+    font-size: 30px;
+  }
+  .market-closed-hour {
+    font-size: 18px;
   }
 }

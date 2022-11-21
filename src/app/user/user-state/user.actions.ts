@@ -20,10 +20,20 @@ export const signIn = createAction(
 
 export const signUp = createAction(
   "[User] User Sign Up",
-  props<{ email: string; password: string; confirmPassword: string }>()
+  props<{ email: string; password: string; confirm_password: string }>()
 );
 
 export const signOut = createAction("[User] User Sign Out");
+
+export const changePassword = createAction(
+  "[User] User Change Password",
+  props<{
+    email: string;
+    password: string;
+    new_password: string;
+    confirm_password: string;
+  }>()
+);
 
 export const setUserInfo = createAction(
   "[User] Set User Account",

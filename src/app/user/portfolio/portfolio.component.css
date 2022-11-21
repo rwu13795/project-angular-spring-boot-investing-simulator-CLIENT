@@ -100,6 +100,13 @@ main {
   transition: all 1s;
 }
 
+.info-icon-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+}
+
 @media screen and (max-width: 1000px) {
   .assets-wrapper {
     display: flex;

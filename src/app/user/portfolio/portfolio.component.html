@@ -11,7 +11,10 @@
       <div class="column-grid" *ngIf="account">
         <div>Fund in Account</div>
         <div class="number">{{ toFixedLocale(account.fund) }}</div>
-        <div>Short Selling Deposit</div>
+        <div class="info-icon-wrapper">
+          Short Selling Deposit
+          <app-sell-short-tooltip></app-sell-short-tooltip>
+        </div>
         <div class="number border-bot">
           <span *ngIf="account.shortSellingDeposit > 0">-</span
           >{{ toFixedLocale(account.shortSellingDeposit) }}

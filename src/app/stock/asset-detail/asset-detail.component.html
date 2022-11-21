@@ -22,9 +22,9 @@
       ></app-column-chart>
     </div>
 
-    <div class="tables-wrapper" *ngIf="transactionData" #scrollRef>
+    <div class="tables-wrapper" *ngIf="transactionData">
       <div class="table" id="custom-scroll-x-thin">
-        <div class="table-title">Positions</div>
+        <div class="table-title" #scrollRef>Positions</div>
         <app-asset-table [asset]="asset"></app-asset-table>
       </div>
 

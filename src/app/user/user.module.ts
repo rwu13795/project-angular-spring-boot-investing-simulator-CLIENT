@@ -16,6 +16,8 @@ import { UserProfileComponent } from "./profile/profile.component";
 import { MatIconModule } from "@angular/material/icon";
 import { AssetListComponent } from "./portfolio/asset-list/asset-list.component";
 import { WatchListComponent } from "./portfolio/watch-list/watch-list.component";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { SellShortTooltipComponent } from "./portfolio/sell-short-tooltip/sell-short-tooltip.component";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { WatchListComponent } from "./portfolio/watch-list/watch-list.component"
     WatchListComponent,
     SignInModalComponent,
     UserProfileComponent,
+    SellShortTooltipComponent,
   ],
   imports: [
     RouterModule,
@@ -35,6 +38,7 @@ import { WatchListComponent } from "./portfolio/watch-list/watch-list.component"
     ReactiveFormsModule,
     MatIconModule,
     MatPaginatorModule,
+    MatTooltipModule,
     AuthRoutingModule,
     SharedModule,
   ],

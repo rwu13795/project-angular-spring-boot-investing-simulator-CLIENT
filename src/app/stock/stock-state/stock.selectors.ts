@@ -40,6 +40,17 @@ export const selectPreviousChangePercentage = createSelector(
   }
 );
 
+export const selectCurrentPriceData = createSelector(
+  selectStockState,
+  (state) => {
+    return {
+      price: state.currentPrice,
+      change: state.currentChangeInPrice,
+      changePercentage: state.currentChangePercentage,
+    };
+  }
+);
+
 export const selectCompanyProfile = createSelector(
   selectStockState,
   (state) => {
