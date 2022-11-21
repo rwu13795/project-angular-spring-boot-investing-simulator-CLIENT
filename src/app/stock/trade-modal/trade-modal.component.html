@@ -1,6 +1,6 @@
 <main *ngIf="isOpen">
   <div class="backdrop" (click)="closeModal()"></div>
-  <div class="content-wrapper" id="custom-scroll-y-thin">
+  <div class="content-wrapper" id="custom-scroll-y-thin" *ngIf="!filledOrder">
     <div class="close-icon-div">
       <mat-icon class="close-icon" (click)="closeModal()">close</mat-icon>
     </div>
@@ -29,19 +29,69 @@
     </div>
     <div class="refresh">
       Real Time Quote as of date date date
-      <span><mat-icon matTooltip="Refresh">refresh</mat-icon></span>
+      <span #refreshRef
+        ><mat-icon matTooltip="Refresh" (click)="onRefresh()"
+          >refresh</mat-icon
+        ></span
+      >
     </div>
 
-    <div class="fund" *ngIf="account">
-      <span>Available Fund</span>
-      <span>${{ toFixed(account.fund) }}</span>
+    <div class="fund-asset" *ngIf="account">
+      <div class="fund">
+        <span>Available Fund</span>
+        <span>${{ toFixed(account.fund - account.shortSellingDeposit) }}</span>
+      </div>
+      <div class="asset-wrapper" *ngIf="asset">
+        <div
+          *ngIf="
+            orderType === OrderType.BUY ||
+            orderType === OrderType.SELL ||
+            !orderType
+          "
+        >
+          Holding {{ asset.shares }} share<span *ngIf="asset.shares > 0"
+            >s @ ${{ toFixed(asset.avgCost) }}</span
+          >
+        </div>
+        <div
+          *ngIf="
+            orderType === OrderType.BUY_TO_COVER ||
+            orderType === OrderType.SELL_SHORT
+          "
+        >
+          Borrowed {{ asset.sharesBorrowed }} share<span
+            *ngIf="asset.sharesBorrowed > 0"
+            >s @ ${{ toFixed(asset.avgBorrowed) }}</span
+          >
+        </div>
+      </div>
     </div>
 
     <div class="buttons-group">
-      <div>Buy</div>
-      <div>Sell</div>
-      <div>Buy to Cover</div>
-      <div>Sell Short</div>
+      <div
+        (click)="onTypeButton(OrderType.BUY)"
+        [ngClass]="{ active_button: orderType === OrderType.BUY }"
+      >
+        Buy
+      </div>
+      <div
+        (click)="onTypeButton(OrderType.SELL)"
+        [ngClass]="{ active_button: orderType === OrderType.SELL }"
+      >
+        Sell
+      </div>
+      <div
+        (click)="onTypeButton(OrderType.BUY_TO_COVER)"
+        [ngClass]="{ active_button: orderType === OrderType.BUY_TO_COVER }"
+      >
+        Buy to Cover
+      </div>
+      <div
+        (click)="onTypeButton(OrderType.SELL_SHORT)"
+        [ngClass]="{ active_button: orderType === OrderType.SELL_SHORT }"
+      >
+        Sell Short
+      </div>
     </div>
 
     <div class="numbers" *ngIf="quote">
@@ -59,7 +109,7 @@
             <mat-icon class="sign">attach_money</mat-icon>
           </div>
         </div>
-        <div>limit error</div>
+        <div class="error">{{ errors[ErrorField.PRICE_LIMIT] }}</div>
       </div>
 
       <div class="cost-wrapper">
@@ -72,9 +122,15 @@
             (input)="onQtyChange($event)"
           />
         </div>
+        <div class="error">{{ errors[ErrorField.QUANTITY] }}</div>
         <div class="per-share">@ ${{ toFixed(quote.price, false) }}</div>
         <div class="total">${{ toFixed(quantity * quote.price) }}</div>
       </div>
+    </div>
+
+    <div class="error">
+      <span>{{ errors[ErrorField.FUND] }}</span
+      ><span>{{ errors[ErrorField.TYPE] }}</span>
     </div>
 
     <div class="confirm">
@@ -85,8 +141,73 @@
         color="orange"
         [fontSize]="18"
         [bold]="true"
-        [disabled]="false"
+        [disabled]="loadingOrder"
+        (click)="onConfirm()"
       ></app-custom-button>
     </div>
+  </div>
+
+  <div class="order-filled" *ngIf="filledOrder">
+    <div class="order-text">Your order is successfully filled!</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Realized G/L</th>
+          <th>Overall Realized</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ getType(filledOrder.buy, filledOrder.shortSell) }}</td>
+          <td>{{ filledOrder.shares }}</td>
+          <td>{{ toFixed(filledOrder.pricePerShare) }}</td>
+          <td
+            [ngClass]="{
+              positive: filledOrder.realizedGainLoss > 0,
+              '': filledOrder.realizedGainLoss === 0,
+              negative: filledOrder.realizedGainLoss < 0
+            }"
+          >
+            {{ toFixed(filledOrder.realizedGainLoss, true, false) }}
+          </td>
+
+          <td *ngIf="filledOrder.buy || filledOrder.shortSell">-</td>
+          <td
+            *ngIf="!filledOrder.buy && !filledOrder.shortSell"
+            [ngClass]="{
+              positive: filledOrder.assetTotalRealizedGainLoss > 0,
+              '': filledOrder.assetTotalRealizedGainLoss === 0,
+              negative: filledOrder.assetTotalRealizedGainLoss < 0
+            }"
+          >
+            {{ toFixed(filledOrder.assetTotalRealizedGainLoss, true, false) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="nav-buttons">
+      <app-custom-button
+        text="Stay On This Page"
+        [width]="130"
+        [fontSize]="14"
+        [height]="30"
+        (click)="closeModal()"
+      ></app-custom-button>
+      <app-custom-button
+        text="Go to Portfolio"
+        [width]="130"
+        [fontSize]="14"
+        [height]="30"
+        color="orange"
+        (click)="toPortfolio()"
+      ></app-custom-button>
+    </div>
+  </div>
+
+  <div class="loading-order" *ngIf="loadingOrder">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </main>

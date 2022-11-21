@@ -116,7 +116,6 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
       markers: {
         size: 0,
       },
-
       yaxis: {
         axisBorder: {
           show: true,
@@ -130,6 +129,9 @@ export class IndexChartComponent implements OnInit, OnDestroy, OnChanges {
             return this.stockChartService.toLocalString(value.toFixed(0));
           },
         },
+      },
+      stroke: {
+        width: 2,
       },
       xaxis: {
         type: "category",

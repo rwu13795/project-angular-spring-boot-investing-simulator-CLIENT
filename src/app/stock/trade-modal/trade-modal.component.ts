@@ -1,12 +1,28 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { Subscription, take } from "rxjs";
+import { catchError, map, Subscription, switchMap, take } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
-import { Response_PortfolioAccount } from "src/app/user/user-models";
-import { selectAccount } from "src/app/user/user-state/user.selectors";
+import {
+  InputField,
+  Response_PortfolioAccount,
+  Response_PortfolioAsset,
+  Response_transaction,
+} from "src/app/user/user-models";
+import { fetchPortfolio } from "src/app/user/user-state/user.actions";
+import {
+  selectAccount,
+  selectTargetAsset,
+} from "src/app/user/user-state/user.selectors";
 import { UserService } from "src/app/user/user.service";
 import { environment } from "src/environments/environment";
-import { Response_realTimePrice } from "../stock-models";
+import { OrderType, Response_realTimePrice } from "../stock-models";
 import { toggleTradeModal } from "../stock-state/stock.actions";
 import {
   selectCurrentSymbol,
@@ -14,28 +30,46 @@ import {
 } from "../stock-state/stock.selectors";
 import { StockService } from "../stock.service";
 
+enum ErrorField {
+  FUND = "FUND",
+  PRICE_LIMIT = "PRICE_LIMIT",
+  QUANTITY = "QUANTITY",
+  TYPE = "TYPE",
+}
+
 @Component({
   selector: "app-trade-modal",
   templateUrl: "./trade-modal.component.html",
   styleUrls: ["./trade-modal.component.css"],
 })
 export class TradeModalComponent implements OnInit, OnDestroy {
+  @ViewChild("refreshRef") refreshRef?: ElementRef<HTMLSpanElement>;
   private symbol$?: Subscription;
   private isOpen$?: Subscription;
   private account$?: Subscription;
+  private asset$?: Subscription;
+  private refreshTimer: any;
+  private animationTimer: any;
 
+  public errors: InputField = {};
   public LOGO_URL = environment.LOGO_URL;
   public isOpen: boolean = false;
   public symbol: string = "";
+  public exchange: string = "";
   public account: Response_PortfolioAccount | null = null;
+  public asset: Response_PortfolioAsset | null = null;
   public quote: Response_realTimePrice | null = null;
   public priceLimit: number = 0;
   public quantity: number = 0;
+  public orderType?: OrderType;
+  public filledOrder: Response_transaction | null = null;
+  public loadingOrder: boolean = false;
 
   constructor(
     private store: Store<AppState>,
     private stockService: StockService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -50,6 +84,11 @@ export class TradeModalComponent implements OnInit, OnDestroy {
             .subscribe((symbol) => {
               this.symbol = symbol;
               this.getQuote(symbol);
+              this.asset$ = this.store
+                .select(selectTargetAsset(symbol))
+                .subscribe((asset) => {
+                  this.asset = asset;
+                });
             });
 
           this.account$ = this.store
@@ -61,41 +100,134 @@ export class TradeModalComponent implements OnInit, OnDestroy {
       });
   }
 
-  toFixed(number: number, addSymbol: boolean = false) {
+  toFixed(
+    number: number,
+    addSymbol: boolean = false,
+    showZero: boolean = true
+  ) {
     return this.userService.toFixedLocale({
       number,
       addSymbol,
-      showZero: true,
+      showZero,
     });
   }
 
   closeModal() {
     this.store.dispatch(toggleTradeModal({ open: false }));
+    this.filledOrder = null;
   }
 
   onPriceLimitChange(event: any) {
     const target = event.target as HTMLInputElement;
     this.priceLimit = +target.value;
+    this.errors[ErrorField.PRICE_LIMIT] = "";
+    this.errors[ErrorField.FUND] = "";
   }
 
   onQtyChange(event: any) {
     const target = event.target as HTMLInputElement;
     this.quantity = +target.value;
+    this.errors[ErrorField.QUANTITY] = "";
+    this.errors[ErrorField.FUND] = "";
+  }
+
+  onRefresh() {
+    if (this.refreshTimer) clearTimeout(this.refreshTimer);
+    if (this.animationTimer) clearTimeout(this.animationTimer);
+    const icon = this.refreshRef?.nativeElement;
+    if (icon) {
+      icon.style.animation = "infinite rotate360 1s linear";
+      this.animationTimer = setTimeout(() => {
+        icon.style.animation = "none";
+      }, 2000);
+
+      this.refreshTimer = setTimeout(() => {
+        this.getQuote(this.symbol);
+      }, 200);
+    }
+  }
+
+  onTypeButton(type: OrderType) {
+    this.orderType = type;
+    this.errors[ErrorField.TYPE] = "";
+    this.errors[ErrorField.QUANTITY] = "";
+    this.errors[ErrorField.PRICE_LIMIT] = "";
+  }
+
+  onConfirm() {
+    if (!this.orderType) {
+      this.errors[ErrorField.TYPE] = "Please select an order type";
+      return;
+    }
+    if (this.quantity <= 0) {
+      this.errors[ErrorField.QUANTITY] = "The quantity must be more than 0";
+      return;
+    }
+
+    if (!this.loadingOrder) {
+      this.loadingOrder = true;
+      this.stockService
+        .placeOrder({
+          symbol: this.symbol,
+          shares: this.quantity,
+          exchange: this.exchange,
+          priceLimit: this.priceLimit,
+          type: this.orderType,
+        })
+        .pipe(
+          take(1),
+          map((data) => {
+            this.filledOrder = data;
+          })
+        )
+        .subscribe({
+          complete: () => {
+            this.loadingOrder = false;
+            this.store.dispatch(fetchPortfolio());
+          },
+          error: (e: any) => {
+            const { field, message } = e.error;
+            this.errors[field] = message;
+            this.loadingOrder = false;
+          },
+        });
+    }
+  }
+
+  toPortfolio() {
+    this.router.navigate(["/user/portfolio"]);
+    this.filledOrder = null;
+  }
+
+  getType(buy?: boolean, shortSell?: boolean) {
+    return this.stockService.getTransactionType(buy, shortSell);
+  }
+
+  get OrderType() {
+    return OrderType;
+  }
+
+  get ErrorField() {
+    return ErrorField;
   }
 
   ngOnDestroy(): void {
     if (this.symbol$) this.symbol$.unsubscribe();
     if (this.isOpen$) this.isOpen$.unsubscribe();
     if (this.account$) this.account$.unsubscribe();
+    if (this.asset$) this.asset$.unsubscribe();
+    if (this.refreshTimer) clearTimeout(this.refreshTimer);
+    if (this.animationTimer) clearTimeout(this.animationTimer);
   }
 
   private getQuote(symbol: string) {
     this.stockService
       .getRealTimePrice(symbol)
       .pipe(take(1))
-      .subscribe((data) => {
-        if (data.length > 0) this.quote = data[0];
-        this.priceLimit = data[0].price;
+      .subscribe(([data]) => {
+        if (data) this.quote = data;
+        this.priceLimit = data.price;
+        this.exchange = data.exchange;
       });
   }
 }

@@ -124,6 +124,21 @@ export enum StockMenu {
   asset = "asset",
 }
 
+export enum OrderType {
+  BUY = "BUY",
+  SELL = "SELL",
+  BUY_TO_COVER = "BUY_TO_COVER",
+  SELL_SHORT = "SELL_SHORT",
+}
+
+export interface OrderBody {
+  symbol: string;
+  shares: number;
+  priceLimit: number;
+  type: OrderType;
+  exchange: string;
+}
+
 // ---------------- charts ---------------- //
 export interface CandleData {
   x: Date; // timestamp

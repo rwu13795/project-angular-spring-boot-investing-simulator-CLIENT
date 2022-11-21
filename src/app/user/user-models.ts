@@ -36,6 +36,7 @@ export enum InputFieldNames {
   email = "email",
   password = "password",
   confirm_password = "confirm_password",
+  new_password = "new_password",
 }
 
 export enum LoadingStatus_user {

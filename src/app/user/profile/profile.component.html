@@ -1,1 +1,133 @@
-<h1>profile</h1>
+<main>
+  <div class="title">Profile</div>
+  <app-gradient-break
+    [height]="8"
+    [type]="2"
+    [marginBottom]="30"
+  ></app-gradient-break>
+
+  <div class="user-info">
+    <div><span>User ID:</span><span>123</span></div>
+    <div><span>Email:</span><span>asdas@email.com</span></div>
+  </div>
+
+  <div class="title">Change Password</div>
+  <app-gradient-break
+    [height]="8"
+    [type]="2"
+    [marginBottom]="30"
+  ></app-gradient-break>
+
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <div class="form-group input-wrapper">
+        <input
+          type="password"
+          id="password"
+          [ngClass]="
+            authErrors[InputFieldNames.password]
+              ? 'input-box auth-error-input-box'
+              : 'input-box'
+          "
+          formControlName="password"
+          placeholder=" "
+          (blur)="onBlur('password')"
+          (input)="onInput('password')"
+        />
+        <span
+          [ngClass]="{
+            'auth-error-span-box': authErrors[InputFieldNames.password]
+          }"
+          >Old Password</span
+        >
+      </div>
+      <div class="error-message">
+        <span *ngIf="inputTouched[InputFieldNames.password]">{{
+          inputError[InputFieldNames.password]
+        }}</span>
+        <span *ngIf="authErrors[InputFieldNames.password]">{{
+          authErrors[InputFieldNames.password]!.message
+        }}</span>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <div class="form-group input-wrapper">
+        <input
+          type="password"
+          id="new_password"
+          [ngClass]="
+            authErrors[InputFieldNames.new_password]
+              ? 'input-box auth-error-input-box'
+              : 'input-box'
+          "
+          formControlName="new_password"
+          placeholder=" "
+          (blur)="onBlur('new_password')"
+          (input)="onInput('new_password')"
+        />
+        <span
+          [ngClass]="{
+            'auth-error-span-box': authErrors[InputFieldNames.new_password]
+          }"
+          >New Password</span
+        >
+      </div>
+      <div class="error-message">
+        <span *ngIf="inputTouched[InputFieldNames.new_password]">{{
+          inputError[InputFieldNames.new_password]
+        }}</span>
+        <span *ngIf="authErrors[InputFieldNames.new_password]">{{
+          authErrors[InputFieldNames.new_password]!.message
+        }}</span>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <div class="form-group input-wrapper">
+        <input
+          type="password"
+          id="confirm_password"
+          [ngClass]="
+            authErrors[InputFieldNames.confirm_password]
+              ? 'input-box auth-error-input-box'
+              : 'input-box'
+          "
+          formControlName="confirm_password"
+          placeholder=" "
+          (blur)="onBlur('confirm_password')"
+          (input)="onInput('confirm_password')"
+        />
+        <span
+          [ngClass]="{
+            'auth-error-span-box': authErrors[InputFieldNames.confirm_password]
+          }"
+          >Confirm Password</span
+        >
+      </div>
+      <div class="error-message">
+        <span *ngIf="inputTouched[InputFieldNames.confirm_password]">{{
+          inputError[InputFieldNames.confirm_password]
+        }}</span>
+        <span *ngIf="authErrors[InputFieldNames.confirm_password]">{{
+          authErrors[InputFieldNames.confirm_password]!.message
+        }}</span>
+      </div>
+    </div>
+
+    <div class="buttons-group">
+      <app-custom-button
+        style="margin-right: 4px"
+        [height]="30"
+        [width]="130"
+        [fontSize]="18"
+        [bold]="true"
+        type="submit"
+        text="Update"
+        [disabled]="loadingStatus === LoadingStatus_user.loading_auth"
+      ></app-custom-button>
+    </div>
+  </form>
+
+  <img class="background" src="../../../assets/images/background_2.webp" />
+</main>

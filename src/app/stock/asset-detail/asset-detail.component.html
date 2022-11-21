@@ -22,9 +22,9 @@
       ></app-column-chart>
     </div>
 
-    <div class="tables-wrapper" *ngIf="transactionData">
+    <div class="tables-wrapper" *ngIf="transactionData" #scrollRef>
       <div class="table" id="custom-scroll-x-thin">
-        <div class="table-title" #scrollRef>Positions</div>
+        <div class="table-title">Positions</div>
         <app-asset-table [asset]="asset"></app-asset-table>
       </div>
 
@@ -44,6 +44,7 @@
       [height]="30"
       [fontSize]="20"
       text="To Portfolio"
+      color="orange"
       (click)="toPortfolio()"
     ></app-custom-button>
   </div>

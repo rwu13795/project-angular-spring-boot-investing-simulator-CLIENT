@@ -151,7 +151,7 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           );
         },
       },
-      stroke: { width: [4, 1] },
+      stroke: { width: [2, 1] },
       plotOptions: {
         bar: {
           columnWidth: "80%",

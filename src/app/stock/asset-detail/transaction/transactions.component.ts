@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Response_transaction } from "src/app/user/user-models";
 import { UserService } from "src/app/user/user.service";
+import { StockService } from "../../stock.service";
 
 @Component({
   selector: "app-transactions",
@@ -17,7 +18,10 @@ export class TransactionsComponent implements OnInit {
   public pageSize = 20;
   public pageIndex = 0;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private stockService: StockService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -26,13 +30,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   getType(buy?: boolean, shortSell?: boolean) {
-    if (buy !== undefined) {
-      return buy ? "Buy" : "Sell";
-    }
-    if (shortSell !== undefined) {
-      return shortSell ? "Sell Short" : "Buy to Cover";
-    }
-    return "-";
+    return this.stockService.getTransactionType(buy, shortSell);
   }
 
   toFixed(number: number, addSymbol: boolean = true, decimal: number = 2) {

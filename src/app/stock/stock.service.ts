@@ -5,6 +5,7 @@ import { from, Observable, Subject, throwError } from "rxjs";
 import { map, switchMap, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { AppState } from "../ngrx-store/app.reducer";
+import { Response_transaction } from "../user/user-models";
 import { Response_incomeStatement } from "./financial-statements/financial-statements.models";
 import {
   ChartData,
@@ -15,6 +16,8 @@ import {
   Response_quoteShort,
   Response_financialRatio,
   CustomTimeRange,
+  OrderBody,
+  OrderType,
 } from "./stock-models";
 import {
   setCurrentPrice,
@@ -162,6 +165,28 @@ export class StockService {
       return false;
     }
     return true;
+  }
+
+  public placeOrder({ symbol, shares, exchange, priceLimit, type }: OrderBody) {
+    let route = "/portfolio/buy-sell";
+    if (type === OrderType.BUY_TO_COVER || type === OrderType.SELL_SHORT) {
+      route = "/portfolio/sell-short-buy-to-cover";
+    }
+    return this.http.post<Response_transaction>(
+      `${this.SERVER_URL}${route}`,
+      { symbol, shares, exchange, priceLimit, type },
+      { withCredentials: true }
+    );
+  }
+
+  public getTransactionType(buy?: boolean, shortSell?: boolean) {
+    if (buy !== undefined) {
+      return buy ? "Buy" : "Sell";
+    }
+    if (shortSell !== undefined) {
+      return shortSell ? "Sell Short" : "Buy to Cover";
+    }
+    return "-";
   }
 
   /* ************************************************************************** */

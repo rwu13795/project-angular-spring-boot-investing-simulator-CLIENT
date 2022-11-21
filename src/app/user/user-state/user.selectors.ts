@@ -50,7 +50,7 @@ export const selectAccount = createSelector(selectPortfolio, (portfolio) => {
 
 export const selectTargetAsset = (symbol: string) => {
   return createSelector(selectAssets, (assets) => {
-    if (!assets) return null;
+    if (!assets || !assets[symbol]) return null;
     return assets[symbol];
   });
 };

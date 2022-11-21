@@ -47,13 +47,13 @@
       <td>Short</td>
       <td>{{ toFixed(asset.sharesBorrowed, false, 0) }}</td>
       <td>
-        {{ toFixed(asset.sharesBorrowed > 0 ? asset.avgBorrowed : 0) }}
+        {{ toFixed(asset.sharesBorrowed > 0 ? asset.avgBorrowed : 0, false) }}
       </td>
       <td>
-        {{ toFixed(asset.sharesBorrowed * asset.avgBorrowed) }}
+        {{ toFixed(asset.sharesBorrowed * asset.avgBorrowed, false) }}
       </td>
       <td>
-        {{ toFixed(asset.sharesBorrowed * asset.currentPrice) }}
+        {{ toFixed(asset.sharesBorrowed * asset.currentPrice, false) }}
       </td>
       <td
         [ngClass]="{
