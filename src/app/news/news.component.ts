@@ -10,8 +10,10 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { Subscription } from "rxjs";
@@ -25,7 +27,9 @@ import { NewsService } from "./news.service";
   styleUrls: ["./news.component.css"],
   animations: [newsAnimation],
 })
-export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class NewsComponent
+  implements OnInit, OnChanges, OnDestroy, AfterViewChecked
+{
   @Input() symbol: string = "";
   // ---- (2) ---- //
   @ViewChild("last_entry") lastEntryRef!: ElementRef;
@@ -36,7 +40,7 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
   private waiting: boolean = false;
   private ENTRY_LIMIT: number = 5;
   private timerId?: any;
-  // have to bind the class context with the methed in order to pass it as a callback
+  // have to bind the class context with the methed in order to pass it in a callback
   private _toggleBackToTop = this.toggleBackToTop.bind(this);
 
   public newsToBeDisplayed: Response_news[] = [];
@@ -68,7 +72,15 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    this.news$ = this.newsService.fetchNews(this.symbol).subscribe((data) => {
+    window.addEventListener("scroll", this._toggleBackToTop);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // when input is detected, symbol will have the current input value
+    let symbolString = this.symbol;
+    if (this.symbol === "all") symbolString = "";
+
+    this.news$ = this.newsService.fetchNews(symbolString).subscribe((data) => {
       this.news = data;
       // ---- (1) ----- //
       this.newsToBeDisplayed = this.news.slice(
@@ -76,8 +88,6 @@ export class NewsComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.ENTRY_LIMIT
       );
     });
-
-    window.addEventListener("scroll", this._toggleBackToTop);
   }
 
   ngAfterViewChecked(): void {

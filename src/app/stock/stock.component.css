@@ -50,6 +50,9 @@ main {
 }
 
 @media screen and (max-width: 1200px) {
+  .content-container {
+    gap: 0px;
+  }
   .container-left {
     width: 100%;
     border: none;

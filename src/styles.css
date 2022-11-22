@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
+
 @import url("https://fonts.googleapis.com/css2?family=Quantico&display=swap");
 
 :root {
@@ -14,15 +14,14 @@
   --main-750: #005aa3;
   --main-800: #005581;
   --main-900: #00315b;
-
   --color-positive-1: #d6ffef;
   --color-positive-2: #2ecc71;
   --color-negative-1: #ffdede;
   --color-negative-2: #e74c3c;
   --color-light-grey: #e2e2e2;
   --color-dark-grey: #585858;
-  --color-orange-light: rgb(248, 200, 109);
-  --color-orange: rgb(255, 166, 0);
+  --color-orange-light: #f8c86d;
+  --color-orange: #ffa600;
 }
 
 html {

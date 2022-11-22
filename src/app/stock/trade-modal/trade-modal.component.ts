@@ -106,7 +106,8 @@ export class TradeModalComponent implements OnInit, OnDestroy {
             .subscribe((data) => {
               this.currentTime = new Date().toLocaleString();
               this.priceData = data;
-              this.priceLimit = data.price;
+              // only update the price limit when user manually refresh the quote
+              // this.priceLimit = data.price;
             });
 
           this.account$ = this.store
@@ -254,6 +255,8 @@ export class TradeModalComponent implements OnInit, OnDestroy {
       .subscribe(([data]) => {
         this.exchange = data.exchange;
         this.currentTime = new Date().toLocaleString();
+        // only update the price limit when user manually refresh the quote
+        this.priceLimit = data.price;
       });
   }
 
