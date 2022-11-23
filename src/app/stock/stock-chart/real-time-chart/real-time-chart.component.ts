@@ -561,11 +561,11 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       let high = this.data.candles[i].y[1];
       let low = this.data.candles[i].y[2];
 
-      if (high * 1.002 > this.zoomedHighBound) {
-        this.zoomedHighBound = high * 1.002;
+      if (high * 1.001 > this.zoomedHighBound) {
+        this.zoomedHighBound = high * 1.001;
       }
-      if (low * 0.998 < this.zoomedLowBound) {
-        this.zoomedLowBound = low * 0.998;
+      if (low * 0.999 < this.zoomedLowBound) {
+        this.zoomedLowBound = low * 0.999;
       }
     }
     console.log(

@@ -81,7 +81,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
             this.loadingToken = false;
             this.isTokenValid = true;
             this.expiration =
-              new Date(timestamp).getTime() - Date.now() - 300000;
+              new Date(timestamp).getTime() - Date.now();
             this.email = email;
 
             this.setCountDown();
