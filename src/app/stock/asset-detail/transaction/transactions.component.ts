@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
+import { LegacyPageEvent as PageEvent } from "@angular/material/legacy-paginator";
 import { Subscription } from "rxjs";
 import { Response_transaction } from "src/app/user/user-models";
 import { UserService } from "src/app/user/user.service";

@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
-import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatMenuModule } from "@angular/material/menu";
+import { MatLegacyTooltipModule as MatTooltipModule } from "@angular/material/legacy-tooltip";
+import { MatLegacyMenuModule as MatMenuModule } from "@angular/material/legacy-menu";
 import { RouterModule } from "@angular/router";
 
 import { NavigationBarComponent } from "../navigation/navigation-bar/navigation-bar.component";

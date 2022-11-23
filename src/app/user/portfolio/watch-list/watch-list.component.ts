@@ -8,7 +8,7 @@ import {
   ElementRef,
   ViewChild,
 } from "@angular/core";
-import { PageEvent } from "@angular/material/paginator";
+import { LegacyPageEvent as PageEvent } from "@angular/material/legacy-paginator";
 import { Store } from "@ngrx/store";
 import { take } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";

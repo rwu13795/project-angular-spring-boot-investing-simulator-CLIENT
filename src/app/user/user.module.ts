@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AuthRoutingModule } from "./user-routing.module";
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatLegacyPaginatorModule as MatPaginatorModule } from "@angular/material/legacy-paginator";
 
 import { SharedModule } from "../shared/shared.module";
 import { UserComponent } from "./user.component";
@@ -16,7 +16,7 @@ import { UserProfileComponent } from "./profile/profile.component";
 import { MatIconModule } from "@angular/material/icon";
 import { AssetListComponent } from "./portfolio/asset-list/asset-list.component";
 import { WatchListComponent } from "./portfolio/watch-list/watch-list.component";
-import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatLegacyTooltipModule as MatTooltipModule } from "@angular/material/legacy-tooltip";
 import { SellShortTooltipComponent } from "./portfolio/sell-short-tooltip/sell-short-tooltip.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { ResetPasswordRequestComponent } from "./reset-password/request-link/request-link.component";
