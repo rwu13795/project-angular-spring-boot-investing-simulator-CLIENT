@@ -1,0 +1,38 @@
+main {
+  margin-left: 20px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font-size: 18px;
+}
+.text span {
+  font-weight: bold;
+}
+
+.digits-wrapper {
+  display: flex;
+  flex-flow: nowrap row;
+  margin-right: 10px;
+}
+
+.mark {
+  height: 36px;
+  font-size: 16px;
+  padding: 4px 2px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.positive {
+  color: var(--color-positive-2);
+}
+
+.negative {
+  color: var(--color-negative-2);
+}

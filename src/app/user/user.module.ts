@@ -18,6 +18,8 @@ import { AssetListComponent } from "./portfolio/asset-list/asset-list.component"
 import { WatchListComponent } from "./portfolio/watch-list/watch-list.component";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { SellShortTooltipComponent } from "./portfolio/sell-short-tooltip/sell-short-tooltip.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
+import { ResetPasswordRequestComponent } from "./reset-password/request-link/request-link.component";
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { SellShortTooltipComponent } from "./portfolio/sell-short-tooltip/sell-s
     SignInModalComponent,
     UserProfileComponent,
     SellShortTooltipComponent,
+    ResetPasswordRequestComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     RouterModule,

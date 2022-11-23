@@ -158,6 +158,7 @@ the next page from the server
 PS: I did not implement the "fetch next page", since 100 news are more than enough,
 I don't think someone will scroll all the way down to bottom
 
+PS-2: I set the news limit to 40 in the news.service
 
 ---- (2) ---- 
 In Angular component template, the "@ViewChile('ref-name')" or "@ViewChildren('ref-name')"

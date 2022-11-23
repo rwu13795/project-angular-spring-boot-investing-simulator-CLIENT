@@ -27,6 +27,7 @@ import {
   removeFromWatchlist,
 } from "src/app/user/user-state/user.actions";
 import { toggleTradeModal } from "../stock-state/stock.actions";
+import { Response_PortfolioAsset } from "src/app/user/user-models";
 
 @Component({
   selector: "app-stock-price",
@@ -54,10 +55,12 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   public changePercentage: string[] = ["0"];
   public previousChangePercentage: string[] = ["0"];
   public timeRange = this.store.select(selectTimeRange);
+  public priceNumber: number = 0;
   public changeNumber: number = 0;
   public isLargeScreen: boolean = true;
   public isWatched: boolean = false;
   public showStar: boolean = true;
+  public asset: Response_PortfolioAsset | null = null;
 
   constructor(
     private store: Store<AppState>,
@@ -76,6 +79,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
             if (!portfolio) return;
             this.isWatched = !!portfolio.watchlist[symbol];
             this.showStar = !portfolio.assets[symbol];
+            this.asset = portfolio.assets[symbol];
           });
       });
 
@@ -87,6 +91,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
 
     this.price$ = this.store.select(selectCurrentPrice).subscribe((data) => {
       this.price = this.toStringArray(data);
+      this.priceNumber = data;
     });
     this.previousPrice$ = this.store
       .select(selectPreviousPrice)

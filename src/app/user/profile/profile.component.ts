@@ -121,7 +121,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.changePasswordForm.value;
     // compare password and confirm_password manually
     this.notMatched = this.passwordsNotMatched(new_password, confirm_password);
-
     const hasError = this.onSubmitErrorCheck();
 
     if (

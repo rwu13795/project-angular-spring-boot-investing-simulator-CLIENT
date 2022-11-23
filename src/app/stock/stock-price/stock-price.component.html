@@ -83,6 +83,12 @@
         >
           star_outline
         </mat-icon>
+        <app-unrealized-gain-loss
+          *ngIf="(hasAuth$ | async) && asset"
+          [asset]="asset"
+          [currentPrice]="priceNumber"
+          [isLargeScreen]="isLargeScreen"
+        ></app-unrealized-gain-loss>
       </div>
     </div>
   </div>

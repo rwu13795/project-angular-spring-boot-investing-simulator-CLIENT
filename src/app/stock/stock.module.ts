@@ -30,6 +30,7 @@ import { TransactionsComponent } from "./asset-detail/transaction/transactions.c
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { TradeModalComponent } from "./trade-modal/trade-modal.component";
 import { StockRedirectComponent } from "./stock-redirect/stock-redirect.component";
+import { UnrealizedGainLossComponent } from "./stock-price/unrealized-gain-loss/unrealized-gain-loss.component";
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { StockRedirectComponent } from "./stock-redirect/stock-redirect.componen
     StockPriceComponent,
     TradeModalComponent,
     StockRedirectComponent,
+    UnrealizedGainLossComponent,
   ],
   imports: [
     RouterModule,

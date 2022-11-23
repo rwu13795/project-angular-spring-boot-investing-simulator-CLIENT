@@ -74,18 +74,21 @@ export class ColumnChartComponent implements OnChanges {
       chartData.unshift(...temp);
     }
     let title = "";
+    let yaxisText = "";
     if (this.transactionType === "buy") {
       if (this.positionType === 1) {
         title = "Buy";
       } else {
         title = "Sell Short";
       }
+      yaxisText = "Shares";
     } else {
       if (this.positionType === 1) {
         title = "Sell";
       } else {
         title = "Buy To Cover";
       }
+      yaxisText = "Realized G/L";
     }
 
     this.chartOptions = {
@@ -146,6 +149,7 @@ export class ColumnChartComponent implements OnChanges {
             return y.toLocaleString(undefined, { maximumFractionDigits: 0 });
           },
         },
+        title: { text: yaxisText },
       },
       xaxis: {
         type: "category",

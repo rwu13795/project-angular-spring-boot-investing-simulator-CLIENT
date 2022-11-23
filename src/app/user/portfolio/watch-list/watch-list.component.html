@@ -8,6 +8,7 @@
     [pageIndex]="pageIndex"
     [disabled]="false"
     aria-label="Select page"
+    *ngIf="watchlistData.length > 0"
   ></mat-paginator>
 
   <div *ngFor="let item of watchlistData" class="item-wrapper">

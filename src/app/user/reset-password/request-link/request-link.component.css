@@ -1,0 +1,27 @@
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.break-wrapper {
+  width: 90%;
+  max-width: 800px;
+}
+
+.button-wrapper {
+  width: 400px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.instruction {
+  line-height: 30px;
+  font-size: 20px;
+}
+
+.succeeded {
+  font-size: 18px;
+  margin-bottom: 20px;
+}

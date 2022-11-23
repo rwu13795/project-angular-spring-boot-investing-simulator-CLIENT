@@ -11,7 +11,6 @@ import {
   selector: "app-account-menu",
   templateUrl: "./account-menu.component.html",
   styleUrls: ["./account-menu.component.css"],
-
   encapsulation: ViewEncapsulation.None,
 })
 export class AccountMenuComponent {
@@ -32,3 +31,5 @@ export class AccountMenuComponent {
 // only use "ViewEncapsulation.None" on a specific small component,
 // the styles defined inside this component.css will affect
 // all other components in the app!!!
+// I have to make these class names unqiue, otherwise the other components
+// might be messed up by the same css class

@@ -18,7 +18,7 @@
       <img [src]="LOGO_URL + symbol + '.png'" alt="Logo" />
       <span class="symbol">{{ symbol }}</span>
       <div class="price-wrapper">
-        <span class="price">${{ toFixed(priceData.price) }}</span>
+        <span class="price" #priceRef>${{ toFixed(priceData.price) }}</span>
         <span
           class="changes"
           [ngClass]="priceData.change >= 0 ? 'positive' : 'negative'"

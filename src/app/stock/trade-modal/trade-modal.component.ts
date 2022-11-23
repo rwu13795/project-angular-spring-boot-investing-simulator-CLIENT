@@ -45,13 +45,15 @@ enum ErrorField {
 })
 export class TradeModalComponent implements OnInit, OnDestroy {
   @ViewChild("refreshRef") refreshRef?: ElementRef<HTMLSpanElement>;
+  @ViewChild("priceRef") priceRef?: ElementRef<HTMLSpanElement>;
   private symbol$?: Subscription;
   private isOpen$?: Subscription;
   private account$?: Subscription;
   private asset$?: Subscription;
   private priceData$?: Subscription;
   private refreshTimer: any;
-  private animationTimer: any;
+  private refreshAnimationTimer: any;
+  private priceAnimationTimer: any;
 
   public errors: InputField = {};
   public LOGO_URL = environment.LOGO_URL;
@@ -106,6 +108,7 @@ export class TradeModalComponent implements OnInit, OnDestroy {
             .subscribe((data) => {
               this.currentTime = new Date().toLocaleString();
               this.priceData = data;
+              this.triggerPriceAnimation();
               // only update the price limit when user manually refresh the quote
               // this.priceLimit = data.price;
             });
@@ -155,11 +158,11 @@ export class TradeModalComponent implements OnInit, OnDestroy {
 
   onRefresh() {
     if (this.refreshTimer) clearTimeout(this.refreshTimer);
-    if (this.animationTimer) clearTimeout(this.animationTimer);
+    if (this.refreshAnimationTimer) clearTimeout(this.refreshAnimationTimer);
     const icon = this.refreshRef?.nativeElement;
     if (icon) {
       icon.style.animation = "infinite rotate360 1s linear";
-      this.animationTimer = setTimeout(() => {
+      this.refreshAnimationTimer = setTimeout(() => {
         icon.style.animation = "none";
       }, 2000);
 
@@ -266,10 +269,21 @@ export class TradeModalComponent implements OnInit, OnDestroy {
     if (this.asset$) this.asset$.unsubscribe();
     if (this.priceData$) this.priceData$.unsubscribe();
     if (this.refreshTimer) clearTimeout(this.refreshTimer);
-    if (this.animationTimer) clearTimeout(this.animationTimer);
+    if (this.refreshAnimationTimer) clearTimeout(this.refreshAnimationTimer);
     this.priceLimit = 0;
     this.quantity = 0;
     this.orderType = undefined;
     this.filledOrder = null;
+  }
+
+  private triggerPriceAnimation() {
+    if (this.priceAnimationTimer) clearTimeout(this.priceAnimationTimer);
+    if (!this.priceRef) return;
+    const elem = this.priceRef.nativeElement;
+
+    elem.style.animation = "heartBeat 1s";
+    this.refreshAnimationTimer = setTimeout(() => {
+      elem.style.animation = "none";
+    }, 1200);
   }
 }

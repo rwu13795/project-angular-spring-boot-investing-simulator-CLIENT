@@ -8,6 +8,8 @@ import { UserGuard } from "./guards/user.guard";
 import { AuthGuard } from "./guards/auth.guard";
 import { PortfolioComponent } from "./portfolio/portfolio.component";
 import { UserProfileComponent } from "./profile/profile.component";
+import { ResetPasswordRequestComponent } from "./reset-password/request-link/request-link.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {
@@ -30,6 +32,16 @@ const routes: Routes = [
         path: "profile",
         component: UserProfileComponent,
         canActivate: [AuthGuard],
+      },
+
+      {
+        path: "reset-password",
+        component: ResetPasswordComponent,
+      },
+
+      {
+        path: "reset-password-request",
+        component: ResetPasswordRequestComponent,
       },
     ],
   },

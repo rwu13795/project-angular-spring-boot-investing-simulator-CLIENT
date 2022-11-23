@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
-import { map, catchError, of } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Response_realTimePrice } from "../stock/stock-models";
 import {
   InputField,
   InputFieldNames,
+  ResetPasswordBody,
   Response_checkAuth,
   Response_transaction,
   Response_transactionCount,
@@ -65,6 +65,23 @@ export class UserService {
       { symbols },
       { withCredentials: true }
     );
+  }
+
+  public getResetPasswordLink(email: string) {
+    return this.http.post(`${this.SERVER_URL}/auth/reset-password-request`, {
+      email,
+    });
+  }
+
+  public validateResetToken(token: string) {
+    return this.http.post<{ timestamp: string; email: string }>(
+      `${this.SERVER_URL}/auth/reset-password`,
+      { token }
+    );
+  }
+
+  public resetPassword(body: ResetPasswordBody) {
+    return this.http.put(`${this.SERVER_URL}/auth/reset-password`, body);
   }
 
   public toFixedLocale({

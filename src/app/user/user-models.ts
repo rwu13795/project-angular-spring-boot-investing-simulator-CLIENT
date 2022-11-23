@@ -17,6 +17,12 @@ export interface UserInfo {
   joinedAt: string;
 }
 
+export interface ResetPasswordBody {
+  email: string;
+  password: string;
+  confirm_password: string;
+}
+
 export interface Response_checkAuth {
   hasAuth: boolean;
 }

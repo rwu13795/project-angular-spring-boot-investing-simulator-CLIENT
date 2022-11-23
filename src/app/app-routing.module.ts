@@ -20,6 +20,11 @@ const routes: Routes = [
       import("./stock/stock.module").then((m) => m.StockModule),
   },
 
+  {
+    path: "user",
+    loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
+  },
+
   { path: "market-index", component: MarketIndexComponent },
   {
     path: "market-index/:symbol",
@@ -28,11 +33,6 @@ const routes: Routes = [
   },
 
   { path: "performance", component: PreviewListLargeComponent },
-
-  {
-    path: "user",
-    loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
-  },
 
   {
     path: "no-result/stock/:symbol",

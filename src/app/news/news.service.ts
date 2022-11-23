@@ -14,7 +14,7 @@ export class NewsService {
     const params = new HttpParams({
       fromObject: {
         symbol,
-        limit: 30,
+        limit: 40,
       },
     });
 

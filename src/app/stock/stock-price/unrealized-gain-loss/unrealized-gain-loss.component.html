@@ -1,0 +1,20 @@
+<main>
+  <div class="text">
+    Unrealized <span class="positive" *ngIf="unrealized >= 0">Gain</span
+    ><span class="negative" *ngIf="unrealized < 0">Loss</span>
+  </div>
+
+  <div
+    class="digits-wrapper"
+    [ngClass]="unrealized >= 0 ? 'positive' : 'negative'"
+  >
+    <span class="mark">{{ unrealized >= 0 ? "+" : "-" }}$</span>
+    <div *ngFor="let digit of currentString; index as i">
+      <app-digit-cylinder
+        [currentDigit]="digit"
+        [previousDigit]="previousString[i]"
+        [fontSize]="isLargeScreen ? 24 : 18"
+      ></app-digit-cylinder>
+    </div>
+  </div>
+</main>

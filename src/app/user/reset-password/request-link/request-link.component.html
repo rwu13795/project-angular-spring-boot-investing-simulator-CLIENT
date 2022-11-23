@@ -1,2 +1,70 @@
-1. Enter the email address connected to your account. 2. Check your inbox for a
-message from us. 3. Follow the link to reset your password.
+<main>
+  <div class="title">Reset Password</div>
+  <div class="break-wrapper">
+    <app-gradient-break [height]="8" [type]="2"></app-gradient-break>
+  </div>
+
+  <ol class="instruction">
+    <li>Enter the email address connected to your account.</li>
+    <li>Check your inbox for a message from us.</li>
+    <li>Follow the link to reset your password.</li>
+  </ol>
+
+  <form
+    [formGroup]="resetRequestForm"
+    (ngSubmit)="onSubmit()"
+    class="form-container"
+  >
+    <div class="input-container">
+      <div class="form-group input-wrapper">
+        <input
+          type="text"
+          id="email"
+          [ngClass]="
+            authErrors[InputFieldNames.email]
+              ? 'input-box auth-error-input-box'
+              : 'input-box'
+          "
+          formControlName="email"
+          placeholder=" "
+          (blur)="onBlur('email')"
+          (input)="onInput('email')"
+        />
+        <span
+          [ngClass]="{
+            'auth-error-span-box': authErrors[InputFieldNames.email]
+          }"
+          >Email</span
+        >
+      </div>
+      <div class="error-message">
+        <span *ngIf="inputTouched[InputFieldNames.email]">{{
+          inputError[InputFieldNames.email]
+        }}</span>
+        <span *ngIf="authErrors[InputFieldNames.email]">{{
+          authErrors[InputFieldNames.email]!.message
+        }}</span>
+      </div>
+
+      <div class="button-wrapper">
+        <app-custom-button
+          style="margin-right: 4px"
+          [height]="30"
+          [width]="130"
+          [fontSize]="18"
+          [bold]="true"
+          type="submit"
+          text="Submit"
+          [disabled]="loading"
+        ></app-custom-button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="succeeded" class="succeeded">
+    The link for resetting your password has been sent to the email address you
+    provided.
+  </div>
+
+  <img class="background" src="../../../../assets/images/background_2.webp" />
+</main>

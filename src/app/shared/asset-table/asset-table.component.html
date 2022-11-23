@@ -21,16 +21,16 @@
         {{ toFixed(asset.shares * asset.avgCost, false) }}
       </td>
       <td>
-        {{ toFixed(asset.shares * asset.currentPrice, false) }}
+        {{ toFixed(marketValue, false) }}
       </td>
       <td
         [ngClass]="{
-          positive: asset.unrealizedGainLoss > 0,
-          '': asset.unrealizedGainLoss === 0,
-          negative: asset.unrealizedGainLoss < 0
+          positive: unrealized > 0,
+          '': unrealized === 0,
+          negative: unrealized < 0
         }"
       >
-        {{ toFixed(asset.unrealizedGainLoss) }}
+        {{ toFixed(unrealized) }}
       </td>
       <td
         [ngClass]="{
@@ -53,16 +53,16 @@
         {{ toFixed(asset.sharesBorrowed * asset.avgBorrowed, false) }}
       </td>
       <td>
-        {{ toFixed(asset.sharesBorrowed * asset.currentPrice, false) }}
+        {{ toFixed(marketValueShort, false) }}
       </td>
       <td
         [ngClass]="{
-          positive: asset.unrealizedGainLossBorrowed > 0,
-          '': asset.unrealizedGainLossBorrowed === 0,
-          negative: asset.unrealizedGainLossBorrowed < 0
+          positive: unrealizedShort > 0,
+          '': unrealizedShort === 0,
+          negative: unrealizedShort < 0
         }"
       >
-        {{ toFixed(asset.unrealizedGainLossBorrowed) }}
+        {{ toFixed(unrealizedShort) }}
       </td>
       <td
         [ngClass]="{

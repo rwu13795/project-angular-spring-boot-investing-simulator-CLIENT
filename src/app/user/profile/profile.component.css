@@ -1,7 +1,7 @@
 main {
   display: flex;
   flex-flow: column nowrap;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -10,7 +10,7 @@ main {
   max-width: 500px;
   display: flex;
   flex-flow: column nowrap;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
   font-size: 30px;
   color: var(--color-dark-grey);
@@ -29,7 +29,6 @@ main {
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px;
   color: var(--color-dark-grey);
   line-height: 30px;
 }
