@@ -1,4 +1,4 @@
-# An investing simulator web app built with Angular and Spring Boot
+# A trading platform simulator built with Angular and Spring Boot
 
 ## live-demo: https://www.trading-simulator.live/
 
