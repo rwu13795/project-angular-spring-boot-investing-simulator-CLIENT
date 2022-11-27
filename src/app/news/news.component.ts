@@ -1,11 +1,4 @@
 import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
-import {
   AfterViewChecked,
   Component,
   ElementRef,
@@ -17,6 +10,7 @@ import {
   ViewChild,
 } from "@angular/core";
 import { Subscription } from "rxjs";
+
 import { newsAnimation } from "./news.animation";
 import { Response_news } from "./news.models";
 import { NewsService } from "./news.service";
@@ -105,7 +99,6 @@ export class NewsComponent
         (this.partNumber + 1) * this.ENTRY_LIMIT
       )
     );
-    console.log("partNumber", this.partNumber);
   }
 
   toggleBackToTop() {

@@ -1,11 +1,7 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { createEffect, ofType, Actions } from "@ngrx/effects";
-import { map, catchError, switchMap, of, tap } from "rxjs";
+import { map, switchMap } from "rxjs";
 import { environment } from "src/environments/environment";
 import {
   Response_companyProfile,
@@ -73,35 +69,6 @@ export class StockEffects {
   );
 
   constructor(private actions$: Actions, private http: HttpClient) {}
-
-  private getErrorMessage(errorRes: HttpErrorResponse): string {
-    console.log("HttpErrorResponse------------->", errorRes);
-
-    let errorMessage = "An unknown error occurred!";
-    if (!errorRes.error || !errorRes.error.error) {
-      return errorMessage;
-    }
-
-    switch (errorRes.error.error.message) {
-      case "EMAIL_EXISTS": {
-        errorMessage = "This email exists already";
-        break;
-      }
-      case "INVALID_PASSWORD": {
-        errorMessage = "The password you provided is not correct";
-        break;
-      }
-      case "EMAIL_NOT_FOUND": {
-        errorMessage = "The email you provided does not exist in our record";
-        break;
-      }
-
-      default:
-        break;
-    }
-
-    return errorMessage;
-  }
 }
 
 /*

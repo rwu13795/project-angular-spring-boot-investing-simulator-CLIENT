@@ -29,7 +29,6 @@ export class UserGuard implements CanActivate {
         return true;
       }),
       catchError((error: any) => {
-        console.log(error);
         return of(true);
       })
     );

@@ -1,6 +1,7 @@
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { LoadingStatus_user } from "src/app/user/user-models";
 import { toggleSignInModal } from "src/app/user/user-state/user.actions";

@@ -1,12 +1,7 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { catchError, map, of, Subscription, take } from "rxjs";
+import { catchError, map, of, take } from "rxjs";
+
 import {
   AuthErrorInField,
   InputField,
@@ -51,8 +46,6 @@ export class ResetPasswordRequestComponent implements OnInit, OnDestroy {
     const hasError = this.onSubmitErrorCheck();
     if (hasError || !email) return;
 
-    console.log("email--------", email);
-
     this.loading = true;
     this.userService
       .getResetPasswordLink(email)
@@ -69,9 +62,7 @@ export class ResetPasswordRequestComponent implements OnInit, OnDestroy {
           return of(null);
         })
       )
-      .subscribe(() => {
-        console.log(this.authErrors);
-      });
+      .subscribe();
   }
 
   onInput(field: string) {

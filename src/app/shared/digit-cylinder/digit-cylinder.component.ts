@@ -1,9 +1,6 @@
 import {
-  AfterContentChecked,
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  DoCheck,
   ElementRef,
   Input,
   OnChanges,

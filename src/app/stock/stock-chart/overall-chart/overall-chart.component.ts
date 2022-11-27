@@ -21,7 +21,7 @@ import {
   ApexYAxis,
   ChartComponent,
 } from "ng-apexcharts";
-import { Response_transaction } from "src/app/user/user-models";
+
 import { VolumeData } from "../../stock-models";
 import { StockChartService } from "../stock-chart.service";
 
@@ -44,7 +44,7 @@ type ChartOptions = {
   templateUrl: "./overall-chart.component.html",
   styleUrls: ["./overall-chart.component.css"],
 })
-export class OverallChartComponent implements OnInit, OnDestroy, OnChanges {
+export class OverallChartComponent implements OnInit, OnChanges {
   @ViewChild("overall_chart", { static: false }) chart!: ChartComponent;
   @Input() chartData: VolumeData[] = [];
   @Input() isLargeScreen: boolean = true;
@@ -63,8 +63,6 @@ export class OverallChartComponent implements OnInit, OnDestroy, OnChanges {
     this.setChartOption();
     this.loading = false;
   }
-
-  ngOnDestroy(): void {}
 
   private setChartOption() {
     this.chartOptions = {
@@ -116,7 +114,6 @@ export class OverallChartComponent implements OnInit, OnDestroy, OnChanges {
         floating: false,
         labels: {
           formatter: (val) => {
-            // console.log(val);
             return val.toLocaleString();
           },
           style: { colors: "#6b6b6b" },

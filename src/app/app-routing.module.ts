@@ -12,34 +12,47 @@ const routes: Routes = [
     path: "",
     pathMatch: "full",
     component: HomeComponent,
+    title: "Trading-Simulator",
   },
 
   {
     path: "stock",
     loadChildren: () =>
       import("./stock/stock.module").then((m) => m.StockModule),
+    title: "Stock",
   },
 
   {
     path: "user",
     loadChildren: () => import("./user/user.module").then((m) => m.UserModule),
+    title: "User",
   },
 
-  { path: "market-index", component: MarketIndexComponent },
+  {
+    path: "market-index",
+    component: MarketIndexComponent,
+    title: "Market Index",
+  },
   {
     path: "market-index/:symbol",
     component: MarketIndexComponent,
     canActivate: [MarketIndexGuard],
+    title: "Market Index",
   },
 
-  { path: "performance", component: PreviewListLargeComponent },
+  {
+    path: "performance",
+    component: PreviewListLargeComponent,
+    title: "Performance",
+  },
 
   {
     path: "no-result/stock/:symbol",
     component: Page404Component,
+    title: "No Result",
   },
 
-  { path: "**", component: Page404Component },
+  { path: "**", component: Page404Component, title: "Nothing to see here!" },
 ];
 
 @NgModule({

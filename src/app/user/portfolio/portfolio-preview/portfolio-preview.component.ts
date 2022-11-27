@@ -1,19 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { LoadingStatus_user, Response_Portfolio } from "../../user-models";
-import {
-  fetchPortfolio,
-  setLoadingStatus_user,
-  toggleSignInModal,
-} from "../../user-state/user.actions";
+import { toggleSignInModal } from "../../user-state/user.actions";
 import {
   selectHasAuth,
   selectLoadingStatus_user,

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, of, switchMap } from "rxjs";
@@ -30,7 +30,6 @@ export class UserEffects {
             }),
             // set hasAuth to false whenever there is a error response
             catchError((error) => {
-              console.log(error);
               // need to wrap error-handling action inside the of() to return
               // an observable
               return of(actions.setAuth({ hasAuth: false }));
@@ -55,7 +54,6 @@ export class UserEffects {
               return actions.setUserInfo({ info: data });
             }),
             catchError((errorRes: Response_authError) => {
-              console.log(errorRes);
               // need to wrap error-handling action inside the of() to return
               // an observable
               return of(actions.setAuthError({ authError: errorRes.error }));
@@ -80,7 +78,6 @@ export class UserEffects {
               return actions.setUserInfo({ info: data });
             }),
             catchError((errorRes: Response_authError) => {
-              console.log(errorRes);
               return of(actions.setAuthError({ authError: errorRes.error }));
             })
           );
@@ -98,11 +95,9 @@ export class UserEffects {
           })
           .pipe(
             map(({ text }) => {
-              console.log(text);
               return actions.removeUserAuth();
             }),
             catchError((errorRes: Response_authError) => {
-              console.log(errorRes);
               return of(actions.setAuthError({ authError: errorRes.error }));
             })
           );
@@ -125,7 +120,6 @@ export class UserEffects {
               });
             }),
             catchError((errorRes: Response_authError) => {
-              console.log(errorRes);
               return of(actions.setAuthError({ authError: errorRes.error }));
             })
           );
@@ -146,7 +140,6 @@ export class UserEffects {
               return actions.setPortfolio({ portfolio: data });
             }),
             catchError((error) => {
-              console.log(error);
               return of(actions.setAuth({ hasAuth: false }));
             })
           );

@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from "@angular/router";
-import { map, Observable, take, tap } from "rxjs";
+import { map, Observable, take } from "rxjs";
 
 import { Store } from "@ngrx/store";
 import { Response_quoteShort } from "./stock-models";

@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
+
 import { AppState } from "../ngrx-store/app.reducer";
 import {
   setCurrentChangeInPrice,

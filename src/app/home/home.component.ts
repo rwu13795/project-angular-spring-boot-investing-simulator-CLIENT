@@ -1,5 +1,5 @@
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-home",

@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { HomeComponent } from "../home/home.component";
 import { AssetDetailComponent } from "./asset-detail/asset-detail.component";
 import { CompanyProfileComponent } from "./company-profile/company-profile.component";
 import { FinancialStatementsComponent } from "./financial-statements/financial-statements.component";

@@ -8,6 +8,7 @@ import {
   ElementRef,
   ViewChild,
 } from "@angular/core";
+
 import { LegacyPageEvent as PageEvent } from "@angular/material/legacy-paginator";
 import { Store } from "@ngrx/store";
 import { take } from "rxjs";
@@ -24,7 +25,6 @@ import { UserService } from "../../user.service";
 })
 export class WatchListComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild("scrollRef") scrollRef?: ElementRef<HTMLElement>;
-  private initialChange: boolean = true;
 
   @Input() watchlist: string[] = [];
 
@@ -45,15 +45,12 @@ export class WatchListComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loading = true;
-    console.log(this.watchlist);
-
     this.pageIndex = 0;
     this.totalCount = this.watchlist.length;
     this.fetchListInfo(0);
   }
 
   handlePageEvent(e: PageEvent) {
-    console.log(e);
     this.pageIndex = e.pageIndex;
     this.fetchListInfo(this.pageIndex);
 

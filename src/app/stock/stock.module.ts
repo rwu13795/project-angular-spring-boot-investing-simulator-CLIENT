@@ -5,7 +5,6 @@ import { RouterModule } from "@angular/router";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { NewsModule } from "../news/news.module";
 import { PreviewListModule } from "../preview-list/preview-list.module";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatLegacyTooltipModule as MatTooltipModule } from "@angular/material/legacy-tooltip";
 
 import { SharedModule } from "../shared/shared.module";

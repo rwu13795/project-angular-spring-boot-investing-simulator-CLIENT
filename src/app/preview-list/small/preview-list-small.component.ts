@@ -1,4 +1,3 @@
-import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import {
   Component,
   OnInit,
@@ -9,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { Response_realTimePrice } from "src/app/stock/stock-models";
 import { setStockListOption } from "src/app/stock/stock-state/stock.actions";

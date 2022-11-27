@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   OnChanges,
-  OnDestroy,
   SimpleChanges,
   Input,
 } from "@angular/core";
@@ -13,9 +12,7 @@ import { Response_PortfolioAsset } from "src/app/user/user-models";
   templateUrl: "./unrealized-gain-loss.component.html",
   styleUrls: ["./unrealized-gain-loss.component.css"],
 })
-export class UnrealizedGainLossComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+export class UnrealizedGainLossComponent implements OnInit, OnChanges {
   @Input() asset: Response_PortfolioAsset | null = null;
   @Input() currentPrice: number = 0;
   @Input() isLargeScreen: boolean = true;
@@ -35,7 +32,6 @@ export class UnrealizedGainLossComponent
       this.currentString = this.toStringArray(this.unrealized);
     }
   }
-  ngOnDestroy(): void {}
 
   private toStringArray(number: number): string[] {
     let temp = number;

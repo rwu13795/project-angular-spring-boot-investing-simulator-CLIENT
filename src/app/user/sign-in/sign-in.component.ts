@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Validators, FormBuilder } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
@@ -13,13 +6,11 @@ import { Subscription } from "rxjs";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 
 import {
-  AuthError,
   AuthErrorInField,
   InputField,
   InputFieldNames,
   InputFieldTouched,
   LoadingStatus_user,
-  Response_authError,
 } from "../user-models";
 import {
   clearAuthError,
@@ -144,7 +135,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     let hasError: boolean = false;
     for (let key of Object.keys(this.inputError)) {
       const control = this.signInForm.get(key);
-      console.log(control);
+
       if (control) {
         if (control.invalid) hasError = true;
         control.markAsTouched();

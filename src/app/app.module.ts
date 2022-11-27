@@ -25,7 +25,7 @@ import { UserEffects } from "./user/user-state/user.effects";
 import { PreviewListModule } from "./preview-list/preview-list.module";
 import { NewsModule } from "./news/news.module";
 import { FooterComponent } from "./footer/footer.component";
-import { MatLegacyTooltipModule as MatTooltipModule } from "@angular/material/legacy-tooltip";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, FooterComponent],

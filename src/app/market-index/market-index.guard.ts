@@ -7,11 +7,10 @@ import {
   UrlTree,
 } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { map, Observable, take, tap } from "rxjs";
+import { map, Observable, take } from "rxjs";
+
 import { AppState } from "../ngrx-store/app.reducer";
-import { Response_realTimePrice } from "../stock/stock-models";
 import { fetchAllChangePercentage } from "../stock/stock-state/stock.actions";
-import { StockService } from "../stock/stock.service";
 import { RealTimeIndex } from "./market-index-models";
 import { MarketIndexService } from "./market-index.service";
 

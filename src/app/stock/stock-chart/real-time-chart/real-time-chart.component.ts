@@ -8,7 +8,6 @@ import {
   ViewChild,
 } from "@angular/core";
 import { Store } from "@ngrx/store";
-
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -23,13 +22,9 @@ import {
   ApexLegend,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
-import { ChartData, CandleData } from "../../stock-models";
-import {
-  setCurrentChangeInPrice,
-  setCurrentChangePercentage,
-  setCurrentPrice,
-} from "../../stock-state/stock.actions";
+import { ChartData } from "../../stock-models";
 import { StockService } from "../../stock.service";
 import { StockChartService } from "../stock-chart.service";
 
@@ -97,9 +92,7 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
     this.setUpdateTimer();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   getHistoricalData() {
     this.data$ = this.stockService
@@ -119,8 +112,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getRealTimePrice() {
-    // if (new Date().getUTCHours() - 4 >= 17) return;
-
     const lastDataPoint = this.data.candles[this.data.candles.length - 1];
     const secondLastDataPoint = this.data.candles[this.data.candles.length - 2];
 
@@ -129,7 +120,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(([data]) => {
         const { timestamp, volume, price } = data;
         const timestampMS = timestamp * 1000;
-        console.log("price-------------", price);
 
         // for the stock-price component
         // moved to stock-service
@@ -164,7 +154,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
           const slTimestamp = new Date(secondLastDataPoint.y[4]).getTime();
           if (timestampMS - slTimestamp > 60000) {
             this.newDataAdded = true;
-            console.log("adding");
             this.currentMinVolume =
               volume - this.data.currentTotalVolume - this.currentMinVolume;
 
@@ -270,7 +259,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
               if (!this.showVolumes) {
                 chart.hideSeries("Volumes");
               }
-              console.log("dataUpdated");
               chart.updateOptions({ yaxis: this.chartCandleOptions.yaxis });
 
               // if the chart has been reset, the xaixs will be undefined
@@ -283,7 +271,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
                   this.data.candles[this.data.candles.length - 1].x.getTime() &&
                 this.isZoomed
               ) {
-                console.log("no zoom, user is at the middle of data");
                 this.zoomTo(this.lastXaxis[0], this.lastXaxis[1]);
                 return;
               }
@@ -291,14 +278,12 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
               // ---- (3) ---- //
               if (this.newDataAdded) {
                 this.newDataAdded = false;
-                console.log("newDataAdded");
                 // only shift the bars after adding new data, otherwise, zoom to
                 // the previous xaxis coordinates
                 this.lastXaxis = [
                   this.lastXaxis[0] + 60000,
                   this.lastXaxis[1] + 60000,
                 ];
-                console.log("zoomX to the new Data point");
               }
               this.zoomTo(this.lastXaxis[0], this.lastXaxis[1]);
             }
@@ -311,18 +296,12 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
             this.isZoomed = true;
 
             if (!min || !max) {
-              console.log("resetting, !min !max");
               this.resetChartYaxis();
               return;
             }
 
             const [minDataPointIndex, maxDataPointIndex] =
               this.getMinMaxDataPointIndex(min, max);
-            console.log(
-              "minDataPointIndex, maxDataPointIndex",
-              minDataPointIndex,
-              maxDataPointIndex
-            );
             if (
               minDataPointIndex === undefined ||
               maxDataPointIndex === undefined
@@ -330,8 +309,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
               this.resetChartYaxis();
               return;
             }
-            console.log("min----", this.data.candles[minDataPointIndex]);
-            console.log("max----", this.data.candles[maxDataPointIndex]);
 
             this.updateZoomedHighLowBound(minDataPointIndex, maxDataPointIndex);
           },
@@ -344,7 +321,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
             // set a 400ms delay for the "scrolled", otherwise, the "updateZoomedHighLowBound"
             // will be triggered on every slight "scrolled"
             this.scrolledDelayTimer = setTimeout(() => {
-              console.log("scrolled------------------------------");
               const [minDataPointIndex, maxDataPointIndex] =
                 this.getMinMaxDataPointIndex(min, max);
               this.updateZoomedHighLowBound(
@@ -509,7 +485,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   private resetChartYaxis() {
     this.isZoomed = false;
     if (this.chartCandleOptions) {
-      console.log("resetting---------------------");
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].min =
         this.data.lowBound;
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].max =
@@ -568,11 +543,6 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
         this.zoomedLowBound = low * 0.999;
       }
     }
-    console.log(
-      "updating min-max bound",
-      this.zoomedLowBound,
-      this.zoomedHighBound
-    );
 
     if (this.chartCandleOptions) {
       this.updateChartsYaxis();
@@ -585,13 +555,11 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
   private updateChartsYaxis() {
     if (!this.chartCandleOptions) return;
     if (this.isZoomed) {
-      console.log("updateChartsYaxis ----- isZoomed");
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].min =
         this.zoomedLowBound;
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].max =
         this.zoomedHighBound;
     } else {
-      console.log("updateChartsYaxis ----- NO Zoomed");
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].min =
         this.data.lowBound;
       (this.chartCandleOptions.yaxis as ApexYAxis[])[0].max =
@@ -603,24 +571,19 @@ export class RealTimeChartComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateChartBoundary(price: number) {
     if (price * 1.001 > this.data.highBound) {
-      console.log("----- updateing data highBound  ----- ");
-
       this.data.highBound = price * 1.001;
       this.updateChartsYaxis();
     }
     if (price * 0.999 < this.data.lowBound) {
-      console.log("----- updateing data lowBound  ----- ");
       this.data.lowBound = price * 0.999;
       this.updateChartsYaxis();
     }
 
     if (price * 1.001 > this.zoomedHighBound) {
-      console.log("----- updateing data zoomedHighBound  ----- ");
       this.zoomedHighBound = price * 1.001;
       this.updateChartsYaxis();
     }
     if (price * 0.999 < this.zoomedLowBound) {
-      console.log("----- updateing data zoomedHighBound  ----- ");
       this.zoomedLowBound = price * 0.999;
       this.updateChartsYaxis();
     }

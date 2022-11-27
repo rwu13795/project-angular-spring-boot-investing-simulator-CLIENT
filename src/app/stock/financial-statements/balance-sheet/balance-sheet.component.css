@@ -60,3 +60,24 @@ tbody tr:hover td {
 .indent-3 {
   padding-left: 70px;
 }
+
+@media screen and (max-width: 765px) {
+  .table-wrapper {
+    font-size: 12px;
+  }
+  .table-head {
+    min-width: 140px;
+    max-width: 180px;
+  }
+  .indent {
+    padding-left: 20px;
+  }
+
+  .indent-2 {
+    padding-left: 30px;
+  }
+
+  .indent-3 {
+    padding-left: 40px;
+  }
+}

@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  Input,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Subscription, take } from "rxjs";
 import { Store } from "@ngrx/store";
 
@@ -19,7 +12,6 @@ import { StockService } from "../stock.service";
 import {
   selectAssets,
   selectHasAuth,
-  selectWatchlist,
 } from "src/app/user/user-state/user.selectors";
 import { Router } from "@angular/router";
 
@@ -29,8 +21,6 @@ import { Router } from "@angular/router";
   styleUrls: ["./stock-menu.component.css"],
 })
 export class StockMenuComponent implements OnInit, OnDestroy {
-  // @ViewChild("containerRef") containerRef?: ElementRef<HTMLDivElement>;
-
   private symbol$?: Subscription;
   private assets$?: Subscription;
   private activeMenu$?: Subscription;
@@ -54,7 +44,6 @@ export class StockMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
       this.hasAuth = hasAuth;
-      console.log("hasAuth", hasAuth, "this.activeMenu", this.activeMenu);
       if (this.activeMenu === StockMenu.asset && !this.hasAuth) {
         this.route.navigate(["/user/sign-in"]);
       }
@@ -117,22 +106,3 @@ export class StockMenuComponent implements OnInit, OnDestroy {
     if (this.hasAuth$) this.hasAuth$.unsubscribe();
   }
 }
-
-// hideMenu() {
-//   const container = this.containerRef?.nativeElement;
-//   if (container) {
-//     container.style.height = "0px";
-//     container.style.opacity = "0";
-//     this.isHidden = true;
-//   }
-// }
-
-// showMenu() {
-//   const container = this.containerRef?.nativeElement;
-//   if (container) {
-//     container.style.height = " 100px";
-//     container.style.opacity = "1";
-//     this.isHidden = false;
-//     window.scrollTo({ top: 0, behavior: "smooth" });
-//   }
-// }

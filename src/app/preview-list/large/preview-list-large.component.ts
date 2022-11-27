@@ -1,14 +1,13 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { setStockListOption } from "src/app/stock/stock-state/stock.actions";
 import { selectStockListOption } from "src/app/stock/stock-state/stock.selectors";
 
 import {
   ListTypes,
-  Response_stockList,
   SortBy,
   StockPerformanceLists,
 } from "../preview-list-models";

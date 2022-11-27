@@ -1,16 +1,7 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { RealTimeIndex } from "../market-index-models";
 
+import { RealTimeIndex } from "../market-index-models";
 import { MarketIndexService } from "../market-index.service";
 
 @Component({

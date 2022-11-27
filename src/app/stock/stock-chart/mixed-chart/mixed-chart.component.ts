@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 
 import {
   ChartComponent,
@@ -22,7 +14,8 @@ import {
   ApexLegend,
 } from "ng-apexcharts";
 import { Subscription } from "rxjs";
-import { ChartData, CandleData } from "../../stock-models";
+
+import { ChartData } from "../../stock-models";
 import { StockService } from "../../stock.service";
 import { StockChartService } from "../stock-chart.service";
 
@@ -82,7 +75,6 @@ export class MixedChartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getHistoricalData();
-
     this.setUpdateTimer();
   }
 
@@ -115,7 +107,6 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       .subscribe(([data]) => {
         const { timestamp, volume, price } = data;
         const timestampMS = timestamp * 1000;
-        console.log("price-------------", price);
 
         this.realTimePrice = price;
         this.dataUpdated = true;
@@ -158,7 +149,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
           const slTimestamp = new Date(secondLastDataPoint.y[4]).getTime();
           if (timestampMS - slTimestamp > 60000) {
             this.newDataAdded = true;
-            console.log("adding");
+
             this.currentMinVolume =
               volume - this.data.currentTotalVolume - this.currentMinVolume;
 
@@ -228,7 +219,7 @@ export class MixedChartComponent implements OnInit, OnDestroy {
       ) {
         clearInterval(this.updateTimer);
         this.realTimePrice$.unsubscribe();
-        console.log("4pm -============= market close!!!");
+        console.log("4pm --------------- market close!!!");
         return;
       }
       this.getRealTimePrice();
@@ -279,8 +270,6 @@ export class MixedChartComponent implements OnInit, OnDestroy {
               chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
               });
-
-              console.log("intialUpdate");
             }
             if (this.dataUpdated) {
               this.dataUpdated = false;
@@ -288,14 +277,12 @@ export class MixedChartComponent implements OnInit, OnDestroy {
                 chart.hideSeries("Volumes");
               }
 
-              console.log("dataUpdated");
               chart.updateOptions({
                 yaxis: this.chartCandleOptions.yaxis,
               });
               // ---- (3) ---- //
               if (this.newDataAdded) {
                 this.newDataAdded = false;
-                console.log("newDataAdded");
 
                 const { min, max } = options.config.xaxis;
                 if (min && max && min !== 0 && max !== 0) {

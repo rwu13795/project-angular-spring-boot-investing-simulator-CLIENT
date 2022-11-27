@@ -1,15 +1,12 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
 import { map } from "rxjs";
-import { environment } from "src/environments/environment";
+
 import { Response_realTimePrice } from "../stock/stock-models";
 import { StockService } from "../stock/stock.service";
 import { MajorIndex, RealTimeIndex } from "./market-index-models";
 
 @Injectable({ providedIn: "root" })
 export class MarketIndexService {
-  private SERVER_URL = environment.SERVER_URL;
-
   private symbols: string[] = [
     "^DJI",
     "^DJT",
@@ -108,7 +105,6 @@ export class MarketIndexService {
     // return the current targetIndex. Also, I need to set the targetIndex
     // to null, so that the next target index won't using the same data
     if (this.targetIndex) {
-      console.log("returning exited targetIndex");
       const temp = { ...this.targetIndex };
       this.targetIndex = null;
       return temp;

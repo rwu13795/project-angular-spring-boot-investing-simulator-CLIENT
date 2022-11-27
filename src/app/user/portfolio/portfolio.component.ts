@@ -2,21 +2,18 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  OnChanges,
-  SimpleChanges,
   ViewChild,
   ElementRef,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import {
   PortfolioAssetList,
-  PortfolioWatchlist,
   Response_Portfolio,
   Response_PortfolioAccount,
-  Response_PortfolioAsset,
 } from "../user-models";
 import { selectHasAuth, selectPortfolio } from "../user-state/user.selectors";
 import { UserService } from "../user.service";

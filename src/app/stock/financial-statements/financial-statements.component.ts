@@ -2,15 +2,11 @@ import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { StockMenu } from "../stock-models";
 import { setStockActiveMenu } from "../stock-state/stock.actions";
-
-import { StockService } from "../stock.service";
-import {
-  FinancialStatement,
-  FinancialStatementType,
-} from "./financial-statements.models";
+import { FinancialStatement } from "./financial-statements.models";
 
 @Component({
   selector: "app-financial-statements",
@@ -50,6 +46,4 @@ export class FinancialStatementsComponent implements OnInit {
   get FinancialStatement() {
     return FinancialStatement;
   }
-
-  ngOnDestroy(): void {}
 }

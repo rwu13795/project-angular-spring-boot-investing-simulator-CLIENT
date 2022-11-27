@@ -75,7 +75,6 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
     this.loading = true;
     const storedData = this.stockService.getStoredChartDate(this.option);
     if (storedData) {
-      console.log("storedData---- found");
       this.data = storedData;
       this.setChartCandleOptions();
       this.loading = false;
@@ -143,7 +142,6 @@ export class HistoricalChartComponent implements OnInit, OnDestroy, OnChanges {
           const data =
             w.globals.initialSeries[seriesIndex].data[dataPointIndex];
 
-          // console.log(data, seriesIndex);
           return this.stockChartService.setCustomTooltip(
             data,
             seriesIndex,

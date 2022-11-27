@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 
 import { AppState } from "src/app/ngrx-store/app.reducer";
@@ -20,7 +19,6 @@ import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import {
   selectHasAuth,
   selectPortfolio,
-  selectWatchlist,
 } from "src/app/user/user-state/user.selectors";
 import {
   addToWatchlist,
@@ -127,8 +125,6 @@ export class StockPriceComponent implements OnInit, OnDestroy {
       .subscribe((state: BreakpointState) => {
         if (state.matches) this.isLargeScreen = true;
         else this.isLargeScreen = false;
-
-        console.log("isLargeScreen", this.isLargeScreen);
       });
   }
 

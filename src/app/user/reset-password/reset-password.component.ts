@@ -80,8 +80,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
           map(({ timestamp, email }) => {
             this.loadingToken = false;
             this.isTokenValid = true;
-            this.expiration =
-              new Date(timestamp).getTime() - Date.now();
+            this.expiration = new Date(timestamp).getTime() - Date.now();
             this.email = email;
 
             this.setCountDown();
@@ -101,8 +100,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     const hasError = this.onSubmitErrorCheck();
 
     if (hasError || !password || !confirm_password) return;
-
-    console.log(this.email);
 
     this.loadingAuth = true;
     this.userService

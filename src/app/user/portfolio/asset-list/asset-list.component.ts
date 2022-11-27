@@ -12,7 +12,6 @@ import { LegacyPageEvent as PageEvent } from "@angular/material/legacy-paginator
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 
-import { StockService } from "src/app/stock/stock.service";
 import { environment } from "src/environments/environment";
 import { LoadingStatus_user, PortfolioAssetList } from "../../user-models";
 import { selectLoadingStatus_user } from "../../user-state/user.selectors";

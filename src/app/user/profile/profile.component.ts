@@ -1,14 +1,9 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { AbstractControl, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Subscription, take } from "rxjs";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import {
   AuthErrorInField,
@@ -20,7 +15,6 @@ import {
 } from "../user-models";
 import {
   setLoadingStatus_user,
-  signUp,
   clearAuthError,
   changePassword,
 } from "../user-state/user.actions";

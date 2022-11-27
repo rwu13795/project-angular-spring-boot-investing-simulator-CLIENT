@@ -7,7 +7,8 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { catchError, map, Subscription, switchMap, take } from "rxjs";
+import { map, Subscription, take } from "rxjs";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import {
   InputField,
@@ -22,7 +23,7 @@ import {
 } from "src/app/user/user-state/user.selectors";
 import { UserService } from "src/app/user/user.service";
 import { environment } from "src/environments/environment";
-import { OrderType, Response_realTimePrice } from "../stock-models";
+import { OrderType } from "../stock-models";
 import { toggleTradeModal } from "../stock-state/stock.actions";
 import {
   selectCurrentPriceData,

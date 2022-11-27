@@ -23,7 +23,6 @@ import {
 import { Subscription } from "rxjs";
 import { StockChartService } from "src/app/stock/stock-chart/stock-chart.service";
 import { ChartData } from "src/app/stock/stock-models";
-import { RealTimeIndex } from "../market-index-models";
 import { MarketIndexService } from "../market-index.service";
 
 export type ChartOptions = {

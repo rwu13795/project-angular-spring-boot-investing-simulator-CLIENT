@@ -1,7 +1,8 @@
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params } from "@angular/router";
 import { Store } from "@ngrx/store";
+
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import { StockMenu } from "../stock-models";
 import {

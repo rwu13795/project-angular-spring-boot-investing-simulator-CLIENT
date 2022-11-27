@@ -1,13 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from "@angular/core";
+import { Component, ElementRef, Input, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
+
 import { RealTimeIndex } from "../market-index-models";
 import { MarketIndexService } from "../market-index.service";
 
@@ -16,7 +9,7 @@ import { MarketIndexService } from "../market-index.service";
   templateUrl: "./index-slide.component.html",
   styleUrls: ["./index-slide.component.css"],
 })
-export class IndexSlideComponent implements OnInit, OnChanges {
+export class IndexSlideComponent {
   @ViewChild("slideRef") slideRef?: ElementRef<HTMLDivElement>;
   @Input() indices: RealTimeIndex[] = [];
   @Input() isPreview: boolean = true;
@@ -26,14 +19,6 @@ export class IndexSlideComponent implements OnInit, OnChanges {
     private marketIndexService: MarketIndexService,
     private router: Router
   ) {}
-
-  ngOnInit(): void {
-    // this.marketIndexService.targetIndexSymbol.subscribe((symbol) => {
-    //   console.log("new symbol-------", symbol);
-    //   this.targetSymbol = symbol;
-    // });
-  }
-  ngOnChanges(changes: SimpleChanges): void {}
 
   scrollHorizontally(direction: string) {
     const slide = this.slideRef?.nativeElement;

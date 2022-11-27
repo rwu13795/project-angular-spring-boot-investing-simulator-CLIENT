@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { AuthRoutingModule } from "./user-routing.module";
 import { MatLegacyPaginatorModule as MatPaginatorModule } from "@angular/material/legacy-paginator";
-
 import { SharedModule } from "../shared/shared.module";
 import { UserComponent } from "./user.component";
 import { SignInComponent } from "./sign-in/sign-in.component";

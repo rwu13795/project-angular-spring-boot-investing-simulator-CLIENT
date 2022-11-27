@@ -124,7 +124,6 @@ export class UserService {
     control: AbstractControl
   ) {
     if (control.errors) {
-      // console.log(control.errors);
       if (control.errors["maxlength"]) {
         switch (field) {
           case InputFieldNames.email: {

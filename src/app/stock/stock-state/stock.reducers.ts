@@ -100,7 +100,6 @@ export const stockReducer = createReducer(
 
   on(actions.clearStockState, (state) =>
     produce(state, (draft) => {
-      console.log({ ...initialState });
       draft.currentSymbol = "";
       draft.currentPrice = 0;
       draft.previousPrice = 0;

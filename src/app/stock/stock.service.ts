@@ -1,15 +1,14 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { from, Observable, Subject, throwError } from "rxjs";
-import { map, switchMap, tap } from "rxjs/operators";
+import { Subject } from "rxjs";
+import { map, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { AppState } from "../ngrx-store/app.reducer";
 import { Response_transaction } from "../user/user-models";
 import { Response_incomeStatement } from "./financial-statements/financial-statements.models";
 import {
   ChartData,
-  // Response_historyPriceFull,
   Response_historyPrice,
   Response_realTimePrice,
   StoredChartData,

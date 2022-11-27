@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
+
 import { AppState } from "./ngrx-store/app.reducer";
 import { LoadingStatus_user } from "./user/user-models";
 import {

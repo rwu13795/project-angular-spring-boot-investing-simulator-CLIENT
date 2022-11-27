@@ -148,3 +148,19 @@ main {
     font-size: min(20px, 4vw);
   }
 }
+
+@media screen and (max-width: 550px) {
+  main {
+    flex-flow: row wrap;
+    margin-bottom: 20px;
+  }
+  .content-container {
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .row-wrapper {
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -60,7 +60,8 @@ main {
 
 @media screen and (max-width: 765px) {
   .menu-wrapper {
-    height: 40px;
+    min-height: 40px;
     font-size: min(16px, 3vw);
+    text-align: center;
   }
 }

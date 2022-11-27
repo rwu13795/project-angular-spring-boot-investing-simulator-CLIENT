@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-  Input,
-} from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { RealTimeIndex } from "../market-index-models";
 import { MarketIndexService } from "../market-index.service";
 
@@ -14,14 +7,11 @@ import { MarketIndexService } from "../market-index.service";
   templateUrl: "./index-list.component.html",
   styleUrls: ["./index-list.component.css"],
 })
-export class IndexListComponent implements OnInit, OnChanges {
+export class IndexListComponent {
   @Input() indices: RealTimeIndex[] = [];
   public targetSymbol: string = "^DJI";
 
   constructor(private marketIndexService: MarketIndexService) {}
-
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {}
 
   onSelectIndex(symbol: string, name: string) {
     this.targetSymbol = symbol;
