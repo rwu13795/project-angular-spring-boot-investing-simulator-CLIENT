@@ -62,6 +62,14 @@ main {
   justify-content: center;
 }
 
+.loading-wrapper {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 1000px) {
   .content-wrapper {
     display: flex;

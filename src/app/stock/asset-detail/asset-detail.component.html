@@ -1,4 +1,4 @@
-<main>
+<main *ngIf="!loading">
   <div class="content-wrapper">
     <div class="charts-wrapper" *ngIf="transactionData">
       <app-overall-chart
@@ -47,5 +47,11 @@
       color="orange"
       (click)="toPortfolio()"
     ></app-custom-button>
+  </div>
+</main>
+
+<main *ngIf="loading">
+  <div class="loading-wrapper">
+    <app-loading-spinner></app-loading-spinner>
   </div>
 </main>

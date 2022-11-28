@@ -19,7 +19,6 @@ import { selectTargetAsset } from "src/app/user/user-state/user.selectors";
 import { UserService } from "src/app/user/user.service";
 import { StockMenu, TransactionsData } from "../stock-models";
 import { setStockActiveMenu } from "../stock-state/stock.actions";
-import { StockService } from "../stock.service";
 
 @Component({
   selector: "app-asset-detail",
@@ -36,14 +35,14 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
   public asset: Response_PortfolioAsset | null = null;
   public positionType: number = 1;
   public isLargeScreen: boolean = true;
+  public loading: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AppState>,
     private userService: UserService,
-    private breakpointObserver: BreakpointObserver,
-    private stockService: StockService
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +141,7 @@ export class AssetDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.transactionData = data;
+        this.loading = false;
       });
   }
 }
