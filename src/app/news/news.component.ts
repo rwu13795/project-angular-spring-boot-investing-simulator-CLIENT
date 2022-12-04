@@ -71,10 +71,9 @@ export class NewsComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     // when input is detected, symbol will have the current input value
-    let symbolString = this.symbol;
-    if (this.symbol === "all") symbolString = "";
+    if (this.symbol === "all") this.symbol = "";
 
-    this.news$ = this.newsService.fetchNews(symbolString).subscribe((data) => {
+    this.news$ = this.newsService.fetchNews(this.symbol).subscribe((data) => {
       this.news = data;
       // ---- (1) ----- //
       this.newsToBeDisplayed = this.news.slice(
