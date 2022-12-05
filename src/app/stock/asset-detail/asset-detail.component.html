@@ -25,7 +25,10 @@
     <div class="tables-wrapper" *ngIf="transactionData">
       <div class="table" id="custom-scroll-x-thin">
         <div class="table-title" #scrollRef>Positions</div>
-        <app-asset-table [asset]="asset"></app-asset-table>
+        <app-asset-table
+          [asset]="asset"
+          [inAssetDetail]="true"
+        ></app-asset-table>
       </div>
 
       <div class="table" id="custom-scroll-x-thin">
