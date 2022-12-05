@@ -46,7 +46,7 @@ type ChartOptions = {
 })
 export class OverallChartComponent implements OnInit, OnChanges {
   @ViewChild("overall_chart", { static: false }) chart!: ChartComponent;
-  @Input() chartData: VolumeData[] = [];
+  @Input() chartData: VolumeData[] | null = null;
   @Input() isLargeScreen: boolean = true;
 
   public chartOptions?: ChartOptions;
@@ -58,13 +58,13 @@ export class OverallChartComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // ----- NOTE ----- //
-    if (this.chartData.length === 0) return;
     this.loading = true;
     this.setChartOption();
     this.loading = false;
   }
 
   private setChartOption() {
+    if (!this.chartData) return;
     this.chartOptions = {
       series: [
         {

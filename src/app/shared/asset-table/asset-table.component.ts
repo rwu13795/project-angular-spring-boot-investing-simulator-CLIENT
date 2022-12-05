@@ -73,7 +73,7 @@ export class AssetTableComponent implements OnInit, OnChanges, OnDestroy {
     if (price === 0) price = currentPrice;
 
     this.marketValue = shares * price;
-    this.marketValueShort = avgBorrowed * price;
+    this.marketValueShort = sharesBorrowed * price;
     this.unrealized = (price - avgCost) * shares;
     this.unrealizedShort = (avgBorrowed - price) * sharesBorrowed;
   }
