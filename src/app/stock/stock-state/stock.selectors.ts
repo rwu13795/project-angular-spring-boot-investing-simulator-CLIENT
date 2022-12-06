@@ -6,6 +6,12 @@ export const selectStockState = createFeatureSelector<StockState>("stock");
 export const selectCurrentSymbol = createSelector(selectStockState, (state) => {
   return state.currentSymbol;
 });
+export const selectPreviousSymbol = createSelector(
+  selectStockState,
+  (state) => {
+    return state.previousSymbol;
+  }
+);
 
 export const selectCurrentPrice = createSelector(selectStockState, (state) => {
   return state.currentPrice;

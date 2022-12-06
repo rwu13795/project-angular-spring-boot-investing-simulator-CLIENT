@@ -12,6 +12,7 @@ import * as actions from "./stock.actions";
 
 export interface StockState {
   currentSymbol: string;
+  previousSymbol: string;
   currentPrice: number;
   previousPrice: number;
   currentChangeInPrice: number;
@@ -28,6 +29,7 @@ export interface StockState {
 
 const initialState: StockState = {
   currentSymbol: "",
+  previousSymbol: "",
   currentPrice: 0,
   previousPrice: 0,
   currentChangeInPrice: 0,
@@ -48,6 +50,12 @@ export const stockReducer = createReducer(
   on(actions.setCurrentSymbol, (state, { symbol }) =>
     produce(state, (draft) => {
       draft.currentSymbol = symbol;
+    })
+  ),
+
+  on(actions.setPreviousSymbol, (state, { symbol }) =>
+    produce(state, (draft) => {
+      draft.previousSymbol = symbol;
     })
   ),
 

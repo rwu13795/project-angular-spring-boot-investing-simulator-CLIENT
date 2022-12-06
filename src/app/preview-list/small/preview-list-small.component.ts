@@ -38,9 +38,9 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("preview list symbol", this.symbol);
+    if (!this.symbol) return;
 
-    if (this.symbol && this.symbol !== "all") {
+    if (this.symbol !== "all") {
       this.fetchPeerStockList(this.symbol);
     } else {
       this.fetchPreviewList();

@@ -12,6 +12,11 @@ export const setCurrentSymbol = createAction(
   props<{ symbol: string }>()
 );
 
+export const setPreviousSymbol = createAction(
+  "[Stock] Set Previous Symbol",
+  props<{ symbol: string }>()
+);
+
 export const fetchCompanyProfile = createAction(
   "[Stock] Fetch Company Profile",
   props<{ symbol: string }>()
