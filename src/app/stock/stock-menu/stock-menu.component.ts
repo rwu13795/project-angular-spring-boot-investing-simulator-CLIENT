@@ -53,6 +53,9 @@ export class StockMenuComponent implements OnInit, OnDestroy {
       .select(selectCurrentSymbol)
       .subscribe((symbol) => {
         this.symbol = symbol;
+        // clear the previous price-fetching interval if there is one
+        // when the symbol is changed
+        clearInterval(this.updateTimer);
 
         if (symbol && symbol !== "") {
           // after getting the symbol from store
@@ -67,6 +70,8 @@ export class StockMenuComponent implements OnInit, OnDestroy {
               }
               // update the price whenever the menu is changed
               this.updatePrice();
+              clearInterval(this.updateTimer);
+
               // fetch the latest price in every 20s if the current menu is not "chart"
               if (
                 this.activeMenu !== StockMenu.chart &&
