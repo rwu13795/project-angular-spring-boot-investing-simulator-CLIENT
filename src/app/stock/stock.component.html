@@ -20,7 +20,9 @@
       *ngIf="activeMenu !== StockMenu.chart && activeMenu !== StockMenu.asset"
     >
       <div class="preview-list-large-screen" *ngIf="isLargeScreen">
-        <app-preview-list-small [symbol]="'AAPL'"></app-preview-list-small>
+        <app-preview-list-small
+          [symbol]="symbol | async"
+        ></app-preview-list-small>
       </div>
     </div>
   </div>

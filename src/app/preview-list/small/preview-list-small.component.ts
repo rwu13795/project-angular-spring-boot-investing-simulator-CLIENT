@@ -21,7 +21,7 @@ import { PreviewListService } from "../preview-list.service";
   styleUrls: ["./preview-list-small.component.css"],
 })
 export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() symbol?: string;
+  @Input() symbol: string | null = null;
   private previewList$?: Subscription;
   private peerList$?: Subscription;
 
@@ -38,6 +38,8 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log("preview list symbol", this.symbol);
+
     if (this.symbol && this.symbol !== "all") {
       this.fetchPeerStockList(this.symbol);
     } else {

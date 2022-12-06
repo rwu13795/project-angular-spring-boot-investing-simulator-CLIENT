@@ -8,7 +8,10 @@ import {
 import { Store } from "@ngrx/store";
 
 import { AppState } from "../ngrx-store/app.reducer";
-import { selectStockActiveMenu } from "./stock-state/stock.selectors";
+import {
+  selectCurrentSymbol,
+  selectStockActiveMenu,
+} from "./stock-state/stock.selectors";
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { StockMenu } from "./stock-models";
 import { Subscription } from "rxjs";
@@ -21,6 +24,7 @@ import { Subscription } from "rxjs";
 export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
   private activeMenu$?: Subscription;
 
+  public symbol = this.store.select(selectCurrentSymbol);
   public isLargeScreen: boolean = true;
   public isSmallScreen: boolean = false;
   public activeMenu: StockMenu | null = null;
