@@ -49,6 +49,10 @@ main {
   font-weight: bold;
 }
 
+.description {
+  line-height: 30px;
+}
+
 @media screen and (max-width: 1200px) {
   .preview-list {
     width: 100%;

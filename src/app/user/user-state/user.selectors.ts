@@ -49,11 +49,7 @@ export const selectAccount = createSelector(selectPortfolio, (portfolio) => {
 });
 
 export const selectTargetAsset = (symbol: string) => {
-  console.log("symbol in select target asset", symbol);
-
   return createSelector(selectAssets, (assets) => {
-    console.log(assets![symbol]);
-
     if (!assets || !assets[symbol]) return null;
     return assets[symbol];
   });

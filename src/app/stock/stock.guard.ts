@@ -47,8 +47,6 @@ export class StockGuard implements CanActivate {
           return this.router.createUrlTree([`/no-result/stock/${symbol}`]);
         }
 
-        console.log("symbol in stock guard", symbol);
-
         // If the symbol exists, then set the symbol in store
         this.store.dispatch(setCurrentSymbol({ symbol }));
 

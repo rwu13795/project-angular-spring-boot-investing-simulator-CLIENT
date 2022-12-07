@@ -47,10 +47,6 @@ export const stockReducer = createReducer(
 
   on(actions.setCurrentSymbol, (state, { symbol, updated }) =>
     produce(state, (draft) => {
-      console.log("new symbol", symbol);
-      console.log("previousSymbol", draft.currentSymbol.previousSymbol);
-      console.log("current symbol", draft.currentSymbol.symbol);
-
       if (draft.currentSymbol.previousSymbol !== symbol) {
         draft.currentSymbol.symbol = symbol;
         draft.currentSymbol.previousSymbol = symbol;
