@@ -11,8 +11,7 @@ import {
 import * as actions from "./stock.actions";
 
 export interface StockState {
-  currentSymbol: string;
-  previousSymbol: string;
+  currentSymbol: { symbol: string; previousSymbol: string; isUpdated: boolean };
   currentPrice: number;
   previousPrice: number;
   currentChangeInPrice: number;
@@ -28,8 +27,7 @@ export interface StockState {
 }
 
 const initialState: StockState = {
-  currentSymbol: "",
-  previousSymbol: "",
+  currentSymbol: { symbol: "", previousSymbol: "", isUpdated: false },
   currentPrice: 0,
   previousPrice: 0,
   currentChangeInPrice: 0,
@@ -47,15 +45,32 @@ const initialState: StockState = {
 export const stockReducer = createReducer(
   { ...initialState },
 
-  on(actions.setCurrentSymbol, (state, { symbol }) =>
+  on(actions.setCurrentSymbol, (state, { symbol, updated }) =>
     produce(state, (draft) => {
-      draft.currentSymbol = symbol;
-    })
-  ),
+      console.log("new symbol", symbol);
+      console.log("previousSymbol", draft.currentSymbol.previousSymbol);
+      console.log("current symbol", draft.currentSymbol.symbol);
 
-  on(actions.setPreviousSymbol, (state, { symbol }) =>
-    produce(state, (draft) => {
-      draft.previousSymbol = symbol;
+      if (draft.currentSymbol.previousSymbol !== symbol) {
+        draft.currentSymbol.symbol = symbol;
+        draft.currentSymbol.previousSymbol = symbol;
+        draft.currentSymbol.isUpdated = true;
+
+        // clear the previous stock info if the symbol has changed
+        draft.currentPrice = 0;
+        draft.previousPrice = 0;
+        draft.currentChangeInPrice = 0;
+        draft.previousChangeInPrice = 0;
+        draft.currentChangePercentage = 0;
+        draft.previousChangePercentage = 0;
+        draft.currentTimeRange = "1D";
+        draft.companyProfile = null;
+        draft.allChangePercentage = null;
+        draft.stockListOption = ListTypes.actives;
+      }
+      if (updated !== undefined) {
+        draft.currentSymbol.isUpdated = updated;
+      }
     })
   ),
 
@@ -103,22 +118,6 @@ export const stockReducer = createReducer(
   on(actions.setStockListOption, (state, { listType }) =>
     produce(state, (draft) => {
       draft.stockListOption = listType;
-    })
-  ),
-
-  on(actions.clearStockState, (state) =>
-    produce(state, (draft) => {
-      draft.currentSymbol = "";
-      draft.currentPrice = 0;
-      draft.previousPrice = 0;
-      draft.currentChangeInPrice = 0;
-      draft.previousChangeInPrice = 0;
-      draft.currentChangePercentage = 0;
-      draft.previousChangePercentage = 0;
-      draft.currentTimeRange = "1D";
-      draft.companyProfile = null;
-      draft.allChangePercentage = null;
-      draft.stockListOption = ListTypes.actives;
     })
   ),
 

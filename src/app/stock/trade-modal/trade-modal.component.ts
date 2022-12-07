@@ -93,7 +93,7 @@ export class TradeModalComponent implements OnInit, OnDestroy {
         if (isOpen) {
           this.symbol$ = this.store
             .select(selectCurrentSymbol)
-            .subscribe((symbol) => {
+            .subscribe(({ symbol }) => {
               this.refreshQuote(symbol);
               this.symbol = symbol;
 

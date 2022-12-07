@@ -9,12 +9,7 @@ import {
 
 export const setCurrentSymbol = createAction(
   "[Stock] Set Current Symbol",
-  props<{ symbol: string }>()
-);
-
-export const setPreviousSymbol = createAction(
-  "[Stock] Set Previous Symbol",
-  props<{ symbol: string }>()
+  props<{ symbol: string; updated?: boolean }>()
 );
 
 export const fetchCompanyProfile = createAction(
@@ -51,8 +46,6 @@ export const setCurrentChangePercentage = createAction(
   "[Stock] Set Current Change Percentage",
   props<{ changePercentage: number }>()
 );
-
-export const clearStockState = createAction("[Stock] Clear Stock State");
 
 export const setCurrentTimeRange = createAction(
   "[Stock] Set Current Time Range",

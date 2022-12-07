@@ -5,17 +5,16 @@ import { Store } from "@ngrx/store";
 import { AppState } from "src/app/ngrx-store/app.reducer";
 import {
   selectCurrentSymbol,
-  selectPreviousSymbol,
   selectStockActiveMenu,
 } from "../stock-state/stock.selectors";
 import { StockMenu } from "../stock-models";
 import { StockService } from "../stock.service";
 import {
-  selectAssets,
   selectHasAuth,
+  selectTargetAsset,
 } from "src/app/user/user-state/user.selectors";
 import { Router } from "@angular/router";
-import { setPreviousSymbol } from "../stock-state/stock.actions";
+import { setCurrentSymbol } from "../stock-state/stock.actions";
 
 @Component({
   selector: "app-stock-menu",
@@ -24,9 +23,8 @@ import { setPreviousSymbol } from "../stock-state/stock.actions";
 })
 export class StockMenuComponent implements OnInit, OnDestroy {
   private symbol$?: Subscription;
-  private previousSymbol$?: Subscription;
-  private assets$?: Subscription;
   private activeMenu$?: Subscription;
+  private targetAsset$?: Subscription;
   private hasAuth$?: Subscription;
   private updateTimer?: any;
 
@@ -52,67 +50,57 @@ export class StockMenuComponent implements OnInit, OnDestroy {
       }
     });
 
+    // ------- (1) -------- //
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
-      .subscribe((currentSymbol) => {
-        console.log("currentSymbol", currentSymbol);
-        this.store
-          .select(selectPreviousSymbol)
-          .pipe(take(1))
-          .subscribe((previousSymbol) => {
-            console.log(
-              "currentSymbol",
-              currentSymbol,
-              "previousSymbol",
-              previousSymbol
-            );
-            console.log("this.symbol", this.symbol);
-            if (previousSymbol === currentSymbol) return;
-            this.symbol = currentSymbol;
-            this.store.dispatch(setPreviousSymbol({ symbol: this.symbol }));
+      .subscribe(({ symbol, isUpdated }) => {
+        console.log("symbol", symbol, "isUpdated", isUpdated);
 
-            console.log("this.symbol", this.symbol);
+        if (symbol && symbol !== "" && isUpdated) {
+          this.symbol = symbol;
 
-            if (this.symbol && this.symbol !== "") {
-              // fetch the latest price in every 20s if the current menu is not "chart"
-              if (this.stockService.isMarketOpen()) {
-                clearInterval(this.updateTimer);
-                this.updateTimer = setInterval(() => {
-                  this.updatePrice();
-                }, 1000 * 20);
-              }
+          console.log("---------------this.symbol", this.symbol);
 
-              this.assets$ = this.store
-                .select(selectAssets)
-                .subscribe((assets) => {
-                  if (assets) this.hasAsset = !!assets[this.symbol];
-                });
+          // fetch the latest price in every 20s if the current
+          // menu is not "Charts"
+          if (this.stockService.isMarketOpen()) {
+            this.updatePrice();
+          }
 
-              // after getting the symbol from store
-              this.activeMenu$ = this.store
-                .select(selectStockActiveMenu)
-                .subscribe((menu) => {
-                  console.log("menu", menu);
+          this.targetAsset$ = this.store
+            .select(selectTargetAsset(this.symbol))
+            .subscribe((asset) => {
+              console.log("-------this.symbol in select asset", this.symbol);
+              this.hasAsset = !!asset;
 
-                  this.activeMenu = menu;
-                  this.showButton = this.activeMenu === StockMenu.chart;
+              console.log("---------this.hasAsset", this.hasAsset);
+            });
 
-                  if (this.activeMenu === StockMenu.asset && !this.hasAuth) {
-                    this.route.navigate(["/user/sign-in"]);
-                  }
-                  // update the price whenever the menu is changed
-                  this.updatePrice();
+          // set the "isUpdated" to false manully after extracting the current symbol
+          this.store.dispatch(setCurrentSymbol({ symbol, updated: false }));
+        }
+      });
 
-                  if (
-                    this.activeMenu === StockMenu.chart &&
-                    this.stockService.isMarketOpen()
-                  ) {
-                    // clear the 20s interval, let the real-time-chart update the price
-                    clearInterval(this.updateTimer);
-                  }
-                });
-            }
-          });
+    this.activeMenu$ = this.store
+      .select(selectStockActiveMenu)
+      .subscribe((menu) => {
+        console.log("menu", menu);
+
+        this.activeMenu = menu;
+        this.showButton = this.activeMenu === StockMenu.chart;
+
+        if (this.activeMenu === StockMenu.asset && !this.hasAuth) {
+          this.route.navigate(["/user/sign-in"]);
+        }
+
+        if (
+          this.activeMenu === StockMenu.chart &&
+          this.stockService.isMarketOpen()
+        ) {
+          // clear the 20s interval, let the real-time-chart
+          // update the price
+          clearInterval(this.updateTimer);
+        }
       });
   }
 
@@ -121,16 +109,17 @@ export class StockMenuComponent implements OnInit, OnDestroy {
   }
 
   private updatePrice() {
-    this.stockService.getRealTimePrice(this.symbol).pipe(take(1)).subscribe();
+    clearInterval(this.updateTimer);
+    this.updateTimer = setInterval(() => {
+      this.stockService.getRealTimePrice(this.symbol).pipe(take(1)).subscribe();
+    }, 1000 * 20);
   }
 
   ngOnDestroy(): void {
     clearInterval(this.updateTimer);
-
-    if (this.previousSymbol$) this.previousSymbol$.unsubscribe();
     if (this.symbol$) this.symbol$.unsubscribe();
     if (this.activeMenu$) this.activeMenu$.unsubscribe();
-    if (this.assets$) this.assets$.unsubscribe();
+    if (this.targetAsset$) this.targetAsset$.unsubscribe();
     if (this.hasAuth$) this.hasAuth$.unsubscribe();
   }
 }

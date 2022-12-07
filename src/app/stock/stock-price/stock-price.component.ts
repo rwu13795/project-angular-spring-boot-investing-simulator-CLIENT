@@ -68,7 +68,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
-      .subscribe((symbol) => {
+      .subscribe(({ symbol }) => {
         this.symbol = symbol;
 
         this.portfolio$ = this.store

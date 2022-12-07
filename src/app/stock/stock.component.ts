@@ -23,8 +23,9 @@ import { Subscription } from "rxjs";
 })
 export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
   private activeMenu$?: Subscription;
+  private currentSymbol$?: Subscription;
 
-  public symbol = this.store.select(selectCurrentSymbol);
+  public currentSymbol: string = "";
   public isLargeScreen: boolean = true;
   public isSmallScreen: boolean = false;
   public activeMenu: StockMenu | null = null;
@@ -40,6 +41,12 @@ export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
       .select(selectStockActiveMenu)
       .subscribe((data) => {
         this.activeMenu = data;
+      });
+
+    this.currentSymbol$ = this.store
+      .select(selectCurrentSymbol)
+      .subscribe(({ symbol }) => {
+        this.currentSymbol = symbol;
       });
 
     // use Angular material CDK to observe the current window width

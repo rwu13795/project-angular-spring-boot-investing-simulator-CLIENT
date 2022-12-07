@@ -11,15 +11,11 @@ import { map, Observable, take } from "rxjs";
 import { Store } from "@ngrx/store";
 import { Response_quoteShort } from "./stock-models";
 import {
-  clearStockState,
   setCurrentSymbol,
   fetchAllChangePercentage,
   fetchCompanyProfile,
 } from "./stock-state/stock.actions";
-import {
-  selectCurrentSymbol,
-  selectCompanyProfile,
-} from "./stock-state/stock.selectors";
+import { selectCompanyProfile } from "./stock-state/stock.selectors";
 import { StockService } from "./stock.service";
 import { AppState } from "../ngrx-store/app.reducer";
 
@@ -42,18 +38,6 @@ export class StockGuard implements CanActivate {
     const urlArray = state.url.split("/");
     const symbol: string = urlArray[3];
 
-    this.store
-      .select(selectCurrentSymbol)
-      .pipe(
-        take(1),
-        map((previousSymbol) => {
-          if (previousSymbol !== symbol) {
-            this.store.dispatch(clearStockState());
-          }
-        })
-      )
-      .subscribe();
-
     // use the quote-short api to find out if this symbol exists, since
     // the api will be fast and response with minimum data
     return this.stockService.getQuoteShort(symbol).pipe(
@@ -62,6 +46,8 @@ export class StockGuard implements CanActivate {
         if (data.length === 0) {
           return this.router.createUrlTree([`/no-result/stock/${symbol}`]);
         }
+
+        console.log("symbol in stock guard", symbol);
 
         // If the symbol exists, then set the symbol in store
         this.store.dispatch(setCurrentSymbol({ symbol }));

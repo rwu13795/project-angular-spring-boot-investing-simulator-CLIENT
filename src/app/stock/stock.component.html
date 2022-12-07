@@ -21,7 +21,8 @@
     >
       <div class="preview-list-large-screen" *ngIf="isLargeScreen">
         <app-preview-list-small
-          [symbol]="symbol | async"
+          *ngIf="currentSymbol !== ''"
+          [symbol]="currentSymbol"
         ></app-preview-list-small>
       </div>
     </div>
