@@ -9,7 +9,7 @@
     <div class="row">
       <div class="row">
         <div class="symbol">{{ index._symbol }}</div>
-        <div>{{ index.price }}</div>
+        <div>{{ toFixedLocale(index.price) }}</div>
       </div>
       <div [ngClass]="index.change >= 0 ? 'positive' : 'negative'" class="row">
         <div>
