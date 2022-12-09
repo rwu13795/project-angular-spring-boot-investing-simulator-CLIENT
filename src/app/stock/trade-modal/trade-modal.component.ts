@@ -209,13 +209,13 @@ export class TradeModalComponent implements OnInit, OnDestroy {
         .subscribe({
           complete: () => {
             this.loadingOrder = false;
-            // update the portfolio
-            this.store.dispatch(fetchPortfolio());
             // emit the "newOrderFilled" event to let asset-detail update
             // transaction list
             if (this.orderType) {
               this.stockService.newOrderFilled_emitter(this.orderType);
             }
+            // update the portfolio
+            this.store.dispatch(fetchPortfolio());
           },
           error: (e: any) => {
             const { field, message } = e.error;
