@@ -28,5 +28,5 @@
     </div>
   </div>
 
-  <app-trade-modal></app-trade-modal>
+  <app-trade-modal *ngIf="hasAuth | async"></app-trade-modal>
 </main>

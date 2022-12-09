@@ -15,6 +15,7 @@ import {
 import { BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { StockMenu } from "./stock-models";
 import { Subscription } from "rxjs";
+import { selectHasAuth } from "../user/user-state/user.selectors";
 
 @Component({
   selector: "app-stock",
@@ -25,6 +26,7 @@ export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
   private activeMenu$?: Subscription;
   private currentSymbol$?: Subscription;
 
+  public hasAuth = this.store.select(selectHasAuth);
   public currentSymbol: string = "";
   public isLargeScreen: boolean = true;
   public isSmallScreen: boolean = false;
@@ -78,6 +80,7 @@ export class StockComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   ngOnDestroy(): void {
     if (this.activeMenu$) this.activeMenu$.unsubscribe();
+    if (this.currentSymbol$) this.currentSymbol$.unsubscribe();
   }
 }
 
