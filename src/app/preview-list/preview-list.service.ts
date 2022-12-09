@@ -72,6 +72,9 @@ export class PreviewListService {
 
     const tempList = [...this.lists[listType]!];
 
+    console.log(listType);
+    console.log(tempList);
+
     return this.sortByValue(sortBy, ascending, tempList);
   }
 

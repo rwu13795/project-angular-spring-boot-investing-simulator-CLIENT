@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy } from "@angular/core";
 import { environment } from "src/environments/environment";
 
 import {
@@ -13,15 +13,13 @@ import { PreviewListService } from "../../preview-list.service";
   templateUrl: "./entry-large.component.html",
   styleUrls: ["./entry-large.component.css"],
 })
-export class PreviewLargeEntryComponent implements OnInit, OnDestroy {
+export class PreviewLargeEntryComponent implements OnDestroy {
   @Input() list: Response_stockList[] | null = null;
   @Input() listType: ListTypes = ListTypes.actives;
   private ascDesc = this.initialAscDesc();
   public LOGO_URL = environment.LOGO_URL;
 
   constructor(private previewListService: PreviewListService) {}
-
-  ngOnInit(): void {}
 
   public get SortBy() {
     return SortBy;

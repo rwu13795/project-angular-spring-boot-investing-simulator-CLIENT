@@ -31,6 +31,7 @@
     id="custom-scroll-x"
   >
     <app-preview-list-large-entry
+      [listType]="ListTypes.actives"
       [list]="lists.actives"
     ></app-preview-list-large-entry>
   </div>
@@ -40,6 +41,7 @@
     id="custom-scroll-x"
   >
     <app-preview-list-large-entry
+      [listType]="ListTypes.gainers"
       [list]="lists.gainers"
     ></app-preview-list-large-entry>
   </div>
@@ -49,6 +51,7 @@
     id="custom-scroll-x"
   >
     <app-preview-list-large-entry
+      [listType]="ListTypes.losers"
       [list]="lists.losers"
     ></app-preview-list-large-entry>
   </div>
