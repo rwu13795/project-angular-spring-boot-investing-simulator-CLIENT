@@ -155,7 +155,6 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   }
 
   onTradeButtonClick() {
-    console.log("onTradeButtonClick has auth", this.hasAuth);
     if (!this.hasAuth) {
       this.store.dispatch(toggleSignInModal({ open: true }));
       this.tradeButtonClicked = true;
