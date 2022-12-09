@@ -12,7 +12,7 @@ main {
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.5s;
-  z-index: 20;
+  z-index: 90;
 }
 
 .backdrop {
@@ -21,7 +21,7 @@ main {
   left: 0;
   min-width: 100%;
   min-height: 100%;
-  z-index: 25;
+  z-index: 95;
 }
 
 .content-wrapper {
@@ -35,7 +35,7 @@ main {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  z-index: 30;
+  z-index: 99;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -282,7 +282,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 40px;
-  z-index: 30;
+  z-index: 95;
 }
 .order-text {
   font-size: 26px;
@@ -338,7 +338,7 @@ table tbody td {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 40;
+  z-index: 99;
 }
 
 .market-closed-title {
