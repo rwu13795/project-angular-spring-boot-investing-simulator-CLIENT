@@ -66,9 +66,10 @@
             orderType === OrderType.SELL_SHORT
           "
         >
-          Borrowed {{ asset.sharesBorrowed }} share<span
-            *ngIf="asset.sharesBorrowed > 0"
-            >s @ ${{ toFixed(asset.avgBorrowed) }}</span
+          Borrowed <b>{{ asset.sharesBorrowed }}</b
+          ><b> share</b
+          ><span *ngIf="asset.sharesBorrowed > 0"
+            ><b>s</b> @ ${{ toFixed(asset.avgBorrowed) }}</span
           >
         </div>
       </div>
