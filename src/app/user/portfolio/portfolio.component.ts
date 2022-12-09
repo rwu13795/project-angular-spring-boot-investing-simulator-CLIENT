@@ -10,6 +10,7 @@ import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
 
 import { AppState } from "src/app/ngrx-store/app.reducer";
+import { clearTargetStock } from "src/app/stock/stock-state/stock.actions";
 import {
   PortfolioAssetList,
   Response_Portfolio,
@@ -51,14 +52,18 @@ export class PortfolioComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.store.select(selectPortfolio).subscribe((portfolio) => {
-      if (!portfolio) return;
-      this.portfolio = portfolio;
-      this.account = this.portfolio.account;
-      this.assets = this.portfolio.assets;
-      this.symbols = this.portfolio.symbols;
-      this.watchlist = Object.keys(this.portfolio.watchlist);
-    });
+    this.portfolio$ = this.store
+      .select(selectPortfolio)
+      .subscribe((portfolio) => {
+        if (!portfolio) return;
+        this.portfolio = portfolio;
+        this.account = this.portfolio.account;
+        this.assets = this.portfolio.assets;
+        this.symbols = this.portfolio.symbols;
+        this.watchlist = Object.keys(this.portfolio.watchlist);
+      });
+
+    this.store.dispatch(clearTargetStock());
   }
 
   toFixedLocale(
