@@ -238,7 +238,7 @@ main {
   align-items: center;
   gap: 30px;
   margin-bottom: 40px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   border-bottom: solid 3px var(--main-600);
 }
 

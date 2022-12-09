@@ -53,8 +53,11 @@
             !orderType
           "
         >
-          Holding {{ asset.shares }} share<span *ngIf="asset.shares > 0"
-            >s @ ${{ toFixed(asset.avgCost) }}</span
+          Holding
+          <b>{{ asset.shares }}</b
+          ><b> share</b
+          ><span *ngIf="asset.shares > 0"
+            ><b>s</b> @ ${{ toFixed(asset.avgCost) }}</span
           >
         </div>
         <div

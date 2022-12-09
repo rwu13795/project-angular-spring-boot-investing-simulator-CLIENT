@@ -23,6 +23,7 @@ import {
 import {
   addToWatchlist,
   removeFromWatchlist,
+  toggleSignInModal,
 } from "src/app/user/user-state/user.actions";
 import { toggleTradeModal } from "../stock-state/stock.actions";
 import { Response_PortfolioAsset } from "src/app/user/user-models";
@@ -42,8 +43,10 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   private changePercentage$?: Subscription;
   private previousChangePercentage$?: Subscription;
   private portfolio$?: Subscription;
+  private hasAuth$?: Subscription;
+  private tradeButtonClicked: boolean = false;
 
-  public hasAuth$ = this.store.select(selectHasAuth);
+  public hasAuth: boolean = false;
   public symbol: string = "";
   public profile: Response_companyProfile | null = null;
   public price: string[] = ["0"];
@@ -66,6 +69,14 @@ export class StockPriceComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.hasAuth$ = this.store.select(selectHasAuth).subscribe((hasAuth) => {
+      this.hasAuth = hasAuth;
+      if (hasAuth && this.tradeButtonClicked) {
+        this.openTradeModal();
+        this.tradeButtonClicked = false;
+      }
+    });
+
     this.symbol$ = this.store
       .select(selectCurrentSymbol)
       .subscribe(({ symbol }) => {
@@ -143,6 +154,16 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     }
   }
 
+  onTradeButtonClick() {
+    console.log("onTradeButtonClick has auth", this.hasAuth);
+    if (!this.hasAuth) {
+      this.store.dispatch(toggleSignInModal({ open: true }));
+      this.tradeButtonClicked = true;
+    } else {
+      this.openTradeModal();
+    }
+  }
+
   openTradeModal() {
     this.store.dispatch(toggleTradeModal({ open: true }));
   }
@@ -158,6 +179,7 @@ export class StockPriceComponent implements OnInit, OnDestroy {
     if (this.previousChangePercentage$)
       this.previousChangePercentage$.unsubscribe();
     if (this.portfolio$) this.portfolio$.unsubscribe();
+    if (this.hasAuth$) this.hasAuth$.unsubscribe();
   }
 
   private toStringArray(data: number): string[] {
