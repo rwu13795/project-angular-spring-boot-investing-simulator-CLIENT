@@ -16,7 +16,7 @@
         <div class="row-wrapper">
           <div class="column-wrapper">
             <div class="symbol">{{ index._symbol }}</div>
-            <div>{{ index.price }}</div>
+            <div>{{ toFixedLocale(index.price) }}</div>
           </div>
           <div
             [ngClass]="index.change >= 0 ? 'positive' : 'negative'"

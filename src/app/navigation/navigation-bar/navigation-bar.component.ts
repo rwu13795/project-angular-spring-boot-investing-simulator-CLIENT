@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 
 import { AppState } from "src/app/ngrx-store/app.reducer";
+import { clearTargetStock } from "src/app/stock/stock-state/stock.actions";
 import { LoadingStatus_user } from "src/app/user/user-models";
 import { toggleSignInModal } from "src/app/user/user-state/user.actions";
 import {
@@ -37,6 +38,10 @@ export class NavigationBarComponent implements OnInit {
 
   openModal() {
     this.store.dispatch(toggleSignInModal({ open: true }));
+  }
+
+  clearStock() {
+    this.store.dispatch(clearTargetStock());
   }
 
   get LoadingStatus() {

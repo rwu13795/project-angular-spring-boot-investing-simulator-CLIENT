@@ -70,6 +70,28 @@ export const stockReducer = createReducer(
     })
   ),
 
+  on(actions.clearTargetStock, (state) =>
+    produce(state, (draft) => {
+      draft.currentSymbol = {
+        symbol: "",
+        previousSymbol: "",
+        isUpdated: false,
+      };
+      draft.currentPrice = 0;
+      draft.previousPrice = 0;
+      draft.currentChangeInPrice = 0;
+      draft.previousChangeInPrice = 0;
+      draft.currentChangePercentage = 0;
+      draft.previousChangePercentage = 0;
+      draft.currentTimeRange = "1D";
+      draft.companyProfile = null;
+      draft.allChangePercentage = null;
+      draft.stockListOption = ListTypes.actives;
+      draft.stockActiveMenu = StockMenu.summary;
+      draft.openTradeModal = false;
+    })
+  ),
+
   on(actions.setCompanyProfile, (state, { profile }) =>
     produce(state, (draft) => {
       if (profile) {

@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
 import { AppState } from "../ngrx-store/app.reducer";
 import {
   setCurrentChangeInPrice,
+  setCurrentChangePercentage,
   setCurrentPrice,
   setCurrentTimeRange,
 } from "../stock/stock-state/stock.actions";
@@ -41,6 +42,7 @@ export class MarketIndexComponent implements OnInit, OnDestroy {
         this.symbol = _symbol.toUpperCase();
         // the index data points shoule be stored in the service if the guard was passed
         this.targetIndex = this.marketIndexService.getTargetIndex();
+
         if (this.targetIndex) {
           this.dayOption = "1D"; // reset the dayOption on symbol change
           this.setDataInState();
@@ -78,12 +80,32 @@ export class MarketIndexComponent implements OnInit, OnDestroy {
 
   private setDataInState() {
     // set the points in the StockState in order to use the cylinder to display the digits
+    // ------ NOTE ------ //
+    /* since the "getRealTimePrice" in stockService will set the price and changes
+       after fetching the realTimePrice, the price and changes will always be
+       the first element of the response array. 
+       
+       AND the preview list will always fetch the "majorIndex" on init,
+       which will trigger the setting price in store action. 
+       
+       I put a boolean flag inside the "getRealTimePrice" to stop 
+       the "fetchMajorIndex" to trigger the setting price action.
+
+       I need to set the price with the current targetIndex manually here,
+       when the component is mounted
+    */
+
     if (this.targetIndex) {
       this.store.dispatch(
         setCurrentPrice({ currentPrice: this.targetIndex.price })
       );
       this.store.dispatch(
         setCurrentChangeInPrice({ changeInPrice: this.targetIndex.change })
+      );
+      this.store.dispatch(
+        setCurrentChangePercentage({
+          changePercentage: this.targetIndex.changesPercentage,
+        })
       );
     }
   }

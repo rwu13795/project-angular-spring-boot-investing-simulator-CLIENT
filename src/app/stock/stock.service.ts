@@ -69,7 +69,7 @@ export class StockService {
     );
   }
 
-  public getRealTimePrice(symbol: string) {
+  public getRealTimePrice(symbol: string, setPriceInStore: boolean = true) {
     const params = new HttpParams({
       fromObject: { symbol },
     });
@@ -81,16 +81,20 @@ export class StockService {
       )
       .pipe(
         tap(([data]) => {
-          const { price, changesPercentage, change } = data;
-          // set the latest price in the store, let the stock-price component
-          // to update the price digit cylinder
-          this.store.dispatch(setCurrentPrice({ currentPrice: price }));
-          this.store.dispatch(
-            setCurrentChangeInPrice({ changeInPrice: change })
-          );
-          this.store.dispatch(
-            setCurrentChangePercentage({ changePercentage: changesPercentage })
-          );
+          if (setPriceInStore) {
+            const { price, changesPercentage, change } = data;
+            // set the latest price in the store, let the stock-price component
+            // to update the price digit cylinder
+            this.store.dispatch(setCurrentPrice({ currentPrice: price }));
+            this.store.dispatch(
+              setCurrentChangeInPrice({ changeInPrice: change })
+            );
+            this.store.dispatch(
+              setCurrentChangePercentage({
+                changePercentage: changesPercentage,
+              })
+            );
+          }
         })
       );
   }

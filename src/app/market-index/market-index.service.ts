@@ -68,7 +68,7 @@ export class MarketIndexService {
     // Both the index and stock price use the same fmp-api route "/quote" to
     // get the current price/quote. But for the index, I need to map the
     // response data before pass them to the component
-    return this.stockService.getRealTimePrice(symbolString).pipe(
+    return this.stockService.getRealTimePrice(symbolString, false).pipe(
       map<Response_realTimePrice[], RealTimeIndex[]>((data) => {
         return data.map((index) => {
           return {

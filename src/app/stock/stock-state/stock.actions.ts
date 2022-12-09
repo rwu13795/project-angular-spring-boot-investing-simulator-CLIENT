@@ -66,3 +66,5 @@ export const toggleTradeModal = createAction(
   "[Stock] Toggle Trade Modal",
   props<{ open: boolean }>()
 );
+
+export const clearTargetStock = createAction("[Stock] clear Target Stock");
