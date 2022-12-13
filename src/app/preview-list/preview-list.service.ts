@@ -49,7 +49,6 @@ export class PreviewListService {
   }
 
   public getStockList() {
-    console.log("get stock list");
     return { ...this.lists };
   }
 
@@ -71,9 +70,6 @@ export class PreviewListService {
     if (!this.lists[listType] === null) return null;
 
     const tempList = [...this.lists[listType]!];
-
-    console.log(listType);
-    console.log(tempList);
 
     return this.sortByValue(sortBy, ascending, tempList);
   }
