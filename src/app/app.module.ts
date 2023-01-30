@@ -47,7 +47,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     // ngrx store //
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
-      name: "NgRx Shopping-List",
+      name: "NgRx store",
       logOnly: environment.production,
     }),
     StoreRouterConnectingModule.forRoot(),
