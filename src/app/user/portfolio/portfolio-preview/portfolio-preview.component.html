@@ -47,7 +47,12 @@
             <div>
               Available Fund
               <span class="number"
-                >${{ toFixedLocale(portfolio.account.fund) }}</span
+                >${{
+                  toFixedLocale(
+                    portfolio.account.fund -
+                      portfolio.account.shortSellingDeposit
+                  )
+                }}</span
               >
             </div>
             <app-custom-button

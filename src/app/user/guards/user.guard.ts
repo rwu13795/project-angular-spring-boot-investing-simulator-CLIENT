@@ -40,8 +40,8 @@ export class UserGuard implements CanActivate {
 If user enter the /user/sign-in or /sign-up route directly, the "getUserInfo" might
 not be resolved yet, the "hasAuth" will be false when the SignInComponent is loaded
 Then after the "getUserInfo" is resolved, the SignInComponent will redirect user to
-home page. Since the SignInComponent willbe loaded and unmounted in a flash, this
-will result a very ugly flashing screen effect
+home page. Since the SignInComponent will be loaded and unmounted in a flash, this
+will create a very ugly flashing screen effect
 
 So I need to use the guard to check the auth directly before loading the
 /user/sign-in or /sign-up route
