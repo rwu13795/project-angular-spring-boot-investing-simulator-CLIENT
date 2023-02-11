@@ -43,18 +43,26 @@ export class ColumnChartComponent implements OnChanges {
   @Input() chartDataSell: ColumnChart[] = [];
   @Input() isLargeScreen: boolean = true;
 
-  public chartOptions?: ChartOptions;
+  public chartOptions: ChartOptions | null = null;
   public loading: boolean = true;
 
   constructor(private stockChartService: StockChartService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+
     if (this.transactionType === "") return;
     this.loading = true;
+    this.chartOptions = null;
     if (this.transactionType === "buy") {
       this.setChartOptions(this.chartDataBuy);
+
+      // have to use "updateOptions" to update the buy/sell and short-sell/buy-to-cover
+      // chart after user selecting the "buy|sell" or "short sell|buy to cover" options
+      this.chart?.updateOptions(this.chartOptions);
     } else {
       this.setChartOptions(this.chartDataSell);
+      this.chart?.updateOptions(this.chartOptions);
     }
     this.loading = false;
   }
