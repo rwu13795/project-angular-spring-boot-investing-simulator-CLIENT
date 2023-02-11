@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { forkJoin, map, tap } from "rxjs";
+import { catchError, forkJoin, map, of, tap } from "rxjs";
 
 import { Response_realTimePrice } from "src/app/stock/stock-models";
 import { environment } from "src/environments/environment";
@@ -89,10 +89,26 @@ export class PreviewListService {
     });
 
     return this.http
-      .get<Response_realTimePrice[]>(`${this.SERVER_URL}/stock/preview/peers`, {
-        params,
-      })
-      .pipe(tap((data) => (this.peerStockList = data)));
+      .get<Response_realTimePrice[] | null>(
+        `${this.SERVER_URL}/stock/preview/peers`,
+        {
+          params,
+        }
+      )
+      .pipe(
+        tap((data) => {
+          // if the stock does not have any peers, the server will return "null"
+          if (data === null) this.peerStockList = [];
+          else this.peerStockList = data;
+          // save the peerList in service. Since changing menu will make the component
+          // re-fetch the peer list, by saving the list in the service, the component
+          // can try to fetch the loaded list from cached
+        }),
+        catchError((error) => {
+          // if the stock does not have any peers
+          return of([]);
+        })
+      );
   }
 
   private sortByValue(

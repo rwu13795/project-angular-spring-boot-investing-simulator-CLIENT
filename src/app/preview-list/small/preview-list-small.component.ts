@@ -26,7 +26,7 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
   private peerList$?: Subscription;
 
   public previewList?: StockPerformanceLists;
-  public peerList?: Response_realTimePrice[];
+  public peerList: Response_realTimePrice[] | null = null;
   public loading: boolean = true;
 
   constructor(
@@ -78,14 +78,17 @@ export class PreviewListSmallComponent implements OnInit, OnDestroy, OnChanges {
   }
   private fetchPeerStockList(symbol: string) {
     this.peerList = this.previewListService.getPeerStockList(symbol);
-    if (this.peerList.length > 0) {
+
+    if (this.peerList && this.peerList.length > 0) {
       this.loading = false;
       return;
     }
     this.peerList$ = this.previewListService
       .fetchPeerStockList(symbol)
       .subscribe((data) => {
-        this.peerList = data;
+        // if the stock does not have any peers, the server will return "null"
+        if (data === null) this.peerList = [];
+        else this.peerList = data;
         this.loading = false;
       });
   }

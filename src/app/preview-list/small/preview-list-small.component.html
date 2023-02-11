@@ -49,7 +49,7 @@
       [height]="8"
       [width]="'100%'"
     ></app-gradient-break>
-    <div class="list-peer">
+    <div class="list-peer" *ngIf="peerList.length > 0">
       <div *ngFor="let entry of peerList">
         <app-preview-list-small-entry
           [entry]="entry"
