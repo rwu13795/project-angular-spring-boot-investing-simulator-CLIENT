@@ -23,7 +23,7 @@ export class ResetPasswordRequestComponent implements OnInit, OnDestroy {
     [InputFieldNames.email]: false,
   };
   public resetRequestForm = this.formBuilder.group({
-    email: [
+    [InputFieldNames.email]: [
       "",
       [Validators.required, Validators.email, Validators.maxLength(30)],
     ],

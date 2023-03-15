@@ -1,6 +1,15 @@
 <main *ngIf="isOpen$ | async">
   <div class="backdrop" (click)="closeModal()"></div>
+
   <div class="content-wrapper">
-    <app-user-sign-in [showImage]="false" [isInModal]="true"></app-user-sign-in>
+    <div class="close-icon-div">
+      <mat-icon class="close-icon" (click)="closeModal()">close</mat-icon>
+    </div>
+    <div class="sign-in-wrapper">
+      <app-user-sign-in
+        [showImage]="false"
+        [isInModal]="true"
+      ></app-user-sign-in>
+    </div>
   </div>
 </main>

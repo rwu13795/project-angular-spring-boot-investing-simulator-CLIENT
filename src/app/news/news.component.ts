@@ -43,6 +43,8 @@ export class NewsComponent
 
   private intersectionObserver = new IntersectionObserver(
     (entries) => {
+      // since only the last entry need to be observed
+      // there is only 1 entry in the entries
       const { isIntersecting } = entries[0];
       if (!isIntersecting) return;
 
@@ -153,10 +155,6 @@ I don't think someone will scroll all the way down to bottom
 PS-2: I set the news limit to 40 in the news.service
 
 ---- (2) ---- 
-In Angular component template, the "@ViewChile('ref-name')" or "@ViewChildren('ref-name')"
-needs to be used in order to select the elements in the DOM. I can NOT use
-the normal JS document.getElementById() to select the the element.
-
 In this example, I use *ngIf="i === newsToBeDisplayed.length - 1" to find out
 if the entry is last one (like I did in React), then I attach the #last_entry
 ref to this last entry

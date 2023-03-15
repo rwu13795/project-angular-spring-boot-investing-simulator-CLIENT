@@ -31,7 +31,47 @@ main {
   width: min(600px, 90%);
   height: min(600px, 80%);
   display: flex;
-  justify-content: center;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
   align-items: center;
   z-index: 99;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sign-in-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-icon-div {
+  height: 0px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+  padding-right: 6px;
+}
+.close-icon {
+  width: 100%;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s all;
+  cursor: pointer;
+}
+.close-icon:hover {
+  background-color: var(--color-negative-1);
+  transition: 0.4s all;
+}
+.close-icon:active {
+  background-color: var(--color-negative-2);
+  transition: 0.2s all;
 }
