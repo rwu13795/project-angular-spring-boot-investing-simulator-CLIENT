@@ -133,7 +133,7 @@ export class StockChartService {
       <div style="padding: 6px 12px; text-align: center;">
         Overall: <span style="${aboveZero ? positive : negative}">${
       aboveZero ? "+" : "-"
-    }$${this.toLocalString(value)}</span>  
+    }$${this.toLocalString(value * (aboveZero ? 1 : -1))}</span>  
       </div> 
     </div>`;
   }
@@ -161,7 +161,7 @@ export class StockChartService {
         <div style="padding: 6px 12px; text-align: center;">
            Realized: <span style="${aboveZero ? positive : negative}">${
               aboveZero ? "+" : "-"
-            }$${this.toLocalString(value)}</span>  
+            }$${this.toLocalString(value * (aboveZero ? 1 : -1))}</span>  
         </div>`
           : ""
       }
