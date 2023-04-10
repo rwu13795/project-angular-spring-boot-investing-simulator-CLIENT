@@ -181,17 +181,14 @@ export class StockService {
     */
     // ---------- No DST --------- //
     /* 
-         if (UTCHours < 14 - (hasDST? 1:0) || UTCHours >= 21) {
+         if (UTCHours < 14 || UTCHours >= 21) {
            return false;
          }
          if (UTCHours >= 14 && UTCHours < 15 && UTCMinutes < 30) {
            return false;
          }
     */
-    if (
-      UTCHours < hour0900_EST - (hasDST ? 1 : 0) ||
-      UTCHours >= hour1600_EST
-    ) {
+    if (UTCHours < hour0900_EST || UTCHours >= hour1600_EST) {
       return false;
     }
     if (
@@ -408,7 +405,7 @@ export class StockService {
     return date;
   }
 
-  private hasDaylightSavingTime(date: Date) {
+  private hasDaylightSavingTime(date: Date): boolean {
     const january = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
     const july = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
 
