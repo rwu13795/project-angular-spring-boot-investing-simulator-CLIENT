@@ -163,6 +163,10 @@ export class StockService {
     const UTCHours = new Date().getUTCHours();
     const UTCMinutes = new Date().getUTCMinutes();
     const UTCday = new Date().getUTCDay();
+    const hasDST = this.hasDaylightSavingTime(new Date());
+    const hour0900_EST = 14 - (hasDST ? 1 : 0);
+    const hour1000_EST = 15 - (hasDST ? 1 : 0);
+    const hour1600_EST = 21 - (hasDST ? 1 : 0);
 
     if (UTCday === 6 || UTCday === 0) return false;
 
@@ -175,10 +179,26 @@ export class StockService {
           return false;
         }
     */
-    if (UTCHours < 14 || UTCHours >= 21) {
+    // ---------- No DST --------- //
+    /* 
+         if (UTCHours < 14 - (hasDST? 1:0) || UTCHours >= 21) {
+           return false;
+         }
+         if (UTCHours >= 14 && UTCHours < 15 && UTCMinutes < 30) {
+           return false;
+         }
+    */
+    if (
+      UTCHours < hour0900_EST - (hasDST ? 1 : 0) ||
+      UTCHours >= hour1600_EST
+    ) {
       return false;
     }
-    if (UTCHours >= 14 && UTCHours < 15 && UTCMinutes < 30) {
+    if (
+      UTCHours >= hour0900_EST &&
+      UTCHours < hour1000_EST &&
+      UTCMinutes < 30
+    ) {
       return false;
     }
     return true;
@@ -319,11 +339,15 @@ export class StockService {
         // then I need to fetch the data of yesterday. Otherwise, the api will
         // return data of last 2 days, since there is NO data for the current day yet
         if (!this.isMarketOpen() && UTCday !== 6 && UTCday !== 0) {
+          const hasDST = this.hasDaylightSavingTime(new Date());
+          const hour0000_EST = 5 - (hasDST ? 1 : 0);
+          const hour0900_EST = 14 - (hasDST ? 1 : 0);
           const UTCHours = new Date().getUTCHours();
           const UTCMinutes = new Date().getUTCMinutes();
           if (
-            UTCHours >= 5 &&
-            (UTCHours < 13 || (UTCHours === 13 && UTCMinutes < 30))
+            UTCHours >= hour0000_EST &&
+            (UTCHours < hour0900_EST ||
+              (UTCHours === hour0900_EST && UTCMinutes < 30))
           ) {
             to_date = new Date(
               to_date.getTime() - (UTCday === 1 ? oneDay * 3 : oneDay)
@@ -382,5 +406,12 @@ export class StockService {
       return new Date(date.getTime() - 86400000 * 2);
     }
     return date;
+  }
+
+  private hasDaylightSavingTime(date: Date) {
+    const january = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+    const july = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+
+    return Math.max(january, july) !== date.getTimezoneOffset();
   }
 }
